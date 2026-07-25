@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Earth — Kolkata</title>
+<style>
+  html,body{ margin:0; height:100%; background:transparent; overflow:hidden; }
+  #c{ display:block; width:100%; height:100%; }
+  .lbl{
+    position:absolute; left:50%; bottom:12px; transform:translateX(-50%);
+    font:600 12px/1 'Space Grotesk','Trebuchet MS',system-ui,sans-serif;
+    color:#17181d; letter-spacing:.06em; text-transform:uppercase; opacity:.62;
+    pointer-events:none; white-space:nowrap;
+  }
+</style>
+</head>
+<body>
+<canvas id="c"></canvas>
+<div class="lbl">Kolkata, India</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script>
+(function(){
+  if(typeof THREE === 'undefined'){ return; }
+  const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const canvas = document.getElementById('c');
+  const renderer = new THREE.WebGLRenderer({ canvas, antialias:true, alpha:true });
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+
+  const scene = new THREE.Scene();
+  const camera = new THREE.PerspectiveCamera(38, 1, 0.1, 100);
+  camera.position.set(0, 0, 3.2);
+
+  scene.add(new THREE.AmbientLight(0xffffff, 0.55));
+  const sun = new THREE.DirectionalLight(0xffffff, 1.15);
+  sun.position.set(3, 1.4, 2.2);
+  scene.add(sun);
+
+  // slight tilt/lean → 3D feel
+  const tilt = new THREE.Group();
+  tilt.rotation.z = 0.26;
+  tilt.rotation.x = 0.20;
+  scene.add(tilt);
+
+  // Earth
+  const earth = new THREE.Mesh(
+    new THREE.SphereGeometry(1, 64, 64),
+    new THREE.MeshPhongMaterial({ color:0x2b4c80, shininess:9, specular:0x2a2a2a })
+  );
+  tilt.add(earth);
+
+  const loader = new THREE.TextureLoader();
+  loader.setCrossOrigin('anonymous');
+  loader.load(
+    'https://cdn.jsdelivr.net/npm/three-globe/example/img/earth-blue-marble.jpg',
+    tex => { earth.material.map = tex; earth.material.color.set(0xffffff); earth.material.needsUpdate = true; },
+    undefined,
+    () => { /* offline → keep the plain blue globe */ }
+  );
+
+  // Atmosphere rim glow
+  const atm = new THREE.Mesh(
+    new THREE.SphereGeometry(1.17, 48, 48),
+    new THREE.ShaderMaterial({
+      transparent:true, side:THREE.BackSide, blending:THREE.AdditiveBlending, depthWrite:false,
+      vertexShader:'varying vec3 vN; void main(){ vN = normalize(normalMatrix * normal); gl_Position = projectionMatrix * modelViewMatrix * vec4(position,1.0); }',
+      fragmentShader:'varying vec3 vN; void main(){ float i = pow(max(0.0, 0.66 - dot(vN, vec3(0.0,0.0,1.0))), 2.0); gl_FragColor = vec4(0.34,0.6,1.0,1.0) * i * 1.4; }'
+    })
+  );
+  tilt.add(atm);
+
+  // Kolkata marker (rides the globe)
+  const lat = 22.57, lon = 88.36;
+  function toXYZ(la, lo, r){
+    const phi = (90 - la) * Math.PI/180, theta = (lo + 180) * Math.PI/180;
+    return new THREE.Vector3(
+      -r * Math.sin(phi) * Math.cos(theta),
+       r * Math.cos(phi),
+       r * Math.sin(phi) * Math.sin(theta)
+    );
+  }
+  const pos = toXYZ(lat, lon, 1);
+  const dot = new THREE.Mesh(new THREE.SphereGeometry(0.022, 16, 16), new THREE.MeshBasicMaterial({ color:0xff3b30 }));
+  dot.position.copy(pos);
+  earth.add(dot);
+  const ring = new THREE.Mesh(
+    new THREE.RingGeometry(0.032, 0.05, 28),
+    new THREE.MeshBasicMaterial({ color:0xff3b30, transparent:true, opacity:0.85, side:THREE.DoubleSide })
+  );
+  ring.position.copy(pos);
+  ring.lookAt(pos.clone().multiplyScalar(2));
+  earth.add(ring);
+
+  // start with Kolkata facing the camera
+  earth.rotation.y = (-lon - 90) * Math.PI/180;
+
+  function resize(){
+    const w = canvas.clientWidth || window.innerWidth;
+    const h = canvas.clientHeight || window.innerHeight;
+    renderer.setSize(w, h, false);
+    camera.aspect = w / h;
+    camera.updateProjectionMatrix();
+    camera.position.z = 3.2 * Math.max(1, h / w);   // keep the whole globe in view either orientation
+  }
+  window.addEventListener('resize', resize);
+  resize();
+
+  let t = 0;
+  (function loop(){
+    requestAnimationFrame(loop);
+    if(!reduced) earth.rotation.y += 0.0016;   // gentle spin
+    t += 0.03;
+    const s = 1 + Math.sin(t) * 0.16;
+    ring.scale.set(s, s, s);
+    ring.material.opacity = 0.9 - (s - 1) * 2.8;
+    renderer.render(scene, camera);
+  })();
+})();
+</script>
+</body>
+</html>
