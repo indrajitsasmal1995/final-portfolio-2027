@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Beautiful UI + Efficient UX + Delightful Interactions = a Timeless Product</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&display=swap" rel="stylesheet" />
+<style>
+  :root{ --ink:#141414; --muted:#5a5a5a; --blue:#2b1ee6; }
+  *{ box-sizing:border-box; margin:0; padding:0; }
+  html,body{ height:100%; }
+  body{ background:transparent; font-family:"Inter",system-ui,sans-serif; color:var(--ink);
+        display:flex; align-items:center; justify-content:center; padding:10px; overflow:hidden; }
+
+  .eq{ display:flex; align-items:flex-start; justify-content:center; gap:clamp(12px,2.4vw,38px); width:100%; max-width:1160px; }
+  .eq-item{ flex:1 1 0; min-width:0; max-width:230px; display:flex; flex-direction:column; align-items:center; text-align:center; }
+  .eq-ico{ height:clamp(88px,11vw,124px); display:flex; align-items:center; justify-content:center; margin-bottom:clamp(16px,2vw,26px); color:var(--ink); }
+  .eq-ico svg{ height:100%; width:auto; display:block; }
+  .eq-item h4{ font-weight:800; font-size:clamp(12px,1.15vw,16px); letter-spacing:.03em; text-transform:uppercase; line-height:1.16; color:var(--ink); }
+
+  /* ---- auto animation: staggered reveal + traveling blue spark ---- */
+  @keyframes eqReveal{ from{ opacity:0; transform:translateY(20px) scale(.96); } to{ opacity:1; transform:translateY(0) scale(1); } }
+  @keyframes eqGlow{ 0%,100%{ color:var(--ink); filter:none; } 2%{ color:var(--blue); filter:drop-shadow(0 0 6px rgba(43,30,230,0.55)); transform:translateY(-3px); } 7%{ color:var(--ink); filter:none; transform:translateY(0); } }
+  .eq > *{ }
+  .eq-item .eq-ico{ }
+  .eq-op{ }
+  .eq > *:nth-child(1){ animation-delay:0s; }
+  .eq > *:nth-child(2){ animation-delay:.09s; }
+  .eq > *:nth-child(3){ animation-delay:.18s; }
+  .eq > *:nth-child(4){ animation-delay:.27s; }
+  .eq > *:nth-child(5){ animation-delay:.36s; }
+  .eq > *:nth-child(6){ animation-delay:.45s; }
+  .eq > *:nth-child(7){ animation-delay:.54s; }
+  .eq > *:nth-child(1) .eq-ico{ animation-delay:.85s; }
+  .eq-op:nth-child(2){ animation-delay:.09s, 1.01s; }
+  .eq > *:nth-child(3) .eq-ico{ animation-delay:1.17s; }
+  .eq-op:nth-child(4){ animation-delay:.27s, 1.33s; }
+  .eq > *:nth-child(5) .eq-ico{ animation-delay:1.49s; }
+  .eq-op:nth-child(6){ animation-delay:.45s, 1.65s; }
+  .eq > *:nth-child(7) .eq-ico{ animation-delay:1.81s; }
+  @media (prefers-reduced-motion: reduce){ .eq > *, .eq-item .eq-ico, .eq-op{ animation:none !important; } }
+  .eq-item p{ margin-top:clamp(8px,1vw,13px); font-size:clamp(11.5px,1vw,14.5px); line-height:1.45; color:var(--muted); }
+
+  .eq-op{ flex:0 0 auto; height:clamp(88px,11vw,124px); display:flex; align-items:center; justify-content:center;
+          font-size:clamp(26px,3vw,46px); font-weight:300; color:var(--ink); line-height:1; }
+
+  @media (max-width:640px){
+    .eq{ flex-wrap:wrap; gap:20px 14px; }
+    .eq-op{ height:auto; width:100%; }
+    .eq-item{ flex:1 1 40%; max-width:none; }
+  }
+  /* Efficient UX — triangle rocks (edges rise) + fan lines rise following */
+  @media (prefers-reduced-motion: reduce){ .ux-rock,.ux-line{ animation:none; } }
+</style>
+</head>
+<body>
+  <div class="eq" role="img" aria-label="Beautiful UI plus Efficient UX plus Delightful Interactions equals a Timeless Product">
+
+    <!-- Beautiful UI -->
+    <div class="eq-item">
+      <span class="eq-ico">
+        <svg viewBox="0 0 100 92"><path d="M50 89 C6 58 2 31 19 17 C33 6 47 13 50 27 C53 13 67 6 81 17 C98 31 94 58 50 89 Z" fill="currentColor"/></svg>
+      </span>
+      <h4>Beautiful UI</h4>
+      <p>Aesthetics that create an emotional connection.</p>
+    </div>
+
+    <div class="eq-op">+</div>
+
+    <!-- Efficient UX -->
+    <div class="eq-item">
+      <span class="eq-ico">
+        <svg viewBox="0 0 100 92">
+          <g class="ux-rock">
+          <path class="ux-tri" d="M12 80 L92 80 L92 24 Z" fill="currentColor"/>
+          <path class="ux-line l1" d="M14 78 L92 16" stroke="currentColor" stroke-width="1.7" fill="none" stroke-linecap="round"/>
+          <path class="ux-line l2" d="M17 76 L90 9" stroke="currentColor" stroke-width="1.7" fill="none" stroke-linecap="round"/>
+          <path class="ux-line l3" d="M20 74 L86 4" stroke="currentColor" stroke-width="1.7" fill="none" stroke-linecap="round"/>
+          </g>
+        </svg>
+      </span>
+      <h4>Efficient UX</h4>
+      <p>Intuitive experiences that make everything effortless.</p>
+    </div>
+
+    <div class="eq-op">+</div>
+
+    <!-- Delightful Interactions -->
+    <div class="eq-item">
+      <span class="eq-ico">
+        <svg viewBox="0 0 136 92">
+          <defs><clipPath id="vc"><circle cx="49" cy="46" r="35"/></clipPath></defs>
+          <circle cx="49" cy="46" r="35" fill="none" stroke="currentColor" stroke-width="2.4"/>
+          <circle cx="88" cy="46" r="35" fill="none" stroke="currentColor" stroke-width="2.4"/>
+          <circle cx="88" cy="46" r="35" fill="currentColor" clip-path="url(#vc)"/>
+        </svg>
+      </span>
+      <h4>Delightful Interactions</h4>
+      <p>Meaningful moments that engage and delight.</p>
+    </div>
+
+    <div class="eq-op">=</div>
+
+    <!-- A Timeless Product -->
+    <div class="eq-item">
+      <span class="eq-ico">
+        <svg viewBox="0 0 130 100">
+          <g stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><line x1="65" y1="5" x2="65" y2="21"/><line x1="41" y1="13" x2="49" y2="26"/><line x1="89" y1="13" x2="81" y2="26"/></g>
+          <polygon points="35,45 50,33 80,33 95,45" fill="currentColor"/>
+          <g fill="none" stroke="#ffffff" stroke-width="1.7"><line x1="50" y1="33" x2="57" y2="45"/><line x1="65" y1="33" x2="65" y2="45"/><line x1="80" y1="33" x2="73" y2="45"/></g>
+          <g fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"><polygon points="35,45 95,45 65,90"/><line x1="57" y1="45" x2="65" y2="90"/><line x1="73" y1="45" x2="65" y2="90"/></g>
+        </svg>
+      </span>
+      <h4>A Timeless Product</h4>
+      <p>Lasting value that stands the test of time.</p>
+    </div>
+
+  </div>
+</body>
+</html>
