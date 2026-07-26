@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Indrajit Sasmal ✦ Product Designer</title>
+<link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png" />
+<link rel="apple-touch-icon" href="favicon-180.png" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet" />
+<style>
+  *{ box-sizing:border-box; margin:0; padding:0; }
+  html{ scroll-behavior:smooth; }
+  body{ background:#ffffff; color:#141414; font-family:'Inter',system-ui,sans-serif; -webkit-font-smoothing:antialiased; }
+
+  /* ---- pill navbar (constant at top) ---- */
+  .pillnav { position:fixed; top:16px; left:0; right:0; z-index:1000; display:flex; justify-content:center; gap:10px; pointer-events:none; padding:0 16px; }
+  .pill-back { display:none !important; position:absolute; left:16px; top:50%; transform:translateY(-50%); width:44px; height:44px; padding:0; justify-content:center; flex:0 0 auto; color:#141414; }
+  .pill-back svg { display:block; }
+  .pill { pointer-events:auto; display:flex; align-items:center; background:rgba(255,255,255,0.32); -webkit-backdrop-filter:blur(9px) saturate(1.8); backdrop-filter:blur(9px) saturate(1.8); border:1px solid rgba(20,20,30,0.12); border-radius:999px; padding:7px 8px; box-shadow:inset 0 1px 1px rgba(255,255,255,0.55); transition:border-color .35s ease; max-width:100%; }
+  .pill:hover { border-color:rgba(20,20,30,0.2); }
+  .pill-id { display:flex; align-items:center; gap:12px; text-decoration:none; padding:0 6px 0 2px; flex:0 0 auto; }
+  .pill-logo { width:40px; height:40px; border-radius:50%; background:#141414; display:flex; align-items:center; justify-content:center; flex:0 0 auto; }
+  .pill-avatar { width:40px; height:40px; border-radius:50%; object-fit:cover; object-position:center; background:transparent; border:1px solid rgba(0,0,0,0.06); flex:0 0 auto; }
+  .pill-name { font-family:'Inter',system-ui,sans-serif; font-weight:600; font-size:15px; letter-spacing:-0.01em; color:#141414; white-space:nowrap; }
+  .pill-menu { display:flex; align-items:center; gap:24px; overflow:hidden; max-width:560px; opacity:1; margin-left:24px; padding-right:12px; transition:max-width .55s cubic-bezier(.2,.8,.2,1), opacity .35s ease, margin-left .55s cubic-bezier(.2,.8,.2,1), padding-right .55s ease; }
+  body.nav-scrolled .pill-menu { max-width:0; opacity:0; margin-left:0; padding-right:0; }
+  body.nav-scrolled .pill:hover .pill-menu { max-width:560px; opacity:1; margin-left:24px; padding-right:12px; }
+  body.nav-scrolled .pill.is-open .pill-menu { max-width:560px; opacity:1; margin-left:24px; padding-right:12px; }
+  .pill-menu a { position:relative; font-family:'Inter',system-ui,sans-serif; font-weight:500; font-size:14px; color:#141414; text-decoration:none; white-space:nowrap; padding:3px 0; }
+  .pill-menu a::after { content:""; position:absolute; left:0; right:0; bottom:-2px; height:2px; border-radius:2px; background:#141414; transform:scaleX(0); transform-origin:left center; transition:transform .32s cubic-bezier(.2,.8,.2,1); }
+  .pill-menu a:hover::after { transform:scaleX(1); }
+  @media (max-width:560px){ .pill-name{ font-size:14px; } .pill-menu{ gap:16px; margin-left:14px; } }
+
+  /* ---- page ---- */
+  .work-page { width:min(1280px, 95%); margin:0 auto; padding:clamp(120px,16vh,170px) 0 clamp(160px,18vh,220px); }
+  .wp-head { text-align:center; margin-bottom:clamp(48px,6vw,80px); }
+  .wp-eyebrow { display:inline-flex; align-items:center; gap:8px; font-size:12px; font-weight:600; letter-spacing:0.12em; text-transform:uppercase; color:#8a8578; margin-bottom:22px; text-decoration:none; }
+  .wp-eyebrow:hover { color:#141414; }
+  .dl-heading { font-family:'Inter', sans-serif; font-weight:700; font-size:clamp(36px, 4.8vw, 60px); letter-spacing:calc(-0.027em - 2px); line-height:normal; color:#1a1a1a; margin:0 0 6px; }
+  .dl-cursive { display:flex; align-items:center; justify-content:center; gap:clamp(16px, 2vw, 26px); font-family:'Instrument Serif', Georgia, serif; font-style:italic; font-weight:400; font-size:clamp(17px, 1.9vw, 23px); line-height:1.2; color:#6b6459; margin:0; }
+  .dl-cursive::before, .dl-cursive::after { content:""; flex:0 0 auto; width:clamp(40px, 6vw, 84px); height:1px; background:#e1e1e1; }
+
+  /* ---- cards (identical to home) ---- */
+  .dl-grid { display:grid; grid-template-columns:repeat(2, 1fr); gap:clamp(40px, 5vw, 72px) clamp(26px, 3vw, 48px); padding:6px 0; }
+  .dl-chip { display:block; text-align:left; text-decoration:none; cursor:pointer; }
+  .dl-media { position:relative; width:100%; aspect-ratio:16/10; overflow:hidden; background:#f0f1f4; transition:transform .45s cubic-bezier(.2,.8,.2,1), box-shadow .45s ease; }
+  .dl-frame { position:absolute; top:7%; left:4%; right:4%; bottom:0; overflow:hidden; }
+  .dl-slide { position:absolute; inset:0; background-size:90% auto; background-position:bottom center; background-repeat:no-repeat; opacity:0; transition:opacity .9s ease, background-size .5s cubic-bezier(.2,.8,.2,1); }
+  .dl-slide.on { opacity:1; }
+  .dl-chip:hover .dl-slide.on { background-size:100% auto; }
+  .dl-arrow { position:absolute; z-index:3; right:12px; bottom:12px; width:40px; height:40px; border-radius:50%; background:#141414; color:#fff; display:flex; align-items:center; justify-content:center; opacity:0; transform:translateY(8px) scale(.9); transition:opacity .35s ease, transform .4s cubic-bezier(.2,.8,.2,1); }
+  .dl-chip:hover .dl-arrow { opacity:1; transform:none; }
+  .dl-tags { display:flex; align-items:center; gap:8px; margin-top:20px; }
+  .dl-cat { display:inline-flex; align-items:center; padding:5px 11px; border-radius:999px; background:#eef0f4; border:1px solid rgba(28,30,45,0.07); font-family:'Inter', sans-serif; font-size:10.5px; font-weight:600; letter-spacing:0.09em; text-transform:uppercase; color:#676a76; }
+  .dl-year { display:inline-flex; align-items:center; padding:5px 10px; border-radius:999px; background:transparent; border:1px solid rgba(28,30,45,0.18); font-family:ui-monospace, "SFMono-Regular", Menlo, monospace; font-size:11px; letter-spacing:0.02em; color:#7d818d; }
+  .dl-meta { margin-top:12px; }
+  .dl-name2 { font-family:'Inter', sans-serif; font-weight:600; font-size:clamp(17px, 1.3vw, 20px); letter-spacing:-0.015em; color:#141414; }
+  .dl-desc { margin:10px 0 0; font-family:'Inter', system-ui, sans-serif; font-size:14px; font-weight:400; line-height:1.55; color:#5f5c53; max-width:46ch; }
+  @media (max-width:720px){ .dl-grid { grid-template-columns:1fr; } }
+</style>
+<style>
+  .cursor-dot, .cursor-bubble { position: fixed; top: 0; left: 0; pointer-events: none; z-index: 2147483647; will-change: transform; }
+  .cursor-dot { width: 11px; height: 11px; margin: -5.5px 0 0 -5.5px; border-radius: 50%; background: #fff; mix-blend-mode: difference; transition: width .18s ease, height .18s ease, margin .18s ease; }
+  .cursor-dot.is-active { width: 18px; height: 18px; margin: -9px 0 0 -9px; }
+  .cursor-bubble { margin: 6px 0 0 14px; background: #fff; color: #1a1a1a; border: 1px solid rgba(0,0,0,0.06); box-shadow: 0 6px 18px rgba(0,0,0,0.22); font-size: 11px; font-family: 'Inter', sans-serif; font-weight: 400; letter-spacing: .04em; text-transform: lowercase; padding: 5px 10px; border-radius: 999px; white-space: nowrap; opacity: 0; transform: scale(.6); transform-origin: left center; transition: opacity .16s ease, transform .16s cubic-bezier(.2,.9,.3,1.4); }
+  .cursor-bubble.is-visible { opacity: 1; transform: scale(1); }
+  .cursor-bubble.on-light { background: #1a1a1a; color: #fff; border-color: rgba(255,255,255,0.10); }
+  *, *::before, *::after { cursor: none !important; }
+  @media (pointer: coarse) { .cursor-dot, .cursor-bubble { display: none !important; } *, *::before, *::after, body { cursor: auto !important; } }
+</style>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&family=Instrument+Serif:ital@0;1&display=swap');
+
+  .s-footer{ position:relative!important; width:100vw; margin-left:calc(50% - 50vw); margin-top:0!important; min-height:auto!important; height:auto!important; background:#2b1ee6!important; color:#ffffff; --foot-pb:clamp(190px,20vh,250px); padding:clamp(84px,13vh,150px) clamp(20px,4vw,52px) var(--foot-pb)!important; display:block!important; text-align:left!important; overflow:visible!important; }
+  .s-footer .foot-wrap{ width:min(1280px,100%); margin:0 auto; position:relative; z-index:1; }
+  .s-footer .foot-eyebrow{ font-family:ui-monospace,"SFMono-Regular",Menlo,monospace; font-size:12px; letter-spacing:.16em; text-transform:uppercase; color:rgba(255,255,255,0.72); display:inline-flex; align-items:center; gap:10px; }
+  .s-footer .foot-eyebrow::before{ content:""; width:26px; height:1px; background:rgba(255,255,255,0.72); opacity:.7; }
+  .s-footer .foot-big{ margin:22px 0 0; font-family:"Inter",sans-serif; font-weight:600; font-size:clamp(38px,8vw,104px); line-height:1.15; letter-spacing:-.055em; color:#ffffff; }
+  .s-footer .foot-big em{ font-family:"Instrument Serif",Georgia,serif; font-style:italic; font-weight:400; }
+  .s-footer .foot-big .fw{ display:inline-block; height:1.15em; overflow:hidden; vertical-align:bottom; }
+  .s-footer .foot-big .fw-list{ display:block; animation:fwScroll 11s cubic-bezier(.76,0,.24,1) infinite; }
+  .s-footer .foot-big .fw-list span{ display:block; height:1.15em; line-height:1.15; white-space:nowrap; }
+  .s-footer .foot-big .foot-together{ display:block; }
+  @keyframes fwScroll{ 0%,13%{ transform:translateY(0); } 16.667%,29.667%{ transform:translateY(-16.667%); } 33.333%,46.333%{ transform:translateY(-33.333%); } 50%,63%{ transform:translateY(-50%); } 66.667%,79.667%{ transform:translateY(-66.667%); } 83.333%,100%{ transform:translateY(-83.333%); } }
+  @media (prefers-reduced-motion: reduce){ .s-footer .foot-big .fw-list{ animation:none; } }
+  .s-footer .foot-mail{ display:block; width:fit-content; margin-top:72px; font-family:'Instrument Serif', Georgia, serif; font-size:clamp(21px,2.3vw,30px); color:#ffffff; text-decoration:underline; text-underline-offset:5px; text-decoration-thickness:1px; transition:opacity .2s ease; } .s-footer .foot-tel{ display:block; width:fit-content; margin-top:16px; font-family:'Instrument Serif', Georgia, serif; font-size:clamp(21px,2.3vw,30px); color:#ffffff; text-decoration:underline; text-underline-offset:5px; text-decoration-thickness:1px; transition:opacity .2s ease; } .s-footer .foot-copyable:hover{ opacity:.82; }
+  
+  /* pill cluster - exact positions from design spec (1440 canvas), anchored bottom-right on the divider */
+  .s-footer .foot-socials{ position:absolute; right:0; bottom:calc(0px - var(--foot-pb)); width:492px; height:123px; margin:0; padding:0; display:block; overflow:visible; z-index:3; transform:scale(1.3); transform-origin:bottom right; }
+  .s-footer .foot-socials a{ position:absolute; display:inline-flex; align-items:center; justify-content:center; height:48.818px; padding:0 15.256px; font-family:'Inter',system-ui,sans-serif; font-weight:300; font-size:27.46px; letter-spacing:-1.098px; line-height:normal; color:#ffffff; text-decoration:none; white-space:nowrap; border:1.526px solid #ffffff; border-radius:30.511px; background:transparent; transition:background .25s ease, color .25s ease; }
+  .s-footer .foot-socials a:nth-child(1){ left:0; top:73.682px; z-index:1; }                                                             /* Linkedin */
+  .s-footer .foot-socials a:nth-child(2){ left:76.945px; top:16.228px; transform-origin:top left; transform:rotate(14.272deg); z-index:2; } /* Dribbble */
+  .s-footer .foot-socials a:nth-child(3){ left:187.715px; top:73.682px; z-index:3; }                                                       /* Instagram */
+  .s-footer .foot-socials a:nth-child(4){ left:306.469px; top:0; transform-origin:top left; transform:rotate(38.157deg); z-index:4; }        /* Whatsapp */
+  .s-footer .foot-socials a:hover{ z-index:10; background:#ffffff; color:#2b1ee6; border-color:#ffffff; }
+  /* box stays sized to 27.46px text (keeps the exact connected layout); glyphs render at 20px */
+  .s-footer .foot-socials a .p-t{ display:inline-block; transform:scale(0.7283); }
+  @media (max-width:900px){ .s-footer .foot-socials{ right:auto; left:12px; transform:scale(.6); transform-origin:bottom left; } }
+  .footer-bar{ width:100vw!important; margin-left:calc(50% - 50vw); height:auto!important; border-top:0!important; padding:0 clamp(20px,4vw,52px)!important; display:block!important; background:#2b1ee6!important; text-align:left!important; }
+  .footer-bar-inner{ width:min(1280px,100%); margin:0 auto; border-top:1px solid rgba(255,255,255,0.4); padding:24px 0 26px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px; font-family:'Instrument Serif',Georgia,serif; font-size:19px; letter-spacing:0; color:#ffffff; }
+  .footer-bar .fstar{ color:#ffffff; margin:0 0.4em; }
+  /* ===== footer parallax reveal: page scrolls up, footer sits pinned behind and is uncovered =====
+     #root gets NO stacking context (keeps the mix-blend nav working); it just paints opaque over
+     the footer, which is pinned behind at z-index:-1. Body must be transparent so the footer shows
+     through once #root scrolls up. */
+  .page-above{ background:#ffffff; min-height:100vh; }
+  html{ background:#ffffff !important; }
+  body{ background:transparent !important; }
+  .footer-reveal{ position:sticky; bottom:0; z-index:-1; }
+  /* footer sits behind at z-index:-1, so make body click-transparent and re-enable its
+     children - clicks now reach the footer (copy button, pills) in its revealed region */
+  body{ pointer-events:none; }
+  body > *{ pointer-events:auto; }
+  @media (prefers-reduced-motion: reduce){ .footer-reveal{ position:static; } }
+</style>
+</head>
+<body>
+<div class="page-above">
+
+  <div class="pillnav">
+    <a class="pill pill-back" data-cursor="back" href="index.html#work" data-back aria-label="Back to home"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M15 6l-6 6 6 6" stroke="#141414" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+    <div class="pill">
+      <a class="pill-id" href="index.html" data-cursor="start again" aria-label="Indrajit Sasmal - home">
+        <img class="pill-avatar" src="avatar.png" alt="Indrajit Sasmal" />
+        <span class="pill-name">Indrajit Sasmal</span>
+      </a>
+      <nav class="pill-menu">
+        <a href="index.html#work" data-cursor="what I do">Work</a>
+        <a href="index.html#about" data-cursor="who I am">About</a>
+        <a href="#contact" data-cursor="let&#39;s connect">Contact</a>
+      </nav>
+    </div>
+  </div>
+
+  <main class="work-page">
+    <div class="wp-head">
+      <h1 class="dl-heading">My latest work</h1>
+      <p class="dl-cursive">A closer look at everything I&rsquo;ve designed &amp; shipped</p>
+    </div>
+    <div class="dl-grid" id="grid"></div>
+  </main>
+
+<script>
+// glass nav collapses on scroll (like home), expands on hover
+var navScroll = function(){ document.body.classList.toggle('nav-scrolled', window.scrollY > 24); };
+window.addEventListener('scroll', navScroll, { passive:true }); navScroll();
+const WORKS = [
+  { name: "ZBrain One", cat: "AI Platform", year: "2026", desc: "The ground-up redesign of ZBrain - where organisations turn data into semantic knowledge.", shots: [ "zbrain-one-dashboard.png", "zbrain-one-build-alt.png", "zbrain-one-build-datasets.png", "zbrain-one-build-editor.png" ], link: "zbrain-one.html" },
+  { name: "ZBrain Governance", cat: "AI Platform", year: "2026", desc: "Policy, guardrails and trust for agentic AI across an organisation.", shots: [ "zbrain-governance-observatory.png", "zbrain-governance-gov-home.png", "zbrain-governance-violation-detail.png", "zbrain-governance-audit-settings.png" ], link: "zbrain-governance.html" },
+  { name: "Applied Materials - CE CoPilot", cat: "AI \u00b7 Semiconductor", year: "2026", desc: "An AI troubleshooting copilot for the Customer Engineers who keep fabs running - it asks before it answers.", shots: [ "applied-materials-home.png", "applied-materials-answer.png", "applied-materials-clarify.png", "applied-materials-followup.png" ], link: "applied-materials.html" },
+  { name: "Americold CPA \u00b7 CRA", cat: "Cold-chain Ops", year: "2025-26", desc: "Program-profile adherence and customer-risk monitoring across cold-storage warehouses.", shots: [ "americold-cpa-cra-cpa-health.png", "americold-cpa-cra-metric-chart.png", "americold-cpa-cra-program-detail.png", "americold-cpa-cra-reports.png" ], link: "americold-risk-monitoring.html" },
+  { name: "Americold STPCT", cat: "Compliance", year: "2025-26", desc: "Safety-training profiles and compliance tracking across thousands of warehouse associates.", shots: [ "americold-stpct-dashboard.png", "americold-stpct-associate.png", "americold-stpct-email.png", "americold-stpct-filters.png" ], link: "americold-safety-training.html" },
+  { name: "FME - AR Cash App", cat: "Healthcare \u00b7 Finance Ops", year: "2025", desc: "A cash-application workbench where RPA bots auto-match incoming payments to SAP invoices.", shots: [ "fme-cash-app-item-details.png", "fme-cash-app-auto-posted.png", "fme-cash-app-exceptions.png", "fme-cash-app-history.png" ], link: "fme-cash-app.html" },
+  { name: "FME - Invoice-to-Pay", cat: "Healthcare \u00b7 Finance Ops", year: "2025", desc: "An invoice-to-pay workbench - AI reads and codes supplier invoices arriving by email.", shots: [ "fme-invoice-to-pay-item-details.png", "fme-invoice-to-pay-accepted.png", "fme-invoice-to-pay-approve.png", "fme-invoice-to-pay-emails.png" ], link: "fme-invoice-to-pay.html" },
+  { name: "CaseSolve", cat: "Legal \u00b7 Insurtech", year: "2025", desc: "A personal-injury claim platform that carries a claimant from the accident to a settled award.", shots: [ "casesolve-web-dashboard-status.png", "casesolve-web-dashboard.png", "casesolve-web-fall-cause.png", "casesolve-admin-accident-details.png" ], link: "casesolve.html" },
+  { name: "MasTec BidPro", cat: "AI \u00b7 Construction", year: "2024", desc: "AI bid takeoff - upload the construction drawings, let AI extract a structured takeoff.", shots: [ "mastec-bidpro-all-bids.png", "mastec-bidpro-approve.png", "mastec-bidpro-create-bid.png", "mastec-bidpro-extract.png" ], link: "mastec-bidpro.html" },
+  { name: "TVT Capital", cat: "Business Lending", year: "2024", desc: "A loan-evaluation dashboard that verifies every applicant and scores funding requests.", shots: [ "tvt-capital-dashboard.png", "tvt-capital-loan-details.png", "tvt-capital-dashboard-menu.png", "tvt-capital-email-templates.png" ], link: "tvt-capital.html" }
+];
+
+var ARROW = '<svg width="15" height="15" viewBox="0 0 16 16" fill="none"><path d="M4 12L12 4M12 4H5.5M12 4V10.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+var grid = document.getElementById('grid');
+WORKS.forEach(function(w){
+  var slides = w.shots.map(function(sh,i){ return '<div class="dl-slide'+(i===0?' on':'')+'" style="background-image:url(\''+sh+'\')"></div>'; }).join('');
+  var a = document.createElement('a');
+  a.className = 'dl-chip'; a.href = w.link; a.setAttribute('data-cursor','view');
+  a.innerHTML =
+    '<div class="dl-media"><div class="dl-frame">'+slides+'</div><span class="dl-arrow">'+ARROW+'</span></div>' +
+    '<div class="dl-tags"><span class="dl-cat">'+w.cat+'</span><span class="dl-year">'+w.year+'</span></div>' +
+    '<div class="dl-meta"><span class="dl-name2">'+w.name+'</span></div>' +
+    '<p class="dl-desc">'+w.desc+'</p>';
+  grid.appendChild(a);
+});
+
+// slideshows: cross-fade, pause on hover
+document.querySelectorAll('.dl-frame').forEach(function(fr, idx){
+  var slides = fr.querySelectorAll('.dl-slide');
+  if(slides.length < 2) return;
+  var cur = 0, timer = null;
+  var chip = fr.closest('.dl-chip');
+  function step(){ slides[cur].classList.remove('on'); cur = (cur+1)%slides.length; slides[cur].classList.add('on'); }
+  function start(){ if(!timer){ timer = setInterval(step, 1400); } }
+  function stop(){ if(timer){ clearInterval(timer); timer = null; } }
+  setTimeout(start, idx * 200);
+  if(chip){ chip.addEventListener('mouseenter', stop); chip.addEventListener('mouseleave', start); }
+});
+</script>
+<script>
+/* frosted-glass page transition (slide reveal/cover) + section-jump masking */
+(function(){
+  if(window.__pagefx) return; window.__pagefx=1;
+  var css='.page-fx{position:fixed;inset:0;z-index:99999;pointer-events:none;transform:translateY(0);'
+    +'background:linear-gradient(180deg,rgba(255,255,255,0.62),rgba(255,255,255,0.42));'
+    +'-webkit-backdrop-filter:blur(30px) saturate(1.7);backdrop-filter:blur(30px) saturate(1.7);'
+    +'border-bottom:1px solid rgba(255,255,255,0.5);'
+    +'box-shadow:0 44px 110px -30px rgba(20,20,45,0.20),inset 0 1px 0 rgba(255,255,255,0.55);'
+    +'will-change:transform;animation:fxUp .72s cubic-bezier(.5,0,.15,1) forwards;}'
+    +'@keyframes fxUp{from{transform:translateY(0);}to{transform:translateY(-100%);}}'
+    +'.page-fx.cover{animation:none;transform:translateY(0);pointer-events:all;'
+    +'transition:transform .62s cubic-bezier(.5,0,.12,1);}'
+    +'@media (prefers-reduced-motion: reduce){.page-fx{animation-duration:.01s;}.page-fx.cover{transition:none;}}';
+  var st=document.createElement('style'); st.textContent=css; document.head.appendChild(st);
+  var fx=document.createElement('div'); fx.className='page-fx'; fx.setAttribute('aria-hidden','true');
+  (document.body||document.documentElement).appendChild(fx);
+  function reveal(){ fx.classList.remove('cover'); fx.style.animation='none'; void fx.offsetWidth; fx.style.animation=''; }
+  window.addEventListener('pageshow', function(e){ if(e.persisted){ fx.classList.remove('cover'); fx.style.animation='none'; fx.style.transform='translateY(-100%)'; } });
+  function jump(target, hash){
+    var html=document.documentElement, prev=html.style.scrollBehavior;
+    html.style.scrollBehavior='auto';
+    if(target) target.scrollIntoView();
+    if(hash){ try{ history.replaceState(null,'',hash); }catch(_){} }
+    html.style.scrollBehavior=prev;
+  }
+  document.addEventListener('click', function(e){
+    var a=e.target.closest ? e.target.closest('a') : null; if(!a) return;
+    var href=a.getAttribute('href'); if(!href) return;
+    if(a.target && a.target!=='_self') return;
+    if(a.hasAttribute('download')) return;
+    if(e.metaKey||e.ctrlKey||e.shiftKey||e.altKey||e.button!==0) return;
+    if(a.getAttribute('data-back')!==null){
+      e.preventDefault();
+      var ref=document.referrer, home=false;
+      try{ home = !ref || new URL(ref).origin===location.origin; }catch(_){}
+      if(home && history.length>1){ history.back(); } else { location.href=a.getAttribute('href'); }
+      return;
+    }
+    var url; try{ url=new URL(href, location.href); }catch(_){ return; }
+    if(url.origin!==location.origin) return;
+    var samePage=(url.pathname===location.pathname);
+    if(href.charAt(0)==='#' || samePage) return;   /* in-page anchors: normal scroll, no glass */
+    e.preventDefault();
+    fx.classList.add('cover');
+    setTimeout(function(){ location.href=href; }, 580);
+  }, true);
+})();
+</script>
+<script>
+/* custom cursor (ported from home page) */
+(function(){
+  if(!window.matchMedia("(hover: hover) and (pointer: fine)").matches) return;
+  var dot=document.createElement('div'); dot.className='cursor-dot';
+  var bub=document.createElement('div'); bub.className='cursor-bubble';
+  document.body.appendChild(dot); document.body.appendChild(bub);
+  document.body.style.cursor='none';
+  var tx=-200,ty=-200,cx=-200,cy=-200,shown=false,lastLabel=null,lastTone=0;
+  function setTone(x,y){
+    var els=document.elementsFromPoint(x,y)||[]; var light=true;
+    for(var i=0;i<els.length;i++){ var cl=els[i].classList;
+      if(cl&&(cl.contains('cursor-bubble')||cl.contains('cursor-dot'))) continue;
+      var bg=getComputedStyle(els[i]).backgroundColor; var m=bg&&bg.match(/rgba?\(([^)]+)\)/);
+      if(!m) continue; var p=m[1].split(',').map(parseFloat); var a=p.length>3?p[3]:1;
+      if(a<0.3) continue; light=(0.299*p[0]+0.587*p[1]+0.114*p[2])>140; break; }
+    bub.classList.toggle('on-light', light);
+  }
+  window.addEventListener('mousemove', function(e){ tx=e.clientX; ty=e.clientY;
+    if(shown){ var now=performance.now(); if(now-lastTone>80){ lastTone=now; setTone(e.clientX,e.clientY);} }
+  }, {passive:true});
+  (function tick(){ dot.style.transform='translate('+tx+'px,'+ty+'px)';
+    cx+=(tx-cx)*0.2; cy+=(ty-cy)*0.2; bub.style.left=cx+'px'; bub.style.top=cy+'px';
+    requestAnimationFrame(tick); })();
+  var HIT='a, button, [role="button"], input:not([type=hidden]), textarea, select, label[for], summary, [data-cursor]';
+  function show(label){ shown=true; dot.classList.add('is-active'); bub.classList.add('is-visible');
+    if(label!==lastLabel){ lastLabel=label; bub.textContent=label; } }
+  function hide(){ shown=false; dot.classList.remove('is-active'); bub.classList.remove('is-visible'); }
+  document.addEventListener('mouseover', function(e){
+    var hit=e.target.closest?e.target.closest(HIT):null;
+    if(!hit) return hide();
+    if(hit.closest('[data-nocursor]')) return hide();
+    var z=hit.closest('[data-cursor-zone]');
+    var label=hit.getAttribute('data-cursor')||(z&&z.getAttribute('data-cursor-zone'))||'click';
+    show(label); setTone(e.clientX,e.clientY);
+  });
+  document.addEventListener('mouseleave', hide);
+})();
+</script>
+<script>
+/* preserve & restore scroll position across back/forward navigation */
+(function(){
+  var KEY='sy:'+location.pathname;
+  var raf=0;
+  addEventListener('scroll', function(){ if(raf) return; raf=requestAnimationFrame(function(){ raf=0; try{ sessionStorage.setItem(KEY, String(Math.round(window.scrollY))); }catch(_){} }); }, {passive:true});
+  function jump(y){ var h=document.documentElement, p=h.style.scrollBehavior; h.style.scrollBehavior='auto'; window.scrollTo(0,y); h.style.scrollBehavior=p; }
+  function restore(){
+    var y; try{ y=parseInt(sessionStorage.getItem(KEY)||'',10); }catch(_){}
+    if(!(y>0)) return;
+    requestAnimationFrame(function(){ requestAnimationFrame(function(){ jump(y); }); });
+    [120,300,600,1000].forEach(function(t){ setTimeout(function(){ jump(y); }, t); });
+  }
+  try{ if('scrollRestoration' in history) history.scrollRestoration='manual'; }catch(_){}
+  var nav=(performance.getEntriesByType && performance.getEntriesByType('navigation')[0]) || {};
+  if(nav.type==='back_forward'){ restore(); }
+  else if(nav.type==='reload'){ try{ sessionStorage.setItem(KEY,'0'); }catch(_){} jump(0); }
+  addEventListener('pageshow', function(e){ if(e.persisted) restore(); });
+})();
+</script>
+</div><!-- /page-above -->
+<div class="footer-reveal">
+<section class="s-footer" id="contact">
+  <div class="foot-wrap">
+    <div class="foot-big">Let&rsquo;s build <span class="fw"><span class="fw-list"><span>a product.</span><span>a team.</span><span>something useful.</span><span>what&rsquo;s next.</span><span>with purpose.</span><span>a product.</span></span></span><em class="foot-together">together</em></div>
+    <span class="foot-mail foot-copyable" data-cursor="click to copy">indrajitsasmal32@gmail.com</span><span class="foot-tel foot-copyable" data-cursor="click to copy">+91 8013 753 152</span>
+    
+    <div class="foot-socials">
+      <a href="https://www.linkedin.com/in/indrajit-sasmal/" target="_blank" rel="noopener"><span class="p-t">Linkedin</span></a>
+      <a href="https://dribbble.com/Indrajit1995" target="_blank" rel="noopener"><span class="p-t">Dribbble</span></a>
+      <a href="https://www.instagram.com/wrijuu?igsh=MTZjMndldXJueGlwMA%3D%3D&amp;utm_source=qr" target="_blank" rel="noopener"><span class="p-t">Instagram</span></a>
+      <a href="https://wa.me/918013753152" target="_blank" rel="noopener"><span class="p-t">Whatsapp</span></a>
+    </div>
+  </div>
+</section>
+
+<div class="footer-bar"><div class="footer-bar-inner"><span>&copy; 2026 Indrajit Sasmal</span><span>Designed with love <span class="fstar">&#10022;</span> Developed with passion</span></div></div>
+</div><!-- /footer-reveal -->
+<script>
+/* footer - click email / phone to copy (cursor bubble: click to copy -> copied!) */
+(function(){
+  function init(){
+    var els=document.querySelectorAll('.s-footer .foot-copyable');
+    if(!els.length){ return setTimeout(init,400); }
+    Array.prototype.forEach.call(els, function(el){
+      var t;
+      el.addEventListener('click', function(){
+        var val=(el.textContent||'').trim();
+        function done(){
+          clearTimeout(t);
+          el.setAttribute('data-cursor','copied!');
+          var b=document.querySelector('.cursor-bubble'); if(b) b.textContent='copied!';
+          t=setTimeout(function(){ el.setAttribute('data-cursor','click to copy'); var b2=document.querySelector('.cursor-bubble'); if(b2) b2.textContent='click to copy'; }, 1500);
+        }
+        if(navigator.clipboard && navigator.clipboard.writeText){ navigator.clipboard.writeText(val).then(done).catch(fb); }
+        else fb();
+        function fb(){ try{ var ta=document.createElement('textarea'); ta.value=val; ta.style.position='fixed'; ta.style.opacity='0'; document.body.appendChild(ta); ta.select(); document.execCommand('copy'); document.body.removeChild(ta); done(); }catch(_){} }
+      });
+    });
+  }
+  if(document.readyState==='complete') init(); else window.addEventListener('load', init);
+})();
+</script>
+<script>
+/* nav "Contact" scrolls to the sticky footer reveal at the page bottom */
+(function(){
+  document.addEventListener('click', function(e){
+    var a=e.target.closest?e.target.closest('a[href="#contact"]'):null; if(!a) return;
+    e.preventDefault(); e.stopPropagation();
+    window.scrollTo({ top: document.documentElement.scrollHeight, behavior:'smooth' });
+  }, true);
+})();
+</script>
+<script>
+/* Collapsed pill on touch devices.
+   The pill collapses to just the avatar once scrolled and reopens on :hover -
+   which never fires on a phone, so the first tap simply followed the avatar's
+   link and reloaded the page. On coarse pointers the first tap now opens the
+   menu; the next tap on Work/About/Contact behaves normally. */
+(function(){
+  if(!window.matchMedia) return;
+  var coarse = window.matchMedia('(hover: none), (pointer: coarse)');
+  function pill(){ return document.querySelector('.pillnav .pill:not(.pill-back)'); }
+  document.addEventListener('click', function(e){
+    var p = pill(); if(!p) return;
+    var t = e.target;
+    if(!t || !t.closest) return;
+    if(coarse.matches && t.closest('.pill-id')
+       && document.body.classList.contains('nav-scrolled')
+       && !p.classList.contains('is-open')){
+      e.preventDefault(); e.stopPropagation();   // capture phase: beat the page's own link handlers
+      p.classList.add('is-open');
+      return;
+    }
+    if(!t.closest('.pillnav')) p.classList.remove('is-open');
+  }, true);
+  window.addEventListener('scroll', function(){
+    var p = pill(); if(p) p.classList.remove('is-open');
+  }, {passive:true});
+})();
+</script>
+</body>
+</html>
