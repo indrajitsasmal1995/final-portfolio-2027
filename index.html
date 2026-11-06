@@ -99,11 +99,12 @@
       --ink-3: #413d36;
       --muted: #6b675f;            /* 4.9:1 on the page */
       --faint: #918c83;
-      --accent: #06603d;           /* the darkest step: a filled button under the pointer */
-      --accent-2: #0b7a4f;         /* at rest: 4.9:1 as text on the page, 5.4:1 under white */
-      --accent-3: #119a66;         /* the lightest step: the flanks of a lit fill */
-      --accent-ink: #fff;
-      --accent-soft: rgba(11, 122, 79, .09);
+      /* one green for both themes: the same mint steps as dark, with the same dark ink on them */
+      --accent: #86f8c6;
+      --accent-2: #4fe6a3;
+      --accent-3: #33c98a;
+      --accent-ink: #06231a;
+      --accent-soft: rgba(79, 230, 163, .14);
       --tint: #eceae4;
       --tint-2: #e2dfd8;
       --glow-1: #ded7ca;
@@ -114,8 +115,8 @@
       --cursor-ink: #f7f5f2;
       --card-hover: #fff;
       --card-lift: 0 18px 40px -22px rgba(16, 20, 14, .22);
-      --accent-glow: rgba(11, 122, 79, .26);
-      --accent-halo: rgba(11, 122, 79, .08);
+      --accent-glow: rgba(79, 230, 163, .38);
+      --accent-halo: rgba(134, 248, 198, .16);
       --drop: rgba(16, 20, 14, .18);
       --shot-edge: inset 0 0 0 1px rgba(21, 20, 15, .13);   /* a grey rule, over the picture */
       --shot-shadow: 0 10px 24px -14px rgba(16, 20, 14, .17);
@@ -126,7 +127,14 @@
        over; they are flat monochrome marks, and inverting one gives the same mark in black */
     :root[data-theme="light"] .team-logos img { filter: invert(1); opacity: .62; }
     /* the tag sits on its own tinted chip rather than the page, so it takes the darkest step */
-    :root[data-theme="light"] .side-tags li { color: var(--accent); }
+    /* mint is a fill colour: as text on the light page it is about 1.5:1. Where dark mode writes
+       in the accent, light mode writes in the mint's own ink, the colour that sits on a mint button */
+    :root[data-theme="light"] .side-tags li,
+    :root[data-theme="light"] .proc-copy .num,
+    :root[data-theme="light"] .side-go b,
+    :root[data-theme="light"] .facts h3,
+    :root[data-theme="light"] .foot-links a:hover,
+    :root[data-theme="light"] .foot-links a:focus-visible { color: var(--accent-ink); }
     :root[data-theme="light"] .flow { mix-blend-mode: multiply; }
     :root[data-theme="light"] .flow.is-on { opacity: .72; }
     * { box-sizing: border-box; margin: 0; padding: 0; }
