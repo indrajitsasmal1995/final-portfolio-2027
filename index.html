@@ -417,6 +417,10 @@
       .work-head > p { justify-self: end; margin-bottom: .18em; }
     }
     .stack { margin-top: clamp(60px, 8vw, 110px); }
+    /* a card leaning in flares wider at its foot than the screen on narrow viewports; clip that
+       sideways here, where it happens, so the page never scrolls left and right. clip, not hidden:
+       it makes no scroll box, so the cards stay sticky */
+    #work { overflow-x: clip; }
     /* Coming back from a project lands on the card it was opened from rather than at the top
        of the section, and the header sits over the page, so the landing has to clear it. */
     .card-mark { display: block; height: 0; scroll-margin-top: 104px; }
@@ -438,27 +442,38 @@
        the way the single-image banners always did, rather than screens sliding over a still ground. */
     .work-visual { position: absolute; inset: 0; overflow: hidden; isolation: isolate;
       transform: scale(calc(var(--zoom, 1) + var(--settle, 0) * .05)); transform-origin: center 30%; }
+    /* The pictures are one fixed composition, drawn to the desktop card's proportions, that only
+       ever scales: as wide as the card, its height following from that, sitting at the top. A
+       narrower card shows the same composition smaller, with its ground carrying on below it,
+       never a re-cropped or re-arranged one. Sizes inside are in cqw (hundredths of its width),
+       so the browser frame, its dots and the shadows shrink with the screenshots rather than
+       holding their pixel size. Each .work-visual's own background is the colour along the
+       composition's bottom edge, so where the card runs on past it there is no seam. */
+    .work-art { position: absolute; left: 0; top: 0; width: 100%; aspect-ratio: 1153 / 740; container-type: inline-size; }
     /* full-bleed banner card: the same image as the case study hero, zooming out as the card settles */
-    .work-visual--banner { background: #d9e2fb; }
-    .work-visual--ds { background: #F2F2FA; }
-    /* DHS Tutor is white UI, so it goes in the browser mock on a lavender wash rather than as a flat banner */
-    .work-visual--dhs { background: radial-gradient(60% 70% at 18% 18%, #e4efd0 0%, transparent 70%), radial-gradient(55% 65% at 88% 28%, #e7f1df 0%, transparent 70%), #eef2e5; }
+    .work-visual--banner { background: linear-gradient(90deg, #eae3f4, #dfe1f3 50%, #ccdafa); }
+    .work-visual--ds { background: linear-gradient(90deg, #f2f5fd, #f6f7f9 50%, #fafafd); }
+    .work-banner { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 50% 32%;
+      -webkit-mask-image: linear-gradient(180deg, #000 88%, transparent); mask-image: linear-gradient(180deg, #000 88%, transparent); }
+    /* DHS Tutor is white UI, so it goes in the browser mock on a soft green wash rather than as a flat banner */
+    .work-visual--dhs { background: #eef2e5; }
+    .work-visual--dhs .work-art { background: radial-gradient(60% 70% at 18% 18%, #e4efd0 0%, transparent 70%), radial-gradient(55% 65% at 88% 28%, #e7f1df 0%, transparent 70%); }
     .work-visual--dhs .mock-browser { width: 84%; aspect-ratio: 1.6; left: 8%; top: 11%; }
-    .work-banner { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 50% 32%; }
-    /* light pastel mesh, after the Finora hero, tinted per product: aqua for CE CoPilot, lavender for the design system */
-    .work-visual--copilot { background: #d3e8ef url("assets/mesh/mesh-copilot.webp?v=2") center / cover no-repeat; }
-    .mock-browser { position: absolute; overflow: hidden; border-radius: 14px; border: 1px solid rgba(255,255,255,.85); background: #fff; box-shadow: 0 25px 65px rgba(27,45,84,.25), 0 3px 12px rgba(27,45,84,.12); }
-    .mock-browser__chrome { height: 32px; padding: 0 12px; display: flex; align-items: center; gap: 12px; background: #f6f7f9; border-bottom: 1px solid #e5e7ec; }
-    .mock-browser__dots { display: flex; gap: 5px; }
-    .mock-browser__dots i { width: 7px; height: 7px; border-radius: 50%; background: #ffbeaf; }
+    /* light pastel mesh, after the Finora hero, tinted per product: aqua for CE CoPilot */
+    .work-visual--copilot { background: linear-gradient(90deg, #dee3f3, #c4e0e8 50%, #cae4eb); }
+    .work-visual--copilot .work-art { background: #d3e8ef url("assets/mesh/mesh-copilot.webp?v=2") center / cover no-repeat; }
+    .mock-browser { position: absolute; overflow: hidden; border-radius: 1.21cqw; border: 1px solid rgba(255,255,255,.85); background: #fff; box-shadow: 0 2.17cqw 5.64cqw rgba(27,45,84,.25), 0 .26cqw 1.04cqw rgba(27,45,84,.12); }
+    .mock-browser__chrome { height: 2.78cqw; padding: 0 1.04cqw; display: flex; align-items: center; gap: 1.04cqw; background: #f6f7f9; border-bottom: 1px solid #e5e7ec; }
+    .mock-browser__dots { display: flex; gap: .43cqw; }
+    .mock-browser__dots i { width: .61cqw; height: .61cqw; border-radius: 50%; background: #ffbeaf; }
     .mock-browser__dots i:nth-child(2) { background: #f4d891; }
     .mock-browser__dots i:nth-child(3) { background: #a6d9ae; }
-    .mock-browser__address { height: 17px; width: 43%; max-width: 260px; margin: auto; border-radius: 4px; background: #e9ebef; }
-    .mock-browser__viewport { height: calc(100% - 32px); overflow: hidden; }
+    .mock-browser__address { height: 1.47cqw; width: 43%; max-width: 22.55cqw; margin: auto; border-radius: .35cqw; background: #e9ebef; }
+    .mock-browser__viewport { height: calc(100% - 2.78cqw); overflow: hidden; }
     .mock-browser__viewport img { width: 100%; height: 100%; object-fit: cover; object-position: left top; }
     .work-visual--copilot .mock-browser { width: 82%; aspect-ratio: 1.78; left: 4%; top: 9%; }
     /* the phones stand in front of the browser, on the same layer as it and the wash behind */
-    .mock-mobile { position: absolute; width: 19%; aspect-ratio: 393 / 852; overflow: hidden; border-radius: 16px; background: #fff; box-shadow: 0 20px 48px rgba(25,60,77,.25), 0 2px 8px rgba(25,60,77,.14); }
+    .mock-mobile { position: absolute; width: 19%; aspect-ratio: 393 / 852; overflow: hidden; border-radius: 1.39cqw; background: #fff; box-shadow: 0 1.73cqw 4.16cqw rgba(25,60,77,.25), 0 .17cqw .69cqw rgba(25,60,77,.14); }
     .mock-mobile img { width: 100%; height: 100%; object-fit: cover; object-position: top; }
     .mock-mobile--first { right: 17%; top: 20%; }
     .mock-mobile--second { right: 3%; top: 25%; }
@@ -929,16 +944,6 @@
       .stack-item { top: 90px; border-radius: 16px; }
       .stack-cap small { font-size: 12px; margin-bottom: 10px; }
       .stack-cap p { margin-top: 12px; font-size: 14px; line-height: 1.4; }
-      .mock-browser__chrome { height: 23px; padding: 0 8px; }
-      .mock-browser__viewport { height: calc(100% - 23px); }
-      .mock-browser__dots i { width: 5px; height: 5px; }
-      .mock-browser__address { height: 12px; }
-      .work-banner { object-position: 9% 50%; }   /* portrait card: keep the monitor's left edge and sidebar in frame */
-      .work-visual--copilot .mock-browser { width: 155%; left: -40%; top: 13%; }
-      .work-visual--dhs .mock-browser { width: 150%; left: -32%; top: 14%; }
-      .mock-mobile { width: 32%; border-radius: 10px; }
-      .mock-mobile--first { right: 15%; top: 28%; }
-      .mock-mobile--second { right: -7%; top: 34%; }
       .qcard { padding: 22px 22px 20px; min-height: 0; }
       .qcard blockquote { font-size: 17px; }
       .badge { width: 120px; height: 120px; }
@@ -1034,7 +1039,9 @@
           <span class="card-mark" id="work-zbrain" aria-hidden="true"></span>
           <a class="stack-item" href="/zbrain" data-cursor="View<br>project">
             <div class="work-visual work-visual--banner">
-              <img class="work-banner" src="assets/admin/monitor-observatory.webp?v=2" width="2400" height="1570" decoding="async" alt="ZBrain Admin Console on a desktop monitor, open on the Observatory with cost, runs, agents at risk, governance events and agent health">
+              <div class="work-art">
+                <img class="work-banner" src="assets/admin/monitor-observatory.webp?v=2" width="2400" height="1570" decoding="async" alt="ZBrain Admin Console on a desktop monitor, open on the Observatory with cost, runs, agents at risk, governance events and agent health">
+              </div>
             </div>
             <div class="stack-cap">
               <div><small>ZBrain · Enterprise AI · 2026</small><h3 class="display">ZBrain Admin Console</h3><p>Where an organisation runs the platform: spaces, users, models, connectors, API keys, deployments and spend. Governance is its key feature.</p></div>
@@ -1044,12 +1051,14 @@
           <span class="card-mark" id="work-ce-copilot" aria-hidden="true"></span>
           <a class="stack-item" href="/ce-copilot" data-cursor="View<br>project">
             <div class="work-visual work-visual--copilot">
-              <div class="mock-browser">
-                <div class="mock-browser__chrome" aria-hidden="true"><span class="mock-browser__dots"><i></i><i></i><i></i></span><span class="mock-browser__address"></span></div>
-                <div class="mock-browser__viewport"><img src="assets/cecopilot/admin-overview.jpg?v=9" alt="CE CoPilot admin analytics dashboard" loading="lazy"></div>
+              <div class="work-art">
+                <div class="mock-browser">
+                  <div class="mock-browser__chrome" aria-hidden="true"><span class="mock-browser__dots"><i></i><i></i><i></i></span><span class="mock-browser__address"></span></div>
+                  <div class="mock-browser__viewport"><img src="assets/cecopilot/admin-overview.jpg?v=9" alt="CE CoPilot admin analytics dashboard" loading="lazy"></div>
+                </div>
+                <div class="mock-mobile mock-mobile--first"><img src="assets/cecopilot/m/mob-chat-initial-response.png?v=9" alt="CE CoPilot mobile troubleshooting response" loading="lazy"></div>
+                <div class="mock-mobile mock-mobile--second"><img src="assets/cecopilot/m/mob-chat-reading-documents.png?v=9" alt="CE CoPilot mobile document search" loading="lazy"></div>
               </div>
-              <div class="mock-mobile mock-mobile--first"><img src="assets/cecopilot/m/mob-chat-initial-response.png?v=9" alt="CE CoPilot mobile troubleshooting response" loading="lazy"></div>
-              <div class="mock-mobile mock-mobile--second"><img src="assets/cecopilot/m/mob-chat-reading-documents.png?v=9" alt="CE CoPilot mobile document search" loading="lazy"></div>
             </div>
             <div class="stack-cap">
               <div><small>Semiconductor equipment · AI assistant · 2026</small><h3 class="display">CE CoPilot</h3><p>An AI troubleshooting assistant for customer engineers at a global semiconductor equipment maker, across a mobile app, a web app and an admin console.</p></div>
@@ -1059,7 +1068,9 @@
           <span class="card-mark" id="work-design-system" aria-hidden="true"></span>
           <a class="stack-item" href="/design-system" data-cursor="View<br>project">
             <div class="work-visual work-visual--banner work-visual--ds">
-              <img class="work-banner" src="assets/ds/card-specimens.webp?v=3" width="2400" height="1539" decoding="async" loading="lazy" alt="ZBrain design system specimens: type scale, data table, charts, spacing, status, forms and feedback">
+              <div class="work-art">
+                <img class="work-banner" src="assets/ds/card-specimens.webp?v=3" width="2400" height="1539" decoding="async" loading="lazy" alt="ZBrain design system specimens: type scale, data table, charts, spacing, status, forms and feedback">
+              </div>
             </div>
             <div class="stack-cap">
               <div><small>ZBrain · Design systems · 120 variables</small><h3 class="display">ZBrain design system</h3><p>The Figma design system turned into an AI-ready Markdown guide, so visual exploration and prototyping come out consistent across prompts.</p></div>
@@ -1069,9 +1080,11 @@
           <span class="card-mark" id="work-dhs-tutor" aria-hidden="true"></span>
           <a class="stack-item" href="/dhs-tutor" data-cursor="View<br>project">
             <div class="work-visual work-visual--dhs">
-              <div class="mock-browser">
-                <div class="mock-browser__chrome" aria-hidden="true"><span class="mock-browser__dots"><i></i><i></i><i></i></span><span class="mock-browser__address"></span></div>
-                <div class="mock-browser__viewport"><img src="assets/dhs/dashboard-hero.jpg" alt="The DHS Tutor dashboard: an exam countdown, four study metrics, and a focus-areas table listing the weakest chapters" loading="lazy"></div>
+              <div class="work-art">
+                <div class="mock-browser">
+                  <div class="mock-browser__chrome" aria-hidden="true"><span class="mock-browser__dots"><i></i><i></i><i></i></span><span class="mock-browser__address"></span></div>
+                  <div class="mock-browser__viewport"><img src="assets/dhs/dashboard-hero.jpg" alt="The DHS Tutor dashboard: an exam countdown, four study metrics, and a focus-areas table listing the weakest chapters" loading="lazy"></div>
+                </div>
               </div>
             </div>
             <div class="stack-cap">
