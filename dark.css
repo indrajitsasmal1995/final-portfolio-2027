@@ -49,6 +49,71 @@ body::after{
 [data-theme="light"] .theme-switch .t-moon{display:block;}
 @media (max-width:760px){.theme-switch{top:14px;right:14px;width:34px;height:34px;}.theme-switch svg{width:17px;height:17px;}}
 
+/* ---------- the sections menu (smaller screens) ----------
+   Below 1240px the rail down the left is hidden, so the corner the theme switch held gets a
+   menu button instead, and the rail itself opens as a panel from the top: Go back, then the
+   sections with the current one marked, then the theme switch (built into it by theme.js). */
+.case-menu-btn,.toc__theme{display:none;}
+@media (max-width:1239px){
+  .theme-switch{display:none;}
+  .case-menu-btn{
+    position:fixed;top:22px;right:22px;z-index:96;
+    width:38px;height:38px;display:grid;place-items:center;padding:0;
+    border:1px solid var(--rule);border-radius:50%;
+    background:color-mix(in srgb, var(--bg) 72%, transparent);
+    -webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);
+    color:var(--ink);cursor:pointer;transition:border-color .35s ease;
+  }
+  .case-menu-btn:hover{border-color:var(--line);}
+  .case-menu-btn span{grid-area:1/1;width:16px;height:1.6px;border-radius:2px;background:currentColor;transition:transform .4s cubic-bezier(.2,.7,.1,1);}
+  .case-menu-btn span:first-child{transform:translateY(-3.5px);}
+  .case-menu-btn span:last-child{transform:translateY(3.5px);}
+  .case-menu-open .case-menu-btn span:first-child{transform:rotate(45deg);}
+  .case-menu-open .case-menu-btn span:last-child{transform:rotate(-45deg);}
+
+  .toc{
+    display:flex;flex-direction:column;gap:0;
+    position:fixed;top:0;left:0;right:0;z-index:95;max-height:100dvh;overflow-y:auto;overscroll-behavior:contain;
+    padding:84px var(--page-pad) 22px;
+    background:color-mix(in srgb, var(--bg) 95%, transparent);
+    -webkit-backdrop-filter:blur(16px);backdrop-filter:blur(16px);
+    border-bottom:1px solid var(--rule);
+    opacity:0;visibility:hidden;pointer-events:none;transform:translateY(-10px);
+    transition:opacity .3s ease,transform .45s cubic-bezier(.2,.7,.1,1),visibility 0s .45s;
+  }
+  .case-menu-open .toc,.case-menu-open .toc.is-covered{
+    opacity:1;visibility:visible;pointer-events:auto;transform:none;
+    transition:opacity .3s ease,transform .45s cubic-bezier(.2,.7,.1,1),visibility 0s;
+  }
+  .toc .toc__back{font-size:15px;line-height:24px;padding-bottom:14px;color:var(--rail-ink-rest);}
+  .toc .toc__back svg{width:16px;height:16px;}
+  /* nothing in the panel shrinks to fit: a long rail scrolls the panel instead of squeezing the list */
+  .toc > *{flex-shrink:0;}
+  .toc__list{overflow:visible;max-height:none;}
+  .toc .toc__list a{max-width:none;min-height:0;padding:12px 0;border-top:1px solid var(--rule);
+    font-size:19px;line-height:26px;font-weight:500;letter-spacing:-.01em;color:var(--rail-ink-rest);}
+  .toc .toc__list a[aria-current]{color:var(--rail-ink);font-weight:600;}
+  /* grouped rails (Finora): the group row carries the divider and runs the full width, its toggle a fair tap target */
+  .toc .toc__group{display:flex;align-items:center;border-top:1px solid var(--rule);}
+  .toc .toc__group a{flex:1;border-top:0;}
+  .toc .toc__toggle{width:40px;height:40px;display:grid;place-items:center;}
+  .toc .toc__toggle svg{width:14px;height:14px;}
+  .toc .toc__sub a{padding-left:16px;font-size:17px;}
+  .toc__theme{display:flex;align-items:center;gap:10px;margin-top:6px;padding:16px 0 2px;
+    border:0;border-top:1px solid var(--rule);background:none;color:var(--ink);
+    font:inherit;font-size:15px;line-height:24px;cursor:pointer;text-align:left;}
+  .toc__theme svg{width:18px;height:18px;flex:none;fill:none;stroke:currentColor;stroke-width:1.7;}
+  .toc__theme .t-moon{display:none;}
+  [data-theme="light"] .toc__theme .t-sun,[data-theme="light"] .toc__theme .t-rays{display:none;}
+  [data-theme="light"] .toc__theme .t-moon{display:block;}
+}
+@media (max-width:760px){
+  .case-menu-btn{top:14px;right:14px;width:34px;height:34px;}
+  .toc{padding-top:66px;}
+  /* the title starts well clear of the menu button rather than tucked beside it */
+  .page{padding-block-start:104px;}
+}
+
 /* headings: weight and tracking, the way the homepage sets them */
 h1.t-display,.t-display{
   font-family:var(--display);font-weight:700;
