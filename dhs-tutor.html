@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<script>try{var tm=localStorage.getItem('theme');if(!tm)tm=matchMedia('(prefers-color-scheme: light)').matches?'light':'dark';var dr=document.documentElement;dr.setAttribute('data-theme',tm);dr.style.colorScheme=tm}catch(e){}</script>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- page transitions: a page that arrived under the wipe is covered before its first paint -->
+<link rel="stylesheet" href="assets/page-transition.css?v=8">
+<script>try{if(!matchMedia('(prefers-reduced-motion:reduce)').matches){var h=sessionStorage.getItem('ptHop');sessionStorage.removeItem('ptHop');var p=h?h.split('|'):0;if(p&&p.length==2&&Date.now()-(+p[1])<3000){var r=document.documentElement;r.setAttribute('data-pt',p[0]);r.classList.add('pt-held');setTimeout(function(){if(r.classList.contains('pt-held')){r.classList.remove('pt-held');r.removeAttribute('data-pt')}},6000)}}}catch(e){}</script>
+<script src="assets/page-transition.js?v=7" defer></script>
+<link rel="icon" href="favicon.svg?v=3" type="image/svg+xml">
+<title>DHS Tutor | NBDHE study app case study</title>
+<meta name="description" content="Case study: DHS Tutor, an NBDHE study app whose tutor answers only from the DHS Review Book, and the flat design system built to replace a vendor restyle.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Mona+Sans:wght@200..900&family=Plus+Jakarta+Sans:wght@300..800&display=swap" rel="stylesheet">
+<style>
+/* tokens: spacing is a multiple of 8 and comes from `gap`; dark.css swaps the colours */
+:root{
+  --s-1:8px;--s-2:16px;--s-3:24px;--s-4:32px;--s-5:40px;--s-6:48px;--s-7:56px;--s-8:64px;--s-10:80px;--s-14:112px;--s-16:128px;
+  --bg:#fdfdfc;--ink:#101114;--ink-2:#474d58;--ink-3:#565d69;--ink-4:#6b7280;
+  --surface:#f4f4f4;--card:#ffffff;--rule:#d7d9dd;--line:#8a8f99;--accent:#305cff;--watermark:#f6f6f6;
+  --ico:#a4cd31;   /* icon stroke: DHS Tutor's own lime, flat */
+  --mono:"Plus Jakarta Sans",system-ui,sans-serif;--code:ui-monospace,"SF Mono",Menlo,monospace;
+  --sans:"Plus Jakarta Sans",system-ui,sans-serif;
+  --col:663px;--col-wide:1153px;--page-pad:var(--s-4);--radius-panel:12px;
+  --rail-sans:"Plus Jakarta Sans",system-ui,sans-serif;--rail-ink:#101114;--rail-ink-rest:#6b7280;
+  --fpx:clamp(20px,3.4vw,48px);   /* a frame's side padding; captions under a frame use it too, so they line up */
+  --lime:#a4cd31;                 /* the app's own dark-theme accent (--accent in styles.css) */
+}
+
+/* the app's lime was chosen against the dark page; on the light one it comes down to 4.9:1 */
+:root[data-theme="light"]{
+  --lime:#5a7a14;
+  --ico:#5a7a14;
+}
+
+/* reset */
+*,*::before,*::after{box-sizing:border-box;}
+html{-webkit-text-size-adjust:100%;}
+body,h1,h2,h3,h4,p,ul,ol,li,dl,dt,dd,figure,figcaption,hr{margin:0;padding:0;}
+ul,ol{list-style:none;}
+img{display:block;max-width:100%;height:auto;}
+button{font:inherit;color:inherit;}
+body{background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:15px;line-height:24px;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;}
+.vh{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap;}
+
+/* layout */
+.stack{display:flex;flex-direction:column;}
+.gap-8{gap:var(--s-1);} .gap-16{gap:var(--s-2);} .gap-24{gap:var(--s-3);} .gap-40{gap:var(--s-5);} .gap-80{gap:var(--s-10);} .gap-112{gap:var(--s-14);}
+.page{max-width:1440px;margin-inline:auto;overflow-x:clip;padding-inline:var(--page-pad);padding-block-start:var(--s-16);}
+.col{width:100%;max-width:var(--col);margin-inline:auto;}
+.col-wide{width:100%;max-width:var(--col-wide);margin-inline:auto;}
+
+/* type */
+.eyebrow{font-family:var(--mono);font-size:12px;line-height:24px;letter-spacing:1.2px;text-transform:uppercase;color:var(--ink-3);}
+.t-display{font-size:30px;line-height:40px;font-weight:600;letter-spacing:-0.6px;}
+.t-title{font-size:24px;line-height:32px;font-weight:600;letter-spacing:-0.48px;}
+.t-body{font-size:15px;line-height:24px;}
+.t-lead{font-size:17px;line-height:24px;}
+strong,b{font-weight:600;}
+#top .intro{font-size:18px;line-height:28px;}
+.lead-in{font-weight:600;color:var(--ink);}
+a{color:inherit;text-decoration:none;}
+a:hover{text-decoration:underline;text-underline-offset:3px;}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:2px;}
+.skip{position:absolute;left:-9999px;top:var(--s-1);padding:var(--s-1) var(--s-2);background:var(--ink);color:#fff;z-index:10;}
+.skip:focus{left:var(--s-2);}
+.meta{display:grid;grid-template-columns:152px 1fr;gap:var(--s-2) 0;padding-top:var(--s-4);}
+.meta dt{font-family:var(--mono);font-size:12px;line-height:24px;letter-spacing:1.8px;text-transform:uppercase;color:var(--ink-3);}
+.claim{display:flex;flex-direction:column;gap:var(--s-1);border-left:2px solid var(--lime);padding-left:var(--s-2);}
+
+/* hero */
+.case-hero{margin-block:0;}
+.case-hero__visual{overflow:hidden;border-radius:16px;}
+.case-hero__visual img{display:block;width:100%;height:auto;}
+
+/* ==========================================================================
+   FRAMES: every picture sits on the page's soft artboard, the way ZBrain's
+   sit on its mesh. The app is white UI and needs a ground that is not the page.
+   ========================================================================== */
+.frame{
+  background:
+    radial-gradient(60% 70% at 15% 20%, #e2eecd 0%, transparent 70%),
+    radial-gradient(55% 65% at 90% 30%, #e8f1dd 0%, transparent 70%),
+    radial-gradient(70% 70% at 50% 100%, #dcedea 0%, transparent 70%),
+    #eef2e5;
+  border-radius:16px;padding:clamp(22px,2.8vw,40px) clamp(20px,3.4vw,48px);
+}
+@media (max-width:700px){.frame{padding:16px;}}
+
+/* screens: inset at the top and sides, running off the frame's bottom edge */
+.shot{margin-block:0;display:grid;gap:12px;}
+.step{display:grid;gap:22px;margin-block:0;padding-bottom:0;overflow:hidden;}
+.screens{display:grid;gap:16px;align-items:end;}
+.screens--2{grid-template-columns:repeat(2,minmax(0,1fr));}
+.screen{display:block;width:100%;margin:0;padding:0;border:0;background:#fff;border-radius:12px 12px 0 0;overflow:hidden;
+  box-shadow:0 -2px 24px rgba(27,45,84,.14);}
+.screen img{display:block;width:100%;height:auto;}
+.screen--crop{aspect-ratio:var(--ar);}
+.screen--crop img{height:100%;object-fit:cover;object-position:left var(--py,top);}
+/* the grid captures are 900 tall but the app shell ends at 813: crop the empty strip beneath it */
+.screens--2 .screen{aspect-ratio:1440/813;}
+.screens--2 .screen img{height:100%;object-fit:cover;object-position:top;}
+/* a frame whose pictures sit fully inside it, every corner rounded */
+.step--inset{padding-bottom:clamp(22px,2.8vw,40px);}
+.step--inset .screens{align-items:start;}
+.step--inset .screen{border-radius:12px;box-shadow:0 18px 44px -12px rgba(27,45,84,.28),0 3px 10px rgba(27,45,84,.10);}
+.cap{padding-inline:var(--fpx);max-width:calc(560px + 2 * var(--fpx));margin-inline:auto;text-align:center;font-size:14px;line-height:21px;color:var(--ink-3);}   /* a readable measure, centred under the frame */
+
+/* steps: the number, title and line in the reading column, then the picture */
+.steps{display:grid;gap:96px;}
+.stepb{display:grid;gap:28px;}
+.stepb--sub{margin-top:-40px;}
+.stepb__head{display:grid;gap:12px;padding-top:24px;}
+.stepb__lead{display:grid;gap:10px;}
+.stepb__n{font-size:12px;line-height:18px;font-weight:600;letter-spacing:.14em;color:var(--ink-3);font-variant-numeric:tabular-nums;}
+.stepb__title{font-size:26px;line-height:32px;font-weight:600;letter-spacing:-.02em;color:var(--ink);font-optical-sizing:auto;}
+.stepb__head--sub{border-top:0;padding-top:0;gap:8px;}
+.stepb__head--sub .stepb__title{font-family:var(--sans);font-size:18px;line-height:26px;letter-spacing:0;}
+
+/* the answer's parts */
+.parts{display:flex;flex-wrap:wrap;gap:8px;}
+.parts li{display:inline-flex;align-items:center;gap:8px;padding:6px 12px;border:1px solid var(--rule);border-radius:99px;font-size:14px;line-height:20px;color:var(--ink-2);}
+.parts i{font-style:normal;font-size:12px;color:var(--ink-3);}
+
+/* the brief's three rules, and the design decisions: separate dark cards */
+.rules{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;}
+.rules li{display:grid;align-content:start;gap:10px;padding:26px 24px 28px;background:var(--surface);border:1px solid var(--rule);border-radius:16px;}
+.rules .n{font-size:12px;line-height:18px;font-weight:600;letter-spacing:.14em;color:var(--ink-3);}
+.rules b{font-size:24px;line-height:28px;font-weight:600;letter-spacing:-.02em;color:var(--ink);font-optical-sizing:auto;}
+.rules span{font-size:15px;line-height:23px;color:var(--ink-3);}
+.ic{width:24px;height:24px;flex:none;fill:none;stroke:var(--ico);stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round;}
+.ic--tile{width:38px;height:38px;stroke-width:1.2;}
+.dcards{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px;}
+.dcard{display:grid;align-content:start;gap:10px;padding:24px 22px 26px;background:var(--surface);border:1px solid var(--rule);border-radius:16px;}
+.dcard .ic--tile{margin-bottom:8px;}
+.dcard b{font-size:15.5px;line-height:21px;font-weight:600;color:var(--ink);}
+.dcard span{font-size:14px;line-height:21px;color:var(--ink-3);}
+
+/* the twelve hard rules, as a plain two-column list */
+.hardrules{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px 32px;}
+.hardrules li{display:grid;grid-template-columns:34px 1fr;gap:12px;padding-bottom:12px;}
+.hardrules .n{font-size:12px;line-height:22px;font-weight:600;letter-spacing:.1em;color:var(--lime);font-variant-numeric:tabular-nums;}
+.hardrules span{font-size:15px;line-height:22px;color:var(--ink-3);}
+
+/* section rail */
+.toc{font-family:var(--rail-sans);position:fixed;top:var(--s-16);left:calc(var(--page-pad) + var(--s-7));max-height:calc(100vh - var(--s-16) - var(--s-6));z-index:5;display:none;transition:opacity .3s ease;}
+@media (min-width:1240px){.toc{display:flex;flex-direction:column;gap:var(--s-3);}}
+.toc.is-covered{opacity:0;pointer-events:none;}
+.toc__back{align-self:flex-start;display:inline-flex;align-items:center;gap:var(--s-1);min-height:var(--s-3);font-size:12px;line-height:24px;color:var(--rail-ink-rest);transition:color .15s ease;}
+.toc__back svg{width:14px;height:14px;flex:none;fill:none;stroke:currentColor;stroke-width:1.25;stroke-linecap:round;stroke-linejoin:round;}
+.toc__back:hover{color:var(--rail-ink);text-decoration:none;}
+.toc__list{display:flex;flex-direction:column;min-height:0;overflow-y:auto;scrollbar-width:none;}
+.toc__list::-webkit-scrollbar{width:0;display:none;}
+.toc__list a{display:block;min-height:var(--s-3);max-width:200px;font-size:12px;line-height:24px;color:var(--rail-ink-rest);transition:color .15s ease;}
+.toc__list a:hover{color:var(--rail-ink);text-decoration:none;}
+.toc__list a[aria-current]{color:var(--rail-ink);font-weight:600;}
+#top,main [id]{scroll-margin-top:var(--s-5);}
+
+/* responsive */
+@media (max-width:1100px){.dcards{grid-template-columns:repeat(2,minmax(0,1fr));}}
+@media (max-width:900px){.rules{grid-template-columns:1fr;}.hardrules{grid-template-columns:1fr;}}
+@media (max-width:760px){
+  .screens--2{grid-template-columns:1fr;}
+  .screen--crop{aspect-ratio:1.45;}
+  .screen--crop img{object-position:30% var(--py,top);}   /* phones: the page body, not the sidebar */
+}
+@media (max-width:760px){
+  :root{--page-pad:var(--s-3);--fpx:16px;}
+  .page{padding-block-start:var(--s-6);}
+  .t-display{font-size:26px;line-height:32px;}
+  .t-title{font-size:21px;line-height:28px;}
+  .gap-112{gap:var(--s-10);} .gap-80{gap:var(--s-6);}
+  .meta{grid-template-columns:1fr;gap:var(--s-1) 0;}
+  .meta dd{padding-bottom:var(--s-1);}
+  .stepb__title{font-size:22px;line-height:28px;}
+  .steps{gap:64px;}
+  .dcards{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;}
+}
+@media (max-width:480px){.dcards{grid-template-columns:1fr;}}
+@media (prefers-contrast:more){:root{--ink-2:#101114;--ink-3:#2c313a;--ink-4:#2c313a;--rule:#8a8f99;}}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important;}}
+@media (prefers-reduced-motion:no-preference){html{scroll-behavior:smooth;}}
+html.lenis,html.lenis body{height:auto;}
+.lenis.lenis-smooth{scroll-behavior:auto !important;}
+.lenis.lenis-stopped{overflow:hidden;}
+</style>
+<link rel="stylesheet" href="dark.css?v=41">
+</head>
+<body>
+<svg class="ico-defs" width="0" height="0" aria-hidden="true" focusable="false" style="position:absolute;width:0;height:0;overflow:hidden"><defs>
+</defs></svg>
+<a class="skip" href="#main">Skip to main content</a>
+
+
+<button class="theme-switch" type="button" data-theme-toggle aria-pressed="false" aria-label="Switch to light mode">
+  <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+    <circle class="t-sun" cx="12" cy="12" r="4.6"/>
+    <g class="t-rays" stroke-linecap="round">
+      <path d="M12 2.4v2.4M12 19.2v2.4M2.4 12h2.4M19.2 12h2.4M5.2 5.2l1.7 1.7M17.1 17.1l1.7 1.7M18.8 5.2l-1.7 1.7M6.9 17.1l-1.7 1.7"/>
+    </g>
+    <path class="t-moon" d="M20.2 14.4A8.6 8.6 0 0 1 9.6 3.8a8.6 8.6 0 1 0 10.6 10.6Z"/>
+  </svg>
+</button>
+<nav class="toc" aria-label="Case study sections">
+  <a class="toc__back" href="/#work-dhs-tutor">
+    <svg viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M6 4.5 2.5 8 6 11.5"/><path d="M2.5 8h7A3.5 3.5 0 0 0 13 4.5v-1"/></svg>
+    Go back
+  </a>
+  <ul class="toc__list">
+    <li><a href="#top">Top</a></li>
+    <li><a href="#context">The context</a></li>
+    <li><a href="#brief">The brief</a></li>
+    <li><a href="#decisions">Design decisions</a></li>
+    <li><a href="#practice">In practice</a></li>
+    <li><a href="#build">The build</a></li>
+    <li><a href="#restyle">The restyle</a></li>
+    <li><a href="#system">The system</a></li>
+    <li><a href="#screens">The screens</a></li>
+    <li><a href="#dark">Dark mode</a></li>
+    <li><a href="#learned">What I learned</a></li>
+  </ul>
+</nav>
+
+<div class="page stack gap-112">
+
+  <div id="top" class="stack gap-80">
+    <div class="col stack gap-40">
+      <div class="stack gap-16">
+        <h1 class="t-display">DHS Tutor: an exam tutor that can only quote the book</h1>
+        <p class="t-body intro">The NBDHE is a licensure exam, and Dental Hygiene Seminars students prepare for it from one source: the DHS Review Book. A study tool built on that book inherits its authority whether or not it has earned it. DHS Tutor answers from the book and nothing else, shows the page every answer came from, and says plainly when the book doesn’t cover the question.</p>
+      </div>
+      <dl class="meta">
+        <dt>Product</dt>
+        <dd class="t-body">DHS Tutor, an NBDHE study app built around the DHS Review Book</dd>
+        <dt>Role</dt>
+        <dd class="t-body">Product definition, interaction design, the design system, the front-end build, and design QA against the incoming restyle</dd>
+        <dt>Status</dt>
+        <dd class="t-body">Built and running on sample content, pending the official Review Book</dd>
+      </dl>
+    </div>
+    <figure class="case-hero col-wide">
+      <div class="case-hero__visual step frame"><div class="screens"><div class="screen screen--crop" style="--ar:2240/1060"><img src="assets/dhs/dashboard-hero.jpg" width="2240" height="1400" fetchpriority="high" alt="The DHS Tutor dashboard: an exam countdown reading 51 days to your NBDHE, a continue-reading card for Ch 4, four metrics (exam readiness, quiz accuracy, flashcards mastered and tutor questions) and a focus-areas table listing the weakest chapters with score bars."></div></div></div>
+    </figure>
+  </div>
+
+  <main id="main" class="stack gap-112">
+
+    <section id="context" class="stack gap-40" aria-labelledby="s-context">
+      <div class="col stack gap-16">
+        <div class="stack gap-8">
+          <p class="eyebrow">The context</p>
+          <h2 class="t-title" id="s-context">A study tool cannot afford to be fluent and wrong</h2>
+        </div>
+        <p class="t-body">A general-purpose assistant will answer any dental hygiene question put to it, confidently, from training data the student cannot see and cannot check against the material they will actually be examined on.</p>
+      </div>
+
+      <div class="col stack gap-40">
+        <div class="stack gap-16">
+          <p class="t-body"><b class="lead-in">The reader:</b> the Review Book itself, with notes, highlights, bookmarks and in-book search.</p>
+          <p class="t-body"><b class="lead-in">The tutor:</b> the same book, answering questions, with the cited page beside the answer.</p>
+          <p class="t-body"><b class="lead-in">The practice:</b> quizzes, flashcards and questions, every card carrying the page it came from.</p>
+        </div>
+        <div class="claim"><p class="t-lead">A student revising at eleven at night cannot tell a sentence that came from the book from one that merely sounds like it did. They will not catch it. They will memorise it.</p></div>
+      </div>
+    </section>
+
+    <section id="brief" class="stack gap-40" aria-labelledby="s-brief">
+      <div class="col stack gap-16">
+        <div class="stack gap-8">
+          <p class="eyebrow">The brief</p>
+          <h2 class="t-title" id="s-brief">Three rules the product could not break</h2>
+        </div>
+        <p class="t-body">Everything in DHS Tutor follows from them.</p>
+      </div>
+
+      <ul class="col-wide rules">
+        <li><span class="n">01</span><b>Only the Review Book</b><span>Passages are ranked against the question first, and the model only ever sees those. No outside knowledge, however confident.</span></li>
+        <li><span class="n">02</span><b>Always show the page</b><span>Every answer, card and question carries its chapter and a page reference like P12, and the cited page opens beside the answer.</span></li>
+        <li><span class="n">03</span><b>Declining is an answer</b><span>When the book doesn’t cover a question, the tutor says so and points to the nearest topic it does cover.</span></li>
+      </ul>
+    </section>
+
+    <section id="decisions" class="stack gap-40" aria-labelledby="s-decisions">
+      <div class="col stack gap-16">
+        <div class="stack gap-8">
+          <p class="eyebrow">Design decisions</p>
+          <h2 class="t-title" id="s-decisions">Small calls that keep the book in charge</h2>
+        </div>
+        <p class="t-body">Each one protects the student’s ability to check an answer, or keeps the interface from competing with the page it is quoting.</p>
+      </div>
+
+      <div class="col-wide">
+        <ul class="dcards">
+          <li class="dcard"><svg class="ic ic--tile" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M4 5.5A1.5 1.5 0 0 1 5.5 4H12v16H5.5A1.5 1.5 0 0 1 4 18.5z"/><path d="M12 4h6.5A1.5 1.5 0 0 1 20 5.5v13a1.5 1.5 0 0 1-1.5 1.5H12"/><path class="a" d="M15 9h2.5"/></svg><b>Retrieval before the model</b><span>Ranking the passages first makes grounding structural, not a promise in a prompt.</span></li>
+          <li class="dcard"><svg class="ic ic--tile" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="11" cy="11" r="6.5"/><path d="M15.8 15.8 21 21"/><path class="a" d="M8.5 11h5"/></svg><b>The page, not a footnote</b><span>The cited page opens next to the answer, so checking it costs nothing.</span></li>
+          <li class="dcard"><svg class="ic ic--tile" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 3.5 20 7v5.5c0 4.2-3.2 7-8 8.5-4.8-1.5-8-4.3-8-8.5V7z"/><path class="a" d="M9.2 12.2 11 14l4-4.2"/></svg><b>A refusal is designed</b><span>“The book doesn’t cover this” is a state with a next step, not an error.</span></li>
+          <li class="dcard"><svg class="ic ic--tile" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="3.5" y="4.5" width="17" height="15" rx="2"/><path d="M3.5 9h17"/><path class="a" d="M7 13h6"/></svg><b>Nothing casts a shadow</b><span>One pixel of border instead, so the book page is the only thing with depth.</span></li>
+        </ul>
+      </div>
+    </section>
+
+    <section id="practice" class="stack gap-40" aria-labelledby="s-practice">
+      <div class="col stack gap-16">
+        <div class="stack gap-8">
+          <p class="eyebrow">In practice</p>
+          <h2 class="t-title" id="s-practice">A student, from a question to the page it came from</h2>
+        </div>
+        <p class="t-body">Three surfaces, one book underneath all of them.</p>
+      </div>
+
+      <div class="steps">
+        <div class="stepb">
+          <header class="col stepb__head">
+            <div class="stepb__lead"><p class="stepb__n">01</p><h3 class="stepb__title">Ask, and get the book back</h3></div>
+            <p class="t-body stepb__desc">The question goes to a ranked set of passages before it goes anywhere else. The answer carries numbered markers, each source names its chapter and page, and opening one puts the book page beside the answer with the cited sentences highlighted on it. The composer repeats the rule under every message: answers come only from the DHS Review Book.</p>
+            <ol class="parts" aria-label="What an answer carries"><li><i>1</i>The answer</li><li><i>2</i>Numbered markers</li><li><i>3</i>Chapter and page</li><li><i>4</i>The page itself</li></ol>
+          </header>
+          <figure class="col-wide shot">
+            <div class="step frame">
+              <div class="screens">
+                <div class="screen screen--crop" style="--ar:2240/1050"><img src="assets/dhs/tutor-answer.jpg" width="2240" height="1050" loading="lazy" alt="The tutor chat with a source open: an answer citing Ch 13 Ethics and Board Format P27 and Ch 7 Clinical Board Prep P15, and beside it the book page for P15 with the cited sentences highlighted in yellow under a note reading, highlighted: where the answer comes from on this page."></div>
+              </div>
+            </div>
+            <figcaption class="cap">Source 2 is open, so the sentence about screening patients sits beside the page it was taken from, highlighted on P15. Checking an answer costs one click, which is the whole argument for the panel.</figcaption>
+          </figure>
+        </div>
+
+        <div class="stepb">
+          <header class="col stepb__head">
+            <div class="stepb__lead"><p class="stepb__n">02</p><h3 class="stepb__title">Read the book, and mark it up</h3></div>
+            <p class="t-body stepb__desc">The reader opens where the student left off. Notes, highlights and bookmarks all live against a page, and the study panel sorts them by it. Tutor and Practice sit in the same panel, so a question never means leaving the page.</p>
+          </header>
+          <figure class="col-wide shot">
+            <div class="step frame">
+              <div class="screens">
+                <div class="screen screen--crop" style="--ar:2240/1060"><img src="assets/dhs/reader.jpg" width="2240" height="1400" loading="lazy" alt="The reader: a contents list with page numbers on the left, a book page with a highlighted sentence in the centre, and a study panel on the right listing notes and highlights, each led by its page."></div>
+              </div>
+            </div>
+            <figcaption class="cap">Every item in the right-hand panel leads with its page, P3, P9, P11, P12, P14, P25, before it shows the note. The page reference is the sort key, not a citation nicety.</figcaption>
+          </figure>
+        </div>
+
+        <div class="stepb">
+          <header class="col stepb__head">
+            <div class="stepb__lead"><p class="stepb__n">03</p><h3 class="stepb__title">See where the weak chapters are</h3></div>
+            <p class="t-body stepb__desc">The dashboard opens on the exam countdown, then readiness, accuracy and flashcard progress, then the chapters the student is weakest in, each with a way straight back into the book.</p>
+          </header>
+          <figure class="col-wide shot">
+            <div class="step frame">
+              <div class="screens">
+                <div class="screen screen--crop" style="--ar:2240/1060"><img src="assets/dhs/dashboard.jpg" width="2240" height="1400" loading="lazy" alt="The dashboard's focus areas: a table of the weakest chapters with a score bar, quiz answers and flashcard counts on each row, and Read, Flashcards and Quiz beside it."></div>
+              </div>
+            </div>
+            <figcaption class="cap">Score is the only coloured column on the table, because it is the only one that has to be scanned. Everything else is text on white, separated by single-pixel borders.</figcaption>
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <section id="build" class="stack gap-40" aria-labelledby="s-build">
+      <div class="col stack gap-16">
+        <div class="stack gap-8">
+          <p class="eyebrow">The build</p>
+          <h2 class="t-title" id="s-build">The specification was a picture and a paragraph</h2>
+        </div>
+        <p class="t-body">A developer handoff arrived for the student experience: 44 screens with a restyled counterpart, 15 that existed only as a new idea, and 56 admin screens that were never restyled at all. Each one was a flat image with a paragraph under it saying roughly what should go where.</p>
+      </div>
+
+      <figure class="col-wide shot">
+        <div class="step frame">
+          <div class="screens">
+            <div class="screen screen--crop" style="--ar:1440/700"><img src="assets/dhs/handoff-screen.jpg" width="1440" height="900" loading="lazy" alt="A screen as it was handed over: a timed quiz question with four lettered options, a green page banner, a running clock and Previous and Next buttons. A flat image with nothing behind it."></div>
+          </div>
+        </div>
+        <figcaption class="cap">One screen, as handed over. The note that came with it, in part: “REMOVED the 220-cell question grid and the case-study chips (approved). Now one question at a time on the standard question screen. No answers or rationales during the timed test. Flag question toggle under the stem. Back/Next arrows.”</figcaption>
+      </figure>
+
+      <div class="col stack gap-16">
+        <p class="t-body">That paragraph is the whole brief for the screen. It names the furniture: what to take out, what to put where, what to call it. It cannot say what the screen does before anything has been answered, when the clock runs out, when the question fails to load, at 375 pixels wide, or in the dark theme. Those are most of a screen, and none of them can be approved from a picture.</p>
+        <p class="t-body">So I built the rest of it. The high-fidelity screens first, then a working prototype, then the front end itself: thirteen pages covering the reader, the tutor, quizzes, flashcards, questions, case studies, lectures and the account, over seven shared components and one stylesheet, running against a real API rather than clicking between frames. It was written in Claude Code, and one stylesheet carries two brands, the original purple and the Dental Hygiene Seminars green, without a second design.</p>
+        <div class="claim"><p class="t-lead">A picture of a screen can be approved without anyone finding out what is missing from it. A built screen cannot.</p></div>
+      </div>
+    </section>
+
+    <section id="restyle" class="stack gap-40" aria-labelledby="s-restyle">
+      <div class="col stack gap-16">
+        <div class="stack gap-8">
+          <p class="eyebrow">The restyle</p>
+          <h2 class="t-title" id="s-restyle">103 screens, and twelve things wrong with them</h2>
+        </div>
+        <p class="t-body">The same handoff had a palette problem running through it: teal, purple, lime, indigo and red rotating across card bands, icon tiles, page heroes and even the A–D answer letters. It could not be argued with on taste, so I reviewed it screen by screen and wrote up what was there.</p>
+      </div>
+
+      <figure class="col-wide shot">
+        <div class="step step--inset frame">
+          <div class="screens">
+            <div class="screen"><img src="assets/dhs/bold-restyle.jpg" width="1856" height="541" loading="lazy" alt="Two cards from the restyled dashboard side by side, each showing a list of chapters with coloured progress bars in unrelated hues."></div>
+          </div>
+        </div>
+        <figcaption class="cap">Two neighbouring cards from the restyle carry five hues between them: purple eyebrows and links, crimson, brown and green bars, and an amber chip. Both sit on a shadow, and they end at different heights.</figcaption>
+      </figure>
+
+      <div class="col stack gap-16">
+        <p class="t-body">Twelve patterns came out of it, each severity-rated and listed against every screen it appeared on. <b>Colour carries no meaning</b> ran across 27 screens. <b>Lime does too many jobs</b> across 45. The quiz screen in the build section shows both at once: its answer letters run teal, purple, lime and indigo, so the lime C reads as the correct answer before the student has chosen. Elsewhere, red marked a section called “Your focus areas”, which is not an error condition. Colour that changes with position cannot signal state, and the palette was telling students things that were not true.</p>
+        <p class="t-body">Patterns at that frequency are a system fault, not a set of instances. Patching them one at a time would have left the fault in place, so the audit became the brief for the system that replaced it.</p>
+      </div>
+    </section>
+
+    <section id="system" class="stack gap-40" aria-labelledby="s-system">
+      <div class="col stack gap-16">
+        <div class="stack gap-8">
+          <p class="eyebrow">The system</p>
+          <h2 class="t-title" id="s-system">Twelve rules, and a page that proves them</h2>
+        </div>
+        <p class="t-body">The system is defined by what it refuses. Each hard rule answers a pattern the audit named.</p>
+      </div>
+
+      <ul class="col-wide hardrules">
+        <li><span class="n">R1</span><span>No shadows on buttons, in any state or theme.</span></li>
+        <li><span class="n">R2</span><span>No shadows on surfaces. Cards, menus and modals use a border.</span></li>
+        <li><span class="n">R3</span><span>White background. Light theme is pure <code>#ffffff</code>, untinted.</span></li>
+        <li><span class="n">R4</span><span>Tokens only. Colours come from CSS variables.</span></li>
+        <li><span class="n">R5</span><span>No native select. One component, everywhere.</span></li>
+        <li><span class="n">R6</span><span>No decorative eyebrows. An eyebrow must name its content.</span></li>
+        <li><span class="n">R7</span><span>No icon tiles on dashboard cards.</span></li>
+        <li><span class="n">R8</span><span>One gradient, on the exam countdown number.</span></li>
+        <li><span class="n">R9</span><span>Equal-height neighbours. Extra content scrolls inside.</span></li>
+        <li><span class="n">R10</span><span>Links don’t underline; they change colour.</span></li>
+        <li><span class="n">R11</span><span>Yellow means highlight, only on book pages.</span></li>
+        <li><span class="n">R12</span><span>No icon library. One icon file.</span></li>
+      </ul>
+
+      <figure class="col-wide shot">
+        <div class="step frame">
+          <div class="screens">
+            <div class="screen screen--crop" style="--ar:2240/1060"><img src="assets/dhs/design-system.jpg" width="2240" height="1400" loading="lazy" alt="The live design system page: six principle cards above a numbered table of hard rules, with a light and dark switch in the sidebar."></div>
+          </div>
+        </div>
+        <figcaption class="cap">The page carries a copy of the app’s real stylesheet and icon set, refreshed by a script, so every sample on it is the component itself in both themes.</figcaption>
+      </figure>
+
+      <div class="col stack gap-16">
+        <p class="t-body">Writing the rules down was not enough on its own. A written system describes components; it does not demonstrate them, and with one person designing and building, a specification and a stylesheet drift apart quietly. So the live page is generated from the source, and the generated regions are not hand-editable. Its samples cannot show behaviour the code does not have.</p>
+      </div>
+    </section>
+
+    <section id="screens" class="stack gap-40" aria-labelledby="s-screens">
+      <div class="col stack gap-16">
+        <div class="stack gap-8">
+          <p class="eyebrow">The screens</p>
+          <h2 class="t-title" id="s-screens">Twenty-five screens, and not one new component</h2>
+        </div>
+        <p class="t-body">A system is only worth writing down if it survives the twenty-fifth screen. Twenty-five were designed and built, covering the dashboard, the chat, the reader, flashcards, quizzes, questions, case studies, lectures, search, notifications and the account. None of them introduced a new component. Six are below; the three the page has already walked through are left out.</p>
+      </div>
+
+      <div class="col-wide step step--inset frame">
+        <div class="screens screens--2">
+          <div class="screen"><img src="assets/dhs/screens/light-sign-in.jpg" width="1440" height="900" loading="lazy" alt="The sign-in screen: the Dental Hygiene Seminars lettering on a dark brand artwork beside an email and password form."></div>
+          <div class="screen"><img src="assets/dhs/screens/light-quizzes.jpg" width="1440" height="900" loading="lazy" alt="The quizzes screen: a chapter picker and quiz length above a list of timed templates, each saying how many questions and case studies it holds."></div>
+          <div class="screen"><img src="assets/dhs/screens/light-questions.jpg" width="1440" height="900" loading="lazy" alt="The questions screen: every chapter as a card with the number of questions in it and how many have been answered."></div>
+          <div class="screen"><img src="assets/dhs/screens/light-flashcard-answer.jpg" width="1440" height="900" loading="lazy" alt="A flashcard turned to its answer side on a green card, carrying P3 · Ch 1 Nutrition, with Again and Got it below it."></div>
+          <div class="screen"><img src="assets/dhs/screens/light-quiz-results.jpg" width="1440" height="900" loading="lazy" alt="Quiz results: a score ring reading 0 percent, counts for correct, missed and unanswered, then a review list of missed questions with the chosen answer, the right answer and a rationale."></div>
+          <div class="screen"><img src="assets/dhs/screens/light-case-study.jpg" width="1440" height="900" loading="lazy" alt="A case study: a scenario about a patient with type 2 diabetes, then numbered questions with lettered options, the chosen option marked and a correct-answer explanation under it."></div>
+        </div>
+      </div>
+
+      <div class="col stack gap-16">
+        <p class="t-body">The same rule runs through all of them. A flashcard carries its page and a way to open it. Missed quiz questions lead the review, each with its rationale and the page the answer is on. A case study holds its scenario at the top and explains every answer in place. Even the questions screen counts by chapter, because a chapter is the unit a page belongs to. Every page reference on every screen is a link back to the book. That is the product, repeated twenty-five times.</p>
+      </div>
+    </section>
+
+    <section id="dark" class="stack gap-40" aria-labelledby="s-dark">
+      <div class="col stack gap-16">
+        <div class="stack gap-8">
+          <p class="eyebrow">Dark mode</p>
+          <h2 class="t-title" id="s-dark">Dark everywhere except the book</h2>
+        </div>
+        <p class="t-body">All twenty-five exist in both themes. Dark is where a token system is actually tested, because nothing is allowed to be a hard-coded colour. The same components hold, with no second layout. Only the token values change: the accent lifts so it still reads against near-black, and the score colours move from orange and red to amber and pink, which keep their distance from the background and from each other where the light-theme pair does not.</p>
+      </div>
+
+      <div class="col-wide step step--inset frame">
+        <div class="screens screens--2">
+          <div class="screen"><img src="assets/dhs/screens/dark-dashboard.jpg" width="1440" height="900" loading="lazy" alt="The same dashboard in the dark theme: the countdown card keeps its green gradient, the metric cards and focus-areas table are light text on near-black."></div>
+          <div class="screen"><img src="assets/dhs/screens/dark-review-book-tutor.jpg" width="1440" height="900" loading="lazy" alt="The reader in the dark theme, with the chrome and both panels dark but the book page itself still white."></div>
+          <div class="screen"><img src="assets/dhs/screens/dark-flashcard-answer.jpg" width="1440" height="900" loading="lazy" alt="A flashcard answer in the dark theme, the green card lifted against a near-black page, with Again and Got it below it."></div>
+          <div class="screen"><img src="assets/dhs/screens/dark-quiz-results.jpg" width="1440" height="900" loading="lazy" alt="Quiz results in the dark theme, the score ring and the missed-question review re-tuned to amber and pink."></div>
+        </div>
+      </div>
+
+      <div class="col stack gap-16">
+        <p class="t-body">One surface does not invert. The book page stays white in both themes, because it is a reproduction of a printed page, the thing the student is being examined on. Inverting it would mean the page they check an answer against is not the page the examiner set.</p>
+        <div class="claim"><p class="t-lead">The theme touches everything the product owns, and nothing it is quoting.</p></div>
+      </div>
+    </section>
+
+    <section id="learned" class="stack gap-40" aria-labelledby="s-learned">
+      <div class="col stack gap-16">
+        <div class="stack gap-8">
+          <p class="eyebrow">What I learned</p>
+          <h2 class="t-title" id="s-learned">Critique is cheaper than construction</h2>
+        </div>
+      </div>
+
+      <div class="col stack gap-16">
+        <p class="t-body"><b class="lead-in">I audited before I had a replacement:</b> I named twelve faults across 103 screens before writing the rules that answer them. It worked, but in the wrong order. Several findings were the same missing rule observed five times, and drafting the system first would have found that faster.</p>
+        <p class="t-body"><b class="lead-in">A refusal is a feature:</b> the hardest thing to design was not the answer, it was what happens when the book has nothing to say. Getting that wrong makes the product look broken; getting it right makes it trustworthy.</p>
+        <p class="t-body"><b class="lead-in">Restraint is an argument:</b> the flat, white, single-accent system is not a taste preference. It is what makes a page reference and a highlighted passage the loudest things on the screen.</p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="next-wrap">
+    <a class="next" href="/zbrain">
+      <h2 class="next__word" aria-hidden="true">next<br>project</h2>
+      <div class="next__card">
+        <div class="next__media"><img src="assets/admin/monitor-observatory.webp?v=2" width="2400" height="1570" alt="ZBrain Admin Console on a desktop monitor, open on the Observatory" loading="lazy"></div>
+        <p class="next__title"><span class="sr-only">Next project: </span>ZBrain Admin Console</p>
+        <p class="next__cat">Enterprise AI</p>
+      </div>
+    </a>
+  </footer>
+
+</div>
+<script>
+/* Rail: marks the section whose heading has passed the upper third of the viewport. */
+(function () {
+  var list = document.querySelector('.toc__list');
+  if (!list) return;
+  var links = Array.prototype.slice.call(list.querySelectorAll('a'));
+  var targets = links.map(function (a) { return document.getElementById(a.getAttribute('href').slice(1)); });
+  var queued = false;
+  function update() {
+    queued = false;
+    var line = window.innerHeight * 0.33, active = 0;
+    targets.forEach(function (el, i) { if (el && el.getBoundingClientRect().top <= line) active = i; });
+    if (window.innerHeight + window.scrollY >= document.body.scrollHeight - 2) active = links.length - 1;
+    links.forEach(function (a, i) {
+      if (i === active) a.setAttribute('aria-current', 'location');
+      else a.removeAttribute('aria-current');
+    });
+  }
+  function onScroll() { if (!queued) { queued = true; requestAnimationFrame(update); } }
+  window.addEventListener('scroll', onScroll, { passive: true });
+  window.addEventListener('resize', onScroll);
+  update();
+})();
+</script>
+<script>
+/* the rail steps aside while a wide picture passes beneath it */
+(() => {
+  const toc = document.querySelector('.toc'); if (!toc) return;
+  const wides = [...document.querySelectorAll('.col-wide')];
+  let queued = false;
+  const check = () => {
+    queued = false;
+    const t = toc.querySelector('.toc__list').getBoundingClientRect();
+    const hit = t.width > 0 && wides.some(w => { const r = w.getBoundingClientRect();
+      return r.left < t.right && r.top < t.bottom && r.bottom > t.top; });
+    toc.classList.toggle('is-covered', hit);
+  };
+  const q = () => { if (!queued) { queued = true; requestAnimationFrame(check); } };
+  addEventListener('scroll', q, { passive: true }); addEventListener('resize', q); check();
+})();
+</script>
+<script src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js" defer></script>
+<script src="smooth-scroll.js" defer></script>
+<script src="assets/theme.js?v=1" defer></script>
+</body>
+</html>

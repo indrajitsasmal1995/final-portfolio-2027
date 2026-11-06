@@ -1,0 +1,189 @@
+/* ---------------------------------------------------------------------------
+   Shared case-study layer. The pages themselves are written in a light palette;
+   this file carries the dark one over the top of it, plus the type, the next-
+   project block and the theme switch, which belong to both.
+   --------------------------------------------------------------------------- */
+:root{
+  --sans:"Plus Jakarta Sans", system-ui, sans-serif;
+  --display:"Mona Sans", "Plus Jakarta Sans", system-ui, sans-serif;   /* headings only */
+  --mono:"Plus Jakarta Sans", system-ui, sans-serif;
+  --rail-sans:"Plus Jakarta Sans", system-ui, sans-serif;
+}
+/* The root element paints the page, not just the body. Between two documents the body of
+   the one arriving does not exist yet, and a transparent root leaves the browser to fill the
+   gap from the operating system's preference — which on a dark machine is black, straight
+   through the middle of a light-mode sweep. */
+html[data-theme="light"]{background:var(--bg);color-scheme:light;}
+body{font-family:var(--sans);}
+/* form controls do not inherit a face on their own, and two of these pages never
+   said so — which showed the moment everything else became one font */
+button,input,select,textarea{font-family:inherit;}
+::selection{background:var(--ink);color:var(--bg);}
+
+/* Finora's type specimens are set in its product face */
+.scale__spec,.specimen__aa{font-family:Manrope,system-ui,sans-serif;}
+
+/* film grain, as on the homepage */
+body::after{
+  content:"";position:fixed;inset:-50%;z-index:90;pointer-events:none;opacity:.06;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+[data-theme="light"] body::after{opacity:.035;}
+
+/* ---------- the theme switch ----------
+   These pages have no top bar, only the rail down the left, so it sits in the
+   top right corner of the window where the homepage keeps its own. */
+.theme-switch{
+  position:fixed;top:22px;right:22px;z-index:95;
+  width:38px;height:38px;display:grid;place-items:center;padding:0;
+  border:1px solid var(--rule);border-radius:50%;
+  background:color-mix(in srgb, var(--bg) 72%, transparent);
+  -webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);
+  color:var(--ink);cursor:pointer;
+  transition:background-color .35s ease,border-color .35s ease,color .35s ease;
+}
+.theme-switch:hover{border-color:var(--line);}
+.theme-switch svg{width:19px;height:19px;display:block;fill:none;stroke:currentColor;stroke-width:1.7;}
+.theme-switch .t-moon{display:none;}
+[data-theme="light"] .theme-switch .t-sun,[data-theme="light"] .theme-switch .t-rays{display:none;}
+[data-theme="light"] .theme-switch .t-moon{display:block;}
+@media (max-width:760px){.theme-switch{top:14px;right:14px;width:34px;height:34px;}.theme-switch svg{width:17px;height:17px;}}
+
+/* headings: weight and tracking, the way the homepage sets them */
+h1.t-display,.t-display{
+  font-family:var(--display);font-weight:700;
+  font-size:clamp(40px,5vw,60px);line-height:1;letter-spacing:-.042em;
+}
+h2.t-title,.t-title,.t-huge{
+  font-family:var(--display);font-weight:700;
+  letter-spacing:-.036em;
+}
+h2.t-title{font-size:34px;line-height:38px;}
+@media (max-width:760px){
+  h1.t-display,.t-display{font-size:38px;line-height:40px;}
+  h2.t-title{font-size:28px;line-height:32px;}
+}
+.thanks span{font-family:var(--display);font-weight:700;}
+
+/* ---------- next project ---------- */
+.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;}
+/* sits on the reading column, so its edges line up with the text above */
+.next-wrap{width:100%;max-width:var(--col,663px);margin:var(--s-14,112px) auto 0;padding-bottom:var(--s-14,112px);}
+/* the words hang from the top edge of the image, not the middle of the card */
+.next{display:grid;grid-template-columns:1fr 1fr;gap:var(--s-4,32px);align-items:start;color:var(--ink);}
+.next__word{margin-top:-.02em;}
+.next:hover{text-decoration:none;}
+.next__word{
+  font-family:var(--display);font-weight:700;
+  font-size:clamp(56px,7.4vw,98px);line-height:.88;letter-spacing:-.045em;
+  transition:transform .6s cubic-bezier(.2,.7,.1,1);
+}
+.next:hover .next__word{transform:translateX(8px);}
+.next__card{display:flex;flex-direction:column;}
+.next__media{border-radius:14px;overflow:hidden;aspect-ratio:1.4;background:var(--surface);}
+.next__media img{width:100%;height:100%;object-fit:cover;object-position:top center;transform:scale(1.02);transition:transform .8s cubic-bezier(.2,.7,.1,1);}
+.next__title{margin-top:16px;font-size:24px;line-height:1.05;letter-spacing:-.02em;font-weight:500;}
+/* the page's own accent, not the warm one this carried over from the pre-accent palette */
+.next__cat{margin-top:12px;font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--accent);}
+@media (max-width:760px){
+  .next{grid-template-columns:1fr;}
+  .next__word{font-size:20vw;}
+}
+
+/* Finora's screens were made on white: set them on a soft pastel artboard
+   (the same wash as the Finora hero) and multiply them into it, so their white
+   grounds pick up the tint instead of glaring against the dark page */
+.lightstage{
+  position:relative;isolation:isolate;overflow:hidden;border-radius:20px;
+  background:
+    radial-gradient(60% 70% at 15% 20%, #e4e6fb 0%, transparent 70%),
+    radial-gradient(55% 65% at 90% 30%, #f3e6f2 0%, transparent 70%),
+    radial-gradient(70% 70% at 50% 100%, #dfeff4 0%, transparent 70%),
+    #eeedf5;
+}
+.lightstage > img{display:block;width:100%;height:auto;mix-blend-mode:multiply;}
+
+
+/* ---------- body text a step larger for Plus Jakarta Sans ---------- */
+body{font-size:16px;line-height:26px;}
+.t-body{font-size:16px;line-height:26px;}
+.t-lead{font-size:19px;line-height:30px;}
+.t-sub{font-size:18px;line-height:26px;}
+.eyebrow,.t-caption,.meta dt,.numbered .n,.tabs__tab,.decision-list .n{font-size:13px;}
+.toc__back,.toc__list a{font-size:13px;}
+.roles li,.decision-list p,.qa li,.rows > li{font-size:16px;line-height:26px;}
+.model__d,.compare .note,.navmap small,.chain__row{font-size:15px;line-height:23px;}
+.decision-list h3{font-size:18px;}
+
+
+/* ---------------------------------------------------------------------------
+   Dark. Every rule below only applies while the page is dark; in light mode
+   none of it matches and each page's own palette, the one it was built in,
+   is simply left alone.
+   --------------------------------------------------------------------------- */
+:root[data-theme="dark"]{
+  --bg:#0b0b0b;
+  --ink:#f1ede6;
+  --ink-2:#c9c4bb;
+  --ink-3:#a29e97;
+  --ink-4:#948f88;
+  --surface:#151515;
+  --card:#1b1b1b;
+  --rule:#2b2a28;
+  --border:#2b2a28;
+  --line:#6f6c67;
+  --watermark:#141414;
+  --dark:#1b1b1b;
+
+  /* accents lifted so they read on the dark ground */
+  --accent:#7d9bff;
+  --purple:#a57bff;
+  --c-control:#7d9bff;  --c-runtime:#2dd4bf;
+  --c-enforce:#f59e0b;  --c-feedback:#a78bfa;
+  --c-warn:#4ade80;     --c-throttle:#818cf8;
+  --c-escalate:#fb923c; --c-deny:#f87171;
+
+  --rail-ink:#f1ede6;
+  --rail-ink-rest:#948f88;
+}
+@media (prefers-contrast:more){
+  :root[data-theme="dark"]{--ink-2:#f1ede6;--ink-3:#d6d1c8;--ink-4:#d6d1c8;--rule:#6f6c67;}
+}
+html[data-theme="dark"]{background:var(--bg);color-scheme:dark;}
+[data-theme="dark"] body{background:var(--bg);color:var(--ink);}
+
+/* hard-coded light colours in the page styles */
+[data-theme="dark"] .skip{background:var(--ink);color:var(--bg);}
+[data-theme="dark"] .chip--accent{background:transparent;}
+[data-theme="dark"] .media__toggle{box-shadow:none;}
+[data-theme="dark"] .shot--missing{background:repeating-linear-gradient(45deg,#141414 0 10px,#191919 10px 20px);}
+[data-theme="dark"] .qa-type--ui{background:rgba(125,155,255,.14);color:#a9bcff;}
+[data-theme="dark"] .qa-type--flow{background:rgba(167,139,250,.14);color:#c4b5fd;}
+[data-theme="dark"] .qa-type--function{background:rgba(245,158,11,.14);color:#fbbf24;}
+[data-theme="dark"] .qa-type--data{background:rgba(74,222,128,.12);color:#86efac;}
+[data-theme="dark"] .navmap > div{border-top-color:var(--ink);}
+[data-theme="dark"] .gallery img{border-color:var(--rule);}
+
+/* screenshots sit on the dark surface; keep a hairline so light UI has an edge */
+[data-theme="dark"] .panel{background:var(--surface);}
+
+/* design-system specimens are exported light UI: show them on a light artboard */
+[data-theme="dark"] .ds-panel{background:#f0f1f3;}
+
+/* Finora */
+[data-theme="dark"] .rule{border-top-color:var(--rule);}
+[data-theme="dark"] .meta dt{color:var(--ink-3);}
+[data-theme="dark"] .t-lead,[data-theme="dark"] .on-dark .t-lead{color:var(--ink-2);}
+[data-theme="dark"] .jtbd li:last-child{background:var(--ink);border-color:var(--ink);color:var(--bg);}
+[data-theme="dark"] .jcurve__dots circle{fill:var(--bg);}
+[data-theme="dark"] .chip{box-shadow:inset 0 0 0 1px rgba(241,237,230,.12);}
+[data-theme="dark"] .pmap__ai{background:rgba(165,123,255,.06);}
+
+/* Figma screenshots are dark already; keep their frame subtle */
+[data-theme="dark"] .figma-shot img{border-color:var(--rule);}
+
+/* large decorative numerals were drawn in the rule colour */
+[data-theme="dark"] .principle__n{color:#4d4a46;}
+
+/* long-form text a step softer than headings: less glare on near-black */
+[data-theme="dark"] .t-body:not(.muted),[data-theme="dark"] .meta dd{color:#d9d4cc;}

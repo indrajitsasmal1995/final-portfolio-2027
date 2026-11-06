@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" role="img" aria-label="Indrajit">
+  <!-- The wordmark's own initial, in pure white on the site's accent green (accent-2, the
+       primary button's fill). The dot is drawn a little wider than the stem: at 16px it is
+       three pixels across, and it has to still read as a dot rather than as the top of the stroke. -->
+  <rect width="32" height="32" rx="8" fill="#4fe6a3"/>
+  <rect x="12.8" y="14.2" width="6.4" height="11.6" rx="3.2" fill="#ffffff"/>
+  <circle cx="16" cy="9" r="3.4" fill="#ffffff"/>
+</svg>

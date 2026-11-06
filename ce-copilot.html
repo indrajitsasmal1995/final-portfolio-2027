@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<script>try{var tm=localStorage.getItem('theme');if(!tm)tm=matchMedia('(prefers-color-scheme: light)').matches?'light':'dark';var dr=document.documentElement;dr.setAttribute('data-theme',tm);dr.style.colorScheme=tm}catch(e){}</script>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- page transitions: a page that arrived under the wipe is covered before its first paint -->
+<link rel="stylesheet" href="assets/page-transition.css?v=8">
+<script>try{if(!matchMedia('(prefers-reduced-motion:reduce)').matches){var h=sessionStorage.getItem('ptHop');sessionStorage.removeItem('ptHop');var p=h?h.split('|'):0;if(p&&p.length==2&&Date.now()-(+p[1])<3000){var r=document.documentElement;r.setAttribute('data-pt',p[0]);r.classList.add('pt-held');setTimeout(function(){if(r.classList.contains('pt-held')){r.classList.remove('pt-held');r.removeAttribute('data-pt')}},6000)}}}catch(e){}</script>
+<script src="assets/page-transition.js?v=7" defer></script>
+<link rel="icon" href="favicon.svg?v=3" type="image/svg+xml">
+<title>CE CoPilot | AI troubleshooting assistant case study</title>
+<meta name="description" content="Case study: CE CoPilot, an AI troubleshooting assistant for customer engineers at a global semiconductor equipment maker, across a mobile app, a web app and an admin console.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Mona+Sans:wght@200..900&family=Plus+Jakarta+Sans:wght@300..800&display=swap" rel="stylesheet">
+<style>
+/* tokens: spacing is a multiple of 8 and comes from `gap`; dark.css swaps the colours */
+:root{
+  --s-1:8px;--s-2:16px;--s-3:24px;--s-4:32px;--s-5:40px;--s-6:48px;--s-7:56px;--s-8:64px;--s-10:80px;--s-14:112px;--s-16:128px;
+  --bg:#fdfdfc;--ink:#101114;--ink-2:#474d58;--ink-3:#565d69;--ink-4:#6b7280;
+  --surface:#f4f4f4;--card:#ffffff;--rule:#d7d9dd;--line:#8a8f99;--accent:#305cff;--watermark:#f6f6f6;
+  --ico:#2bb3c7;   /* icon stroke: CE CoPilot's own teal, flat */
+  --mono:"Plus Jakarta Sans",system-ui,sans-serif;--code:ui-monospace,"SF Mono",Menlo,monospace;
+  --sans:"Plus Jakarta Sans",system-ui,sans-serif;
+  --col:663px;--col-wide:1153px;--page-pad:var(--s-4);--radius-panel:12px;
+  --rail-sans:"Plus Jakarta Sans",system-ui,sans-serif;--rail-ink:#101114;--rail-ink-rest:#6b7280;
+  --fpx:clamp(20px,3.4vw,48px);   /* a frame's side padding; labels under a frame use it too, so they line up */
+  --teal:#7fd6e1;                 /* CE CoPilot's single accent on the dark page */
+}
+
+/* CE CoPilot's teal and DHS's lime were chosen against the dark page. On the light one the
+   same hues are taken down until they read: the teal to 4.6:1, its icon stroke with it. */
+:root[data-theme="light"]{
+  --teal:#0d7f8e;
+  --ico:#0d7f8e;
+}
+
+/* reset */
+*,*::before,*::after{box-sizing:border-box;}
+html{-webkit-text-size-adjust:100%;}
+body,h1,h2,h3,h4,p,ul,ol,li,dl,dt,dd,figure,figcaption,hr{margin:0;padding:0;}
+ul,ol{list-style:none;}
+img{display:block;max-width:100%;height:auto;}
+button{font:inherit;color:inherit;}
+body{background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:15px;line-height:24px;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;}
+.vh{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap;}
+
+/* layout */
+.stack{display:flex;flex-direction:column;}
+.gap-8{gap:var(--s-1);} .gap-16{gap:var(--s-2);} .gap-24{gap:var(--s-3);} .gap-40{gap:var(--s-5);} .gap-80{gap:var(--s-10);} .gap-112{gap:var(--s-14);}
+.page{max-width:1440px;margin-inline:auto;overflow-x:clip;padding-inline:var(--page-pad);padding-block-start:var(--s-16);}
+.col{width:100%;max-width:var(--col);margin-inline:auto;}
+.col-wide{width:100%;max-width:var(--col-wide);margin-inline:auto;}
+
+/* type */
+.eyebrow{font-family:var(--mono);font-size:12px;line-height:24px;letter-spacing:1.2px;text-transform:uppercase;color:var(--ink-3);}
+.t-display{font-size:30px;line-height:40px;font-weight:600;letter-spacing:-0.6px;}
+.t-title{font-size:24px;line-height:32px;font-weight:600;letter-spacing:-0.48px;}
+.t-body{font-size:15px;line-height:24px;}
+.t-lead{font-size:17px;line-height:24px;}
+strong,b{font-weight:600;}
+#top .intro{font-size:18px;line-height:28px;}
+.lead-in{font-weight:600;color:var(--ink);}
+a{color:inherit;text-decoration:none;}
+a:hover{text-decoration:underline;text-underline-offset:3px;}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:2px;}
+.skip{position:absolute;left:-9999px;top:var(--s-1);padding:var(--s-1) var(--s-2);background:var(--ink);color:#fff;z-index:10;}
+.skip:focus{left:var(--s-2);}
+.meta{display:grid;grid-template-columns:152px 1fr;gap:var(--s-2) 0;padding-top:var(--s-4);}
+.meta dt{font-family:var(--mono);font-size:12px;line-height:24px;letter-spacing:1.8px;text-transform:uppercase;color:var(--ink-3);}
+.claim{display:flex;flex-direction:column;gap:var(--s-1);border-left:2px solid var(--teal);padding-left:var(--s-2);}
+
+/* hero */
+.case-hero{margin-block:0;}
+.case-hero__visual{overflow:hidden;border-radius:16px;}
+.case-hero__visual img{display:block;width:100%;height:auto;}
+
+/* frames: every picture sits on the hero's aqua mesh */
+.frame{margin-block:0;background:#d3e8ef url("assets/mesh/mesh-copilot.webp?v=2") center / cover no-repeat;border-radius:16px;padding:clamp(24px,3vw,40px) var(--fpx);}
+
+/* phones on a frame; their labels sit under the frame, each under its phone */
+.shotset{display:grid;gap:16px;}
+.phones,.labels{display:flex;flex-wrap:wrap;justify-content:center;column-gap:32px;}
+.phones{row-gap:28px;}
+.phone{margin:0;}
+.phone img{display:block;width:100%;height:auto;filter:drop-shadow(0 24px 34px rgba(10,57,71,.26)) drop-shadow(0 4px 10px rgba(10,57,71,.12));}
+.labels{row-gap:8px;padding-inline:var(--fpx);}
+.labels li{text-align:center;font-size:14px;line-height:20px;color:var(--ink-2);}
+.phones--4 .phone,.labels--4 li{width:min(220px,calc((100% - 96px) / 4));}
+.phones--3 .phone,.labels--3 li{width:min(220px,calc((100% - 64px) / 3));}
+.phones--2 .phone,.labels--2 li{width:min(220px,calc((100% - 32px) / 2));}
+/* the five working states: tops of the phone, five across */
+.states,.labels--5{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));column-gap:16px;}
+.states .phone img{filter:none;}
+.labels--5 li:not(:last-child)::after{content:"  \2192";color:var(--ink-3);}
+
+/* admin screens: white UI, inset at the top and sides, running off the frame's bottom edge */
+.screen-frame{padding-bottom:0;overflow:hidden;}
+.screen{display:block;width:100%;background:#fff;border-radius:12px 12px 0 0;overflow:hidden;box-shadow:0 -2px 24px rgba(10,57,71,.14);aspect-ratio:var(--ar,2880/1400);}
+.screen img{display:block;width:100%;height:100%;object-fit:cover;object-position:top left;}
+
+/* steps: the number, title and line in the reading column, then the pictures */
+.steps{display:grid;gap:96px;}
+.stepb{display:grid;gap:28px;}
+.stepb--sub{margin-top:-40px;}
+.stepb__head{display:grid;gap:12px;padding-top:24px;}
+.stepb__lead{display:grid;gap:10px;}
+.stepb__n{font-size:12px;line-height:18px;font-weight:600;letter-spacing:.14em;color:var(--ink-3);font-variant-numeric:tabular-nums;}
+.stepb__title{font-size:26px;line-height:32px;font-weight:600;letter-spacing:-.02em;color:var(--ink);font-optical-sizing:auto;}
+.stepb__head--sub{border-top:0;padding-top:0;gap:8px;}
+.stepb__head--sub .stepb__title{font-family:var(--sans);font-size:18px;line-height:26px;letter-spacing:0;}
+
+/* the answer's five parts */
+.parts{display:flex;flex-wrap:wrap;gap:8px;}
+.parts li{display:inline-flex;align-items:center;gap:8px;padding:6px 12px;border:1px solid var(--rule);border-radius:99px;font-size:14px;line-height:20px;color:var(--ink-2);}
+.parts i{font-style:normal;font-size:12px;color:var(--ink-3);}
+
+/* tabs, in the reading column above the frame they switch */
+.tabs__list{display:flex;flex-wrap:wrap;gap:0 24px;border-bottom:1px solid var(--rule);}
+.tabs__tab{appearance:none;background:none;border:0;display:inline-flex;align-items:center;min-height:40px;padding:0 0 10px;margin-bottom:-1px;
+  border-bottom:2px solid transparent;font-size:14px;line-height:20px;font-weight:600;color:var(--ink-3);cursor:pointer;transition:color .15s ease,border-color .15s ease;}
+.tabs__tab:hover{color:var(--ink);}
+.tabs__tab[aria-selected="true"]{color:var(--ink);border-bottom-color:var(--teal);}
+.tabs__panel{display:grid;gap:24px;}
+.tabs__panel[hidden]{display:none;}
+.tabs__desc{font-size:15px;line-height:23px;color:var(--ink-3);}
+
+/* the brief's three rules, and the design decisions: separate dark cards */
+.rules{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;}
+.rules li{display:grid;align-content:start;gap:10px;padding:26px 24px 28px;background:var(--surface);border:1px solid var(--rule);border-radius:16px;}
+.rules .n{font-size:12px;line-height:18px;font-weight:600;letter-spacing:.14em;color:var(--ink-3);}
+.rules b{font-size:24px;line-height:28px;font-weight:600;letter-spacing:-.02em;color:var(--ink);font-optical-sizing:auto;}
+.rules span{font-size:15px;line-height:23px;color:var(--ink-3);}
+.ic{width:24px;height:24px;flex:none;fill:none;stroke:var(--ico);stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round;}
+.ic--tile{width:38px;height:38px;stroke-width:1.2;}
+.dcards{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:16px;}
+.dcard{display:grid;align-content:start;gap:10px;padding:24px 22px 26px;background:var(--surface);border:1px solid var(--rule);border-radius:16px;}
+.dcard .ic--tile{margin-bottom:8px;}
+.dcard b{font-size:15.5px;line-height:21px;font-weight:600;color:var(--ink);}
+.dcard span{font-size:14px;line-height:21px;color:var(--ink-3);}
+
+/* the feedback loop: four steps in a row, then the way back to the first */
+.ic1{width:26px;height:26px;flex:none;fill:none;stroke:var(--teal);stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round;}
+.loop{position:relative;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:48px;padding-bottom:76px;}
+.loop__step{position:relative;display:grid;align-content:start;gap:8px;padding:22px 20px 24px;border:1px solid rgba(241,237,230,.14);border-radius:14px;background:var(--surface);}
+.loop__step .ic1{margin-bottom:6px;}
+.loop__n{font-size:12px;line-height:18px;font-weight:600;letter-spacing:.14em;color:var(--ink-3);}
+.loop__step b{font-size:16px;line-height:22px;font-weight:600;color:var(--ink);}
+.loop__step span{font-size:14px;line-height:21px;color:var(--ink-3);}
+.loop__step + .loop__step::before{content:"";position:absolute;left:-44px;top:50%;width:38px;border-top:1.25px solid rgba(241,237,230,.34);}
+.loop__step + .loop__step::after{content:"";position:absolute;left:-14px;top:50%;width:7px;height:7px;border-top:1.25px solid rgba(241,237,230,.5);border-right:1.25px solid rgba(241,237,230,.5);transform:translateY(-50%) rotate(45deg);}
+.loop__back{position:absolute;left:calc((100% - 144px) / 8);right:calc((100% - 144px) / 8);top:calc(100% - 76px);height:40px;border:1.25px dashed rgba(127,214,225,.55);border-top:0;border-radius:0 0 16px 16px;}
+.loop__back::before{content:"";position:absolute;left:-4.5px;top:-1px;width:7px;height:7px;border-top:1.25px solid var(--teal);border-left:1.25px solid var(--teal);transform:rotate(45deg);}
+.loop__back span{position:absolute;left:50%;bottom:-11px;transform:translateX(-50%);padding:0 14px;background:var(--bg);font-size:14px;line-height:20px;color:var(--teal);white-space:nowrap;}
+
+/* section rail */
+.toc{font-family:var(--rail-sans);position:fixed;top:var(--s-16);left:calc(var(--page-pad) + var(--s-7));max-height:calc(100vh - var(--s-16) - var(--s-6));z-index:5;display:none;transition:opacity .3s ease;}
+@media (min-width:1240px){.toc{display:flex;flex-direction:column;gap:var(--s-3);}}
+.toc.is-covered{opacity:0;pointer-events:none;}
+.toc__back{align-self:flex-start;display:inline-flex;align-items:center;gap:var(--s-1);min-height:var(--s-3);font-size:12px;line-height:24px;color:var(--rail-ink-rest);transition:color .15s ease;}
+.toc__back svg{width:14px;height:14px;flex:none;fill:none;stroke:currentColor;stroke-width:1.25;stroke-linecap:round;stroke-linejoin:round;}
+.toc__back:hover{color:var(--rail-ink);text-decoration:none;}
+.toc__list{display:flex;flex-direction:column;min-height:0;overflow-y:auto;scrollbar-width:none;}
+.toc__list::-webkit-scrollbar{width:0;display:none;}
+.toc__list a{display:block;min-height:var(--s-3);max-width:200px;font-size:12px;line-height:24px;color:var(--rail-ink-rest);transition:color .15s ease;}
+.toc__list a:hover{color:var(--rail-ink);text-decoration:none;}
+.toc__list a[aria-current]{color:var(--rail-ink);font-weight:600;}
+#top,main [id]{scroll-margin-top:var(--s-5);}
+
+/* responsive */
+@media (max-width:1100px){.dcards{grid-template-columns:repeat(3,minmax(0,1fr));}}
+@media (max-width:900px){
+  .loop{grid-template-columns:1fr 1fr;gap:16px;padding-bottom:0;}
+  .loop__step + .loop__step::before,.loop__step + .loop__step::after{display:none;}
+  .loop__back{position:static;grid-column:1 / -1;height:auto;border:0;text-align:center;}
+  .loop__back::before{display:none;}
+  .loop__back span{position:static;transform:none;padding:0;white-space:normal;}
+  .rules{grid-template-columns:1fr;}
+}
+@media (max-width:760px){
+  :root{--page-pad:var(--s-3);--fpx:16px;}
+  .page{padding-block-start:var(--s-6);}
+  .t-display{font-size:26px;line-height:32px;}
+  .t-title{font-size:21px;line-height:28px;}
+  .gap-112{gap:var(--s-10);} .gap-80{gap:var(--s-6);}
+  .meta{grid-template-columns:1fr;gap:var(--s-1) 0;}
+  .meta dd{padding-bottom:var(--s-1);}
+  .frame{padding-block:20px;}
+  .screen-frame{padding-bottom:0;}
+  .stepb__title{font-size:22px;line-height:28px;}
+  .phones,.labels{column-gap:16px;}
+  .phones--4 .phone,.labels--4 li,.phones--3 .phone,.labels--3 li,.phones--2 .phone,.labels--2 li{width:calc((100% - 16px) / 2);}
+  .states,.labels--5{grid-template-columns:repeat(3,minmax(0,1fr));column-gap:10px;}
+  .states{row-gap:12px;}
+  .labels li{font-size:13px;line-height:18px;}
+  .dcards{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;}
+  .loop{grid-template-columns:1fr;}
+}
+@media (max-width:480px){.dcards{grid-template-columns:1fr;}}
+@media (prefers-contrast:more){:root{--ink-2:#101114;--ink-3:#2c313a;--ink-4:#2c313a;--rule:#8a8f99;}}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important;}}
+@media (prefers-reduced-motion:no-preference){html{scroll-behavior:smooth;}}
+html.lenis,html.lenis body{height:auto;}
+.lenis.lenis-smooth{scroll-behavior:auto !important;}
+.lenis.lenis-stopped{overflow:hidden;}
+</style>
+<noscript><style>.tabs__list{display:none;}.tabs__panel[hidden]{display:grid;}</style></noscript>
+<link rel="stylesheet" href="dark.css?v=41">
+</head>
+<body>
+<svg class="ico-defs" width="0" height="0" aria-hidden="true" focusable="false" style="position:absolute;width:0;height:0;overflow:hidden"><defs>
+</defs></svg>
+<a class="skip" href="#main">Skip to main content</a>
+
+
+<button class="theme-switch" type="button" data-theme-toggle aria-pressed="false" aria-label="Switch to light mode">
+  <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+    <circle class="t-sun" cx="12" cy="12" r="4.6"/>
+    <g class="t-rays" stroke-linecap="round">
+      <path d="M12 2.4v2.4M12 19.2v2.4M2.4 12h2.4M19.2 12h2.4M5.2 5.2l1.7 1.7M17.1 17.1l1.7 1.7M18.8 5.2l-1.7 1.7M6.9 17.1l-1.7 1.7"/>
+    </g>
+    <path class="t-moon" d="M20.2 14.4A8.6 8.6 0 0 1 9.6 3.8a8.6 8.6 0 1 0 10.6 10.6Z"/>
+  </svg>
+</button>
+<nav class="toc" aria-label="Case study sections">
+  <a class="toc__back" href="/#work-ce-copilot">
+    <svg viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M6 4.5 2.5 8 6 11.5"/><path d="M2.5 8h7A3.5 3.5 0 0 0 13 4.5v-1"/></svg>
+    Go back
+  </a>
+  <ul class="toc__list">
+    <li><a href="#top">Top</a></li>
+    <li><a href="#context">The context</a></li>
+    <li><a href="#brief">The brief</a></li>
+    <li><a href="#decisions">Design decisions</a></li>
+    <li><a href="#practice">In practice</a></li>
+    <li><a href="#loop">The feedback loop</a></li>
+    <li><a href="#admin">Admin console</a></li>
+    <li><a href="#learned">What I learned</a></li>
+  </ul>
+</nav>
+
+<div class="page stack gap-112">
+
+  <div id="top" class="stack gap-80">
+    <div class="col stack gap-40">
+      <div class="stack gap-16">
+        <h1 class="t-display">CE CoPilot: the service manual, answering back</h1>
+        <p class="t-body intro">At a global semiconductor equipment maker, customer engineers keep chip-fab tools running, and when a tool faults, the fix is somewhere in thousands of pages of approved documentation. CE CoPilot lets an engineer describe the problem and get a step-by-step answer from those documents only, with its sources and a confidence score. When an answer is wrong, the admin console turns the complaint into a fix.</p>
+      </div>
+      <dl class="meta">
+        <dt>Client</dt>
+        <dd class="t-body">Customer engineering at a global semiconductor equipment maker</dd>
+        <dt>Role</dt>
+        <dd class="t-body">End-to-end design: mobile app, web app and admin console</dd>
+        <dt>Built at</dt>
+        <dd class="t-body">LeewayHertz</dd>
+        <dt>Year</dt>
+        <dd class="t-body">2026</dd>
+      </dl>
+    </div>
+    <figure class="case-hero col-wide">
+      <div class="case-hero__visual"><img src="assets/cecopilot/cover.jpg?v=9" width="2400" height="1500" fetchpriority="high" alt="CE CoPilot across its surfaces: the admin console overview behind three phone screens, a new chat, a step-by-step answer with sources and confidence, and an answer drawn as a flowchart."></div>
+    </figure>
+  </div>
+
+  <main id="main" class="stack gap-112">
+
+    <section id="context" class="stack gap-40" aria-labelledby="s-context">
+      <div class="col stack gap-16">
+        <div class="stack gap-8">
+          <p class="eyebrow">The context</p>
+          <h2 class="t-title" id="s-context">The fix was in the documents. Finding it was the problem.</h2>
+        </div>
+        <p class="t-body">When a tool faults, a customer engineer needs the right procedure, fast, and it sits somewhere in thousands of pages of approved documentation. CE CoPilot meets them in three places.</p>
+      </div>
+
+      <div class="col stack gap-40">
+        <div class="stack gap-16">
+          <p class="t-body"><b class="lead-in">Mobile app:</b> for the engineer standing at the tool.</p>
+          <p class="t-body"><b class="lead-in">Web app:</b> the same chat at a desk, with the sidebar open.</p>
+          <p class="t-body"><b class="lead-in">Admin console:</b> usage, answer quality, the knowledge base and feedback.</p>
+        </div>
+        <div class="claim"><p class="t-lead">A wrong torque value on a fab tool is not a typo.</p></div>
+      </div>
+    </section>
+    <section id="brief" class="stack gap-40" aria-labelledby="s-brief">
+      <div class="col stack gap-16">
+        <div class="stack gap-8">
+          <p class="eyebrow">The brief</p>
+          <h2 class="t-title" id="s-brief">Three rules the product could not break</h2>
+        </div>
+        <p class="t-body">Everything in CE CoPilot follows from them.</p>
+      </div>
+
+      <ul class="col-wide rules">
+        <li><span class="n">01</span><b>Only approved documents</b><span>Answers come from approved technical documents and structured datasets, nothing else. Off-topic questions are declined.</span></li>
+        <li><span class="n">02</span><b>Always show the source</b><span>Every answer names its documents and carries a confidence score an engineer can question.</span></li>
+        <li><span class="n">03</span><b>Safety before steps</b><span>Lockout, venting and preconditions come before any diagnostic step, every time.</span></li>
+      </ul>
+    </section>
+    <section id="decisions" class="stack gap-40" aria-labelledby="s-decisions">
+      <div class="col stack gap-16">
+        <div class="stack gap-8">
+          <p class="eyebrow">Design decisions</p>
+          <h2 class="t-title" id="s-decisions">Small calls that kept the product honest</h2>
+        </div>
+        <p class="t-body">Each one protects the engineer’s trust, or the truth of a number in the console.</p>
+      </div>
+
+      <div class="col-wide">
+        <ul class="dcards">
+          <li class="dcard"><svg class="ic ic--tile" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 3v18"/><path d="M12 5.5h6.5l2.5 2.5-2.5 2.5H12"/><path class="a" d="M12 13H5.5L3 15.5 5.5 18H12"/></svg><b>Decline, but show the way in</b><span>An out-of-scope reply lists what to add, so a refusal becomes a better question.</span></li>
+          <li class="dcard"><svg class="ic ic--tile" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M4 4.5h16a1 1 0 0 1 1 1V16a1 1 0 0 1-1 1H9.5L5 20.5V17H4a1 1 0 0 1-1-1V5.5a1 1 0 0 1 1-1z"/><path class="a" d="M8.5 10.8l2.3 2.3 4.7-4.8"/></svg><b>One chat, one issue</b><span>Resolving closes the chat, so every resolution rate in the console stays true.</span></li>
+          <li class="dcard"><svg class="ic ic--tile" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="3.5" y="5" width="17" height="15.5" rx="2"/><path d="M3.5 9.5h17M8 3v4M16 3v4"/><path class="a" d="M7.5 17l3-3.2 2.2 1.8 3.8-4.1"/></svg><b>Adoption on an average day</b><span>Not “ever used”, which only climbs. The daily share is the number that moves.</span></li>
+          <li class="dcard"><svg class="ic ic--tile" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="3" y="3" width="18" height="18" rx="2.5"/><path d="M3 9h18"/><path class="a" d="M10.5 12.5l1.8-1.3V17"/></svg><b>Each number appears once</b><span>A tile gives the headline, a chart the trend, a table the detail.</span></li>
+          <li class="dcard"><svg class="ic ic--tile" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="6" cy="6" r="2.2"/><circle cx="6" cy="18" r="2.2"/><circle class="a" cx="18" cy="8" r="2.2"/><path d="M6 8.2v7.6M18 10.2c0 4.2-6.5 3-11 6.3"/></svg><b>Fixes are scoped and versioned</b><span>A fix for Singapore stays in Singapore, and none is ever deleted.</span></li>
+        </ul>
+      </div>
+    </section>
+    <section id="practice" class="stack gap-40" aria-labelledby="s-practice">
+      <div class="col stack gap-16">
+        <div class="stack gap-8">
+          <p class="eyebrow">In practice</p>
+          <h2 class="t-title" id="s-practice">An engineer at the tool, from question to resolved</h2>
+        </div>
+        <p class="t-body">Five steps on the mobile app.</p>
+      </div>
+<div class="steps">
+        <div class="stepb">
+          <header class="col stepb__head"><div class="stepb__lead"><p class="stepb__n">01</p><h3 class="stepb__title">Ask the way you’d ask a colleague</h3></div><p class="t-body stepb__desc">Type the symptom in plain words, paste an error code or attach a script. If a question is out of scope or too thin, CE CoPilot asks for the platform, part or code.</p></header>
+          <div class="col-wide shotset">
+            <figure class="frame"><div class="phones phones--4"><figure class="phone"><img src="assets/cecopilot/p/new-chat.png?v=9" width="418" height="843" loading="lazy" alt="New chat: a greeting, one field, and the scope one tap away."></figure><figure class="phone"><img src="assets/cecopilot/p/typing.png?v=9" width="418" height="843" loading="lazy" alt="Describing the issue in plain language."></figure><figure class="phone"><img src="assets/cecopilot/p/code-attach.png?v=9" width="418" height="843" loading="lazy" alt="A script attached to the question."></figure><figure class="phone"><img src="assets/cecopilot/p/out-of-scope.png?v=9" width="418" height="843" loading="lazy" alt="An out-of-scope reply asking for the platform, part or problem code."></figure></div></figure>
+            <ul class="labels labels--4" aria-hidden="true"><li>New chat</li><li>Describe the issue</li><li>Attach code</li><li>Too vague? It asks</li></ul>
+          </div>
+        </div>
+        <div class="stepb stepb--sub">
+          <header class="col stepb__head stepb__head--sub"><div class="stepb__lead"><h4 class="stepb__title">While it works, it says what it’s doing</h4></div><p class="t-body stepb__desc">Five honest states instead of one spinner. A seven-second wait feels shorter when you can see the work.</p></header>
+          <div class="col-wide shotset">
+            <figure class="frame"><div class="states"><div class="phone"><img src="assets/cecopilot/p/thinking-top.png?v=9" width="418" height="300" loading="lazy" alt="Status line: Thinking"></div><div class="phone"><img src="assets/cecopilot/p/working-top.png?v=9" width="418" height="300" loading="lazy" alt="Status line: Working on it"></div><div class="phone"><img src="assets/cecopilot/p/reading-context-top.png?v=9" width="418" height="300" loading="lazy" alt="Status line: Reading context"></div><div class="phone"><img src="assets/cecopilot/p/searching-top.png?v=9" width="418" height="300" loading="lazy" alt="Status line: Searching knowledge"></div><div class="phone"><img src="assets/cecopilot/p/reading-top.png?v=9" width="418" height="300" loading="lazy" alt="Status line: Reading documents"></div></div></figure>
+            <ul class="labels labels--5" aria-hidden="true"><li>Thinking</li><li>Working on it</li><li>Reading context</li><li>Searching knowledge</li><li>Reading documents</li></ul>
+          </div>
+        </div>
+        <div class="stepb">
+          <header class="col stepb__head"><div class="stepb__lead"><p class="stepb__n">02</p><h3 class="stepb__title">Read a procedure, not a paragraph</h3></div><p class="t-body stepb__desc">Every troubleshooting answer uses the same five parts, so an engineer always knows where the safety notes and the fix will be.</p><ol class="parts" aria-label="The five parts of an answer"><li><i>1</i>Issue description</li><li><i>2</i>Safety and preconditions</li><li><i>3</i>Root cause</li><li><i>4</i>Diagnostic steps</li><li><i>5</i>Corrective actions</li></ol></header>
+          <div class="col-wide shotset">
+            <figure class="frame"><div class="phones phones--3"><figure class="phone"><img src="assets/cecopilot/p/structured.png?v=9" width="418" height="843" loading="lazy" alt="An answer opening with the issue description, safety and preconditions, and root cause."></figure><figure class="phone"><img src="assets/cecopilot/p/steps.png?v=9" width="418" height="843" loading="lazy" alt="Diagnostic steps as short, checkable bullets in order."></figure><figure class="phone"><img src="assets/cecopilot/p/create-diagram.png?v=9" width="418" height="843" loading="lazy" alt="Corrective actions, then the sources, the confidence and the option to make a diagram."></figure></div></figure>
+            <ul class="labels labels--3" aria-hidden="true"><li>Issue, safety, root cause</li><li>Diagnostic steps</li><li>Corrective actions and sources</li></ul>
+          </div>
+        </div>
+        <div class="stepb">
+          <header class="col stepb__head"><div class="stepb__lead"><p class="stepb__n">03</p><h3 class="stepb__title">Question any answer</h3></div><p class="t-body stepb__desc">The footer is where trust is earned: the sources, a confidence score explained in plain words, and a way to say what was wrong. Closing a chat asks for a category.</p></header>
+          <div class="col-wide shotset">
+            <figure class="frame"><div class="phones phones--3"><figure class="phone"><img src="assets/cecopilot/p/confidence.png?v=9" width="418" height="843" loading="lazy" alt="The confidence score explained: how closely the documents match, lowered by details still missing."></figure><figure class="phone"><img src="assets/cecopilot/p/feedback.png?v=9" width="418" height="843" loading="lazy" alt="Share feedback: status, category and what went wrong."></figure><figure class="phone"><img src="assets/cecopilot/p/resolve.png?v=9" width="418" height="843" loading="lazy" alt="Mark as resolved: closing the chat asks for a category."></figure></div></figure>
+            <ul class="labels labels--3" aria-hidden="true"><li>Confidence, explained</li><li>Share feedback</li><li>Mark as resolved</li></ul>
+          </div>
+        </div>
+        <div class="stepb">
+          <header class="col stepb__head"><div class="stepb__lead"><p class="stepb__n">04</p><h3 class="stepb__title">Follow it at the tool</h3></div><p class="t-body stepb__desc">Long procedures with branches read better as a flowchart. One tap turns an answer into one, with a legend for every shape.</p></header>
+          <div class="col-wide shotset">
+            <figure class="frame"><div class="phones phones--2"><figure class="phone"><img src="assets/cecopilot/p/diagram.png?v=9" width="418" height="843" loading="lazy" alt="An answer drawn as a flowchart, to pinch, zoom and pan in place."></figure><figure class="phone"><img src="assets/cecopilot/p/legend.png?v=9" width="418" height="843" loading="lazy" alt="The flowchart legend."></figure></div></figure>
+            <ul class="labels labels--2" aria-hidden="true"><li>Answer as a flowchart</li><li>A legend for every shape</li></ul>
+          </div>
+        </div>
+        <div class="stepb">
+          <header class="col stepb__head"><div class="stepb__lead"><p class="stepb__n">05</p><h3 class="stepb__title">Sign in once, find any chat again</h3></div><p class="t-body stepb__desc">Microsoft sign-in with the company’s own branding, an error that says how to fix it, and a history where every chat carries its category and status.</p></header>
+          <div class="col-wide shotset">
+            <figure class="frame"><div class="phones phones--3"><figure class="phone"><img src="assets/cecopilot/p/welcome.png?v=9" width="418" height="843" loading="lazy" alt="Welcome screen with one button: Sign in with Microsoft."></figure><figure class="phone"><img src="assets/cecopilot/p/password-error.png?v=9" width="418" height="843" loading="lazy" alt="A sign-in error that says what failed and how to fix it."></figure><figure class="phone"><img src="assets/cecopilot/p/recent.png?v=9" width="418" height="843" loading="lazy" alt="Recent chats grouped by day, each with its category and status."></figure></div></figure>
+            <ul class="labels labels--3" aria-hidden="true"><li>Sign in with Microsoft</li><li>An error that helps</li><li>Recent chats</li></ul>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section id="loop" class="stack gap-40" aria-labelledby="s-loop">
+      <div class="col stack gap-16">
+        <div class="stack gap-8">
+          <p class="eyebrow">The feedback loop</p>
+          <h2 class="t-title" id="s-loop">Wrong answers become better ones</h2>
+        </div>
+        <p class="t-body">This is the part of the product I’m proudest of. A thumbs-down in the app isn’t the end of the story: it starts a fix that every later answer benefits from.</p>
+      </div>
+
+      <figure class="col-wide" aria-label="The feedback loop: an engineer flags an answer, it lands in the admin inbox, an expert writes a scoped fix, and future answers use it, so the next engineer gets the corrected answer.">
+        <ol class="loop">
+          <li class="loop__step"><svg class="ic1" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M5 21V4"/><path d="M5 4h11.5l-2.2 4 2.2 4H5"/></svg><span class="loop__n">01</span><b>An engineer flags it</b><span>Status, category and what was wrong, from the answer footer.</span></li>
+          <li class="loop__step"><svg class="ic1" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M3 13l3-8h12l3 8v5.5a1.5 1.5 0 0 1-1.5 1.5h-15A1.5 1.5 0 0 1 3 18.5z"/><path d="M3 13h5l1.5 2.5h5L16 13h5"/></svg><span class="loop__n">02</span><b>It lands in the inbox</b><span>Sorted by type: incorrect, outdated, incomplete or a safety concern.</span></li>
+          <li class="loop__step"><svg class="ic1" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M4 20h4L19 9l-4-4L4 16z"/><path d="M13.5 6.5l4 4"/></svg><span class="loop__n">03</span><b>An expert writes the fix</b><span>Scoped to one site or one tool family, with its source document.</span></li>
+          <li class="loop__step"><svg class="ic1" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M20 12a8 8 0 1 1-2.34-5.66"/><path d="M20 4v5h-5"/></svg><span class="loop__n">04</span><b>Future answers use it</b><span>Versioned, never deleted, counted every time it’s applied.</span></li>
+          <li class="loop__back" aria-hidden="true"><span>The next engineer gets the corrected answer</span></li>
+        </ol>
+      </figure>
+      <div class="steps">
+        <div class="stepb">
+          <header class="col stepb__head"><div class="stepb__lead"><p class="stepb__n">02</p><h3 class="stepb__title">It lands in the inbox</h3></div><p class="t-body stepb__desc">Flags arrive sorted by type (incorrect, outdated, incomplete or a safety concern), each in the engineer’s own words.</p></header>
+          <figure class="col-wide frame screen-frame"><div class="screen" style="--ar:2880/1400"><img src="assets/cecopilot/admin-feedback.jpg?v=9" width="2880" height="1800" loading="lazy" alt="Feedback inbox: pending, in review, refined and median time to refine, then a table of flagged answers with type, category, site, submitter, age and status."></div></figure>
+        </div>
+        <div class="stepb">
+          <header class="col stepb__head"><div class="stepb__lead"><p class="stepb__n">03</p><h3 class="stepb__title">An expert writes the fix</h3></div><p class="t-body stepb__desc">The answer, the complaint and the fix sit side by side. Here, Copilot quoted 18 N·m from a superseded revision; the expert stores the right value, scoped to one site.</p></header>
+          <figure class="col-wide frame screen-frame"><div class="screen" style="--ar:2880/1400"><img src="assets/cecopilot/admin-fb-record.jpg?v=9" width="2880" height="1800" loading="lazy" alt="A feedback record: on the left the expert writes the refinement, chooses whether it applies to one site or a tool family, and names the source document; on the right the original thread and what the engineer said was wrong."></div></figure>
+        </div>
+        <div class="stepb">
+          <header class="col stepb__head"><div class="stepb__lead"><p class="stepb__n">04</p><h3 class="stepb__title">Future answers use it</h3></div><p class="t-body stepb__desc">Every fix traces back to the feedback that created it, and counts each time it’s applied.</p></header>
+          <figure class="col-wide frame screen-frame"><div class="screen" style="--ar:2880/1400"><img src="assets/cecopilot/admin-fb-refinements.jpg?v=9" width="2880" height="1800" loading="lazy" alt="Stored refinements: each with the feedback it came from, where it applies, its owner, how many times it has been applied and its status."></div></figure>
+        </div>
+        <div class="stepb stepb--sub">
+          <header class="col stepb__head stepb__head--sub"><div class="stepb__lead"><h4 class="stepb__title">Is the loop working?</h4></div><p class="t-body stepb__desc">Insights track feedback volume, refinement coverage and repeat feedback. Repeat feedback is the number to watch.</p></header>
+          <figure class="col-wide frame screen-frame"><div class="screen" style="--ar:2880/1400"><img src="assets/cecopilot/admin-fb-insights.jpg?v=9" width="2880" height="1800" loading="lazy" alt="Feedback insights: feedback volume, refinement coverage, answers using refinements and repeat feedback rate, with weekly volume and breakdowns by category and type."></div></figure>
+        </div>
+      </div>
+    </section>
+    <section id="admin" class="stack gap-40" aria-labelledby="s-admin">
+      <div class="col stack gap-16">
+        <div class="stack gap-8">
+          <p class="eyebrow">Admin console</p>
+          <h2 class="t-title" id="s-admin">Four questions an admin asks every week</h2>
+        </div>
+        <p class="t-body">Is it being used? Are the answers good? Where is the knowledge failing? Who can see what? The console answers them in that order.</p>
+      </div>
+<div class="steps">
+        <div class="stepb">
+          <header class="col stepb__head"><div class="stepb__lead"><h3 class="stepb__title">The overview</h3></div><p class="t-body stepb__desc">Activity by day, then the five numbers that matter: adoption, conversations, resolution rate, feedback coverage and response time.</p></header>
+          <figure class="col-wide frame screen-frame"><div class="screen" style="--ar:2880/1400"><img src="assets/cecopilot/admin-overview.jpg?v=9" width="2880" height="1800" loading="lazy" alt="CE CoPilot admin overview: an activity heatmap by day, adoption 23.6%, 26,022 conversations, 64% resolution rate, 68% feedback coverage and 6.9s average response time."></div></figure>
+        </div>
+        <div class="stepb" data-tabs>
+          <header class="col stepb__head"><div class="stepb__lead"><h3 class="stepb__title">Behind each number</h3></div><p class="t-body stepb__desc">Usage, the conversations themselves, and the documents CE CoPilot is allowed to read.</p></header>
+          <div class="col tabs__list" role="tablist" aria-label="Admin console pages"><button class="tabs__tab" type="button" role="tab" id="t-usage" aria-controls="p-usage" aria-selected="true">Usage</button><button class="tabs__tab" type="button" role="tab" id="t-conv" aria-controls="p-conv" aria-selected="false" tabindex="-1">Conversations</button><button class="tabs__tab" type="button" role="tab" id="t-convd" aria-controls="p-convd" aria-selected="false" tabindex="-1">One conversation</button><button class="tabs__tab" type="button" role="tab" id="t-kb" aria-controls="p-kb" aria-selected="false" tabindex="-1">Knowledge base</button></div>
+          <div class="tabs__panel" role="tabpanel" id="p-usage" aria-labelledby="t-usage">
+            <p class="col tabs__desc">Messages and people on one daily trend.</p>
+            <figure class="col-wide frame screen-frame"><div class="screen" style="--ar:2880/1400"><img src="assets/cecopilot/admin-usage.jpg?v=9" width="2880" height="1800" loading="lazy" alt="Usage page: conversations, messages, resolution rate and adoption, with a daily trend of messages and people."></div></figure>
+          </div>
+          <div class="tabs__panel" role="tabpanel" id="p-conv" aria-labelledby="t-conv" hidden>
+            <p class="col tabs__desc">The tiles at the top are also the filters.</p>
+            <figure class="col-wide frame screen-frame"><div class="screen" style="--ar:2880/1400"><img src="assets/cecopilot/admin-conversations.jpg?v=9" width="2880" height="1800" loading="lazy" alt="Conversations list with tiles that double as filters: all, resolved, needs attention, awaiting rating."></div></figure>
+          </div>
+          <div class="tabs__panel" role="tabpanel" id="p-convd" aria-labelledby="t-convd" hidden>
+            <p class="col tabs__desc">Read exactly as the engineer saw it, with the documents used and the rating.</p>
+            <figure class="col-wide frame screen-frame"><div class="screen" style="--ar:2880/1400"><img src="assets/cecopilot/admin-conv-detail.jpg?v=9" width="2880" height="1800" loading="lazy" alt="A single conversation: the question, the structured answer with its sources and confidence, and a side panel of category, documents used and rating."></div></figure>
+          </div>
+          <div class="tabs__panel" role="tabpanel" id="p-kb" aria-labelledby="t-kb" hidden>
+            <p class="col tabs__desc">The approved documents per site, with revision and status, and a plain reason when a file fails to index.</p>
+            <figure class="col-wide frame screen-frame"><div class="screen" style="--ar:2880/1400"><img src="assets/cecopilot/admin-kb-detail.jpg?v=9" width="2880" height="1800" loading="lazy" alt="A knowledge base for Endura platform procedures: documents with source, category, revision, owner, indexing status and a failure reason, plus an activity log."></div></figure>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section id="learned" class="stack gap-40" aria-labelledby="s-learned">
+      <div class="col stack gap-16">
+        <div class="stack gap-8">
+          <p class="eyebrow">What I learned</p>
+          <h2 class="t-title" id="s-learned">Trust is something you design</h2>
+        </div>
+        
+      </div>
+
+      <div class="col stack gap-16">
+        <p class="t-body"><b class="lead-in">Show your work:</b> engineers don’t trust an answer because it sounds sure. Showing the source and an honest confidence score let them check it for themselves.</p>
+        <p class="t-body"><b class="lead-in">A no can still help:</b> declining an off-topic question is easy. Telling the engineer exactly what to add turns a dead end into a better question.</p>
+        <p class="t-body"><b class="lead-in">Plan for being wrong:</b> some answers will be wrong. Designing the way back, from a thumbs-down to a scoped fix, mattered more than any single screen.</p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="next-wrap">
+    <a class="next" href="/design-system">
+      <h2 class="next__word" aria-hidden="true">next<br>project</h2>
+      <div class="next__card">
+        <div class="next__media"><img src="assets/ds/cover-card.jpg?v=6" width="1600" height="1143" alt="ZBrain design system specimens on a soft lavender background" loading="lazy"></div>
+        <p class="next__title"><span class="sr-only">Next project: </span>ZBrain design system</p>
+        <p class="next__cat">Design systems</p>
+      </div>
+    </a>
+  </footer>
+
+</div>
+<script>
+/* Tabs, following the APG pattern: one tab in the tab order at a time,
+   arrow keys move between them, and the panel follows selection. */
+document.querySelectorAll('[data-tabs]').forEach(function (root) {
+  var tabs = Array.prototype.slice.call(root.querySelectorAll('[role="tab"]'));
+  var panels = tabs.map(function (t) { return document.getElementById(t.getAttribute('aria-controls')); });
+  function select(i, moveFocus) {
+    tabs.forEach(function (t, n) {
+      var on = n === i;
+      t.setAttribute('aria-selected', on ? 'true' : 'false');
+      t.tabIndex = on ? 0 : -1;
+      panels[n].hidden = !on;
+    });
+    if (moveFocus) tabs[i].focus();
+  }
+  tabs.forEach(function (t, i) {
+    t.addEventListener('click', function () { select(i); });
+    t.addEventListener('keydown', function (e) {
+      var n = null;
+      if (e.key === 'ArrowRight') n = (i + 1) % tabs.length;
+      else if (e.key === 'ArrowLeft') n = (i - 1 + tabs.length) % tabs.length;
+      else if (e.key === 'Home') n = 0;
+      else if (e.key === 'End') n = tabs.length - 1;
+      if (n !== null) { e.preventDefault(); select(n, true); }
+    });
+  });
+});
+
+/* Rail: marks the section whose heading has passed the upper third of the viewport. */
+(function () {
+  var list = document.querySelector('.toc__list');
+  if (!list) return;
+  var links = Array.prototype.slice.call(list.querySelectorAll('a'));
+  var targets = links.map(function (a) { return document.getElementById(a.getAttribute('href').slice(1)); });
+  var queued = false;
+  function update() {
+    queued = false;
+    var line = window.innerHeight * 0.33, active = 0;
+    targets.forEach(function (el, i) { if (el && el.getBoundingClientRect().top <= line) active = i; });
+    if (window.innerHeight + window.scrollY >= document.body.scrollHeight - 2) active = links.length - 1;
+    links.forEach(function (a, i) {
+      if (i === active) a.setAttribute('aria-current', 'location');
+      else a.removeAttribute('aria-current');
+    });
+  }
+  function onScroll() { if (!queued) { queued = true; requestAnimationFrame(update); } }
+  window.addEventListener('scroll', onScroll, { passive: true });
+  window.addEventListener('resize', onScroll);
+  update();
+})();
+</script>
+<script>
+/* the rail steps aside while a wide picture passes beneath it */
+(() => {
+  const toc = document.querySelector('.toc'); if (!toc) return;
+  const wides = [...document.querySelectorAll('.col-wide')];
+  let queued = false;
+  const check = () => {
+    queued = false;
+    const t = toc.querySelector('.toc__list').getBoundingClientRect();
+    const hit = t.width > 0 && wides.some(w => { const r = w.getBoundingClientRect();
+      return r.left < t.right && r.top < t.bottom && r.bottom > t.top; });
+    toc.classList.toggle('is-covered', hit);
+  };
+  const q = () => { if (!queued) { queued = true; requestAnimationFrame(check); } };
+  addEventListener('scroll', q, { passive: true }); addEventListener('resize', q); check();
+})();
+</script>
+<script src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js" defer></script>
+<script src="smooth-scroll.js" defer></script>
+<script src="assets/theme.js?v=1" defer></script>
+</body>
+</html>

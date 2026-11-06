@@ -1,0 +1,86 @@
+/* ───────────────────────────────────────────────────────────────────────────
+   Page transitions.
+
+   One sweep, carried across two documents by two panels that are the same
+   thing. A click on an internal link sends the first in to cover the page being
+   left; it navigates under that cover, and the page being landed on sends the
+   second on out the far side, uncovering it. Both travel the same way, so what
+   you see is one solid edge crossing the screen while the page underneath it
+   changes — in and out are the same move, not a cover and an uncover.
+
+   Opening a project the sweep runs downward, coming back out of one it runs up.
+
+   A panel is whatever ground the page it covers is sitting on — the black on a
+   dark page, the near-white on a light one — which is also why each carries a
+   hairline on the edge it leads with: against a page that is nearly the same
+   colour, the line is what you actually see move.
+
+   Timings come from the script, which sets them on the elements — it needs the
+   same numbers to know when to navigate, and one source for them beats two
+   that can drift apart.
+   ─────────────────────────────────────────────────────────────────────────── */
+
+:root {
+  /* The page's own ground, taken from the page rather than restated here, so a
+     covered screen is the exact value underneath it on either theme and on every
+     page, and the handoff between two of them is seamless. */
+  --pt-fill: var(--bg, #0b0b0b);
+  --pt-line: rgba(241, 237, 230, .22);
+  --pt-ease: cubic-bezier(.76, 0, .24, 1);
+}
+/* the leading edge has to darken a pale panel, not lighten it */
+:root[data-theme="light"] { --pt-line: rgba(16, 16, 16, .14); }
+
+/* The page being landed on is covered before its first paint by the root
+   element's own pseudo-element. No markup to parse first means no gap to flash
+   through, however heavy the page behind it is. It only holds the screen until
+   the script has a real panel in place; the travelling is the panel's. */
+html[data-pt]::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: 9990;
+  background: var(--pt-fill);
+  pointer-events: none;
+}
+
+/* ── the panel, the same on both sides of the gap ────────────────────────── */
+
+.pt {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background: var(--pt-fill);
+  pointer-events: none;
+  will-change: transform;
+  animation: var(--pt-move) var(--pt-span) var(--pt-ease) both;
+}
+
+/* the edge it leads with. Coming in, that is the edge furthest along the way it
+   is going; going out, it is the one behind — the panel is leaving, so what
+   crosses the screen is its back edge. Either way the line travels the same
+   way, which is what makes the two panels read as one pass. */
+.pt::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: var(--pt-line);
+}
+.pt[data-phase="in"][data-dir="down"]::after,
+.pt[data-phase="out"][data-dir="up"]::after   { bottom: -1px; }
+.pt[data-phase="in"][data-dir="up"]::after,
+.pt[data-phase="out"][data-dir="down"]::after { top: -1px; }
+
+@keyframes pt-in-down  { from { transform: translateY(-101%); } to { transform: none; } }
+@keyframes pt-in-up    { from { transform: translateY(101%); }  to { transform: none; } }
+@keyframes pt-out-down { from { transform: none; } to { transform: translateY(101%); } }
+@keyframes pt-out-up   { from { transform: none; } to { transform: translateY(-101%); } }
+
+/* Nobody who has asked for less movement gets a sweep; the script stands down
+   too, so links navigate the plain way. */
+@media (prefers-reduced-motion: reduce) {
+  html[data-pt]::after,
+  .pt { display: none; }
+}

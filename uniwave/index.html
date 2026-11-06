@@ -1,0 +1,193 @@
+<!doctype html>
+<html lang="en">
+<head>
+<base href="/uniwave/">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>uniwave</title>
+  <meta name="description" content="Waves from nations, united in an app." />
+  <!-- link previews (og-image.png is made from og/og.html) -->
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="uniwave" />
+  <meta property="og:title" content="uniwave" />
+  <meta property="og:description" content="Waves from nations, united in an app." />
+  <meta property="og:url" content="https://uniwaveradio.vercel.app/" />
+  <meta property="og:image" content="https://uniwaveradio.vercel.app/og-image.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:image:alt" content="The uniwave logo beside a world map lit with thousands of radio stations" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:image" content="https://uniwaveradio.vercel.app/og-image.png" />
+  <!-- tab icon: dark on light browser themes, lime on dark ones -->
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%231F3326' stroke-width='2' stroke-linecap='round'%3E%3Cstyle%3E@media (prefers-color-scheme:dark){svg{stroke:%23CFF56E}}%3C/style%3E%3Cpath d='M4.929 4.929A10 10 0 0 0 4.929 19.071'/%3E%3Cpath d='M7.757 7.757A6 6 0 0 0 7.757 16.243'/%3E%3Ccircle cx='12' cy='12' r='2'/%3E%3Cpath d='M16.243 7.757A6 6 0 0 1 16.243 16.243'/%3E%3Cpath d='M19.071 4.929A10 10 0 0 1 19.071 19.071'/%3E%3C/svg%3E" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&family=Geist+Mono:wght@400;500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css?v=119" />
+  <script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/hls.js@1/dist/hls.min.js"></script>
+</head>
+<body class="intro-on intro-hold">
+  <!-- Intro: on a dark screen the logo's circle appears, sends out its signal twice, holds steady, and the name appears -->
+  <div class="intro" id="intro" aria-hidden="true">
+    <div class="intro-bg"></div>
+    <div class="intro-glow"></div>
+    <div class="intro-mark" id="intro-mark">
+      <svg class="intro-icon" viewBox="0 0 24 24">
+        <path class="i-arc i-out" d="M4.929 4.929A10 10 0 0 0 4.929 19.071"/>
+        <path class="i-arc i-in" d="M7.757 7.757A6 6 0 0 0 7.757 16.243"/>
+        <circle class="i-dot" cx="12" cy="12" r="2"/>
+        <path class="i-arc i-in" d="M16.243 7.757A6 6 0 0 1 16.243 16.243"/>
+        <path class="i-arc i-out" d="M19.071 4.929A10 10 0 0 1 19.071 19.071"/>
+      </svg>
+      <span class="intro-clip"><span class="intro-word">uniwave</span></span>
+    </div>
+  </div>
+  <!-- Icons are Lucide line icons (ISC licence). -->
+  <div class="app">
+    <header class="topbar">
+      <a class="wordmark" href="./" aria-label="uniwave">
+        <svg viewBox="0 0 24 24"><path d="M4.929 4.929A10 10 0 0 0 4.929 19.071"/><path d="M7.757 7.757A6 6 0 0 0 7.757 16.243"/><circle cx="12" cy="12" r="2"/><path d="M16.243 7.757A6 6 0 0 1 16.243 16.243"/><path d="M19.071 4.929A10 10 0 0 1 19.071 19.071"/></svg>
+        <span>uniwave</span>
+      </a>
+      <nav class="tabs" aria-label="Menu">
+        <!-- a list beside a music note: browse by genre (also saved as icon-genres.svg) -->
+        <button class="tab" id="tab-genres" aria-pressed="false" aria-label="Genres" data-tip="Genres" data-tip-pos="bottom">
+          <svg viewBox="0 0 24 24"><path d="M3 5.4h10.4"/><path d="M3 10.65h10.4"/><path d="M3 15.85h6.3"/><path d="M17.8 16.6V6.6a1.5 1.5 0 0 1 1.5-1.5h1.7"/><circle cx="15.6" cy="16.6" r="2.4" fill="currentColor"/></svg>
+        </button>
+        <button class="tab" id="tab-favs" aria-pressed="false" aria-label="Favorites" data-tip="Favorites" data-tip-pos="bottom-end">
+          <svg viewBox="0 0 24 24"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg>
+        </button>
+      </nav>
+    </header>
+
+    <main class="main" id="main">
+      <section class="map-area" id="map-area" aria-label="World map">
+        <div class="map-intro" aria-hidden="true"></div>
+        <div class="intro-text">
+          <h1>Tune in to the world, live.</h1>
+          <p>Tap any country to hear what it’s playing right now, or start with a listener favourite.</p>
+          <div class="famous" id="famous" role="region" tabindex="0" aria-label="Popular stations, continuously scrolling. Hover or focus to pause. Scroll or use arrow keys to browse."></div>
+        </div>
+
+        <div class="map" id="map">
+          <canvas id="earth" aria-hidden="true"></canvas>
+          <svg id="map-svg" role="img" aria-label="World map of countries with radio stations">
+            <defs>
+              <filter id="lift" x="-20%" y="-20%" width="140%" height="140%">
+                <feDropShadow id="lift-shadow" dx="0" dy="2" stdDeviation="3" flood-color="#000" flood-opacity="0.6" />
+              </filter>
+              <filter id="glow" x="-30%" y="-30%" width="160%" height="160%">
+                <feDropShadow id="glow-shadow" dx="0" dy="0" stdDeviation="4" flood-color="#CFF56E" flood-opacity="0.4" />
+              </filter>
+              <!-- selected country: emerald flowing into sage, as in the palette -->
+              <linearGradient id="sel-fill" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0" stop-color="#347B66" />
+                <stop offset="1" stop-color="#6FA99F" />
+              </linearGradient>
+              <linearGradient id="sel-fill-hover" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0" stop-color="#3F8C76" />
+                <stop offset="1" stop-color="#86BDB2" />
+              </linearGradient>
+            </defs>
+          </svg>
+          <canvas id="dots" aria-hidden="true"></canvas>
+          <div class="hover-tip hidden" id="hover-tip"></div>
+          <div class="map-loading" id="map-loading">Loading map…</div>
+        </div>
+        <div class="map-horizon" id="map-horizon" aria-hidden="true"></div>
+
+        <!-- the playing station's location, on the map while the station is on -->
+        <div class="pin" id="pin" aria-hidden="true"><div class="pin-body"><span class="pin-head"><i class="pin-logo" id="pin-logo"></i></span><span class="pin-pulse"></span></div></div>
+
+        <div class="map-foot">
+          <div class="zoom">
+            <button id="zoom-in" data-tip="Zoom in" data-tip-pos="left" aria-label="Zoom in"><svg viewBox="0 0 24 24"><path d="M5 12h14"/><path d="M12 5v14"/></svg></button>
+            <button id="zoom-out" data-tip="Zoom out" data-tip-pos="left" aria-label="Zoom out"><svg viewBox="0 0 24 24"><path d="M5 12h14"/></svg></button>
+            <button id="fit" data-tip="Fit to screen" data-tip-pos="left" aria-label="Fit the whole map to the screen"><svg viewBox="0 0 24 24"><path d="M3 9.5V5a2 2 0 0 1 2-2h4.5"/><path d="M14.5 3H19a2 2 0 0 1 2 2v4.5"/><path d="M21 14.5V19a2 2 0 0 1-2 2h-4.5"/><path d="M9.5 21H5a2 2 0 0 1-2-2v-4.5"/></svg></button>
+          </div>
+        </div>
+
+        <!-- The player: the station's logo ringed by a live spectrum, floating over the map -->
+        <div class="np idle" id="np" role="region" aria-label="Player">
+          <div class="np-art" aria-hidden="true">
+            <canvas class="np-ring" id="np-ring"></canvas>
+            <div class="np-label" id="np-label"></div>
+          </div>
+          <span class="p-live" id="p-live">○ OFF AIR</span>
+          <div class="np-name" id="np-name">Nothing playing</div>
+          <dl class="np-info">
+            <div><dt>Country</dt><dd id="np-country"></dd></div>
+            <div id="np-genre-row"><dt>Genre</dt><dd id="np-tags"></dd></div>
+            <div id="np-stream-row"><dt>Stream</dt><dd class="p-quality" id="p-quality"></dd></div>
+          </dl>
+          <div class="np-controls">
+            <button class="ibtn" id="p-shuffle" data-tip="Shuffle this country’s stations" aria-label="Shuffle this country’s stations">
+              <svg viewBox="0 0 24 24"><path d="m18 14 4 4-4 4"/><path d="m18 2 4 4-4 4"/><path d="M2 18h1.973a4 4 0 0 0 3.3-1.7l5.454-7.6a4 4 0 0 1 3.3-1.7H22"/><path d="M2 6h1.972a4 4 0 0 1 3.6 2.2"/><path d="M22 18h-6.041a4 4 0 0 1-3.3-1.8l-.359-.45"/></svg>
+            </button>
+            <button class="ibtn" id="p-prev" data-tip="Previous station" aria-label="Previous station" disabled>
+              <svg class="fill" viewBox="0 0 24 24"><polygon points="19 20 9 12 19 4 19 20"/><line x1="5" x2="5" y1="19" y2="5"/></svg>
+            </button>
+            <button class="p-play" id="p-play" data-tip="Play" aria-label="Play" disabled>
+              <svg class="i-play" viewBox="0 0 24 24"><polygon points="6 3 20 12 6 21 6 3"/></svg>
+              <svg class="i-pause" viewBox="0 0 24 24"><rect x="14" y="4" width="4" height="16" rx="1"/><rect x="6" y="4" width="4" height="16" rx="1"/></svg>
+            </button>
+            <button class="ibtn" id="p-next" data-tip="Next station" aria-label="Next station" disabled>
+              <svg class="fill" viewBox="0 0 24 24"><polygon points="5 4 15 12 5 20 5 4"/><line x1="19" x2="19" y1="5" y2="19"/></svg>
+            </button>
+            <button class="ibtn" id="p-fav" data-tip="Add to favorites" aria-label="Add to favorites" disabled>
+              <svg viewBox="0 0 24 24"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg>
+            </button>
+          </div>
+          <div class="np-vol">
+            <button class="ibtn" id="p-mute" data-tip="Mute" aria-label="Mute"><svg viewBox="0 0 24 24" id="vol-icon"></svg></button>
+            <input type="range" id="p-volume" min="0" max="1" step="0.01" value="0.8" aria-label="Volume" />
+            <button class="ibtn hidden" id="p-output" data-tip="Audio output" aria-label="Choose audio output">
+              <svg viewBox="0 0 24 24"><path d="M5.5 20H8"/><path d="M17 9h.01"/><rect width="10" height="16" x="12" y="4" rx="2"/><path d="M8 6H4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h4"/><circle cx="17" cy="15" r="1"/></svg>
+            </button>
+            <button class="ibtn" id="p-expand" data-tip="Full screen" data-tip-pos="top-end" aria-label="Full screen">
+              <svg viewBox="0 0 24 24" id="expand-icon"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" x2="14" y1="3" y2="10"/><line x1="3" x2="10" y1="21" y2="14"/></svg>
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- Search: an icon in the top bar that opens out into the search bar; it stays there while a panel is open -->
+      <div class="searchbar" id="searchbar">
+        <div class="country-search" id="country-search-wrap">
+          <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+          <input id="country-search" type="text" placeholder="country, station or genre" autocomplete="off" spellcheck="false"
+            role="combobox" aria-expanded="false" aria-controls="country-results" aria-autocomplete="list" aria-label="Search a country, station or genre" />
+          <kbd>/</kbd>
+          <ul id="country-results" class="results hidden" role="listbox"></ul>
+        </div>
+      </div>
+
+      <!-- The panel: a country's or a genre's stations, favorites or the genre list, at the right -->
+      <div class="finder" id="finder">
+        <button class="ibtn finder-close" id="finder-close" aria-label="Close">
+          <svg viewBox="0 0 24 24"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+        </button>
+        <div class="finder-body" id="finder-body" aria-label="Stations" aria-live="polite" inert>
+          <div class="side-head">
+            <div class="eyebrow" id="side-eyebrow">You’re exploring</div>
+            <div class="side-title"><span id="side-mark"></span><h2 id="side-title"></h2></div>
+            <div class="side-sub-row">
+              <div class="side-sub" id="side-sub"></div>
+              <button class="side-shuffle" id="side-shuffle" aria-label="Shuffle"><svg viewBox="0 0 24 24"><path d="m18 14 4 4-4 4"/><path d="m18 2 4 4-4 4"/><path d="M2 18h1.973a4 4 0 0 0 3.3-1.7l5.454-7.6a4 4 0 0 1 3.3-1.7H22"/><path d="M2 6h1.972a4 4 0 0 1 3.6 2.2"/><path d="M22 18h-6.041a4 4 0 0 1-3.3-1.8l-.359-.45"/></svg><span>Shuffle</span></button>
+            </div>
+          </div>
+          <div class="side-genres" id="side-genres" aria-label="Filter by genre"></div>
+          <ul class="stations" id="stations"></ul>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <div class="toast hidden" id="toast" role="status"></div>
+
+
+  <script src="dots.js?v=1"></script>
+  <script src="app.js?v=154"></script>
+</body>
+</html>
