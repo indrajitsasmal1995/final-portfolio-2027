@@ -30,32 +30,13 @@ body::after{
 }
 [data-theme="light"] body::after{opacity:.035;}
 
-/* ---------- the theme switch ----------
-   These pages have no top bar, only the rail down the left, so it sits in the
-   top right corner of the window where the homepage keeps its own. */
-.theme-switch{
-  position:fixed;top:22px;right:22px;z-index:95;
-  width:38px;height:38px;display:grid;place-items:center;padding:0;
-  border:1px solid var(--rule);border-radius:50%;
-  background:color-mix(in srgb, var(--bg) 72%, transparent);
-  -webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);
-  color:var(--ink);cursor:pointer;
-  transition:background-color .35s ease,border-color .35s ease,color .35s ease;
-}
-.theme-switch:hover{border-color:var(--line);}
-.theme-switch svg{width:19px;height:19px;display:block;fill:none;stroke:currentColor;stroke-width:1.7;}
-.theme-switch .t-moon{display:none;}
-[data-theme="light"] .theme-switch .t-sun,[data-theme="light"] .theme-switch .t-rays{display:none;}
-[data-theme="light"] .theme-switch .t-moon{display:block;}
-@media (max-width:760px){.theme-switch{top:14px;right:14px;width:34px;height:34px;}.theme-switch svg{width:17px;height:17px;}}
 
 /* ---------- the sections menu (smaller screens) ----------
-   Below 1240px the rail down the left is hidden, so the corner the theme switch held gets a
-   menu button instead, and the rail itself opens as a panel from the top: Go back, then the
-   sections with the current one marked, then the theme switch (built into it by theme.js). */
-.case-menu-btn,.toc__theme{display:none;}
+   Below 1240px the rail down the left is hidden, so a menu button sits in the top right
+   corner and the rail itself opens as a panel from the top: Go back, then the sections with
+   the current one marked. The button is built by theme.js. */
+.case-menu-btn{display:none;}
 @media (max-width:1239px){
-  .theme-switch{display:none;}
   .case-menu-btn{
     position:fixed;top:22px;right:22px;z-index:96;
     width:38px;height:38px;display:grid;place-items:center;padding:0;
@@ -99,13 +80,6 @@ body::after{
   .toc .toc__toggle{width:40px;height:40px;display:grid;place-items:center;}
   .toc .toc__toggle svg{width:14px;height:14px;}
   .toc .toc__sub a{padding-left:16px;font-size:17px;}
-  .toc__theme{display:flex;align-items:center;gap:10px;margin-top:6px;padding:16px 0 2px;
-    border:0;border-top:1px solid var(--rule);background:none;color:var(--ink);
-    font:inherit;font-size:15px;line-height:24px;cursor:pointer;text-align:left;}
-  .toc__theme svg{width:18px;height:18px;flex:none;fill:none;stroke:currentColor;stroke-width:1.7;}
-  .toc__theme .t-moon{display:none;}
-  [data-theme="light"] .toc__theme .t-sun,[data-theme="light"] .toc__theme .t-rays{display:none;}
-  [data-theme="light"] .toc__theme .t-moon{display:block;}
 }
 @media (max-width:760px){
   .case-menu-btn{top:14px;right:14px;width:34px;height:34px;}
