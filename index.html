@@ -132,9 +132,11 @@
     :root[data-theme="light"] .side-tags li,
     :root[data-theme="light"] .proc-copy .num,
     :root[data-theme="light"] .side-go b,
-    :root[data-theme="light"] .facts h3,
     :root[data-theme="light"] .foot-links a:hover,
     :root[data-theme="light"] .foot-links a:focus-visible { color: var(--accent-ink); }
+    /* the section labels (Recognitions) stay green and medium in both themes: on the light page in
+       the deepest step of the same mint, since the resting mint all but disappears on cream */
+    :root[data-theme="light"] .facts h3 { color: var(--accent-3); font-weight: 500; }
     :root[data-theme="light"] .flow { mix-blend-mode: multiply; }
     :root[data-theme="light"] .flow.is-on { opacity: .72; }
     * { box-sizing: border-box; margin: 0; padding: 0; }
