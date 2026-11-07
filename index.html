@@ -8,6 +8,29 @@
 <script>try{var tm=localStorage.getItem('theme');if(!tm)tm=matchMedia('(prefers-color-scheme: light)').matches?'light':'dark';var dr=document.documentElement;dr.setAttribute('data-theme',tm);dr.style.colorScheme=tm}catch(e){}</script>
 <script>try{if(!matchMedia('(prefers-reduced-motion:reduce)').matches){var h=sessionStorage.getItem('ptHop');sessionStorage.removeItem('ptHop');var p=h?h.split('|'):0;if(p&&p.length==2&&Date.now()-(+p[1])<3000){var r=document.documentElement;r.setAttribute('data-pt',p[0]);r.classList.add('pt-held');setTimeout(function(){if(r.classList.contains('pt-held')){r.classList.remove('pt-held');r.removeAttribute('data-pt')}},6000)}}}catch(e){}</script>
 <script src="assets/page-transition.js?v=7" defer></script>
+<script>
+/* Back from a case study. Its "Go back" link names the card it came from (#work-dhs-tutor,
+   #side-finora). The name comes off the address bar before the page is drawn, so the URL stays
+   the plain homepage, and the page puts itself back on that card: once the markup is in, again
+   when fonts and images have settled, and never after the reader has started scrolling. */
+(function () {
+  var m = /^#((?:work|side)-[\w-]+)$/.exec(location.hash);
+  if (!m) return;
+  var id = m[1], moved = false;
+  try { history.replaceState(history.state, '', location.pathname + location.search); } catch (e) {}
+  var go = function () {
+    if (moved) return;
+    var el = document.getElementById(id);
+    if (el) el.scrollIntoView({ block: 'start', behavior: 'instant' });
+  };
+  ['wheel', 'touchstart', 'keydown', 'pointerdown'].forEach(function (t) {
+    addEventListener(t, function () { moved = true; }, { once: true, passive: true });
+  });
+  document.addEventListener('DOMContentLoaded', go);
+  addEventListener('load', function () { go(); setTimeout(go, 0); });
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(go);
+})();
+</script>
 <link rel="icon" href="favicon.svg?v=4" type="image/svg+xml">
   <title>Indrajit Sasmal | Product Designer</title>
   <meta name="description" content="Indrajit Sasmal is a product designer at LeewayHertz who owns products end to end: brainstorming ideas, designing solutions, bringing them alive in prototypes, and testing every UI/UX gap before launch.">
