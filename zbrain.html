@@ -259,10 +259,9 @@ a:hover{text-decoration:underline;text-underline-offset:3px;}
    that introduces it. At this measure a column is about 120px, which is too narrow for the
    branch lines the taller version used: the rule above each group and its label carry the
    grouping instead, and the type steps down so a long page name breaks over two lines rather
-   than out of its column. The sidebar's first group has no heading, so its label slot is
-   held open and left empty rather than given a name the product does not use. */
+   than out of its column. The sidebar's first group has no heading of its own; here it is
+   labelled Overview so every column reads the same way. */
 .ia--tree{grid-template-columns:repeat(5,minmax(0,1fr));gap:26px 14px;}
-.ia__label--blank{min-height:20px;}
 @media (max-width:860px){.ia--tree{grid-template-columns:repeat(3,minmax(0,1fr));gap:30px 20px;}}
 .ia--tree .ia__group{padding-top:12px;}
 .ia--tree .ia__label{font-size:11px;letter-spacing:.1em;}
@@ -494,18 +493,18 @@ html.lenis,html.lenis body{height:auto;}
       </div>
 
       <div class="col stack gap-16">
-        <p class="t-body">Three compliance frameworks to support, four things a builder can run out of, one deployment path with checks that can fail. The console’s menu comes out of that rather than from a sitemap drawn first: the Observatory and Spaces at the top, then Access, Resources, Governance and Account, with the pages inside each.</p>
+        <p class="t-body">Three compliance frameworks to support, four things a builder can run out of, one deployment path with checks that can fail. The console’s menu comes out of that rather than from a sitemap drawn first: Overview, Access, Resources, Governance and Account, with the pages inside each.</p>
       </div>
 
       <figure class="col ig" aria-labelledby="ia-cap">
         <div class="ia ia--tree">
-          <div class="ia__group"><p class="ia__label ia__label--blank" aria-hidden="true"></p><ul class="ia__items"><li><span class="ia__name">Observatory</span></li><li><span class="ia__name">Spaces</span></li></ul></div>
+          <div class="ia__group"><p class="ia__label">Overview</p><ul class="ia__items"><li><span class="ia__name">Observatory</span></li><li><span class="ia__name">Spaces</span></li></ul></div>
           <div class="ia__group"><p class="ia__label">Access</p><ul class="ia__items"><li><span class="ia__name">Users</span></li></ul></div>
           <div class="ia__group"><p class="ia__label">Resources</p><ul class="ia__items"><li><span class="ia__name">Models</span></li><li><span class="ia__name">Connections</span></li><li><span class="ia__name">API Keys</span></li></ul></div>
           <div class="ia__group"><p class="ia__label">Governance</p><ul class="ia__items"><li><span class="ia__name">Policies</span></li><li><span class="ia__name">Requests</span></li><li><span class="ia__name">Agent log</span></li><li><span class="ia__name">Usage log</span></li><li><span class="ia__name">Deployments</span></li><li><span class="ia__name">Audit &amp; Activity</span></li></ul></div>
           <div class="ia__group"><p class="ia__label">Account</p><ul class="ia__items"><li><span class="ia__name">Billing</span></li><li><span class="ia__name">My Account</span></li></ul></div>
         </div>
-        <figcaption id="ia-cap" class="vh">The admin console’s menu as it appears in its sidebar: Observatory and Spaces at the top, then four groups, Access, Resources, Governance and Account, with the pages inside each.</figcaption>
+        <figcaption id="ia-cap" class="vh">The admin console’s menu in five groups: Overview, with the Observatory and Spaces, then Access, Resources, Governance and Account, with the pages inside each.</figcaption>
       </figure>
 
       <div class="col stack gap-16">
