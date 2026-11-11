@@ -83,6 +83,10 @@
 
 *,*::before,*::after{box-sizing:border-box;}
 html{-webkit-text-size-adjust:100%;scroll-behavior:smooth;}
+/* Lenis drives the scroll; the browser's own smooth-scroll would fight it */
+html.lenis,html.lenis body{height:auto;}
+.lenis.lenis-smooth{scroll-behavior:auto !important;}
+.lenis.lenis-stopped{overflow:hidden;}
 body{margin:0;background:var(--bg);color:var(--ink);font:400 15px/24px var(--sans);-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;}
 img,video{display:block;max-width:100%;height:auto;}
 h1,h2,h3,p,ul,ol,figure,blockquote,dl,dd{margin:0;}
@@ -1042,6 +1046,8 @@ figcaption,.loop figcaption,.branch li,.metric span,.meta dt,.note{font:400 var(
   lb.addEventListener('click', function () { lb.close(); });
 })();
 </script>
+<script src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js" defer></script>
+<script src="smooth-scroll.js" defer></script>
 <script src="assets/cursor.js?v=1"></script>
 </body>
 </html>
