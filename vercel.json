@@ -26,13 +26,13 @@
       "permanent": true
     },
     {
-      "source": "/zbrain",
-      "destination": "/zbrain-v2",
+      "source": "/zbrain-v2",
+      "destination": "/zbrain",
       "permanent": false
     },
     {
-      "source": "/ce-copilot",
-      "destination": "/ce-copilot-v2",
+      "source": "/ce-copilot-v2",
+      "destination": "/ce-copilot",
       "permanent": false
     },
     {
