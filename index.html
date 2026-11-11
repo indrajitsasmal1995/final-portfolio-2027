@@ -9,8 +9,8 @@
 <script>try{if(!matchMedia('(prefers-reduced-motion:reduce)').matches){var h=sessionStorage.getItem('ptHop');sessionStorage.removeItem('ptHop');var p=h?h.split('|'):0;if(p&&p.length==2&&Date.now()-(+p[1])<3000){var r=document.documentElement;r.setAttribute('data-pt',p[0]);r.classList.add('pt-held');setTimeout(function(){if(r.classList.contains('pt-held')){r.classList.remove('pt-held');r.removeAttribute('data-pt')}},6000)}}}catch(e){}</script>
 <script src="assets/page-transition.js?v=7" defer></script>
 <script>
-/* Back from a case study. Its "Go back" link names the card it came from (#work-dhs-tutor,
-   #side-finora). The name comes off the address bar before the page is drawn, so the URL stays
+/* Back from a case study. Its "Go back" link names the card it came from (for example
+   #work-dhs-tutor). The name comes off the address bar before the page is drawn, so the URL stays
    the plain homepage, and the page puts itself back on that card: once the markup is in, again
    when fonts and images have settled, and never after the reader has started scrolling. */
 (function () {
@@ -51,8 +51,9 @@
 <meta name="twitter:image:alt" content="Portfolio27. Indrajit Sasmal, Product Designer">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Mona+Sans:wght@200..900&family=Plus+Jakarta+Sans:wght@300..800&display=swap" rel="stylesheet">
-  <style>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300..800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/cursor.css?v=1">
+<style>
     :root {
       --bg: #0b0b0b;
       --bg-2: #141414;
@@ -85,7 +86,7 @@
       --wrap: 1153px;
       --pad: 32px;
       --sans: "Plus Jakarta Sans", system-ui, sans-serif;
-      --display: "Mona Sans", "Plus Jakarta Sans", system-ui, sans-serif;   /* headings only */
+      --display: "Plus Jakarta Sans", system-ui, sans-serif;   /* the title, section headings and closing line, as on CE CoPilot v2 */
       --ease: cubic-bezier(.2, .7, .1, 1);
       /* how far the ring's layer is pulled down into the closing section. Named because two
          rules need the same number: the layer subtracts it, and the closing line adds it back
@@ -152,14 +153,12 @@
     /* the tag sits on its own tinted chip rather than the page, so it takes the darkest step */
     /* mint is a fill colour: as text on the light page it is about 1.5:1. Where dark mode writes
        in the accent, light mode writes in the mint's own ink, the colour that sits on a mint button */
-    :root[data-theme="light"] .side-tags li,
     :root[data-theme="light"] .proc-copy .num,
-    :root[data-theme="light"] .side-go b,
     :root[data-theme="light"] .foot-links a:hover,
     :root[data-theme="light"] .foot-links a:focus-visible { color: var(--accent-ink); }
-    /* the section labels (Recognitions) stay green and medium in both themes: on the light page in
-       the deepest step of the same mint, since the resting mint all but disappears on cream */
-    :root[data-theme="light"] .facts h3 { color: var(--accent-3); font-weight: 500; }
+    /* the section labels (Recognitions) stay green in both themes: on the light page in the
+       deepest step of the same mint, since the resting mint all but disappears on cream */
+    :root[data-theme="light"] .facts h3 { color: var(--accent-3); }
     :root[data-theme="light"] .flow { mix-blend-mode: multiply; }
     :root[data-theme="light"] .flow.is-on { opacity: .72; }
     * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -256,11 +255,6 @@
     .pill:hover .pill__arrow--out i:first-child, .pill:focus-visible .pill__arrow--out i:first-child { transform: translate(110%, -110%); }
     .pill:hover .pill__arrow i:last-child, .pill:focus-visible .pill__arrow i:last-child { transform: none; transition-delay: .06s; }
     .vh { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
-    /* the cursor dot steps aside over the framed works (they tilt instead) */
-    .cursor.is-hidden, .cursor.is-btn { width: 0; height: 0; margin: 0; }
-    /* over a link it grows and fades, leaving the link's own hover in view; over buttons it hides (above) */
-    .cursor.is-link { width: 56px; height: 56px; margin: -28px 0 0 -28px; }
-    .cursor.is-on.is-link { opacity: .32; }
     @media (prefers-reduced-motion: reduce) {
       .pill.primary::before, .pill.tint::before, .pill__label > span, .pill__label::after, .pill__arrow i { transition: none; }
     }
@@ -467,32 +461,36 @@
       .work-head { grid-template-columns: 1fr auto; }
       .work-head > p { justify-self: end; margin-bottom: .18em; }
     }
-    .stack { margin-top: clamp(60px, 8vw, 110px); }
-    /* a card leaning in flares wider at its foot than the screen on narrow viewports; clip that
-       sideways here, where it happens, so the page never scrolls left and right. clip, not hidden:
-       it makes no scroll box, so the cards stay sticky */
+    .cases { margin-top: clamp(40px, 5vw, 64px); }
+    /* nothing in the list should ever push the page sideways */
     #work { overflow-x: clip; }
     /* Coming back from a project lands on the card it was opened from rather than at the top
        of the section, and the header sits over the page, so the landing has to clear it. */
     .card-mark { display: block; height: 0; scroll-margin-top: 104px; }
-    .stack-item {
-      position: sticky; top: 104px; display: block;
-      height: min(calc(100svh - 150px), 740px); margin-bottom: 8vh;
-      border-radius: 22px; overflow: hidden; background: var(--bg-2);
-      /* The whole card leans back as it rises and comes upright as it lands: picture, shade and
-         caption as one piece. Hinged on its top edge, so that edge keeps the width of the card it
-         is covering and only the bottom swings out toward you. Tilting just the picture inside a
-         flat frame read as the image sliding about in a box. */
-      transform: perspective(1600px) rotateX(calc(var(--settle, 0) * 16deg));
-      transform-origin: 50% 0;
-      will-change: transform;
+    /* Case studies as a list, after the reference: the picture in a soft frame on the left, what it
+       is on the right, no rule between rows. They scroll with the page; only the picture moves,
+       drifting inside its frame (see .work-visual). */
+    .case { display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr); align-items: center; gap: 32px;
+      padding-block: 24px; color: var(--ink); }
+    .cases > .case:first-of-type { padding-top: 0; }
+    .case { isolation: isolate; }   /* keeps the stretched frame below the copy */
+    .case-frame { position: relative; padding: 20px 14px; border-radius: 10px; }
+    /* The frame's grey is drawn here so that on hover it can stretch right across the row, behind
+       the copy, to the row's far edge: its own width (the first column), the 32px gap, and the copy
+       column, which the grid makes 1/1.15 of the first. Pointer screens only, never on phones. */
+    .case-frame::before { content: ""; position: absolute; z-index: -1; top: 0; bottom: 0; left: 0; width: 100%;
+      border-radius: inherit; background: var(--tint); transition: width .6s var(--ease); }
+    @media (hover: hover) and (min-width: 761px) {
+      .case:hover .case-frame::before, .case:focus-visible .case-frame::before { width: calc(100% * (1 + 1 / 1.15) + 32px); }
     }
-    .stack-item:last-child { margin-bottom: 0; }
-    /* The background and every picture on it are one layer: the zoom-out as a card settles is
-       applied here, to the whole visual, so a wash and the screens sitting on it move together
-       the way the single-image banners always did, rather than screens sliding over a still ground. */
-    .work-visual { position: absolute; inset: 0; overflow: hidden; isolation: isolate;
-      transform: scale(calc(var(--zoom, 1) + var(--settle, 0) * .05)); transform-origin: center 30%; }
+    .case-shot { position: relative; aspect-ratio: 1153 / 740; border-radius: 6px; overflow: hidden; isolation: isolate;
+      /* parallax: the whole picture, uncropped, drifts up to 6px inside the frame's 20px top and
+         bottom padding (--para, from the script), so it reads as sitting behind the frame */
+      transform: translate3d(0, calc(var(--para, 0) * 6px), 0); will-change: transform; }
+    /* the banners show whole: no cover crop and no fade at the foot, which was there for the old caption overlay */
+    .case-shot .work-banner { object-fit: contain; -webkit-mask-image: none; mask-image: none; }
+    /* The background and every picture on it are one layer, shown whole at its own proportions. */
+    .work-visual { position: absolute; inset: 0; overflow: hidden; isolation: isolate; }
     /* The pictures are one fixed composition, drawn to the desktop card's proportions, that only
        ever scales: as wide as the card, its height following from that, sitting at the top. A
        narrower card shows the same composition smaller, with its ground carrying on below it,
@@ -528,35 +526,22 @@
     .mock-mobile img { width: 100%; height: 100%; object-fit: cover; object-position: top; }
     .mock-mobile--first { right: 17%; top: 20%; }
     .mock-mobile--second { right: 3%; top: 25%; }
-    /* the block below it is taller now and these cards carry bright screenshots, not the soft blur
-       the reference puts its text on, so the shade reaches higher and lands deeper */
-    /* One overlay, the full width of the banner and straight down it. A pool anchored in the
-       corner is a shape, and a shape laid over a photograph shows its own outline wherever its
-       falloff is quickest — which is the arc that kept cutting across these. A gradient that runs
-       edge to edge has no outline to show: every pixel on a given row is darkened by the same
-       amount, so there is nothing to read as a boundary. It carries the caption on its own now,
-       which is why it goes deeper than it used to. */
-    .stack-item::after { content: ""; position: absolute; inset: 0; pointer-events: none;
-      background: linear-gradient(180deg, transparent 0%, rgba(0, 0, 0, .03) 24%, rgba(0, 0, 0, .08) 34%,
-        rgba(0, 0, 0, .15) 43%, rgba(0, 0, 0, .24) 51%, rgba(0, 0, 0, .35) 59%, rgba(0, 0, 0, .47) 67%,
-        rgba(0, 0, 0, .59) 75%, rgba(0, 0, 0, .71) 83%, rgba(0, 0, 0, .82) 91%, rgba(0, 0, 0, .9) 100%); }
-    .stack-shade { position: absolute; inset: 0; background: #000; opacity: var(--shade, 0); z-index: 2; pointer-events: none; }
-    /* title, then what it is, then the way in — one column on the left edge, the way the reference
-       has it. The reference centres that column in its card; these cards are twice as tall and carry
-       a shade along their bottom, so it stays on the bottom edge where the shade can hold it. */
-    .stack-cap { position: absolute; left: 0; right: 0; bottom: 0; z-index: 1; display: flex; justify-content: space-between; align-items: flex-end; gap: 24px; padding: clamp(24px, 3.4vw, 46px); }
-    .stack-cap > div { max-width: 660px; }
-    .stack-cap h3 { text-transform: none; font-size: clamp(32px, 4.6vw, 62px); line-height: 1.02; color: #fff; max-width: 15ch; }
-    .stack-cap small { display: block; font-size: 14px; letter-spacing: .08em; text-transform: uppercase; color: rgba(255, 255, 255, .9); margin-bottom: 14px; }   /* the smallest line on the card, so it gets the most of the white */
-    .stack-cap p { margin-top: 16px; max-width: 52ch; font-size: clamp(15px, 1.25vw, 17px); line-height: 1.45; color: rgba(255, 255, 255, .84); text-wrap: pretty; }
+    /* the copy beside the frame: worked for, product type, built on as outline pills, then the title
+       and the line under it, centred on the frame's height */
+    .case-copy { display: grid; justify-items: start; align-content: center; padding-right: 32px; }   /* the same inset on the right as the gap on the left, once the frame stretches */
+    .case-tags { display: flex; flex-wrap: wrap; gap: 8px; margin: 0 0 16px; padding: 0; list-style: none; }
+    .case-tags li { font-size: 13px; line-height: 1; padding: 7px 12px; border-radius: 999px; border: 1px solid rgba(var(--ink-rgb), .4); color: var(--ink-2); white-space: nowrap; }
+    .case-copy h3 { text-transform: none; color: var(--ink); max-width: 18ch; }
+    .case-copy p { margin-top: 12px; max-width: 46ch; color: var(--muted); text-wrap: pretty; }
 
     /* What I do: fill heading + overlapping cards */
     .do-head { display: flex; justify-content: space-between; align-items: center; gap: 32px; }
     /* problem to product: four framed paintings on transparent canvases. On larger screens the section holds while
        the works slide past like a small gallery; each frame has its own period character. */
     .proc .do-head { align-items: flex-end; gap: clamp(28px, 4vw, 64px); }
-    /* a single progress line, centred on the heading's lowercase letters: nudged from the box centre by .133 of the heading size */
-    .proc-rail { flex: 1; min-width: 140px; display: none; align-self: center; transform: translateY(calc(clamp(56px, 8.6vw, 124px) * .133)); }
+    /* a single progress line, centred on the heading's lowercase letters: nudged from the box centre by .141 of the heading size
+       (the x-height centre of Plus Jakarta Sans at the heading's 1.02 leading; measured, the same .141 Fraunces gave) */
+    .proc-rail { flex: 1; min-width: 140px; display: none; align-self: center; transform: translateY(calc(clamp(40px, 5.2vw, 68px) * .141)); }
     .proc.is-pinned .proc-rail { display: flex; }
     .proc-rail__line { position: relative; width: 100%; height: 1px; background: var(--line); }
     .proc-rail__line i { position: absolute; inset: 0; background: var(--accent); transform: scaleX(0); transform-origin: left; }
@@ -667,60 +652,25 @@
     .qc-dot.is-on { width: 42px; background: rgba(var(--ink-rgb), .3) content-box; }
     .qc-dot i { position: absolute; left: 0; top: 6px; bottom: 6px; width: 0; background: var(--accent-2); border-radius: inherit; pointer-events: none; }
 
-    /* Reel: widens to full bleed as it scrolls in, words and screens cycle */
-    .reel { padding: 20px 0 clamp(90px, 12vw, 160px); }
-    /* the reel carries its own typography, so the frame keeps the video's 16:9 shape instead of cropping it */
-    /* on wide, short screens the 16:9 frame is narrower than the window, so it sits centred */
-    .reel-frame { position: relative; aspect-ratio: 16 / 9; width: min(100%, calc(92vh * 16 / 9)); width: min(100%, calc(92svh * 16 / 9)); margin-inline: auto; overflow: hidden; background: #111; clip-path: inset(var(--iy, 6%) var(--ix, 20%) round var(--r, 28px)); will-change: clip-path; }
-    .reel-img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: top center; opacity: 0; transform: scale(var(--rz, 1.12)); transition: opacity 1s var(--ease); }
-    .reel-img.is-on { opacity: 1; }
-    .reel-video { object-position: center; }
-    /* the reel autoplays muted (browsers require it); two quiet icon buttons pause it and turn its sound on */
-    /* rides the clip edge while the frame opens, so both buttons stay in the visible window */
-    .reel-ctrl { position: absolute; right: calc(var(--ix, 20%) + clamp(16px, 2.4vw, 36px)); bottom: calc(var(--iy, 6%) + clamp(16px, 2.4vw, 36px)); z-index: 2; display: flex; gap: 10px; }
-    .reel-btn { width: 48px; height: 48px; display: grid; place-items: center; padding: 0; border: 1px solid rgba(255, 255, 255, .22); border-radius: 50%; cursor: pointer;
-      background: rgba(10, 10, 12, .45); -webkit-backdrop-filter: blur(14px); backdrop-filter: blur(14px);
-      color: #fff; transition: background-color .3s, transform .3s var(--ease); }
-    .reel-btn:hover { background: rgba(10, 10, 12, .7); }
-    .reel-btn:active { transform: scale(.92); }
-    .reel-btn:focus-visible { outline: 2px solid #fff; outline-offset: 3px; }
-    .reel-btn svg { width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
-    .reel-btn .spk, .reel-btn .fill { fill: currentColor; }
-    .reel-sound .spk { stroke: none; }
-    .reel-sound .on, .reel-play .i-play { display: none; }
-    .reel-sound[aria-pressed="true"] .on, .reel-play.is-paused .i-play { display: inline; }
-    .reel-sound[aria-pressed="true"] .off, .reel-play.is-paused .i-pause { display: none; }
-    @media (max-width: 600px) { .reel-ctrl { gap: 8px; } .reel-btn { width: 40px; height: 40px; } .reel-btn svg { width: 17px; height: 17px; } }
 
-    /* Side projects. A card per project: the shot, what it is in three tags, the
-       line that explains it, and the way in — with the year it shipped opposite.
-       The cards are equal height and the footer sits at the bottom of each, so
-       the ways in line up across the row however long a description runs. */
-    .side-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-top: 60px; align-items: stretch; }
-    .side-card { display: flex; flex-direction: column; color: inherit; background: var(--bg-2);
-      border: 1px solid var(--line); border-radius: 18px; padding: 4px;
-      transition: border-color .45s var(--ease), background .45s var(--ease), box-shadow .45s var(--ease); }
-    .side-card:hover { border-color: var(--accent-3); background: var(--card-hover); box-shadow: var(--card-lift); }
-    .side-media { border-radius: 14px; overflow: hidden; aspect-ratio: 16 / 11; background: var(--bg); }
+    /* Side projects, after the reference: no card around them. The shot as a wide 16:9 banner with
+       16px corners, then the title, one line on what it is, and its tags as plain text split by dots,
+       all 4px in from the shot's edge. Two across the full column with an 18px gap. */
+    .side-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 18px; margin-top: 60px; align-items: start; }
+    .side-card { display: flex; flex-direction: column; color: inherit; }
+    .side-media { border-radius: 16px; overflow: hidden; aspect-ratio: 16 / 9; background: var(--bg-2); }
+    /* the 4:3 covers show three quarters of their height in the banner: uniwave from the top, so the whole
+       station card and the pin stay in; Motion Bucket a little lower, so the phone and the panel both sit in it */
+    .side-media--mb img { object-position: 50% 40%; }
     .side-media img { width: 100%; height: 100%; object-fit: cover; object-position: center top;
       transition: transform .8s var(--ease); }
     .side-card:hover .side-media img { transform: scale(1.035); }
-    .side-body { flex: 1; display: flex; flex-direction: column; padding: 20px 18px 18px; }
-    .side-tags { display: flex; flex-wrap: wrap; gap: 8px; list-style: none; }
-    .side-tags li { font-size: 13px; line-height: 1; padding: 7px 12px; border-radius: 999px;
-      background: var(--accent-soft); color: var(--accent-2); white-space: nowrap; }
-    .side-card h3 { margin-top: 16px; font-weight: 600;
-      font-size: clamp(19px, 1.75vw, 22px); line-height: 1.26; letter-spacing: -.02em; color: var(--ink); text-wrap: balance; }
-    .side-card p { margin-top: 12px; font-size: 15px; line-height: 1.55; color: var(--muted); }
-    /* margin-top:auto is what pins the row of footers to the bottom of the cards */
-    .side-foot { margin-top: auto; padding-top: 26px; display: flex; align-items: center;
-      justify-content: space-between; gap: 16px; font-size: 14px; }
-    .side-go { display: inline-flex; align-items: center; gap: 9px; color: var(--ink); }
-    .side-go i { font-style: normal; font-size: 15px; line-height: 1; }
-    .side-go b { font-weight: 400; transition: transform .45s var(--ease); }
-    .side-card:hover .side-go b { transform: translateX(4px); }
-    .side-go b { color: var(--accent-2); }
-    .side-foot time { color: var(--faint); font-variant-numeric: tabular-nums; }
+    .side-body { display: flex; flex-direction: column; padding: 12px 4px 0; }
+    .side-card h3 { font-weight: 600; font-size: 17px; line-height: 1.3; letter-spacing: -.01em; color: var(--ink); }
+    .side-card p { margin-top: 8px; font-size: 15px; line-height: 1.45; color: rgba(var(--ink-rgb), .72); }
+    .side-tags { display: flex; flex-wrap: wrap; margin-top: 8px; padding: 0; list-style: none; font-size: 12.5px; line-height: 1.4; color: var(--muted); }
+    .side-tags li { white-space: nowrap; }
+    .side-tags li + li::before { content: "\00b7"; margin: 0 7px; }   /* a middle dot between tags */
     /* placeholder cover until a real screenshot exists: a dark sky with a softly lit globe */
     .side-ph { background: radial-gradient(ellipse at 50% 120%, #0d1a36 0%, #04060d 70%); }
     .side-ph i { position: absolute; left: 50%; top: 42%; width: 46%; aspect-ratio: 1; transform: translate(-50%, -50%); border-radius: 50%;
@@ -952,19 +902,7 @@
     .foot .clock { font-size: 14px; letter-spacing: .04em; display: flex; align-items: center; gap: 8px; font-variant-numeric: tabular-nums; }
     .foot .clock i { width: 6px; height: 6px; border-radius: 50%; background: var(--accent-2); box-shadow: 0 0 8px var(--accent-2); }
 
-    /* Cursor follower */
-    .cursor { position: fixed; left: 0; top: 0; z-index: 100; pointer-events: none; width: 14px; height: 14px; margin: -7px 0 0 -7px; border-radius: 50%; background: var(--cursor-fill); display: grid; place-items: center; mix-blend-mode: difference; transition: width .5s var(--ease), height .5s var(--ease), margin .5s var(--ease), opacity .3s; opacity: 0; }
-    .cursor span { font-size: 15px; font-weight: 600; text-transform: uppercase; letter-spacing: -.03em; line-height: .95; text-align: center; color: var(--cursor-ink); opacity: 0; transition: opacity .2s; }
-    .cursor.is-on { opacity: 1; }
-    /* over the hero headline it swells and inverts what is under it */
-    .cursor.is-big { width: 260px; height: 260px; margin: -130px 0 0 -130px; }
-    /* over project cards it becomes a small "view project" disc */
-    .cursor.is-label { width: 120px; height: 120px; margin: -60px 0 0 -60px; mix-blend-mode: normal; }
-    .cursor.is-label span { opacity: 1; transform: rotate(-12deg); }
-    .cursor span { transition: opacity .2s, transform .4s var(--ease); }
-    @media (hover: none), (pointer: coarse) { .cursor { display: none; } }
-    /* the custom cursor replaces the system one wherever it runs */
-    html.has-cursor, html.has-cursor * { cursor: none !important; }
+    /* Cursor follower: assets/cursor.css, shared with the case studies */
 
     ::selection { background: var(--ink); color: var(--bg); }
     :focus-visible { outline: 2px solid var(--accent-2); outline-offset: 3px; }
@@ -1004,7 +942,7 @@
       .timeline-head { position: static; }
       .say-head { width: 220px; }
       #about-title { position: static; }
-      .side-grid { grid-template-columns: 1fr 1fr; gap: 20px; }
+      .side-grid { grid-template-columns: 1fr 1fr; gap: 18px; }
       .foot { grid-template-columns: 1fr 1fr; row-gap: 40px; }
       .pill.primary.cta-btn { --pl: 22px; --pr: 20px; --ic: 16px; --g: 10px; height: 52px; font-size: 14px; }
       .foot-top { padding-block: 22px 20px; }
@@ -1018,13 +956,13 @@
     @media (max-width: 600px) {
       :root { --pad: 16px; }
       .menu-toggle { width: 34px; height: 34px; }   /* matches the theme switch beside it */
-      .side-grid { grid-template-columns: 1fr; }
+      .side-grid { grid-template-columns: 1fr; row-gap: 32px; }   /* stacked, each card needs clear air before the next shot */
       .hero-strip .wrap { grid-template-columns: 1fr; text-align: left; gap: 8px; }
       .hero-strip .wrap > * { text-align: left !important; }
       .facts dl div { grid-template-columns: 1fr; gap: 4px; }
-      .stack-item { top: 90px; border-radius: 16px; }
-      .stack-cap small { font-size: 12px; margin-bottom: 10px; }
-      .stack-cap p { margin-top: 12px; font-size: 14px; line-height: 1.4; }
+      .case-frame { padding: 12px 10px; }
+      .case-tags { gap: 6px; margin-bottom: 12px; }
+      .case-tags li { font-size: 12px; padding: 6px 10px; }
       .qcard { padding: 22px 22px 20px; min-height: 0; }
       .qcard blockquote { font-size: 17px; }
       .badge { width: 120px; height: 120px; }
@@ -1037,7 +975,45 @@
       *, *::before, *::after { animation: none !important; transition: none !important; }
       .mask > span, [data-reveal], .hero-cta, .hero-intro, .proc-art img { transform: none !important; opacity: 1 !important; }
       .hero-title.kin .k > i, .hero-title .lines { transform: none !important; }
-      .stack-item { position: relative; top: 0; }
+      .case-shot { transform: none; }
+    }
+
+    /* Typography, taken from the CE CoPilot v2 case study (ce-copilot-v2.html): Plus Jakarta Sans 500 for
+       the title, the section headings and the closing line, Plus Jakarta Sans for everything else.
+       Sizes, leading and tracking are that page's, role for role; each rule names the role it
+       borrows. Colours, the nav, the buttons and the footer are left as this page's. */
+    /* the title: CE h1 */
+    .hero-title { font-size: clamp(50px, 7.2vw, 96px); line-height: .96; }
+    .hero-title .l1 > span, .hero-title .l2 > span { font-family: var(--display); font-weight: 600; letter-spacing: -.052em; }
+    /* section headings: CE h2 */
+    .hero-title .l1 > span, .hero-title .l2 > span, .h-xl { word-spacing: .06em; }   /* the tight display tracking was set for a serif; at 600 the sans needs its word gaps back */
+    .h-xl { font-family: var(--display); font-weight: 600; font-size: clamp(40px, 5.2vw, 68px); line-height: 1.02; letter-spacing: -.045em; }
+    /* the closing line stays in the body sans (set with .cta-big above), not the display serif */
+    /* the line under the title: CE summary */
+    .hero-intro { font-size: clamp(17px, 1.53vw, 22px); line-height: 1.55; }
+    /* copy under a section heading: CE section intro */
+    @media (max-width: 760px) {
+      .case { grid-template-columns: 1fr; gap: 20px; }
+      .case-copy { padding-right: 0; }
+    }
+    .lede, .work-head > p, .about-copy p { font-size: clamp(17px, 1.39vw, 20px); line-height: 1.65; letter-spacing: 0; }
+    /* the recognitions list: CE body, 15/24 */
+    .facts dl { font-size: 15px; line-height: 1.6; }
+    /* labels: CE kicker */
+    .kicker, .proc-copy .num, .facts h3 { font-size: 12px; line-height: 1.65; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; }
+    /* project banners: CE context step (kicker, the big sans heading, then copy) */
+    .case-copy h3 { font-family: var(--sans); font-weight: 600; font-size: clamp(26px, 2.64vw, 38px); line-height: 1.1; letter-spacing: -.04em; }
+    .case-copy p { font-size: 16px; line-height: 1.65; }
+    /* process steps: CE rules (number, heading, line) */
+    .proc-copy h3 { font-family: var(--sans); font-weight: 700; font-size: clamp(24px, 2.7vw, 34px); line-height: 1.12; letter-spacing: -.035em; }
+    .proc-copy p { font-size: 15px; line-height: 1.6; }
+    /* side projects: sized after the reference (set with .side-card above) */
+    /* testimonials: CE line under the pull quote, the name and role as CE project details */
+    .qcard blockquote { font-size: clamp(17px, 1.32vw, 19px); line-height: 1.65; font-weight: 500; letter-spacing: -.005em; }
+    .qcard .who-text b { font-size: 15px; line-height: 1.3; font-weight: 600; }
+    .qcard .who-text span { font-size: 13px; line-height: 1.2; font-weight: 400; }
+    @media (max-width: 760px) {
+      .hero-title { font-size: min(13vw, 54px); }
     }
   </style>
 </head>
@@ -1085,8 +1061,8 @@
           <span class="mask l2"><span>with <em>builder instinct</em></span></span>
           </span>
         </h1>
-        <p class="hero-intro">6 years designing SaaS applications and AI products for enterprises. <span class="now">Presently working at <span class="nb">LeewayHertz, A Hackett Group Company.</span></span></p>
-        <div class="hero-cta"><a class="pill primary" href="#work"><span class="pill__label" data-t="View my work"><span>View my work</span></span><span class="pill__arrow pill__arrow--down" aria-hidden="true"><i><svg viewBox="0 0 14 14" aria-hidden="true" focusable="false"><path d="M7 2v10M2.5 7.5 7 12l4.5-4.5"/></svg></i><i><svg viewBox="0 0 14 14" aria-hidden="true" focusable="false"><path d="M7 2v10M2.5 7.5 7 12l4.5-4.5"/></svg></i></span></a><a class="pill tint" href="assets/Indrajit-Sasmal-Resume.pdf?v=5" target="_blank" rel="noopener noreferrer"><span class="pill__label" data-t="Resume"><span>Resume</span></span><span class="pill__arrow pill__arrow--out" aria-hidden="true"><i><svg viewBox="0 0 14 14" aria-hidden="true" focusable="false"><path d="M3.5 10.5 10.5 3.5M5 3.5h5.5V9"/></svg></i><i><svg viewBox="0 0 14 14" aria-hidden="true" focusable="false"><path d="M3.5 10.5 10.5 3.5M5 3.5h5.5V9"/></svg></i></span><span class="vh">(opens in a new tab)</span></a></div>
+        <p class="hero-intro">5+ years designing SaaS applications and AI products for enterprises. <span class="now">Presently working at <span class="nb">LeewayHertz, A Hackett Group Company.</span></span></p>
+        <div class="hero-cta"><a class="pill primary" href="#work"><span class="pill__label" data-t="View my work"><span>View my work</span></span><span class="pill__arrow pill__arrow--down" aria-hidden="true"><i><svg viewBox="0 0 14 14" aria-hidden="true" focusable="false"><path d="M7 2v10M2.5 7.5 7 12l4.5-4.5"/></svg></i><i><svg viewBox="0 0 14 14" aria-hidden="true" focusable="false"><path d="M7 2v10M2.5 7.5 7 12l4.5-4.5"/></svg></i></span></a><a class="pill tint" href="assets/Indrajit-Sasmal-Resume.pdf?v=10" target="_blank" rel="noopener noreferrer"><span class="pill__label" data-t="Resume"><span>Resume</span></span><span class="pill__arrow pill__arrow--out" aria-hidden="true"><i><svg viewBox="0 0 14 14" aria-hidden="true" focusable="false"><path d="M3.5 10.5 10.5 3.5M5 3.5h5.5V9"/></svg></i><i><svg viewBox="0 0 14 14" aria-hidden="true" focusable="false"><path d="M3.5 10.5 10.5 3.5M5 3.5h5.5V9"/></svg></i></span><span class="vh">(opens in a new tab)</span></a></div>
 
       </div>
 
@@ -1122,25 +1098,26 @@
     <section class="sec" id="work" aria-labelledby="work-title">
       <div class="wrap">
         <div class="work-head">
-          <h2 class="display h-xl" id="work-title" data-fill>Made to ship</h2>
-          <p data-reveal>Products I’ve taken from problem to launch, owning every step on the way.</p>
+          <h2 class="display h-xl" id="work-title" data-fill>Selected Work</h2>
         </div>
 
-        <div class="stack" id="featured" data-stack>
+        <div class="cases" id="featured">
           <span class="card-mark" id="work-zbrain" aria-hidden="true"></span>
-          <a class="stack-item" href="/zbrain" data-cursor="View<br>project">
+          <a class="case" href="/zbrain-v2" data-cursor="View<br>project">
+            <div class="case-frame"><div class="case-shot">
             <div class="work-visual work-visual--banner">
               <div class="work-art">
                 <img class="work-banner" src="assets/admin/monitor-observatory.webp?v=2" width="2400" height="1570" decoding="async" alt="ZBrain Admin Console on a desktop monitor, open on the Observatory with cost, runs, agents at risk, governance events and agent health">
               </div>
             </div>
-            <div class="stack-cap">
-              <div><small>ZBrain · Enterprise AI · 2026</small><h3 class="display">ZBrain Admin Console</h3><p>Where an organisation runs the platform: spaces, users, models, connectors, API keys, deployments and spend. Governance is its key feature.</p></div>
+            </div></div>
+            <div class="case-copy">
+              <ul class="case-tags"><li>Admin console</li><li>Agentic AI</li></ul><h3 class="display">ZBrain Admin Console</h3><p>Where an organisation runs the platform: spaces, users, models, connectors, API keys, deployments and spend. Governance is its key feature.</p>
             </div>
-            <div class="stack-shade"></div>
           </a>
           <span class="card-mark" id="work-ce-copilot" aria-hidden="true"></span>
-          <a class="stack-item" href="/ce-copilot" data-cursor="View<br>project">
+          <a class="case" href="/ce-copilot-v2" data-cursor="View<br>project">
+            <div class="case-frame"><div class="case-shot">
             <div class="work-visual work-visual--copilot">
               <div class="work-art">
                 <div class="mock-browser">
@@ -1151,25 +1128,27 @@
                 <div class="mock-mobile mock-mobile--second"><img src="assets/cecopilot/m/mob-chat-reading-documents.png?v=9" alt="CE CoPilot mobile document search" loading="lazy"></div>
               </div>
             </div>
-            <div class="stack-cap">
-              <div><small>Semiconductor equipment · AI assistant · 2026</small><h3 class="display">CE CoPilot</h3><p>An AI troubleshooting assistant for customer engineers at a global semiconductor equipment maker, across a mobile app, a web app and an admin console.</p></div>
+            </div></div>
+            <div class="case-copy">
+              <ul class="case-tags"><li>AI assistant</li><li>Admin console</li></ul><h3 class="display">CE CoPilot</h3><p>An AI troubleshooting assistant for customer engineers at a global semiconductor equipment maker, across a mobile app, a web app and an admin console.</p>
             </div>
-            <div class="stack-shade"></div>
           </a>
           <span class="card-mark" id="work-design-system" aria-hidden="true"></span>
-          <a class="stack-item" href="/design-system" data-cursor="View<br>project">
+          <a class="case" href="/design-system" data-cursor="View<br>project">
+            <div class="case-frame"><div class="case-shot">
             <div class="work-visual work-visual--banner work-visual--ds">
               <div class="work-art">
                 <img class="work-banner" src="assets/ds/card-specimens.webp?v=3" width="2400" height="1539" decoding="async" loading="lazy" alt="ZBrain design system specimens: type scale, data table, charts, spacing, status, forms and feedback">
               </div>
             </div>
-            <div class="stack-cap">
-              <div><small>ZBrain · Design systems · 120 variables</small><h3 class="display">ZBrain design system</h3><p>The Figma design system turned into an AI-ready Markdown guide, so visual exploration and prototyping come out consistent across prompts.</p></div>
+            </div></div>
+            <div class="case-copy">
+              <ul class="case-tags"><li>Design system</li></ul><h3 class="display">ZBrain design system</h3><p>The Figma design system turned into an AI-ready Markdown guide, so visual exploration and prototyping come out consistent across prompts.</p>
             </div>
-            <div class="stack-shade"></div>
           </a>
           <span class="card-mark" id="work-dhs-tutor" aria-hidden="true"></span>
-          <a class="stack-item" href="/dhs-tutor" data-cursor="View<br>project">
+          <a class="case" href="/dhs-tutor" data-cursor="View<br>project">
+            <div class="case-frame"><div class="case-shot">
             <div class="work-visual work-visual--dhs">
               <div class="work-art">
                 <div class="mock-browser">
@@ -1178,10 +1157,10 @@
                 </div>
               </div>
             </div>
-            <div class="stack-cap">
-              <div><small>DHS · Study app · Grounded AI</small><h3 class="display">DHS Tutor</h3><p>An NBDHE study app whose tutor answers only from the DHS Review Book, on a flat design system built to replace a vendor restyle.</p></div>
+            </div></div>
+            <div class="case-copy">
+              <ul class="case-tags"><li>Study app</li><li>Grounded AI</li></ul><h3 class="display">DHS Tutor</h3><p>An NBDHE study app whose tutor answers only from the DHS Review Book, on a flat design system built to replace a vendor restyle.</p>
             </div>
-            <div class="stack-shade"></div>
           </a>
         </div>
       </div>
@@ -1196,29 +1175,17 @@
           <a class="side-card" href="/uniwave" target="_blank" rel="noopener" data-cursor="Open<br>app" data-reveal>
             <div class="side-media"><img src="assets/uniwave-cover.jpg?v=3" width="1600" height="1200" alt="uniwave playing MANGORADIO: the lit map tilts and zooms in on Europe, and a popup above the pin in Germany shows the station live, with its genre and stream" loading="lazy"></div>
             <div class="side-body">
-              <ul class="side-tags"><li>Live app</li><li>Data viz</li><li>Audio</li></ul>
-              <h3>Live radio from every country on a world map</h3>
+              <h3>A world map of every country’s radio</h3>
               <p>uniwave puts thousands of stations on a lit map and asks one thing: where do you want to listen?</p>
-              <div class="side-foot"><span class="side-go"><i aria-hidden="true">&#127758;</i>Open the app <b aria-hidden="true">&#8599;</b></span><time datetime="2026">2026</time></div>
+              <ul class="side-tags"><li>Live app</li><li>Data viz</li><li>Audio</li></ul>
             </div>
           </a>
-          <a class="side-card" href="https://carrom-scorer-2026.vercel.app" target="_blank" rel="noopener" data-cursor="Open<br>app" data-reveal>
-            <div class="side-media"><img src="assets/carrom/card-cover.jpg" alt="Carrom Scorer: a finished game, the home screen with stars of the week, and the leaderboard" loading="lazy"></div>
+          <a class="side-card" href="/motion-bucket" target="_blank" rel="noopener" data-cursor="Open<br>app" data-reveal>
+            <div class="side-media side-media--mb"><img src="assets/motion-bucket-cover.jpg" width="1600" height="1200" alt="Motion Bucket frozen mid-animation: confetti bursts over a rewards screen on an iPhone, beside a spec card that reads Festive and plots the burst's height over time" loading="lazy"></div>
             <div class="side-body">
-              <ul class="side-tags"><li>Live app</li><li>Realtime</li><li>AI guardrails</li></ul>
-              <h3>Building a carrom scoring app</h3>
-              <p>Carrom Scorer settles every game in the open: live scores, a leaderboard, and an AI helper that can&rsquo;t make up a number.</p>
-              <div class="side-foot"><span class="side-go"><i aria-hidden="true">&#127758;</i>Open the app <b aria-hidden="true">&#8599;</b></span><time datetime="2026">2026</time></div>
-            </div>
-          </a>
-          <a class="side-card" href="/finora" data-cursor="View<br>project" data-reveal>
-            <span class="card-mark" id="side-finora" aria-hidden="true"></span>
-            <div class="side-media"><img src="assets/finora-hero.jpg" alt="Finora financial companion showing net worth, an AI coach, and goal progress" loading="lazy"></div>
-            <div class="side-body">
-              <ul class="side-tags"><li>Fintech</li><li>AI coach</li><li>Product exploration</li></ul>
-              <h3>A money app that tells you where you stand</h3>
-              <p>Finora answers one question before anything else: am I doing okay? Only then does it show you the numbers behind it.</p>
-              <div class="side-foot"><span class="side-go"><i aria-hidden="true">&#128214;</i>View casestudy <b aria-hidden="true">&rarr;</b></span><time datetime="2026">2026</time></div>
+              <h3>A field guide to native mobile motion</h3>
+              <p>Motion Bucket plays 76 iOS and Android interactions live, lets you tune every spring and curve, then hands you the code.</p>
+              <ul class="side-tags"><li>Live app</li><li>Motion design</li><li>iOS and Android</li></ul>
             </div>
           </a>
         </div>
@@ -1284,19 +1251,6 @@
           <button class="qc-btn" type="button" data-dir="-1" aria-label="Previous quote"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 12H5M11 6l-6 6 6 6"/></svg></button>
           <div class="qc-dots"><button class="qc-dot" type="button" aria-label="Quote 1" data-to="0"></button><button class="qc-dot" type="button" aria-label="Quote 2" data-to="1"></button><button class="qc-dot" type="button" aria-label="Quote 3" data-to="2"></button><button class="qc-dot" type="button" aria-label="Quote 4" data-to="3"></button><button class="qc-dot" type="button" aria-label="Quote 5" data-to="4"></button></div>
           <button class="qc-btn" type="button" data-dir="1" aria-label="Next quote"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
-        </div>
-      </div>
-    </section>
-
-    <!-- parked for now: drop the hidden attribute to bring it back -->
-    <section class="reel" id="showreel" data-reel aria-label="Showreel" hidden>
-      <div class="reel-frame">
-        <video class="reel-img reel-video is-on" muted loop playsinline preload="metadata" poster="assets/reel/showreel-2026-poster.jpg" aria-label="Indrajit Sasmal showreel: 6 years, 20+ projects, 3 promotions, product interfaces, design systems, domains and client teams. Original music available with sound on.">
-          <source src="assets/reel/indrajit-showreel-2026.mp4" type="video/mp4">
-        </video>
-        <div class="reel-ctrl">
-          <button class="reel-btn reel-play" type="button" aria-label="Pause reel"><svg viewBox="0 0 24 24" aria-hidden="true"><g class="i-pause"><rect class="fill" x="6.5" y="5" width="3.6" height="14" rx="1.2" stroke="none"/><rect class="fill" x="13.9" y="5" width="3.6" height="14" rx="1.2" stroke="none"/></g><path class="i-play fill" d="M8 6.2v11.6a1 1 0 0 0 1.5.86l9.6-5.8a1 1 0 0 0 0-1.72L9.5 5.34A1 1 0 0 0 8 6.2z" stroke="none"/></svg></button>
-          <button class="reel-btn reel-sound" type="button" aria-pressed="false" aria-label="Turn sound on"><svg viewBox="0 0 24 24" aria-hidden="true"><path class="spk" d="M4 9.5h3.5L12 5.5v13l-4.5-4H4z"/><path class="on" d="M15.5 9a4.5 4.5 0 0 1 0 6M18 6.5a8 8 0 0 1 0 11"/><path class="off" d="M16 9.5l5 5M21 9.5l-5 5"/></svg></button>
         </div>
       </div>
     </section>
@@ -1368,7 +1322,7 @@
         <ul class="foot-links">
           <li><a href="https://www.linkedin.com/in/indrajit-sasmal/" target="_blank" rel="noopener noreferrer"><span class="roll" data-t="LinkedIn"><span>LinkedIn</span></span><span class="arr">↗</span><span class="vh">(opens in a new tab)</span></a></li>
           <li><a href="https://dribbble.com/Indrajit1995" target="_blank" rel="noopener noreferrer"><span class="roll" data-t="Dribbble"><span>Dribbble</span></span><span class="arr">↗</span><span class="vh">(opens in a new tab)</span></a></li>
-          <li><a href="assets/Indrajit-Sasmal-Resume.pdf?v=5" target="_blank" rel="noopener noreferrer"><span class="roll" data-t="Resume"><span>Resume</span></span><span class="arr">↗</span><span class="vh">(opens in a new tab)</span></a></li>
+          <li><a href="assets/Indrajit-Sasmal-Resume.pdf?v=10" target="_blank" rel="noopener noreferrer"><span class="roll" data-t="Resume"><span>Resume</span></span><span class="arr">↗</span><span class="vh">(opens in a new tab)</span></a></li>
         </ul>
       </div>
       <div class="foot-bar"><span>© 2026 - Indrajit Sasmal</span><span class="foot-clock"><i></i>Available for opportunities</span></div>
@@ -2275,35 +2229,16 @@
       const q = () => { if (!queued) { queued = true; requestAnimationFrame(measure); } };
       addEventListener('scroll', q, { passive: true }); addEventListener('resize', q);
     })();
-    const stackItems = [...document.querySelectorAll('.stack-item')];
-    /* A card is never taller than its picture and caption need. The picture keeps its own
-       proportions (1153 by 740), so on a narrow screen the card's set height left an empty band
-       between the picture and the caption; here the card closes up to the picture, with the
-       caption laid over the picture's bottom quarter. Every card takes the same height, the
-       tallest any of them needs, so a shorter card never lets the one behind show beneath it.
-       Wide screens are untouched: there the set height is already the smaller of the two. */
-    const fitStack = () => {
-      if (!stackItems.length) return;
-      stackItems.forEach(el => { el.style.height = ''; });
-      const set = stackItems[0].offsetHeight;
-      const art = stackItems[0].clientWidth * 740 / 1153;
-      const cap = Math.max(...stackItems.map(el => el.querySelector('.stack-cap').offsetHeight));
-      const need = Math.ceil(art * 0.75 + cap);
-      if (need < set) stackItems.forEach(el => { el.style.height = need + 'px'; });
-    };
-    let fitQueued = false;
-    const fitSoon = () => { if (!fitQueued) { fitQueued = true; requestAnimationFrame(() => { fitQueued = false; fitStack(); }); } };
-    fitStack();
-    addEventListener('resize', fitSoon);
-    if (document.fonts && document.fonts.ready) document.fonts.ready.then(fitSoon);
+    /* Case studies scroll with the page. The picture in each frame drifts against the scroll, a
+       little slower than the page, so it reads as sitting behind the frame: --para runs from -1 while
+       the frame is low on the screen to 1 as it leaves at the top. */
+    const caseShots = [...document.querySelectorAll('.case-shot')];
     // testimonial avatars: the person's initials, taken from their name
     document.querySelectorAll('.qcard .who').forEach(w => {
       const n = w.querySelector('b').textContent.trim().split(/\s+/);
       w.querySelector('.avatar').textContent = (n[0][0] + (n.length > 1 ? n[n.length - 1][0] : '')).toUpperCase();
     });
     const floats = [...document.querySelectorAll('[data-float]')];
-    const reel = document.querySelector('[data-reel]');
-    const reelFrame = reel.querySelector('.reel-frame');
     const heroPin = document.querySelector('.hero-pin');
     const heroHold = () => innerHeight * .62;   // most of the way down the hero, where its own dark has gone
     let lastY = scrollY, ticking = false;
@@ -2324,30 +2259,12 @@
         el.style.transform = `translate3d(0, ${y * f}px, 0) rotate(${y * s}deg)`;
       });
 
-      // Stacked project cards: grow in from below, sink back when covered
-      const stuckTop = parseFloat(getComputedStyle(stackItems[0]).top);
-      const prog = stackItems.map(el => {
-        const top = el.getBoundingClientRect().top;
-        return clamp((vh - top) / (vh - stuckTop));
-      });
-      stackItems.forEach((el, i) => {
-        const inT = ease(prog[i]);
-        const cover = i < stackItems.length - 1 ? prog[i + 1] : 0;
-        /* No scale on any of them: every card keeps the same left and right edge, always.
-           Scaling the one underneath is what made the cuts — two rounded rectangles of different
-           widths, centred on each other, cannot overlap cleanly. Whichever is narrower, something
-           shows at the join: a sliver of the back card down the sides, or, once the front one is
-           wider, an L of bare page beside it where the back card no longer reaches. Any scale at
-           all does it, because the card behind is still visible above the one in front for the
-           whole of the handover. Aligned edges and the shade below carry the depth instead, and
-           the arrival is carried by --zoom, which pulls the image back inside the card's own clip
-           and so never touches its edges. */
-        el.style.setProperty('--zoom', (1.15 - 0.15 * inT).toFixed(4));
-        /* off the raw travel, not the eased arrival. The ease is nearly spent by the time the
-           card is halfway up the screen, which is exactly the stretch you watch, so taking the
-           lean from it leaves almost none of it visible. */
-        el.style.setProperty('--settle', Math.pow(1 - prog[i], 0.85).toFixed(4));
-        el.style.setProperty('--shade', (cover * 0.6).toFixed(3));
+      // Case study pictures: parallax inside their frames
+      caseShots.forEach(el => {
+        const r = el.getBoundingClientRect();
+        if (r.bottom < 0 || r.top > vh) return;
+        const p = clamp((r.top + r.height / 2 - vh / 2) / (vh / 2 + r.height / 2), -1, 1);
+        el.style.setProperty('--para', (-p).toFixed(4));
       });
 
       // Headings and the intro: once one comes into view, it fills in on its own
@@ -2360,52 +2277,12 @@
         else if (f.done && r.top > vh * 0.92) { f.done = false; f.el.classList.remove('is-filled'); }
       });
 
-      // Reel opens from an inset card to full bleed
-      const rr = reel.getBoundingClientRect();
-      const rp = clamp((vh * 0.95 - rr.top) / (vh * 0.9));
-      reelFrame.style.setProperty('--ix', ((1 - rp) * 20).toFixed(2) + '%');
-      reelFrame.style.setProperty('--iy', ((1 - rp) * 6).toFixed(2) + '%');
-      // a frame narrower than the window keeps soft corners once open, so it reads as a framed player
-      const rMin = reelFrame.offsetWidth < innerWidth - 4 ? 20 : 0;
-      reelFrame.style.setProperty('--r', Math.max(rMin, (1 - rp) * 28).toFixed(1) + 'px');
-      reelFrame.style.setProperty('--rz', (1.12 - 0.12 * rp).toFixed(4));
 
     };
     const onScroll = () => { if (!ticking) { ticking = true; requestAnimationFrame(render); } };
     addEventListener('scroll', onScroll, { passive: true });
     addEventListener('resize', onScroll);
     render();
-
-    // Reel: the showreel video plays only while it is on screen
-    (() => {
-      const video = reel.querySelector('.reel-video');
-      const sound = reel.querySelector('.reel-sound');
-      const playBtn = reel.querySelector('.reel-play');
-      let held = false;   // paused by the visitor, so scrolling back into view doesn't restart it
-      const start = () => { const r = video.play(); if (r && r.catch) r.catch(() => {}); };
-      const syncPlay = () => {
-        if (!playBtn) return;
-        playBtn.classList.toggle('is-paused', video.paused);
-        playBtn.setAttribute('aria-label', video.paused ? 'Play reel' : 'Pause reel');
-      };
-      if (video) { video.addEventListener('play', syncPlay); video.addEventListener('pause', syncPlay); syncPlay(); }
-      if (video && playBtn) playBtn.addEventListener('click', () => {
-        if (video.paused) { held = false; start(); } else { held = true; video.pause(); }
-      });
-      if (video && sound) sound.addEventListener('click', () => {
-        video.muted = !video.muted;
-        if (!video.muted && video.paused && !held) start();   // e.g. reduced motion, where it never autoplayed; a visitor's pause stays put
-        sound.setAttribute('aria-pressed', String(!video.muted));
-        sound.setAttribute('aria-label', video.muted ? 'Turn sound on' : 'Turn sound off');
-      });
-      if (video && !reduced) {
-        const io = new IntersectionObserver(([e]) => {
-          if (e.isIntersecting) { if (!held) start(); }
-          else video.pause();
-        }, { threshold: 0.15 });
-        io.observe(video);
-      }
-    })();
 
     /* The theme switch. The attribute is already on <html> from the head, so this only wires the
        button up to it and remembers the choice; until someone chooses, the system's preference
@@ -2529,59 +2406,9 @@
       });
     })();
 
-    // Cursor follower with labels on project cards
-    (() => {
-      if (!matchMedia('(hover: hover) and (pointer: fine)').matches || reduced) return;
-      const cur = document.querySelector('.cursor'), lab = cur.querySelector('span');
-      document.documentElement.classList.add('has-cursor');
-      let x = innerWidth / 2, y = innerHeight / 2, cx = x, cy = y;
-      addEventListener('pointermove', e => { x = e.clientX; y = e.clientY; cur.classList.add('is-on'); });
-      document.addEventListener('pointerleave', () => cur.classList.remove('is-on'));
-      document.querySelectorAll('.hero-title').forEach(el => {
-        el.addEventListener('pointerenter', () => cur.classList.add('is-big'));
-        el.addEventListener('pointerleave', () => cur.classList.remove('is-big'));
-      });
-      // Project label: follow whatever card is under the pointer, including while the page
-      // scrolls a new card underneath a still mouse. Landing on a different project blinks the disc.
-      let card = null, queued = false;
-      const blink = () => {
-        // a quick squeeze, fully opaque. The cursor's transform carries its position, so the
-        // disc's own size is animated (margins keep it centred) and the label scales inside it
-        cur.animate([
-          { width: '120px', height: '120px', margin: '-60px 0 0 -60px' },
-          { width: '92px', height: '92px', margin: '-46px 0 0 -46px', offset: .4 },
-          { width: '120px', height: '120px', margin: '-60px 0 0 -60px' }
-        ], { duration: 260, easing: 'cubic-bezier(.3,.7,.2,1)' });
-        lab.animate([{ scale: 1 }, { scale: .78, offset: .4 }, { scale: 1 }], { duration: 260, easing: 'cubic-bezier(.3,.7,.2,1)' });
-      };
-      const sync = () => {
-        queued = false;
-        const hit = document.elementFromPoint(x, y);
-        const el = hit ? hit.closest('[data-cursor]') : null;
-        const btn = !el && !!(hit && hit.closest('.pill, button, [role="button"]'));   // buttons: the dot steps aside, the button's own hover shows
-        cur.classList.toggle('is-btn', btn);
-        cur.classList.toggle('is-link', !el && !btn && !!(hit && hit.closest('a[href], summary, label[for]')));
-        if (el === card) return;
-        if (el) {
-          lab.innerHTML = el.dataset.cursor;
-          if (card) blink();                 // moved from one project straight onto another
-          cur.classList.add('is-label');
-        } else {
-          cur.classList.remove('is-label');
-        }
-        card = el;
-      };
-      const queue = () => { if (!queued) { queued = true; requestAnimationFrame(sync); } };
-      addEventListener('pointermove', queue, { passive: true });
-      addEventListener('scroll', queue, { passive: true });
-      const loop = () => {
-        cx += (x - cx) * 0.18; cy += (y - cy) * 0.18;
-        cur.style.transform = `translate3d(${cx}px, ${cy}px, 0)`;
-        requestAnimationFrame(loop);
-      };
-      loop();
-    })();
+    // Cursor follower: assets/cursor.js, shared with the case studies (loaded below)
 
   </script>
+<script src="assets/cursor.js?v=1"></script>
 </body>
 </html>

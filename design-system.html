@@ -9,12 +9,12 @@
 <script>try{if(!matchMedia('(prefers-reduced-motion:reduce)').matches){var h=sessionStorage.getItem('ptHop');sessionStorage.removeItem('ptHop');var p=h?h.split('|'):0;if(p&&p.length==2&&Date.now()-(+p[1])<3000){var r=document.documentElement;r.setAttribute('data-pt',p[0]);r.classList.add('pt-held');setTimeout(function(){if(r.classList.contains('pt-held')){r.classList.remove('pt-held');r.removeAttribute('data-pt')}},6000)}}}catch(e){}</script>
 <script src="assets/page-transition.js?v=7" defer></script>
 <link rel="icon" href="favicon.svg?v=4" type="image/svg+xml">
-<title>Making a Figma design system usable in every AI chat | ZBrain design system</title>
+<title>Making a Figma design system usable in any AI chat | ZBrain design system</title>
 <meta name="description" content="How the existing ZBrain Figma design system became an AI-ready Markdown guide for more consistent visual exploration and prototyping across prompts.">
 <!-- link previews: one share image for the whole site, each page its own title and line -->
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Indrajit Sasmal">
-<meta property="og:title" content="Making a Figma design system usable in every AI chat | ZBrain design system">
+<meta property="og:title" content="Making a Figma design system usable in any AI chat | ZBrain design system">
 <meta property="og:description" content="How the existing ZBrain Figma design system became an AI-ready Markdown guide for more consistent visual exploration and prototyping across prompts.">
 <meta property="og:url" content="https://indrajit.work/design-system">
 <meta property="og:image" content="https://indrajit.work/og-image.jpg">
@@ -22,13 +22,13 @@
 <meta property="og:image:height" content="630">
 <meta property="og:image:alt" content="Portfolio27. Indrajit Sasmal, Product Designer">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Making a Figma design system usable in every AI chat | ZBrain design system">
+<meta name="twitter:title" content="Making a Figma design system usable in any AI chat | ZBrain design system">
 <meta name="twitter:description" content="How the existing ZBrain Figma design system became an AI-ready Markdown guide for more consistent visual exploration and prototyping across prompts.">
 <meta name="twitter:image" content="https://indrajit.work/og-image.jpg">
 <meta name="twitter:image:alt" content="Portfolio27. Indrajit Sasmal, Product Designer">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Mona+Sans:wght@200..900&family=Plus+Jakarta+Sans:wght@300..800&family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@100..900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300..800&family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@100..900&display=swap" rel="stylesheet">
 <style>
 /* ==========================================================================
    TOKENS - the same shell as index.html and finora.html.
@@ -541,6 +541,7 @@ code,pre,kbd{font-family:var(--code);}
 .outs li + li{border-left:2px dotted #C2C7D0;}
 .outs b{font-size:clamp(28px,3vw,38px);line-height:1.05;font-weight:600;letter-spacing:-.02em;color:#0F1115;}
 .outs span{font-size:15px;line-height:22px;color:#5B616E;}
+.outs--2{grid-template-columns:repeat(2,1fr);}
 
 @media (max-width:900px){
   .hub{grid-template-columns:1fr;gap:28px;}
@@ -568,9 +569,9 @@ code,pre,kbd{font-family:var(--code);}
    Each screen sits inset at the top and sides of a mesh frame and runs off its bottom edge. */
 .rpair{display:grid;gap:20px;}
 .rpair__item.frame{margin:0;display:grid;gap:22px;padding:clamp(22px,2.8vw,40px) clamp(20px,3.4vw,48px) 0;overflow:hidden;border-radius:16px;}
-.rpair__screen{aspect-ratio:1920/622;overflow:hidden;background:#fff;border-radius:12px 12px 0 0;box-shadow:0 -2px 24px rgba(27,45,84,.14);}
-.rpair__screen img{display:block;width:100%;height:100%;object-fit:cover;object-position:top left;}
-@media (max-width:700px){.rpair__screen{aspect-ratio:1.5;}.rpair__screen img{object-position:33% top;}}   /* phones: crop to the page body, not the sidebar */
+.rpair__screen{overflow:hidden;background:#fff;border-radius:12px 12px 0 0;box-shadow:0 -2px 24px rgba(27,45,84,.14);}
+.rpair__screen img{display:block;width:100%;height:auto;}
+/* the Claude screens scale as whole images at every width, never cropped */
 
 /* the guide itself: a short excerpt with its real line numbers, in a light editor window */
 .mdx{margin-block:0;padding:clamp(22px,3.4vw,48px) clamp(16px,3.4vw,48px);}
@@ -799,8 +800,8 @@ code,pre,kbd{font-family:var(--code);}
 /* the two chat screens run off the bottom of the frame, like windows cropped by it; labels as plain text */
 .frame.drift{padding-bottom:0;overflow:hidden;align-items:end;}
 .drift__tag{background:none;padding:0;border-radius:0;font-size:15px;font-weight:600;color:#1f2a44;}
-.drift .ds-shot__zoom{border-radius:12px 12px 0 0;aspect-ratio:1920/700;box-shadow:0 -2px 24px rgba(27,45,84,.14);}
-.drift img{height:100%;object-fit:cover;object-position:top left;}
+.drift .ds-shot__zoom{border-radius:12px 12px 0 0;box-shadow:0 -2px 24px rgba(27,45,84,.14);}
+.drift img{height:auto;}
 
 /* the prompts, as someone on the team would type them */
 .drift__tag{display:grid;gap:6px;margin:0;max-width:52ch;font-size:14px;line-height:21px;font-weight:400;color:#3a4560;}
@@ -860,6 +861,52 @@ h3.t-title{font-size:26px;line-height:32px;}   /* sub-sections inside The system
 @media (max-width:700px){.frame--cut{padding-right:0;}.frame--cut > .ds-panel{border-top-right-radius:0;}}
 </style>
 <link rel="stylesheet" href="dark.css?v=43">
+<style>
+/* After dark.css, so it wins over the shared sheet without changing the other pages that load it. */
+
+/* Frames, as on the ZBrain and CE CoPilot case studies: the page's grey well in place of the
+   lavender mesh, the same in both themes. Screens sit inset at the top and sides and run off the
+   well's bottom edge where the screen is a page (the two chats, the two results, the Figma AI
+   screen, the Markdown window). The system specimens and the Claude Code session keep their
+   full frame, since a crop would hide what they show. */
+.frame,.frame--panel{background:var(--surface);border:1px solid var(--rule);border-radius:20px;}
+@media (max-width:700px){.frame,.frame--panel{border-radius:16px;}}
+.drift__item.frame,.mdx.frame,.proof--bleed{padding-bottom:0;overflow:hidden;}
+.drift__item .ds-shot__zoom{border-radius:12px 12px 0 0;}
+.mdx__win{border-radius:12px 12px 0 0;}
+.proof--bleed img{border-radius:12px 12px 0 0;filter:none;box-shadow:0 -2px 24px rgba(27,45,84,.14);}
+/* the tags were dark navy for the lavender mesh; on the grey well they take the page's inks */
+.drift__tag{color:var(--ink-2);}
+.drift__tag b{color:var(--ink);}
+
+/* TYPE SYSTEM, as in type-guideline.md. Plus Jakarta Sans 500 for display only; Plus Jakarta Sans for
+   everything else in 400, 600 and 700. The live system sections (.ds-panel), the Markdown
+   window and the chat illustration are exhibits set in ZBrain's own type, and are left alone. */
+:root{
+  --serif:"Plus Jakarta Sans", system-ui, sans-serif;
+  --t-d1:clamp(44px, 5vw, 72px); --t-d2:clamp(40px, 5.2vw, 68px);
+  --t-h3:clamp(27px, 2.64vw, 38px); --t-h4:clamp(21px, 1.875vw, 27px); --t-h5:16px; --t-h6:14px;
+  --t-lead-l:clamp(17px, 1.53vw, 22px); --t-lead:clamp(17px, 1.39vw, 20px);
+  --t-body:16px; --t-small:13px; --t-metric:clamp(28px, 2.78vw, 40px);
+}
+h1.t-display{font:600 var(--t-d1)/.96 var(--serif);letter-spacing:-.052em;text-wrap:balance;}
+h2.t-title{font:600 var(--t-d2)/1.02 var(--serif);letter-spacing:-.045em;}
+h1.t-display,h2.t-title{word-spacing:.06em;}   /* the tight display tracking was set for a serif; at 600 the sans needs its word gaps back */
+.next__word{font-family:var(--serif);font-weight:600;}
+h3.t-title{font:700 var(--t-h3)/1.1 var(--sans);letter-spacing:-.04em;}
+.next__title{font:700 var(--t-h4)/1.14 var(--sans);letter-spacing:-.035em;}
+.hub__tag b,.dcard b{font:600 var(--t-h5)/1.3 var(--sans);letter-spacing:-.01em;}
+.hub__label b{font:600 var(--t-h6)/1.3 var(--sans);letter-spacing:0;}
+#top .t-body.intro{font:400 var(--t-lead-l)/1.55 var(--sans);letter-spacing:0;}   /* #top, to beat the older "#top .intro" size */
+.stack.gap-8 + .t-body,.t-lead{font:400 var(--t-lead)/1.65 var(--sans);letter-spacing:0;}
+.t-body:not(.intro){font-size:var(--t-body);line-height:1.65;letter-spacing:0;}
+.stack.gap-8 + .t-body{font-size:var(--t-lead);}
+.hub__label span,.hub__tag span,.dcard span,.outs span,.drift__tag{font:400 var(--t-small)/1.5 var(--sans);letter-spacing:0;}
+.eyebrow,.meta dt,.next__cat,.drift__tag b{font:700 12px/1.65 var(--sans);letter-spacing:.04em;text-transform:uppercase;}
+.outs b{font:600 var(--t-metric)/1 var(--sans);letter-spacing:-.05em;}
+@media (max-width:760px){ h1.t-display{font-size:min(11vw, 44px);} }
+</style>
+<link rel="stylesheet" href="assets/cursor.css?v=1">
 </head>
 <body>
 <svg class="ico-defs" width="0" height="0" aria-hidden="true" focusable="false" style="position:absolute;width:0;height:0;overflow:hidden"><defs>
@@ -887,6 +934,7 @@ h3.t-title{font-size:26px;line-height:32px;}   /* sub-sections inside The system
     <li><a href="#loop">In practice</a></li>
     <li><a href="#result">The result</a></li>
     <li><a href="#changed">What changed</a></li>
+    <li><a href="#limits">Where it falls short</a></li>
     <li>
       <span class="toc__group">
         <a href="#system">The system</a>
@@ -911,19 +959,19 @@ h3.t-title{font-size:26px;line-height:32px;}   /* sub-sections inside The system
   <div id="top" class="stack gap-80">
     <div class="col stack gap-40">
       <div class="stack gap-16">
-        <h1 class="t-display">Making a Figma design system usable in every AI chat</h1>
-        <p class="t-body intro">ZBrain’s design system lived in Figma, where an AI chat can’t see it. I updated it for the components the product needs today, then rewrote it as a Markdown guide and an HTML reference that any AI project can load, so every designed screen and generated prototype comes back looking like one product.</p>
+        <h1 class="t-display">Making a Figma design system usable in any AI chat</h1>
+        <p class="t-body intro">ZBrain’s design system lived in Figma, where an AI chat can’t see it. I built and released a new version for the components the product needs today, then rewrote it as a Markdown guide and an HTML reference that any AI project can load, so designed screens and generated prototypes come back looking like one product.</p>
       </div>
 
       <dl class="meta">
         <dt>Product</dt>
         <dd class="t-body">ZBrain Design System 5.0</dd>
         <dt>Role</dt>
-        <dd class="t-body">Updated the Figma design system; wrote the Markdown guide and built the HTML reference</dd>
+        <dd class="t-body">Built and released the Figma design system; wrote the Markdown guide and built the HTML reference</dd>
         <dt>Team</dt>
         <dd class="t-body">Shared with the ZBrain product team</dd>
         <dt>Status</dt>
-        <dd class="t-body">In use for AI-assisted prototyping, with refinement ongoing</dd>
+        <dd class="t-body">Released, and in use across the admin and user portals and for AI-assisted prototyping</dd>
       </dl>
     </div>
 
@@ -965,11 +1013,11 @@ h3.t-title{font-size:26px;line-height:32px;}   /* sub-sections inside The system
       <div class="col-wide drift">
         <figure class="drift__item frame">
           <p class="drift__tag"><b>Chat 1</b>“Can you make a Spaces page for our admin console? I need a table with the space name, the policy attached to it, how many models it uses, monthly budget and status. Add search, a provider filter and a button to add a new space.”</p>
-          <button class="ds-shot__zoom" type="button" aria-label="Enlarge: Spaces page from chat 1"><img src="assets/ds/drift-chat1-spaces.jpg" width="1920" height="780" loading="lazy" alt="Chat 1's Spaces page: a near-black sidebar, black New Space button, black Active badges, uppercase table headers and underlined View usage links."></button>
+          <button class="ds-shot__zoom" type="button" aria-label="Enlarge: Spaces page from chat 1"><img src="assets/ds/drift-chat1-spaces.png" width="1920" height="780" loading="lazy" alt="Chat 1's Spaces page: a near-black sidebar, black New Space button, black Active badges, uppercase table headers and underlined View usage links."></button>
         </figure>
         <figure class="drift__item frame">
           <p class="drift__tag"><b>Chat 2</b>“Need a Policies screen for the ZBrain admin. Show each policy with the spaces it applies to, its models and monthly limit, and how many overrides it has. Should be easy to filter by space and create a new policy.”</p>
-          <button class="ds-shot__zoom" type="button" aria-label="Enlarge: Policies page from chat 2"><img src="assets/ds/drift-chat2-policies.jpg" width="1920" height="780" loading="lazy" alt="Chat 2's Policies page: an indigo top bar, a purple pill Create Policy button, filter chips, and policies laid out as shadowed cards with teal space tags."></button>
+          <button class="ds-shot__zoom" type="button" aria-label="Enlarge: Policies page from chat 2"><img src="assets/ds/drift-chat2-policies.png" width="1920" height="780" loading="lazy" alt="Chat 2's Policies page: an indigo top bar, a purple pill Create Policy button, filter chips, and policies laid out as shadowed cards with teal space tags."></button>
         </figure>
       </div>
 
@@ -986,8 +1034,8 @@ h3.t-title{font-size:26px;line-height:32px;}   /* sub-sections inside The system
       </div>
 
       <div class="col stack gap-16">
-        <p class="t-body"><b class="lead-in">The updated Figma system:</b> I brought it up to date with the components the product needs today: 120 variables, 11 component families and 17 text styles. It stays the source of truth.</p>
-        <p class="t-body"><b class="lead-in">The Markdown guide:</b> Tokens as copy-ready CSS and Tailwind, every component with its sizes and states, plus a starter prompt and a review checklist.</p>
+        <p class="t-body"><b class="lead-in">The Figma system:</b> I built it around the components the product needs today: 120 variables, 86 component variants in 11 families, 17 text styles and 120 icons, released for the admin and user portals. It stays the source of truth.</p>
+        <p class="t-body"><b class="lead-in">The Markdown guide:</b> Tokens as copy-ready CSS and Tailwind, the components with their sizes and states, plus a starter prompt and a review checklist.</p>
         <p class="t-body"><b class="lead-in">The HTML reference:</b> All 23 sections rendered as live UI: a visual target for generated screens, built from the same values as the guide.</p>
       </div>
 
@@ -1011,8 +1059,8 @@ h3.t-title{font-size:26px;line-height:32px;}   /* sub-sections inside The system
 
       <figure class="mdx col-wide frame" aria-label="An excerpt of the Markdown guide, ZBrain-Design-System.md, with its line numbers: the file's purpose, the first three instructions for the model, four semantic tokens and four lines of the review checklist.">
         <div class="mdx__win">
-          <div class="mdx__bar" aria-hidden="true"><span class="mdx__dots"><i></i><i></i><i></i></span><span class="mdx__file">ZBrain-Design-System.md</span><span class="mdx__meta">751 lines · excerpt</span></div>
-          <pre class="mdx__code"><span class="r"><span class="n">1</span><span><span class="h"><span class="m"># </span>ZBrain Design System</span></span></span><span class="r"><span class="n">6</span><span><span class="m">**</span><span class="b">Purpose of this file:</span><span class="m">**</span> a single reference an AI model (or a person) reads before generating any screen, prototype or component, so every output looks like the same product.</span></span><span class="r gap"><span class="n">⋯</span><span></span></span><span class="r"><span class="n">11</span><span><span class="h"><span class="m">## </span>0. Instructions for the model</span></span></span><span class="r"><span class="n">15</span><span><span class="m">1. **</span><span class="b">Use only the values in this file.</span><span class="m">**</span> No hex code, font size, spacing value, radius, shadow or duration may appear in output unless it is listed here. …</span></span><span class="r"><span class="n">16</span><span><span class="m">2. **</span><span class="b">Blue means action.</span><span class="m">**</span> <span class="c">`--action-primary`</span> (#2563EB) is used for primary buttons, links, selection and focus, and for nothing decorative.</span></span><span class="r"><span class="n">17</span><span><span class="m">3. **</span><span class="b">Purple is for AI only.</span><span class="m">**</span> <span class="x">`--ai`</span> (#7C3AED) marks machine agency: AI actions, model output, agents, copilots and the <span class="m">*</span>Processing<span class="m">*</span> status. Never use it for anything a human does.</span></span><span class="r gap"><span class="n">⋯</span><span></span></span><span class="r"><span class="n">115</span><span>  <span class="c">--text-primary</span>:     #0F1115;  <span class="cm">/* 18.90:1 on white */</span></span></span><span class="r"><span class="n">125</span><span>  <span class="c">--border-default</span>: #E5E7EB;  <span class="cm">/* card, table and outline-button edges, table row lines, dividers */</span></span></span><span class="r"><span class="n">130</span><span>  <span class="c">--action-primary</span>:         var(--color-blue-600);</span></span><span class="r"><span class="n">139</span><span>  <span class="x">--ai</span>:         var(--color-violet-600);  <span class="cm">/* 5.70:1 on white */</span></span></span><span class="r gap"><span class="n">⋯</span><span></span></span><span class="r"><span class="n">736</span><span><span class="h"><span class="m">## </span>11. Review checklist for generated screens</span></span></span><span class="r"><span class="n">740</span><span><span class="m">- [ ]</span> Only hex values, sizes, radii, shadows and durations from this file</span></span><span class="r"><span class="n">741</span><span><span class="m">- [ ]</span> Blue only on actions, links, selection and focus; purple only on AI</span></span><span class="r"><span class="n">743</span><span><span class="m">- [ ]</span> One primary button per region; the destructive action is last and confirmed</span></span><span class="r"><span class="n">746</span><span><span class="m">- [ ]</span> Radius matches the family (8 controls, 12 menus and tables, 16 cards, 24 dialogs)</span></span></pre>
+          <div class="mdx__bar" aria-hidden="true"><span class="mdx__dots"><i></i><i></i><i></i></span><span class="mdx__file">ZBrain-Design-System.md</span><span class="mdx__meta">746 lines · excerpt</span></div>
+          <pre class="mdx__code"><span class="r"><span class="n">1</span><span><span class="h"><span class="m"># </span>ZBrain Design System</span></span></span><span class="r"><span class="n">5.0</span><span><span class="m">**</span><span class="b">Purpose of this file:</span><span class="m">**</span> a single reference an AI model (or a person) reads before generating any screen, prototype or component, so every output looks like the same product.</span></span><span class="r gap"><span class="n">⋯</span><span></span></span><span class="r"><span class="n">11</span><span><span class="h"><span class="m">## </span>0. Instructions for the model</span></span></span><span class="r"><span class="n">15</span><span><span class="m">1. **</span><span class="b">Use only the values in this file.</span><span class="m">**</span> No hex code, font size, spacing value, radius, shadow or duration may appear in output unless it is listed here. …</span></span><span class="r"><span class="n">16</span><span><span class="m">2. **</span><span class="b">Blue means action.</span><span class="m">**</span> <span class="c">`--action-primary`</span> (#2563EB) is used for primary buttons, links, selection and focus, and for nothing decorative.</span></span><span class="r"><span class="n">17</span><span><span class="m">3. **</span><span class="b">Purple is for AI only.</span><span class="m">**</span> <span class="x">`--ai`</span> (#7C3AED) marks machine agency: AI actions, model output, agents, copilots and the <span class="m">*</span>Processing<span class="m">*</span> status. Never use it for anything a human does.</span></span><span class="r gap"><span class="n">⋯</span><span></span></span><span class="r"><span class="n">115</span><span>  <span class="c">--text-primary</span>:     #0F1115;  <span class="cm">/* 18.90:1 on white */</span></span></span><span class="r"><span class="n">125</span><span>  <span class="c">--border-default</span>: #E5E7EB;  <span class="cm">/* card, table and outline-button edges, table row lines, dividers */</span></span></span><span class="r"><span class="n">130</span><span>  <span class="c">--action-primary</span>:         var(--color-blue-600);</span></span><span class="r"><span class="n">139</span><span>  <span class="x">--ai</span>:         var(--color-violet-600);  <span class="cm">/* 5.70:1 on white */</span></span></span><span class="r gap"><span class="n">⋯</span><span></span></span><span class="r"><span class="n">736</span><span><span class="h"><span class="m">## </span>11. Review checklist for generated screens</span></span></span><span class="r"><span class="n">740</span><span><span class="m">- [ ]</span> Only hex values, sizes, radii, shadows and durations from this file</span></span><span class="r"><span class="n">741</span><span><span class="m">- [ ]</span> Blue only on actions, links, selection and focus; purple only on AI</span></span><span class="r"><span class="n">743</span><span><span class="m">- [ ]</span> One primary button per region; the destructive action is last and confirmed</span></span><span class="r"><span class="n">746</span><span><span class="m">- [ ]</span> Radius matches the family (8 controls, 12 menus and tables, 16 cards, 24 dialogs)</span></span></pre>
         </div>
       </figure>
 
@@ -1091,18 +1139,18 @@ h3.t-title{font-size:26px;line-height:32px;}   /* sub-sections inside The system
       <div class="rpair col-wide">
         <figure class="rpair__item frame">
           <p class="drift__tag"><b>Chat 1 · guide attached</b>Spaces</p>
-          <div class="rpair__screen"><img src="assets/ds/result-spaces.jpg" width="1920" height="622" loading="lazy" alt="Spaces, built in Claude with the guide attached: the ZBrain sidebar, one blue Add Space button, and a table of spaces with their policy, models, budget and an Active status."></div>
+          <div class="rpair__screen"><img src="assets/ds/result-spaces.png" width="1920" height="622" loading="lazy" alt="Spaces, built in Claude with the guide attached: the ZBrain sidebar, one blue Add Space button, and a table of spaces with their policy, models, budget and an Active status."></div>
         </figure>
         <figure class="rpair__item frame">
           <p class="drift__tag"><b>Chat 2 · guide attached</b>Policies</p>
-          <div class="rpair__screen"><img src="assets/ds/result-policies.jpg" width="1920" height="622" loading="lazy" alt="Policies, built in Claude with the guide attached: the same sidebar and blue action, and a table of policies with their spaces, base grants and scoped overrides."></div>
+          <div class="rpair__screen"><img src="assets/ds/result-policies.png" width="1920" height="622" loading="lazy" alt="Policies, built in Claude with the guide attached: the same sidebar and blue action, and a table of policies with their spaces, base grants and scoped overrides."></div>
         </figure>
       </div>
 
       <div class="col stack gap-16">
         <p class="t-body"><b class="lead-in">Inside Figma, too:</b> Figma’s own AI reads the same library. Asked to update the tabs and table on the Models page, it searched the components, styles and variables first, then kept the original UI.</p>
       </div>
-      <figure class="proof col-wide frame"><img src="assets/ds/figma-ai-models.webp?v=2" width="1160" height="700" loading="lazy" alt="Figma’s AI panel, asked to update the Models page’s tabs and table and keep the original UI. It lists its steps: discovered top library assets, searched for components, searched for styles, searched for variables. Beside it, the ZBrain Admin Console Models frame with Pending and History tabs and a table of models with tokens, cost, requests, last used and budget limit."></figure>
+      <figure class="proof proof--bleed col-wide frame"><img src="assets/ds/figma-ai-models.webp?v=2" width="1160" height="700" loading="lazy" alt="Figma’s AI panel, asked to update the Models page’s tabs and table and keep the original UI. It lists its steps: discovered top library assets, searched for components, searched for styles, searched for variables. Beside it, the ZBrain Admin Console Models frame with Pending and History tabs and a table of models with tokens, cost, requests, last used and budget limit."></figure>
     </section>
 
     <!-- ============================ WHAT CHANGED ============================ -->
@@ -1112,15 +1160,33 @@ h3.t-title{font-size:26px;line-height:32px;}   /* sub-sections inside The system
           <p class="eyebrow">What changed</p>
           <h2 class="t-title" id="s-changed">One quality bar across the product team</h2>
         </div>
-        <p class="t-body">Two weeks after launch I talked to the team about how they were using it.</p>
+        <p class="t-body">The guide is where the team’s AI prototypes start, and every generated screen is checked against the same list.</p>
       </div>
 
       <div class="ig ig--outs ig--dark col-wide">
-        <ul class="outs">
+        <ul class="outs outs--2">
+          <li><svg class="ic ic--lg" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="2.5" y="4" width="19" height="15" rx="2"/><path d="M2.5 8h19"/><path class="as" d="M8.5 13.2l2.3 2.3 4.7-4.7"/></svg><b>~80% accurate</b><span>generated screens, as they come out of an AI chat with the guide attached</span></li>
+          <li><svg class="ic ic--lg" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="10" cy="12" r="7.5"/><path d="M10 8v4l2.6 1.6"/><path class="as" d="M20.5 13.5v7M18.3 18.3l2.2 2.2 2.2-2.2"/></svg><b>~60% less time</b><span>spent fixing the design of generated screens</span></li>
           <li><svg class="ic ic--lg" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="9" cy="8" r="3.6"/><path d="M2.5 20.5a6.5 6.5 0 0 1 13 0"/><circle class="a" cx="17.2" cy="9" r="2.8"/><path d="M15.8 14.4a5.4 5.4 0 0 1 5.7 5.6"/></svg><b>27 people</b><span>on the ZBrain product team prototype from the same guide</span></li>
-          <li><svg class="ic ic--lg" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="4" y="2.5" width="16" height="5" rx="1.5"/><rect class="a" x="4" y="9.5" width="16" height="5" rx="1.5"/><rect x="4" y="16.5" width="16" height="5" rx="1.5"/></svg><b>One look</b><span>Prototypes come back uniform across people and prompts</span></li>
-          <li><svg class="ic ic--lg" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M3 17.5a9 9 0 1 1 18 0"/><path d="M5.8 17.5h1.4M16.8 17.5h1.4M12 8.5V10M7.4 10.9l1 1M16.6 10.9l-1 1"/><path class="as" d="M12 17.5l4.2-4.6"/><circle class="a" cx="12" cy="17.5" r="1.7"/></svg><b>~60% less time</b><span>spent fixing design elements: generated frames come out about 80% accurate, so time goes to making the functionality work</span></li>
+          <li><svg class="ic ic--lg" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="4" y="2.5" width="16" height="19" rx="2"/><path class="as" d="M7.5 8l1.6 1.6L12 6.8M7.5 14.5l1.6 1.6 2.9-2.8"/><path d="M14 8.3h3M14 14.8h3"/></svg><b>12 checks</b><span>on one review list for every generated screen, from color roles to touch targets</span></li>
         </ul>
+      </div>
+    </section>
+
+    <!-- ============================ WHERE IT FALLS SHORT ============================ -->
+    <section id="limits" class="stack gap-40" aria-labelledby="s-limits">
+      <div class="col stack gap-16">
+        <div class="stack gap-8">
+          <p class="eyebrow">Where it falls short</p>
+          <h2 class="t-title" id="s-limits">What didn’t work, and what still doesn’t</h2>
+        </div>
+        <p class="t-body">The guide only removes guesswork where it is written down.</p>
+      </div>
+
+      <div class="col stack gap-16">
+        <p class="t-body"><b class="lead-in">The first table spec was generic:</b> overline headers, a shadowed card and an invoices example, not the table ZBrain uses. I rewrote it from the admin console’s own table, and every data view now starts from that one.</p>
+        <p class="t-body"><b class="lead-in">Some families have no spec yet:</b> Navigation is in the inventory but not written down, the chart docs are still in progress, and the AI agent card and workflow builder are in beta. These are the parts a chat is most likely to invent.</p>
+        <p class="t-body"><b class="lead-in">The model checks its own work:</b> Claude reports the review checklist itself, so a person still compares each screen with the HTML reference and Figma before it is accepted.</p>
       </div>
     </section>
 
@@ -1131,7 +1197,7 @@ h3.t-title{font-size:26px;line-height:32px;}   /* sub-sections inside The system
           <p class="eyebrow">The system</p>
           <h2 class="t-title" id="s-system">Twenty-three sections, three shown in full</h2>
         </div>
-        <p class="t-body">Four groups: foundations, components, AI patterns and the rules that hold them together. 120 variables, 86 component variants and 120 icons. The three sections below are the live UI; the other twenty live in the HTML reference.</p>
+        <p class="t-body">Four groups: foundations, components, AI patterns and the rules that hold them together. 120 variables and 86 component variants. The three sections below are the live UI; the other twenty live in the HTML reference.</p>
       </div>
 
     <!-- ============================ COLOR SYSTEM ============================ -->
@@ -1141,7 +1207,7 @@ h3.t-title{font-size:26px;line-height:32px;}   /* sub-sections inside The system
           <p class="eyebrow">Color system</p>
           <h3 class="t-title" id="s-color">Semantic first, decorative never</h3>
         </div>
-        <p class="t-body">Color in the system is functional. One blue carries every action, purple is reserved exclusively for AI, and everything else is neutral. Each role ships with a contrast recommendation so accessible pairings are the default, not a review comment.</p>
+        <p class="t-body">Color in the system is functional. One blue carries every action, purple is reserved exclusively for AI, status colors carry state, and everything else is neutral. Each role ships with a contrast recommendation so accessible pairings are the default, not a review comment.</p>
       </div>
 
       <div class="col-wide frame frame--panel">
@@ -2672,9 +2738,9 @@ h3.t-title{font-size:26px;line-height:32px;}   /* sub-sections inside The system
       <div class="col stack gap-16">
         <div class="stack gap-8">
           <p class="eyebrow">Buttons</p>
-          <h3 class="t-title" id="s-buttons">Thirteen variants, six states, zero ambiguity</h3>
+          <h3 class="t-title" id="s-buttons">Thirteen variants, six states, one recipe</h3>
         </div>
-        <p class="t-body">Every button resolves from the same recipe: one height scale, one radius token, one focus ring. Variants change intent and states change feedback. Nothing else is allowed to vary.</p>
+        <p class="t-body">Every button resolves from the same recipe: one height scale, a radius for each size, one focus ring. Variants change intent and states change feedback. Nothing else is allowed to vary.</p>
       </div>
 
       <div class="col-wide frame frame--panel frame--cut" data-cut-after="Row AI Action">
@@ -6522,7 +6588,7 @@ h3.t-title{font-size:26px;line-height:32px;}   /* sub-sections inside The system
 
   <!-- ============================ FOOTER ============================ -->
   <footer class="next-wrap">
-    <a class="next" href="/dhs-tutor">
+    <a class="next" href="/dhs-tutor" data-cursor="View<br>project">
       <h2 class="next__word" aria-hidden="true">next<br>project</h2>
       <div class="next__card">
         <div class="next__media"><img src="assets/dhs/tutor-answer.jpg" alt="DHS Tutor's chat, with an answer citing a page of the DHS Review Book" loading="lazy"></div>
@@ -6796,5 +6862,6 @@ h3.t-title{font-size:26px;line-height:32px;}   /* sub-sections inside The system
 <script src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js" defer></script>
 <script src="smooth-scroll.js" defer></script>
 <script src="assets/theme.js?v=3" defer></script>
+<script src="assets/cursor.js?v=1"></script>
 </body>
 </html>

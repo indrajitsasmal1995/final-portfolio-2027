@@ -24,6 +24,31 @@
       ],
       "destination": "https://indrajit.work/:path*",
       "permanent": true
+    },
+    {
+      "source": "/zbrain",
+      "destination": "/zbrain-v2",
+      "permanent": false
+    },
+    {
+      "source": "/ce-copilot",
+      "destination": "/ce-copilot-v2",
+      "permanent": false
+    },
+    {
+      "source": "/finora",
+      "destination": "/",
+      "permanent": false
+    },
+    {
+      "source": "/carrom-scorer",
+      "destination": "/",
+      "permanent": false
+    },
+    {
+      "source": "/carrom-scorer-landing",
+      "destination": "/",
+      "permanent": false
     }
   ]
 }

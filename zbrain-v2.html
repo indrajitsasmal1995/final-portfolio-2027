@@ -1,0 +1,1270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- page transitions: a page that arrived under the wipe is covered before its first paint -->
+<link rel="stylesheet" href="assets/page-transition.css?v=8">
+<script>try{var tm=localStorage.getItem('theme');if(!tm)tm=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';document.documentElement.setAttribute('data-theme',tm);document.documentElement.style.colorScheme=tm}catch(e){}document.documentElement.classList.add('js')</script>
+<script>try{if(!matchMedia('(prefers-reduced-motion:reduce)').matches){var h=sessionStorage.getItem('ptHop');sessionStorage.removeItem('ptHop');var p=h?h.split('|'):0;if(p&&p.length==2&&Date.now()-(+p[1])<3000){var r=document.documentElement;r.setAttribute('data-pt',p[0]);r.classList.add('pt-held');setTimeout(function(){if(r.classList.contains('pt-held')){r.classList.remove('pt-held');r.removeAttribute('data-pt')}},6000)}}}catch(e){}</script>
+<script src="assets/page-transition.js?v=7" defer></script>
+<title>ZBrain Admin Console | Enterprise AI governance case study</title>
+<meta name="description" content="Case study: the admin console for ZBrain, LeewayHertz’s enterprise AI platform, where admins give each department a space and one policy that decides what its builders can use, spend and do.">
+<link rel="icon" href="favicon.svg?v=4" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300..800&display=swap" rel="stylesheet">
+<style>
+/* ZBrain admin console, v2: laid out on the CE CoPilot v2 system, copied as it stands (164 + 108px
+   between sections, oklch neutrals tinted blue, Plus Jakarta Sans 500 for the title, section headings and
+   pull quote, Plus Jakarta Sans for everything else), with ZBrain's blue as the one accent in place
+   of CE CoPilot's teal. What this page adds (the before/after diagrams, the screen recordings, the
+   governance panel and the screenshot cards) is in the block at the end of this sheet. */
+:root{
+  --bg:oklch(0.978 0.004 255);
+  --ink:oklch(0.22 0.014 255);
+  --ink-2:oklch(0.42 0.014 255);
+  --ink-3:oklch(0.515 0.016 255);
+  --accent:#305cff;   /* ZBrain blue, as on the live case study */
+  --surface:oklch(0.945 0.006 255);
+  --surface-2:oklch(0.955 0.005 255);
+  --line:oklch(0.22 0.014 255 / 0.12);
+  --tint:oklch(0.22 0.014 255 / 0.07);
+  --green:oklch(0.5 0.13 150);
+  --nav-bg:oklch(0.945 0.006 255 / 0.88);
+  --panel:rgb(5 6 8);
+  --panel-ink:oklch(0.97 0.008 255);
+  --panel-ink-2:oklch(0.78 0.012 255);
+  --panel-ink-3:oklch(0.66 0.014 255);
+  --panel-line:rgba(255,255,255,.12);
+  --foot:rgb(29 29 31);
+  --display:"Plus Jakarta Sans", system-ui, sans-serif;
+  --sans:"Plus Jakarta Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --logo:Avenir, "Avenir Next", "Plus Jakarta Sans", system-ui, sans-serif;
+  --shot:0 2px 24px rgba(27,45,84,.14);
+}
+:root[data-theme="dark"]{
+  /* The original case study's dark mode, from dark.css: a warm black with warm greys,
+     the same ground as the homepage, rather than the cool blue-black this page began on. */
+  --bg:#0b0b0b;
+  --ink:#f1ede6;
+  --ink-2:#c9c4bb;
+  --ink-3:#a29e97;
+  --accent:#8fa6ff;
+  --surface:#151515;
+  --surface-2:#1b1b1b;
+  --line:rgba(241,237,230,.14);
+  --tint:rgba(241,237,230,.07);
+  --green:oklch(0.78 0.16 150);
+  --nav-bg:rgba(21,21,21,.88);
+  --foot:#151515;
+  --shot:0 2px 24px rgba(0,0,0,.4);
+  /* the one panel (the feedback loop) sits on the surface, as panels do on the original */
+  --panel:#151515;
+  --panel-ink:#f1ede6;
+  --panel-ink-2:#c9c4bb;
+  --panel-ink-3:#a29e97;
+  --panel-line:rgba(241,237,230,.12);
+}
+
+*,*::before,*::after{box-sizing:border-box;}
+html{-webkit-text-size-adjust:100%;scroll-behavior:smooth;}
+body{margin:0;background:var(--bg);color:var(--ink);font:400 15px/24px var(--sans);-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;}
+img,video{display:block;max-width:100%;height:auto;}
+h1,h2,h3,p,ul,ol,figure,blockquote,dl,dd{margin:0;}
+ul,ol{padding:0;list-style:none;}
+a{color:inherit;text-decoration:none;}
+button{font:inherit;color:inherit;}
+.vh{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap;}
+.skip{position:absolute;left:16px;top:-60px;z-index:100;padding:10px 16px;border-radius:999px;background:var(--ink);color:var(--bg);font-weight:600;}
+.skip:focus{top:16px;}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:6px;}
+
+/* as on the live case study: the 663px text column is centred on the page, and pictures and grids
+   run wider, up to 1153px, centred on the same axis. From 1240px up each side margin is at least
+   256px, so the wide blocks clear the sections rail down the left. */
+:root{--side:32px;}
+@media (min-width:1240px){:root{--side:256px;}}
+.col,.wide{margin-inline:auto;}
+.col{width:min(663px, calc(100% - 2 * var(--side)));}
+.wide{width:min(1153px, calc(100% - 2 * var(--side)));}
+section[id]{scroll-margin-top:96px;}
+
+/* the sections rail, as on the live case study: fixed down the left from 1240px up */
+.toc{position:fixed;top:128px;left:88px;z-index:5;display:none;max-height:calc(100vh - 176px);transition:opacity .3s ease;}
+@media (min-width:1240px){.toc{display:flex;flex-direction:column;gap:24px;}}
+.toc.is-covered{opacity:0;pointer-events:none;}
+.toc__back{align-self:flex-start;display:inline-flex;align-items:center;gap:8px;min-height:24px;font-size:12px;line-height:24px;color:var(--ink-3);transition:color .15s ease;}
+.toc__back svg{width:14px;height:14px;flex:none;fill:none;stroke:currentColor;stroke-width:1.25;stroke-linecap:round;stroke-linejoin:round;}
+.toc__back:hover{color:var(--ink);}
+.toc__list{display:flex;flex-direction:column;min-height:0;overflow-y:auto;scrollbar-width:none;}
+.toc__list::-webkit-scrollbar{width:0;display:none;}
+.toc__list a{display:block;min-height:24px;max-width:200px;font-size:12px;line-height:24px;color:var(--ink-3);transition:color .15s ease;}
+.toc__list a:hover{color:var(--ink);}
+.toc__list a[aria-current]{color:var(--ink);font-weight:600;}
+
+/* below 1240px, as on the live case studies: a round menu button in the top right corner opens
+   the rail as a panel from the top */
+.menu-btn{display:none;}
+@media (max-width:1239px){
+  .menu-btn{position:fixed;top:22px;right:22px;z-index:96;display:grid;place-items:center;width:38px;height:38px;padding:0;border:1px solid var(--line);border-radius:50%;background:color-mix(in oklch, var(--bg) 72%, transparent);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);color:var(--ink);cursor:pointer;transition:border-color .35s ease;}
+  .menu-btn:hover{border-color:var(--ink-3);}
+  .menu-btn span{grid-area:1/1;width:16px;height:1.6px;border-radius:2px;background:currentColor;transition:transform .4s cubic-bezier(.2,.7,.1,1);}
+  .menu-btn span:first-child{transform:translateY(-3.5px);}
+  .menu-btn span:last-child{transform:translateY(3.5px);}
+  .menu-open .menu-btn span:first-child{transform:rotate(45deg);}
+  .menu-open .menu-btn span:last-child{transform:rotate(-45deg);}
+  .toc{display:flex;flex-direction:column;gap:0;top:0;left:0;right:0;z-index:95;max-height:100dvh;overflow-y:auto;overscroll-behavior:contain;padding:84px var(--side) 22px;background:color-mix(in oklch, var(--bg) 95%, transparent);-webkit-backdrop-filter:blur(16px);backdrop-filter:blur(16px);border-bottom:1px solid var(--line);opacity:0;visibility:hidden;pointer-events:none;transform:translateY(-10px);transition:opacity .3s ease,transform .45s cubic-bezier(.2,.7,.1,1),visibility 0s .45s;}
+  .menu-open .toc,.menu-open .toc.is-covered{opacity:1;visibility:visible;pointer-events:auto;transform:none;transition:opacity .3s ease,transform .45s cubic-bezier(.2,.7,.1,1),visibility 0s;}
+  .toc > *{flex-shrink:0;}
+  .toc__back{font-size:15px;padding-bottom:14px;}
+  .toc__back svg{width:16px;height:16px;}
+  .toc__list{overflow:visible;max-height:none;}
+  .toc__list a{max-width:none;min-height:0;padding:12px 0;border-top:1px solid var(--line);font-size:19px;line-height:26px;font-weight:500;letter-spacing:-.01em;}
+}
+
+/* hero */
+.hero{padding-top:128px;}
+.back{display:flex;width:max-content;align-items:center;gap:10px;height:44px;margin-left:-14px;padding:0 14px;border-radius:999px;font-size:14px;font-weight:600;color:var(--ink-2);}
+.back:hover{background:var(--tint);color:var(--ink);}
+.hero__copy{margin-top:32px;}
+@media (min-width:1240px){.hero .back{display:none;}.hero__copy{margin-top:0;}}
+.project-line{font-size:12px;line-height:24px;letter-spacing:1.2px;text-transform:uppercase;color:var(--ink-3);}
+h1{margin-top:12px;font:700 clamp(40px,5vw,60px)/1 var(--display);letter-spacing:-.042em;}
+.summary{margin-top:20px;font-size:18px;line-height:28px;color:var(--ink-2);}
+.meta{display:grid;grid-template-columns:repeat(4,auto);justify-content:start;column-gap:40px;margin-top:64px;padding-top:24px;}
+.meta dt{font-size:12px;line-height:24px;letter-spacing:1.8px;text-transform:uppercase;color:var(--ink-3);}
+.meta dd{margin-top:4px;font-size:15px;line-height:24px;}
+.live{display:inline-flex;align-items:center;gap:8px;vertical-align:top;}   /* top, not baseline: the dot has no baseline, so on the baseline it pushed "Live" 2px below the other values */
+.live::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--green);box-shadow:0 0 0 4px color-mix(in oklch, var(--green) 18%, transparent);}
+.hero__media{margin-top:52px;}
+.hero__media img{width:100%;border-radius:24px;}
+figcaption{margin-top:14px;font-size:14px;line-height:20px;color:var(--ink-3);}
+
+/* sections */
+.sec{margin-top:164px;padding-top:108px;}
+h2{font:700 34px/38px var(--display);letter-spacing:-.036em;}
+.head > p{margin-top:16px;font-size:15px;line-height:24px;color:var(--ink-2);}
+.kicker{display:block;font-size:12px;line-height:24px;letter-spacing:1.2px;text-transform:uppercase;color:var(--ink-3);}
+
+/* numbers across a row, divided by vertical rules */
+.metrics{display:grid;grid-template-columns:repeat(2,1fr);margin-top:72px;}
+.metric{padding:30px 28px 32px;}
+.metric:first-child{padding-left:0;}
+.metric + .metric{border-left:1px solid var(--line);}
+.metric strong{display:block;font:700 40px/1 var(--display);letter-spacing:-.04em;}
+.metric span{display:block;margin-top:14px;font-size:14px;line-height:1.5;color:var(--ink-3);}
+.metrics--3{grid-template-columns:repeat(3,1fr);}
+.metric strong.live{display:flex;align-items:center;gap:14px;}
+#s-anatomy,#s-iter{text-wrap:balance;}   /* even lines, never one word left on its own */
+
+/* a sticky picture beside steps that scroll past it */
+.context{display:grid;grid-template-columns:minmax(0,468fr) minmax(0,600fr);gap:112px;margin-top:148px;}
+.sec--context .context{margin-top:0;}
+.context__visual{position:sticky;top:120px;height:748px;}
+.context__visual img{position:absolute;inset:0;margin:auto;width:100%;height:100%;object-fit:contain;opacity:0;transform:scale(.98);transition:opacity .5s ease, transform .5s ease;}
+.context__visual img.is-active{opacity:1;transform:none;}
+.context__step{display:flex;flex-direction:column;justify-content:center;min-height:774px;padding:72px 0;}
+.context__step h3{margin-top:8px;font:700 34px/38px var(--display);letter-spacing:-.036em;}
+.context__step ul{margin-top:28px;}
+.dash li{position:relative;padding:14px 0 14px 34px;color:var(--ink-2);}
+.dash li::before{content:"";position:absolute;left:2px;top:26px;width:12px;height:1px;background:var(--accent);}
+.dash b{font-weight:600;color:var(--ink);}
+.step-visual{display:none;}
+
+/* the big quote */
+.quote{margin-top:168px;}
+.quote .kicker{margin-bottom:12px;color:var(--accent);}
+.quote__line{font:700 clamp(32px,4vw,48px)/1.08 var(--display);letter-spacing:-.04em;}
+.quote__sub{margin-top:16px;font-size:15px;line-height:24px;color:var(--ink-3);}
+.quote--card{padding:108px 0;border-radius:43.2px;background:var(--surface);}
+.sec > .quote:first-child{margin-top:0;}   /* "Why it matters" is the whole section now, so the card opens it */
+.quote--card .col{width:min(663px, calc(100% - 96px));}
+@media (max-width:900px){
+  .quote--card{padding:72px 0;border-radius:28px;}
+  .quote--card .col{width:calc(100% - 48px);}
+}
+
+/* principles */
+.claim{margin-top:16px;padding-left:16px;border-left:2px solid var(--accent);font-size:17px;line-height:24px;}
+.rules{display:grid;grid-template-columns:1fr 1fr;margin-top:72px;}
+.rules article{padding:32px 48px 44px;}
+.rules article:nth-child(odd){padding-left:0;}
+.rules article:nth-child(even){border-left:1px solid var(--line);}
+.rules h3{margin-top:24px;font-size:22px;line-height:28px;font-weight:600;letter-spacing:-.02em;}
+.rules p{max-width:461px;margin-top:10px;font-size:15px;line-height:24px;color:var(--ink-3);}
+.subhead{margin-top:44px;font-size:17px;line-height:24px;color:var(--ink-2);}
+.subhead em{font-style:normal;font-weight:600;color:var(--accent);}
+
+/* anatomy: a root and its branches */
+.tree{margin-top:76px;}
+.tree__root{width:max-content;margin:0 auto;padding:16px 24px;border:1px solid var(--line);border-radius:999px;background:var(--surface-2);font-size:15px;line-height:18px;font-weight:700;}
+.tree__branches{position:relative;display:grid;grid-template-columns:repeat(5,1fr);gap:18px;padding-top:64px;}
+.tree__branches::before{content:"";position:absolute;left:50%;top:0;height:32px;border-left:1px solid var(--line);}
+.tree__branches::after{content:"";position:absolute;left:calc(10% - 7px);right:calc(10% - 7px);top:32px;border-top:1px solid var(--line);}
+.branch{position:relative;padding:26px 20px 24px;border:1px solid var(--line);background:var(--surface);}
+.branch::before{content:"";position:absolute;left:50%;top:-33px;height:32px;border-left:1px solid var(--line);}
+.branch h3{font-size:15px;line-height:22px;font-weight:600;}
+.branch ul{display:grid;gap:10px;margin-top:22px;padding-top:22px;border-top:1px solid var(--line);}
+.branch li{position:relative;padding-left:14px;font-size:13px;line-height:1.45;color:var(--ink-3);}
+.branch li::before{content:"";position:absolute;left:0;top:9px;width:6px;height:1px;background:var(--accent);}
+
+/* cards with a phone in a grey well */
+.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:80px;}
+.well{display:flex;align-items:center;justify-content:center;padding:32px;border:1px solid var(--line);background:var(--surface);}
+.well img{width:min(100%,250px);}
+.card__copy{padding-top:24px;}
+.card__copy h3{margin-top:6px;font-size:18px;line-height:26px;font-weight:600;letter-spacing:-.01em;}
+.card__copy p{margin-top:6px;font-size:15px;line-height:24px;color:var(--ink-3);}
+
+/* states: the five status lines, laid out in order under the question they answer, beside the
+   reply to a vague question. A still sequence, not an animation: every state is readable at once.
+   The lines are drawn in the app's own grey on white, since they stand in for its screen. */
+.states{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-top:72px;}
+.state .well{flex-direction:column;gap:36px;min-height:620px;padding:40px;}
+.state h3{margin-top:18px;font-size:18px;line-height:26px;font-weight:600;letter-spacing:-.01em;}
+.state__phone{width:min(100%,250px);}
+/* The rows line up with the phone's screen (it runs 5% to 95% of the image), the numbers hang
+   outside it, and row 1 sits exactly where the status line is in the app: 80% down the 418x300
+   image, which is 57.7% of its width. Percentage margins resolve against that width. */
+.status{display:flex;flex-direction:column;align-items:flex-start;width:min(100%,320px);}
+.well .status__phone{width:100%;}
+.status__seq{position:relative;display:grid;gap:10px;width:calc(86% + 48px);margin:calc(-14.1% - 18px) 0 0 calc(7% - 48px);}
+.status__seq::before{content:"";position:absolute;left:11.5px;top:18px;bottom:18px;border-left:1px solid var(--line);}
+.status__seq li{position:relative;display:grid;grid-template-columns:24px minmax(0,1fr);align-items:center;gap:24px;}   /* the 24px gap keeps number 1 clear of the phone's bezel */
+.status__seq b{display:grid;place-items:center;width:24px;height:24px;border:1px solid var(--line);border-radius:50%;background:var(--surface);font:600 11px/1 var(--sans);color:var(--ink-3);}
+.status__seq span{display:flex;align-items:center;gap:8px;padding:9px 12px;border-radius:10px;background:#fff;box-shadow:0 0 0 1px rgb(0 0 0 / .05),0 2px 10px rgb(0 0 0 / .06);font:400 13px/18px Inter, system-ui, -apple-system, "Segoe UI", sans-serif;color:#8a8a8a;}
+.status__seq span::before{content:"";width:10px;height:10px;flex:none;border:1.5px solid #c8c8c8;border-top-color:transparent;border-radius:50%;}
+
+/* the dark panel */
+.panel{margin-top:164px;padding:84px;border-radius:43.2px;background:var(--panel);color:var(--panel-ink);}
+:root[data-theme="dark"] .panel{box-shadow:inset 0 0 0 1px var(--panel-line);}
+.panel h2{color:var(--panel-ink);}
+.panel .head > p{color:var(--panel-ink-2);}
+.loop{display:grid;grid-template-columns:1fr 1fr;margin-top:64px;}
+.loop figure{padding:32px 40px 34px;}
+.loop figure:nth-child(odd){padding-left:0;}
+.loop figure:nth-child(even){border-left:1px solid var(--panel-line);}
+.chip{display:inline-flex;align-items:center;gap:12px;padding:12px 20px 12px 14px;border:1px solid rgba(255,255,255,.14);border-radius:999px;background:rgba(255,255,255,.07);font-size:17px;line-height:1.2;font-weight:600;}
+.chip i{display:inline-grid;place-items:center;width:28px;height:28px;border-radius:50%;background:rgba(255,255,255,.12);font-style:normal;font-size:12px;letter-spacing:.04em;color:var(--panel-ink-2);}
+.loop figcaption{max-width:430px;margin-top:20px;font-size:14px;line-height:1.55;color:var(--panel-ink-3);}
+.loop__back{margin-top:44px;font-size:15px;line-height:1.6;color:var(--panel-ink-2);}
+.loop__back b{color:var(--panel-ink);font-weight:600;}
+
+/* iterations: rejected and selected */
+.iter{display:grid;grid-template-columns:1fr 1fr;gap:72px;margin-top:80px;}
+.iter .well{aspect-ratio:554/460;padding:44px;}
+.iter .well img{width:auto;max-width:100%;max-height:100%;border-radius:10px;box-shadow:var(--shot);}
+.iter__copy{padding-top:26px;}
+.iter__copy h3{margin-top:6px;font-size:22px;line-height:28px;font-weight:600;letter-spacing:-.02em;}
+.iter__copy p{max-width:527px;margin-top:10px;font-size:15px;line-height:24px;color:var(--ink-3);}
+
+/* admin console */
+.console{margin-top:72px;}
+.console .well{padding:44px;}
+.console .well img{width:100%;border-radius:12px;box-shadow:var(--shot);}
+.console__row{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:24px;}
+.console__row .well{padding:20px;}
+.console__row .well img{width:100%;border-radius:8px;box-shadow:var(--shot);}
+/* the console, told one question at a time */
+.cgroup{margin-top:120px;}
+.cgroup h3{font-size:22px;line-height:28px;font-weight:600;letter-spacing:-.02em;}
+.cgroup > p{margin-top:12px;font-size:15px;line-height:24px;color:var(--ink-2);}
+.cgroup + .console{margin-top:40px;}
+.cgroup + .console__row{margin-top:40px;}
+.console__row.console__row--2{grid-template-columns:repeat(2,1fr);}
+@media (max-width:900px){
+  .cgroup{margin-top:80px;}
+  .console__row.console__row--2{grid-template-columns:1fr;}
+}
+.decisions{display:grid;grid-template-columns:repeat(3,1fr);margin-top:56px;}
+.decisions article{padding:8px 40px 8px;}
+.decisions article:first-child{padding-left:0;}
+.decisions article + article{border-left:1px solid var(--line);}
+.decisions h3{margin-top:8px;font-size:18px;line-height:26px;font-weight:600;letter-spacing:-.01em;}
+.decisions p{margin-top:8px;font-size:15px;line-height:24px;color:var(--ink-3);}
+.decisions + .console__row{margin-top:56px;}
+
+/* any screen can be opened full size */
+.zoom{display:block;width:100%;padding:0;border:0;background:none;cursor:zoom-in;}
+.iter .zoom{display:flex;align-items:center;justify-content:center;height:100%;}
+/* sized from the width and height attributes, so a lazy image has a box before it loads */
+.iter .zoom img{width:100%;height:auto;max-height:100%;}
+.iter .zoom img.is-tall{width:auto;height:100%;}
+.lb{width:100vw;max-width:none;height:100dvh;max-height:none;margin:0;padding:clamp(16px,4vw,48px);border:0;background:transparent;}
+.lb[open]{display:grid;place-items:center;}
+.lb::backdrop{background:rgb(5 6 8 / .88);}
+.lb img{max-width:100%;max-height:calc(100dvh - 2 * clamp(16px,4vw,48px));width:auto;height:auto;border-radius:10px;cursor:zoom-out;}
+.lb__close{position:fixed;top:18px;right:18px;display:grid;place-items:center;width:40px;height:40px;padding:0;border:1px solid rgba(255,255,255,.28);border-radius:50%;background:rgba(255,255,255,.08);color:#fff;cursor:pointer;transition:background .15s ease;}
+/* a drawn cross, not the × character, which the font sets small and below the middle */
+.lb__close svg{display:block;width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;}
+.lb__close:hover,.lb__close:focus-visible{background:rgba(255,255,255,.16);}
+
+/* results and reflections run full width */
+.band{margin-top:180px;padding:108px 0 128px;}
+.outcomes{display:grid;grid-template-columns:repeat(3,1fr);margin-top:72px;}
+.outcomes article{padding:32px 28px 0;}
+.outcomes article:first-child{padding-left:0;}
+.outcomes article + article{border-left:1px solid var(--line);}
+.outcomes h3{margin-top:8px;font-size:18px;line-height:26px;font-weight:600;letter-spacing:-.01em;}
+.outcomes p{max-width:365px;margin-top:8px;font-size:15px;line-height:24px;color:var(--ink-3);}
+.note{margin-top:56px;font-size:14px;line-height:1.6;color:var(--ink-3);}
+.reflect{padding:108px 0 144px;background:var(--surface);}
+.reflect ul{margin-top:40px;}
+.reflect li{position:relative;padding:20px 0 20px 40px;font-size:18px;line-height:28px;font-weight:500;}
+.reflect li::before{content:"";position:absolute;left:4px;top:33px;width:16px;height:2px;background:var(--accent);}
+
+/* next project, as on the live case studies */
+.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;}
+.next-wrap{margin-top:112px;padding-bottom:112px;}
+.next{display:grid;grid-template-columns:1fr 1fr;gap:32px;align-items:start;color:var(--ink);}
+.next__word{margin-top:-.02em;font-family:var(--display);font-weight:600;font-size:clamp(56px,7.4vw,98px);line-height:.88;letter-spacing:-.045em;transition:transform .6s cubic-bezier(.2,.7,.1,1);}
+.next:hover .next__word{transform:translateX(8px);}
+.next__card{display:flex;flex-direction:column;}
+.next__media{border-radius:14px;overflow:hidden;aspect-ratio:1.4;background:var(--surface);}
+.next__media img{width:100%;height:100%;object-fit:cover;object-position:top center;transform:scale(1.02);transition:transform .8s cubic-bezier(.2,.7,.1,1);}
+.next:hover .next__media img{transform:scale(1.05);}
+.next__title{margin-top:16px;font-size:24px;line-height:1.05;letter-spacing:-.02em;font-weight:500;}
+.next__cat{margin-top:12px;font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--accent);}
+@media (max-width:760px){
+  .next{grid-template-columns:1fr;}
+  .next__word{font-size:20vw;}
+}
+
+/* reveal on scroll, only once scripts have run */
+.js .reveal{opacity:0;transform:translateY(24px);transition:opacity .8s cubic-bezier(.2,.7,.2,1), transform .8s cubic-bezier(.2,.7,.2,1);}
+.js .reveal.is-in{opacity:1;transform:none;}
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto;}
+  .js .reveal{opacity:1;transform:none;transition:none;}
+  .context__visual img{transition:none;}
+}
+
+/* tablet and phone */
+@media (max-width:1100px){
+  .context{gap:56px;}
+  .panel{padding:64px 48px;}
+}
+@media (max-width:900px){
+  .hero{padding-top:120px;}
+  .meta{grid-template-columns:1fr 1fr;row-gap:20px;}
+  .sec{margin-top:96px;padding-top:64px;}
+  .context{display:block;margin-top:72px;}
+  .context__visual{display:none;}
+  .context__step{min-height:0;padding:40px 0;}
+  .step-visual{display:block;margin-top:32px;}
+  .step-visual img{width:min(100%,320px);margin-inline:auto;}
+  .quote{margin-top:96px;}
+  .rules{grid-template-columns:1fr;}
+  .rules article{padding:28px 0;}
+  .rules article:nth-child(even){border-left:0;}
+  .rules h3{margin-top:12px;}
+  .tree__branches{grid-template-columns:1fr 1fr;padding-top:24px;}
+  .tree__branches::before,.tree__branches::after,.branch::before{display:none;}
+  .cards,.iter,.console__row,.decisions,.outcomes{grid-template-columns:1fr;}
+  .decisions article,.decisions article:first-child{padding:20px 0;}
+  .decisions article + article{border-left:0;}
+  .iter{gap:56px;}
+  .state .well{min-height:0;}
+  .panel{margin-top:96px;padding:48px 28px;border-radius:28px;}
+  .loop{grid-template-columns:1fr;}
+  .loop figure,.loop figure:nth-child(odd){padding:20px 0;}
+  .loop figure:nth-child(even){border-left:0;}
+  .console .well{padding:20px;}
+  .band{margin-top:96px;padding:64px 0 80px;}
+  .outcomes article,.outcomes article:first-child{padding:28px 0 0;}
+  .outcomes article + article{border-left:0;}
+  .outcomes h3{margin-top:16px;}
+  .reflect{padding:72px 0 96px;}
+}
+@media (max-width:760px){
+  :root{--side:24px;}
+  .menu-btn{top:14px;right:14px;width:34px;height:34px;}
+  .toc{padding-top:66px;}
+  .hero{padding-top:104px;}
+  h1{font-size:38px;line-height:40px;}
+  h2,.context__step h3{font-size:28px;line-height:32px;}
+}
+@media (max-width:560px){
+  /* three metrics stack on a phone, each ruled off from the one above */
+  .metrics{grid-template-columns:1fr;}
+  .metric,.metric + .metric{padding:22px 0;border-left:0;}
+  .metric + .metric{border-top:1px solid var(--line);}
+  .tree__branches,.states{grid-template-columns:1fr;}
+}
+
+/* Every container on the page has rounded corners: the screenshot wells and the five
+   answer-anatomy boxes take one radius between them. The reflections band was full-bleed,
+   and a band running edge to edge can't take a radius, so it becomes a card the same width
+   and shape as the feedback-loop panel. */
+.well,.branch{border-radius:20px;}
+.reflect{width:min(1153px, calc(100% - 2 * var(--side)));margin-inline:auto;margin-top:164px;border-radius:43.2px;}
+.reflect .col{width:min(663px, calc(100% - 96px));}
+@media (max-width:900px){
+  .well,.branch{border-radius:16px;}
+  .reflect{margin-top:96px;border-radius:28px;}
+  .reflect .col{width:calc(100% - 48px);}
+}
+
+/* Typography, matched to the reference case study: Plus Jakarta Sans 500 for the title, the section
+   headings and the pull quote, Plus Jakarta Sans for everything else. Every size is the
+   reference's own, read at 390, 900 and 1440 wide and joined with a clamp, so it scales the
+   same way; line heights and tracking are its ratios. Colours are left as this page's. */
+:root{--serif:"Plus Jakarta Sans", system-ui, sans-serif;}
+h1{font-family:var(--serif);font-weight:600;font-size:clamp(44px, 5vw, 72px);line-height:.96;letter-spacing:-.052em;}   /* three lines at 1440, a step above the 68px section headings */
+h2:not(.next__word){font-family:var(--serif);font-weight:600;font-size:clamp(40px, 5.2vw, 68px);line-height:1.02;letter-spacing:-.045em;}
+.quote__line{font-family:var(--serif);font-weight:600;font-size:clamp(42px, 6vw, 76px);line-height:1.03;letter-spacing:-.045em;text-wrap:balance;}
+.quote__sub{font-size:clamp(17px, 1.32vw, 19px);line-height:1.65;font-weight:500;letter-spacing:-.005em;}
+.summary{font-size:clamp(17px, 1.53vw, 22px);line-height:1.55;}
+.project-line{font-size:14px;line-height:1.65;font-weight:600;letter-spacing:.02em;text-transform:none;}
+.meta dt{font-size:13px;line-height:1.2;font-weight:400;letter-spacing:0;text-transform:none;}
+.meta dd{font-size:15px;line-height:1.3;font-weight:600;}
+.head > p,.cgroup > p,.loop__back{font-size:clamp(17px, 1.39vw, 20px);line-height:1.65;}
+.subhead{font-size:17px;line-height:1.6;}
+.metric strong{font-family:var(--sans);font-weight:600;font-size:clamp(28px, 2.78vw, 40px);line-height:1;letter-spacing:-.05em;}
+.context__step h3{font-family:var(--sans);font-weight:600;font-size:clamp(30px, 3.8vw, 48px);line-height:1.08;letter-spacing:-.04em;}
+.dash li{font-size:16px;line-height:1.65;}
+.rules h3{font-weight:700;font-size:clamp(24px, 2.7vw, 34px);line-height:1.12;letter-spacing:-.035em;}
+.rules p{font-size:15px;line-height:1.6;}
+.card__copy h3{font-weight:700;font-size:clamp(21px, 1.875vw, 27px);line-height:1.14;letter-spacing:-.035em;}
+.card__copy p,.iter__copy p{font-size:15px;line-height:1.65;}
+.iter__copy h3,.cgroup h3{font-weight:700;font-size:clamp(27px, 2.64vw, 38px);line-height:1.1;letter-spacing:-.04em;}
+.state h3,.decisions h3{font-weight:700;font-size:20px;line-height:1.25;letter-spacing:-.025em;}
+.branch h3{font-weight:700;font-size:16px;line-height:1.35;letter-spacing:-.02em;}
+.outcomes h3{font-weight:700;font-size:18px;line-height:1.35;letter-spacing:0;}
+.reflect li{font-weight:600;font-size:17px;line-height:1.6;letter-spacing:-.01em;}   /* text size, so it takes body-text leading and only light tracking */
+.kicker{font-size:12px;line-height:1.65;font-weight:700;letter-spacing:.04em;text-transform:uppercase;}
+figcaption{font-size:13px;line-height:1.5;}
+@media (max-width:760px){
+  h1{font-size:min(11vw, 44px);}
+}
+
+/* Horizontal rules, as the reference draws them: a line above the project details, the
+   metrics ruled above and below, a line above each row of outcomes and decisions, and the
+   four rules ruled top, between rows and bottom (the loop's steps keep only the middle rule,
+   see below). Once a grid stacks
+   on a phone, each item after the first takes a line above it in place of the column
+   divider it had beside it. The state screenshots are left alone: each is already a box. */
+.meta{border-top:1px solid var(--line);}
+.metrics{border-top:1px solid var(--line);border-bottom:1px solid var(--line);}
+.rules{border-top:1px solid var(--line);}
+.rules article{border-bottom:1px solid var(--line);}
+.outcomes,.decisions{border-top:1px solid var(--line);}
+.decisions article{padding-top:32px;}
+/* the loop's four steps take only the rule between their two rows, with no line above or below */
+.loop figure:nth-child(-n+2){border-bottom:1px solid var(--panel-line);}
+@media (max-width:900px){
+  .loop figure:not(:last-child){border-bottom:1px solid var(--panel-line);}
+  .outcomes article + article,.decisions article + article{border-top:1px solid var(--line);}
+  .outcomes article,.outcomes article:first-child{padding:26px 0;}
+  .decisions article,.decisions article:first-child{padding:24px 0;}
+}
+
+/* the answer iteration: two crops of the same reply, shown as large as the card allows so
+   the run-on version and the labelled one can be told apart at a glance */
+.iter--answer .well{aspect-ratio:auto;padding:28px;}
+.iter + .iter{margin-top:112px;}
+@media (max-width:900px){ .iter + .iter{margin-top:72px;} }
+
+/* round two: the answer pair now sits with its claim, and the admin decisions run two to a row */
+.iter--answer + .cards{margin-top:112px;}
+.decisions.decisions--2{grid-template-columns:1fr 1fr;}
+@media (max-width:900px){
+  .iter--answer + .cards{margin-top:72px;}
+  .decisions.decisions--2{grid-template-columns:1fr;}
+}
+
+/* round three: callouts on the two before/after pairs. Pins and tags sit on the screenshot
+   itself, placed at percentages of the image, so they stay on their line at every width. They
+   take the product's own teal in both themes, because they always sit on a white screen. */
+.anno{position:relative;}
+.iter .anno > img,.iter .anno .zoom,.iter .anno .zoom img{width:100%;height:100%;max-height:none;}
+.iter--answer .anno{width:100%;}
+.iter--answer .anno > img,.iter--answer .anno .zoom,.iter--answer .anno .zoom img{height:auto;}
+.anno--tall{height:100%;aspect-ratio:1298/1838;}
+.anno--wide{width:100%;aspect-ratio:2880/1800;}
+.pin,.tag{position:absolute;left:var(--x);top:var(--y);pointer-events:none;font-family:var(--sans);line-height:1;}
+.pin{display:grid;place-items:center;width:22px;height:22px;transform:translate(-50%,-50%);border-radius:50%;background:#305cff;color:#fff;font-size:11px;font-weight:700;box-shadow:0 0 0 3px rgb(48 92 255 / .18);}
+.pin--ghost{background:#fff;color:#6b7280;box-shadow:inset 0 0 0 1.5px #9aa1ab;}
+.tag{transform:translateY(-50%);padding:6px 11px;border-radius:999px;background:#305cff;color:#fff;font-size:12px;font-weight:600;white-space:nowrap;box-shadow:0 2px 8px rgb(27 45 84 / .2);}
+@media (max-width:560px){
+  .pin{width:18px;height:18px;font-size:10px;}
+  .tag{padding:4px 8px;font-size:11px;}
+}
+/* The results, drawn as the reference results section is: a row of three, each a large figure,
+   a bold title and a muted line, with a rule along the top and between columns but none below.
+   Measured from the reference at 1759 wide, where its text sizes match this page's at 1440 and up:
+   figure 54px regular with -3px tracking, its top 40px below the rule; title 18px bold, 56px
+   below the figure; description 14px/1.65, 23px below the title; 61px more to the foot of the
+   column rule; columns 30px in from each rule. The figures keep this page's accent, with a light
+   gradient across each one (inline-block, so the gradient spans the figure, not the column). */
+:root{--accent-2:#6f8fff;}
+:root[data-theme="dark"]{--accent-2:#dbe3ff;}
+.results{display:grid;grid-template-columns:repeat(3,1fr);margin-top:72px;border-top:1px solid var(--line);}
+.results article{padding:31px 30px 58px;}
+.results article:first-child{padding-left:0;}
+.results article + article{border-left:1px solid var(--line);}
+.results strong{display:inline-block;font:400 clamp(40px,3.75vw,54px)/1 var(--sans);letter-spacing:-.055em;background:linear-gradient(100deg,var(--accent) 0%,var(--accent-2) 100%);-webkit-background-clip:text;background-clip:text;color:transparent;-webkit-text-fill-color:transparent;}
+.results h3{margin-top:44px;font:700 18px/1.3 var(--sans);color:var(--ink);}
+.results p{margin-top:12px;font-size:14px;line-height:1.65;color:var(--ink-3);}
+@media (max-width:560px){
+  .results{grid-template-columns:1fr;}
+  .results article,.results article:first-child{padding:28px 0 32px;border-left:0;}
+  .results article + article{border-left:0;border-top:1px solid var(--line);}
+  .results h3{margin-top:24px;}
+}
+
+/* ---- ZBrain additions ---- */
+/* the title is longer than CE CoPilot's, so its lines are balanced and no word sits alone */
+h1{text-wrap:balance;}
+/* The diagrams stand in for the product's own screens, so they keep its ink, lines and pill
+   colours on white in both themes, as the status lines on CE CoPilot do. */
+:root{--ui-ink:#0F1115;--ui-ink-3:#5B616E;--ui-line:#E5E7EB;--ui-blue:#2563EB;--ui-wire:#C2C7D0;}
+
+/* the two context steps are text only, one above the other on the text column, so they take no
+   sticky picture and none of the full-screen height a scrolling step needs */
+.context--text{display:block;width:min(663px, calc(100% - 2 * var(--side)));}
+.context--text .context__steps{display:grid;gap:96px;}
+.context--text .context__step{min-height:0;justify-content:flex-start;padding:0;}
+@media (max-width:900px){.context--text .context__steps{gap:64px;}}
+
+/* the governance panel: the three places work runs feed one policy, and the policy sends each action
+   one of three ways. The panel is dark in both themes, so its colours are fixed rather than themed;
+   the four levels use the hues of the iteration diagram (warn green, throttle blue, escalate orange,
+   deny red), lifted for a dark ground. */
+.gflow{--cg:44px;--g-line:rgba(255,255,255,.24);--g-card:rgba(255,255,255,.045);--g-card-line:rgba(255,255,255,.12);
+  --g-blue:#8fa6ff;--g-green:oklch(0.78 0.16 150);--g-orange:#f4a261;--g-red:#ff8b8b;
+  display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.14fr) minmax(0,.96fr);column-gap:var(--cg);row-gap:20px;align-items:center;margin-top:64px;}
+.gflow ul{list-style:none;margin:0;padding:0;}
+.gflow svg{width:14px;height:14px;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round;}
+.gflow__label{align-self:end;text-align:center;font-size:12px;line-height:1.65;font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:var(--panel-ink-3);}
+.gflow__col{position:relative;display:grid;grid-template-rows:repeat(3,1fr);gap:14px;}
+.gnode{position:relative;display:flex;flex-direction:column;justify-content:center;gap:10px;padding:16px 18px;border:1px solid var(--g-card-line);border-radius:16px;background:var(--g-card);}
+.gnode__head{display:flex;align-items:center;gap:10px;font-size:15px;line-height:1.25;font-weight:600;color:var(--panel-ink);}
+.gnode__head i,.gpolicy__head i{flex:none;display:inline-grid;place-items:center;width:28px;height:28px;border-radius:50%;background:rgba(255,255,255,.1);color:var(--panel-ink-2);font-style:normal;}
+.gnode__text{font-size:13px;line-height:1.5;color:var(--panel-ink-3);}
+.gnode--ok{--c:var(--g-green);} .gnode--rule{--c:var(--g-orange);} .gnode--more{--c:var(--g-blue);}
+.gflow__col--out .gnode__head i{color:var(--c);background:color-mix(in oklch, var(--c) 16%, transparent);}
+.glevels,.gsteps{display:flex;flex-wrap:wrap;align-items:center;gap:6px;}
+.glvl{--l:var(--g-green);display:inline-flex;align-items:center;gap:5px;padding:3px 9px;border:1px solid color-mix(in oklch, var(--l) 40%, transparent);border-radius:999px;background:color-mix(in oklch, var(--l) 12%, transparent);color:var(--l);font-size:12px;line-height:16px;font-weight:500;}
+.glvl::before{content:"";width:5px;height:5px;border-radius:50%;background:currentColor;}
+.glvl--throttle{--l:var(--g-blue);} .glvl--escalate{--l:var(--g-orange);} .glvl--deny{--l:var(--g-red);}
+.gsteps{gap:5px;}
+.gsteps span{font-size:12px;line-height:16px;font-weight:500;color:var(--panel-ink-2);white-space:nowrap;}
+.gsteps i{font-style:normal;font-size:12px;color:var(--panel-ink-3);}
+/* the policy: one card in the middle, in the brand blue */
+.gpolicy{position:relative;padding:20px;border:1px solid color-mix(in oklch, var(--g-blue) 45%, transparent);border-radius:20px;background:color-mix(in oklch, var(--g-blue) 9%, transparent);box-shadow:0 0 0 6px color-mix(in oklch, var(--g-blue) 5%, transparent);}
+.gpolicy__head{display:flex;align-items:center;gap:10px;padding-bottom:16px;border-bottom:1px solid var(--g-card-line);}
+.gpolicy__head i{width:30px;height:30px;color:var(--g-blue);background:color-mix(in oklch, var(--g-blue) 18%, transparent);}
+.gpolicy__head b{display:block;font-size:16px;line-height:1.25;font-weight:600;color:var(--panel-ink);}
+.gpolicy__head small{display:block;margin-top:2px;font-size:12px;line-height:1.4;color:var(--panel-ink-3);}
+.gflow .gpolicy__list{display:grid;gap:14px;margin-top:18px;}   /* scoped, or ".gflow ul" resets the margin and the first item sits on the divider */
+.gpolicy__list li{display:grid;grid-template-columns:30px minmax(0,1fr);gap:10px;align-items:start;}
+.gpolicy__list svg{justify-self:center;margin-top:2px;color:var(--g-blue);}
+.gpolicy__list b{display:block;font-size:14px;line-height:1.3;font-weight:600;color:var(--panel-ink);}
+.gpolicy__list span{display:block;margin-top:2px;font-size:12.5px;line-height:1.45;color:var(--panel-ink-3);}
+/* connectors: a bracket gathers the three places into the policy, another sends the policy out to the
+   three endings. Each column's rows are equal, so the first and last centres sit a sixth of the way in. */
+.gflow__col--in::after,.gflow__col--out::before{content:"";position:absolute;top:calc(100% / 6 - 14px / 3);bottom:calc(100% / 6 - 14px / 3);width:calc(var(--cg) / 2);border:1px solid var(--g-line);pointer-events:none;}
+.gflow__col--in::after{left:100%;border-left:0;border-radius:0 10px 10px 0;}
+.gflow__col--out::before{right:100%;border-right:0;border-radius:10px 0 0 10px;}
+.gflow__col--in .gnode:nth-child(2)::before,.gflow__col--out .gnode:nth-child(2)::after,.gpolicy::before,.gpolicy::after{content:"";position:absolute;top:50%;width:calc(var(--cg) / 2);border-top:1px solid var(--g-line);pointer-events:none;}
+.gflow__col--in .gnode:nth-child(2)::before{left:100%;}
+.gflow__col--out .gnode:nth-child(2)::after{right:100%;}
+.gpolicy::before{right:100%;}
+.gpolicy::after{left:100%;}
+/* ports where a line meets a card: grey on the way in, blue on the policy, each ending's own colour on the way out */
+.gflow__col--in .gnode::after,.gflow__col--out .gnode::before,.gport{content:"";position:absolute;top:50%;z-index:1;width:7px;height:7px;margin-top:-3.5px;border-radius:50%;border:1px solid var(--g-line);background:var(--panel);}
+.gflow__col--in .gnode::after{right:-4px;}
+.gflow__col--out .gnode::before{left:-4px;border-color:var(--c);background:var(--c);}
+.gport{border-color:var(--g-blue);background:var(--g-blue);}
+.gport--l{left:-4px;} .gport--r{right:-4px;}
+/* narrow: one column, top to bottom, with a line into the policy and a line out of it */
+@media (max-width:860px){
+  .gflow{grid-template-columns:minmax(0,1fr);row-gap:0;margin-top:48px;}
+  .gflow__label{margin-bottom:14px;}
+  .gflow__label--in{order:1;} .gflow__col--in{order:2;} .gpolicy{order:3;} .gflow__label--out{order:4;} .gflow__col--out{order:5;}
+  .gflow__label--mid{display:none;}
+  .gflow__col{grid-template-rows:none;gap:10px;}
+  .gflow__col--in::after,.gflow__col--out::before,.gflow__col--in .gnode:nth-child(2)::before,.gflow__col--out .gnode:nth-child(2)::after,.gflow__col--in .gnode::after,.gflow__col--out .gnode::before,.gport{display:none;}
+  .gpolicy{margin:44px 0;}
+  .gpolicy::before,.gpolicy::after{left:50%;right:auto;top:auto;width:0;border-top:0;border-left:1px solid var(--g-line);}
+  .gpolicy::before{bottom:100%;height:44px;}
+  .gpolicy::after{top:100%;height:30px;}
+}
+
+/* before/after diagrams, inside the iteration wells where a screenshot would sit */
+.iter .well .ba__card{width:100%;max-width:440px;}
+.iter .well:has(.ba__card){padding:32px;}
+.ba__card{display:flex;flex-direction:column;justify-content:center;gap:12px;padding:26px 24px;background:#fff;border-radius:10px;box-shadow:var(--shot);color:var(--ui-ink);font:400 13px/18px var(--sans);}
+.ba__row{display:grid;grid-template-columns:auto 28px 1fr;align-items:center;}
+.ba__chip{display:inline-flex;align-items:center;gap:7px;padding:7px 11px;border:1px solid var(--ui-line);border-radius:8px;background:#fff;font-weight:500;white-space:nowrap;}
+.ba__chip svg{width:16px;height:16px;flex:none;fill:none;stroke:var(--ui-ink-3);stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round;}
+.ba__set{padding:7px 11px;border:1px dashed var(--ui-wire);border-radius:8px;color:var(--ui-ink-3);}
+.ba__link{position:relative;height:1px;margin:0 4px;background:var(--ui-wire);}
+.ba__link::after{content:"";position:absolute;right:-1px;top:-3.5px;border:4px solid transparent;border-left:6px solid var(--ui-wire);border-right:0;}
+.ba__note{margin-top:6px;font-size:13px;color:var(--ui-ink-3);text-align:center;}
+.ba__space{position:relative;display:flex;flex-direction:column;align-items:center;padding:30px 18px 20px;border:1px dashed var(--ui-wire);border-radius:14px;}
+.ba__scope{position:absolute;top:-9px;left:16px;padding:0 8px;background:#fff;font-size:12px;line-height:18px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--ui-ink-3);}
+.ba__policy{position:relative;display:inline-flex;align-items:center;gap:8px;padding:8px 14px;border:1px solid var(--ui-blue);border-radius:8px;background:#EFF4FF;font-weight:600;color:#1D4ED8;}
+.ba__policy svg{width:16px;height:16px;fill:none;stroke:var(--ui-blue);stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round;}
+.ba__policy::after{content:"";position:absolute;top:100%;left:50%;height:16px;border-left:1px solid var(--ui-blue);}
+/* equal tracks, so the rule across the three drops starts and stops at the outer chips' centres */
+.ba__agents{--ba-gap:10px;position:relative;display:grid;grid-template-columns:repeat(3,1fr);gap:var(--ba-gap);margin-top:32px;width:100%;}
+.ba__agents .ba__chip{position:relative;justify-self:center;}
+.ba__agents::before{content:"";position:absolute;top:-16px;left:calc((100% - 2 * var(--ba-gap)) / 6);right:calc((100% - 2 * var(--ba-gap)) / 6);border-top:1px solid var(--ui-blue);}
+.ba__agents .ba__chip::before{content:"";position:absolute;bottom:100%;left:50%;height:16px;border-left:1px solid var(--ui-blue);}
+.ba__flow{display:flex;flex-direction:column;align-items:center;}
+.ba__drop{position:relative;width:1px;height:22px;margin:4px 0 10px;background:var(--ui-wire);}
+.ba__drop::after{content:"";position:absolute;left:-3.5px;bottom:-1px;border:4px solid transparent;border-top:6px solid var(--ui-wire);border-bottom:0;}
+.ba__levels{display:flex;flex-wrap:nowrap;justify-content:center;gap:8px;}
+/* the pill colours are the ones the product's rules table uses for the same four actions */
+.ba__lvl{display:inline-flex;align-items:center;gap:6px;padding:5px 11px;border:1px solid;border-radius:999px;font-size:12.5px;line-height:16px;font-weight:500;white-space:nowrap;}
+.ba__lvl::before{content:"";width:6px;height:6px;border-radius:50%;background:currentColor;}
+.ba__lvl--allow{color:#3A4560;background:#F3F4F6;border-color:#E5E7EB;}
+.ba__lvl--warn{color:#15803D;background:#ECF8F0;border-color:#B5E3C5;}
+.ba__lvl--throttle{color:#1D4ED8;background:#EEF3FF;border-color:#C3D3FB;}
+.ba__lvl--escalate{color:#C2410C;background:#FFF4EA;border-color:#FAD0A8;}
+.ba__lvl--deny{color:#C81E1E;background:#FEEFEF;border-color:#F6BDBD;}
+.ba__range{display:grid;max-width:100%;}
+.ba__scale{display:flex;justify-content:space-between;margin-top:10px;font-size:11px;line-height:16px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--ui-ink-3);}
+
+/* the two rule-builder recordings, in the iteration wells */
+.iter .well .media{position:relative;height:100%;max-width:100%;aspect-ratio:1440/1294;}
+.media video{width:100%;height:100%;object-fit:contain;border-radius:10px;box-shadow:var(--shot);background:#fff;}
+.media__toggle{position:absolute;bottom:14px;right:14px;display:inline-flex;align-items:center;justify-content:center;width:40px;height:40px;padding:0;border:1px solid rgba(31,42,68,.2);border-radius:50%;background:#fff;color:#1f2a44;cursor:pointer;opacity:0;transition:opacity .15s ease;}
+.media__toggle svg{width:20px;height:20px;fill:currentColor;display:block;}
+.media__toggle .ic-play{display:none;}
+.media__toggle[data-state="paused"] .ic-pause{display:none;}
+.media__toggle[data-state="paused"] .ic-play{display:block;}
+.media:hover .media__toggle,.media__toggle:focus-visible{opacity:1;}
+@media (hover:none){.media__toggle{opacity:1;}}
+
+/* screenshot cards: desktop crops in place of the phones, so they fill the well */
+.cards--shots .well{padding:24px;}
+.cards--shots .well img{width:100%;border-radius:8px;box-shadow:var(--shot);}
+.cards--shots + .cgroup{margin-top:120px;}
+/* the results band carries two notes under its numbers */
+.results + .decisions{margin-top:56px;}
+/* a pair's two halves stay equal, whatever is inside each well */
+@media (min-width:901px){
+  .iter{grid-template-columns:repeat(2,minmax(0,1fr));}
+  /* four decisions run two to a row: each row starts flush left, with a rule between the rows */
+  .decisions--2 article:nth-child(odd){padding-left:0;border-left:0;}
+  .decisions--2 article:nth-child(n+3){border-top:1px solid var(--line);}
+}
+
+@media (max-width:900px){
+  .cards--shots + .cgroup{margin-top:80px;}
+}
+@media (max-width:560px){
+  .ba__card{padding:20px 14px;}
+  .ba__chip{padding:6px 8px;gap:5px;font-size:12px;}
+  .ba__set{padding:6px 8px;font-size:12px;}
+  .ba__space{padding-inline:10px;}
+  .ba__agents{--ba-gap:4px;grid-template-columns:repeat(3,minmax(0,1fr));}
+  .ba__agents .ba__chip{padding:6px;gap:4px;}
+  .ba__agents .ba__chip svg{width:14px;height:14px;}
+  .ba__levels{gap:4px;}
+  .ba__lvl{padding:4px 7px;gap:4px;font-size:11px;}
+  .iter .well,.iter .well:has(.ba__card){padding:16px;}
+}
+@media (max-width:359px){.ba__agents .ba__chip svg{display:none;}.ba__lvl{padding:4px 6px;}.ba__lvl::before{display:none;}}
+
+/* Screenshot frames: every screen except the hero sits in the page's grey well, inset at the top
+   and sides and running off the well's bottom edge, as v1 does on its mesh (the crops are lifted further down: every screen shows whole). The rule-builder recordings and the before/after diagrams keep their plain wells. */
+.console .well,.console__row .well,.cards--shots .well{display:block;padding:clamp(22px,2.8vw,40px) clamp(20px,3.4vw,48px) 0;overflow:hidden;}
+.console__row .well,.cards--shots .well{padding:18px 18px 0;}
+.console .well img,.console__row .well img,.cards--shots .well img{display:block;width:100%;height:auto;aspect-ratio:var(--ar);object-fit:cover;object-position:left top;
+  border-radius:12px 12px 0 0;box-shadow:var(--shot);background:#fff;}
+.console .well img{--ar:1920/860;}
+.console__row{--ar:2/1;}
+.cards--shots .well img{--ar:2/1;}
+.console__row .well img,.cards--shots .well img{border-radius:8px 8px 0 0;}
+@media (max-width:760px){
+  .console .well{padding:16px 16px 0;}
+  .console .well img,.console__row .well img{aspect-ratio:1.45;object-position:30% top;}   /* set directly, so it wins over a screen's own desktop crop */   /* phones: the page body, not the sidebar, as v1 does */
+  .console__row .well,.cards--shots .well{padding:14px 14px 0;}
+}
+
+
+/* Screenshots show whole: each keeps its own shape and scales with the column, with nothing cut from
+   the foot or, on a phone, from the sides. In a row of screens of different heights the wells share
+   the row's height and the captions share the line below, and each screen sits on its well's bottom
+   edge, so the row stays level. */
+.console .well img,.console__row .well img,.cards--shots .well img{aspect-ratio:auto;height:auto;object-fit:fill;}
+.console__row{align-items:stretch;}
+.console__row figure{display:grid;grid-row:span 2;grid-template-rows:subgrid;row-gap:0;}
+.console__row figure .well{display:flex;align-items:flex-end;}
+.console__row figure .well > *{flex:1;}
+@media (max-width:760px){
+  .console .well img,.console__row .well img{aspect-ratio:auto;object-position:0 0;}
+}
+
+/* ==========================================================================
+   TYPE SYSTEM, the one source of truth for text on this page (type-guideline.md).
+   Plus Jakarta Sans 500 for display only; Plus Jakarta Sans for everything else in three weights:
+   400 reading text, 600 emphasis, values and small titles, 700 headings and kickers.
+   Every role is set in full here, so it overrides any earlier size on the same element.
+   ========================================================================== */
+:root{
+  --t-d1:clamp(44px, 5vw, 72px);
+  --t-d2:clamp(40px, 5.2vw, 68px);
+  --t-h3:clamp(27px, 2.64vw, 38px);
+  --t-h4:clamp(21px, 1.875vw, 27px);
+  --t-h5:16px;
+  --t-h6:14px;
+  --t-lead-l:clamp(17px, 1.53vw, 22px);
+  --t-lead:clamp(17px, 1.39vw, 20px);
+  --t-body:16px;
+  --t-body-s:15px;
+  --t-small:13px;
+  --t-micro:12px;
+  --t-metric:clamp(28px, 2.78vw, 40px);
+}
+/* display: Plus Jakarta Sans 600 (was Fraunces 500) */
+h1{font:600 var(--t-d1)/.96 var(--serif);letter-spacing:-.052em;}
+h2:not(.next__word),.quote__line{font:600 var(--t-d2)/1.02 var(--serif);letter-spacing:-.045em;}
+h1,h2:not(.next__word),.quote__line{word-spacing:.06em;}   /* the tight display tracking was set for a serif; at 600 the sans needs its word gaps back */
+/* headings */
+.context__step h3,.rules h3,.iter__copy h3,.cgroup h3{font:700 var(--t-h3)/1.1 var(--sans);letter-spacing:-.04em;}
+.card__copy h3,.next__title{font:700 var(--t-h4)/1.14 var(--sans);letter-spacing:-.035em;}
+.gpolicy__head b,.tree__root,.branch h3{font:600 var(--t-h5)/1.3 var(--sans);letter-spacing:-.01em;}
+.gnode__head,.gpolicy__list b{font:600 var(--t-h6)/1.3 var(--sans);letter-spacing:0;}
+/* text */
+.summary{font:400 var(--t-lead-l)/1.55 var(--sans);letter-spacing:0;}
+.head > p,.cgroup > p,.loop__back,.quote__sub{font:400 var(--t-lead)/1.65 var(--sans);letter-spacing:0;}
+.dash li,.subhead{font:400 var(--t-body)/1.65 var(--sans);letter-spacing:0;}
+.reflect li{font:600 var(--t-body)/1.65 var(--sans);letter-spacing:0;}
+.card__copy p,.iter__copy p,.rules p{font:400 var(--t-body-s)/1.6 var(--sans);letter-spacing:0;}
+.meta dd{font:600 var(--t-body-s)/1.3 var(--sans);letter-spacing:0;}
+figcaption,.gnode__text,.branch li,.gpolicy__list span,.metric span,.meta dt{font:400 var(--t-small)/1.5 var(--sans);letter-spacing:0;text-transform:none;}
+.gpolicy__head small,.gsteps i{font:400 var(--t-micro)/1.4 var(--sans);letter-spacing:0;}
+.glvl,.gsteps span{font:600 var(--t-micro)/1.4 var(--sans);letter-spacing:0;}
+/* labels and numbers */
+.kicker,.gflow__label,.next__cat{font:700 12px/1.65 var(--sans);letter-spacing:.04em;text-transform:uppercase;}
+.project-line{font:600 14px/1.65 var(--sans);letter-spacing:.02em;text-transform:none;}
+.metric strong{font:600 var(--t-metric)/1 var(--sans);letter-spacing:-.05em;}
+/* phones: only the title has its own size; every other role uses its clamp floor */
+@media (max-width:760px){ h1{font-size:min(11vw, 44px);} }
+</style>
+<link rel="stylesheet" href="assets/cursor.css?v=1">
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <symbol id="i-agent" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3.6"/><circle cx="4.5" cy="5" r="1.6"/><circle cx="19.5" cy="5" r="1.6"/><circle cx="4.5" cy="19" r="1.6"/><circle cx="19.5" cy="19" r="1.6"/><path d="M5.9 6.3l3.4 3.1M18.1 6.3l-3.4 3.1M5.9 17.7l3.4-3.1M18.1 17.7l-3.4-3.1"/></symbol>
+  <symbol id="i-policy" viewBox="0 0 24 24"><path d="M12 2.8l7.5 3v5.6c0 4.6-3.2 8.3-7.5 9.8-4.3-1.5-7.5-5.2-7.5-9.8V5.8z"/><path d="M8.8 12l2.2 2.2 4.3-4.4"/></symbol>
+</svg>
+
+<button class="menu-btn" type="button" aria-controls="case-menu" aria-expanded="false" aria-label="Open sections menu"><span aria-hidden="true"></span><span aria-hidden="true"></span></button>
+
+<nav class="toc" id="case-menu" aria-label="Case study sections">
+  <a class="toc__back" href="/#work-zbrain">
+    <svg viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M6 4.5 2.5 8 6 11.5"/><path d="M2.5 8h7A3.5 3.5 0 0 0 13 4.5v-1"/></svg>
+    Go back
+  </a>
+  <ul class="toc__list">
+    <li><a href="#top">Overview</a></li>
+    <li><a href="#problem">Problem framing</a></li>
+    <li><a href="#rules">Design principles</a></li>
+    <li><a href="#anatomy">Information architecture</a></li>
+    <li><a href="#governance">Systems design</a></li>
+    <li><a href="#iterating">Design iteration</a></li>
+    <li><a href="#console">Workflow design</a></li>
+    <li><a href="#states">States and edge cases</a></li>
+    <li><a href="#stands">Where it stands</a></li>
+    <li><a href="#reflect">Reflections</a></li>
+  </ul>
+</nav>
+
+<main id="main">
+
+  <section class="hero" id="top">
+    <div class="col">
+    <a class="back" href="/#work-zbrain"><span aria-hidden="true">←</span><span>Back to work</span></a>
+    <div class="hero__copy reveal">
+      <p class="project-line">ZBrain · Enterprise AI platform · Admin console</p>
+      <h1>Designing ZBrain’s admin console, with governance at its core</h1>
+      <p class="summary">I designed the admin console for ZBrain, LeewayHertz’s enterprise AI platform, where admins give each department a space and one policy that decides what its builders can use, spend and do, with logs that show what it did.</p>
+      <dl class="meta">
+        <div><dt>Role</dt><dd>Senior UI/UX Designer</dd></div>
+        <div><dt>Platform</dt><dd>Web admin console</dd></div>
+        <div><dt>Status</dt><dd><span class="live">Live</span></dd></div>
+        <div><dt>Year</dt><dd>2026</dd></div>
+      </dl>
+    </div>
+    </div>
+    <figure class="hero__media wide reveal">
+      <img src="assets/admin/monitor-observatory.webp?v=2" width="2400" height="1570" fetchpriority="high" alt="The ZBrain admin console on a desktop monitor, open on the Observatory: cost, solution runs, agents running, agents at risk and policy violations across the top; spend by space and a feed of governance events; and an agents health table with a kill action on agents in warning.">
+    </figure>
+  </section>
+
+  <article>
+
+    <section class="sec sec--context" id="context" aria-label="Scope and how I worked">
+      <div class="context context--text wide">
+        <div class="context__steps">
+          <div class="context__step" data-step="0">
+            <span class="kicker">Two portals</span>
+            <h3>Builders build. Admins set the terms.</h3>
+            <ul class="dash">
+              <li><b>Spaces:</b> the admin creates one for each department and adds its builders.</li>
+              <li><b>Policies:</b> every space has one. A new space starts on the default governance policy until the admin gives it one of its own.</li>
+              <li><b>Access:</b> builders in a space get the models, API keys and budget its policy contains, and work within its rules.</li>
+              <li><b>Requests:</b> when building or deploying needs more, a builder asks and the admin decides.</li>
+            </ul>
+          </div>
+          <div class="context__step" data-step="1">
+            <span class="kicker">How I worked</span>
+            <h3>Learned the platform, then designed its controls</h3>
+            <ul class="dash">
+              <li>I designed the console end to end: research, structure, production UI, states and design QA.</li>
+              <li>The problems came from the solutions and support teams already fielding them, and from the customers they worked with. I didn’t run separate admin interviews.</li>
+              <li>ZBrain was still building what the console had to govern, so I read each part as it went in: governance and its compliance frameworks (GDPR, HIPAA and SOC 2 among them), connectors (how Teams, Drive, Sheets and Slack bring a department’s data in) and deployment (what’s checked before a release and what removal cleans up). I designed the controls against what the system actually did.</li>
+              <li>Kapil, Design Head, gave direction and critique, Vivek designed the builder side, and the engineers built what the console governs. The move from agent to space came out of that work.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="sec" id="problem" aria-labelledby="s-problem">
+      <div class="quote quote--card wide reveal">
+        <div class="col">
+          <span class="kicker">Why it matters</span>
+          <h2 id="s-problem" class="quote__line">Builders decide what an agent does. The console decides what it’s allowed to do.</h2>
+          <p class="quote__sub">Agents act with nobody watching, and customers wanted control. Those running agents in production could describe exactly what they couldn’t see or control. And organisations run budget, data and risk by department, so each department needed its own terms: what its builders can use, what they can spend and what their agents are allowed to do.</p>
+          <p class="quote__sub">An admin’s change reaches a whole department, so every change has to be safe to make.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="sec" id="rules" aria-labelledby="s-rules">
+      <header class="head col reveal">
+        <h2 id="s-rules">Four rules the screens are built on</h2>
+        <p class="claim">Every screen in the console follows from them.</p>
+      </header>
+      <div class="rules wide reveal">
+        <article><span class="kicker">01</span><h3>Policy on the space, not the agent</h3><p>One policy per department, inherited by every agent and solution built in it. I gave up per-agent settings so one change reaches the whole department.</p></article>
+        <article><span class="kicker">02</span><h3>Rules act in levels</h3><p>Warn, throttle, escalate or deny, so a false alarm doesn’t get a rule switched off.</p></article>
+        <article><span class="kicker">03</span><h3>A limit is a request</h3><p>Builders ask, and one approval applies it to the whole space.</p></article>
+        <article><span class="kicker">04</span><h3>Exceptions expire</h3><p>Each one is scoped to a space or solution, with an end or review date, so a one-off never quietly becomes the policy.</p></article>
+      </div>
+      <p class="subhead col reveal">The opportunity was to make policy <em>inherited</em> and every exception <em>temporary</em>.</p>
+    </section>
+
+    <section class="sec" id="anatomy" aria-labelledby="s-anatomy">
+      <header class="head col reveal">
+        <h2 id="s-anatomy">Structured around admin responsibilities, not system objects</h2>
+        <p>The menu follows what an admin comes to the console to do: see what’s happening, decide who gets in, give builders the models, connections and API keys they need, set the rules and check what ran against them, and look after the account. Each of those jobs became one group, with its pages inside.</p>
+      </header>
+      <div class="tree wide reveal">
+        <div class="tree__root">The admin console</div>
+        <div class="tree__branches">
+          <article class="branch"><h3>Overview</h3><ul><li>Observatory</li><li>Spaces</li></ul></article>
+          <article class="branch"><h3>Access</h3><ul><li>Users</li></ul></article>
+          <article class="branch"><h3>Resources</h3><ul><li>Models</li><li>Connections</li><li>API Keys</li></ul></article>
+          <article class="branch"><h3>Governance</h3><ul><li>Policies</li><li>Requests</li><li>Agent log</li><li>Usage log</li><li>Deployments</li><li>Audit &amp; Activity</li></ul></article>
+          <article class="branch"><h3>Account</h3><ul><li>Billing</li><li>My Account</li></ul></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="panel wide reveal" id="governance" aria-labelledby="s-gov">
+      <header class="head">
+        <h2 id="s-gov">One policy governs the whole space</h2>
+        <p>A space’s policy decides what its builders get (models, API keys and budget) and the rules and compliance their work has to meet, from the first build to the release and the agents that run after it. Every action then goes one of three ways.</p>
+      </header>
+      <div class="gflow">
+        <p class="gflow__label gflow__label--in">Where the work runs</p>
+        <p class="gflow__label gflow__label--mid">The space’s policy</p>
+        <p class="gflow__label gflow__label--out">How it ends</p>
+        <ul class="gflow__col gflow__col--in">
+          <li class="gnode"><span class="gnode__head"><i><svg viewBox="0 0 16 16" aria-hidden="true" focusable="false"><rect x="2.5" y="8.5" width="5" height="5" rx="1"/><rect x="8.5" y="8.5" width="5" height="5" rx="1"/><rect x="5.5" y="2.5" width="5" height="5" rx="1"/></svg></i>Build solutions</span><span class="gnode__text">With the models, data and connections the policy allows.</span></li>
+          <li class="gnode"><span class="gnode__head"><i><svg viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M8 10V3M5 6l3-3 3 3"/><path d="M3 10.5v2h10v-2"/></svg></i>Deploy releases</span><span class="gnode__text">To a cloud target, after its checks.</span></li>
+          <li class="gnode"><span class="gnode__head"><i><svg viewBox="0 0 16 16" aria-hidden="true" focusable="false"><circle cx="8" cy="8" r="5.5"/><path d="M7 5.8v4.4L10.4 8z"/></svg></i>Run agents</span><span class="gnode__text">And their API keys, in the app and outside it.</span></li>
+        </ul>
+        <div class="gpolicy">
+          <span class="gport gport--l" aria-hidden="true"></span><span class="gport gport--r" aria-hidden="true"></span>
+          <div class="gpolicy__head"><i><svg viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M8 1.8l5 1.9v3.9c0 3.1-2.1 5.6-5 6.6-2.9-1-5-3.5-5-6.6V3.7z"/><path d="M5.8 8.2l1.5 1.5 3-3"/></svg></i><div><b>HR Standard Policy</b><small>Human Resources space</small></div></div>
+          <ul class="gpolicy__list">
+            <li><svg viewBox="0 0 16 16" aria-hidden="true" focusable="false"><rect x="3.5" y="3.5" width="9" height="9" rx="2"/><path d="M6 1.8v1.7M10 1.8v1.7M6 12.5v1.7M10 12.5v1.7M1.8 6h1.7M1.8 10h1.7M12.5 6h1.7M12.5 10h1.7"/></svg><div><b>Models and API keys</b><span>What the space’s builders can use</span></div></li>
+            <li><svg viewBox="0 0 16 16" aria-hidden="true" focusable="false"><circle cx="8" cy="8" r="5.5"/><path d="M9.6 6.3c-.4-.6-1-.9-1.7-.9-1 0-1.7.5-1.7 1.3 0 1.9 3.6.9 3.6 2.8 0 .8-.8 1.4-1.9 1.4-.8 0-1.5-.4-1.9-1M8 4.2v1.2M8 10.9v1.2"/></svg><div><b>Budget</b><span>Credit limits per period and key</span></div></li>
+            <li><svg viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M2.5 4.5l1.2 1.2L6 3.4M2.5 10.5l1.2 1.2L6 9.4M8.5 4.8h5M8.5 10.8h5"/></svg><div><b>Rules and compliance</b><span>Conditions, actions and frameworks like GDPR</span></div></li>
+          </ul>
+        </div>
+        <ul class="gflow__col gflow__col--out">
+          <li class="gnode gnode--ok"><span class="gnode__head"><i><svg viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M3.5 8.5l3 3 6-7"/></svg></i>Allowed</span><span class="gnode__text">Within the policy, the action goes ahead.</span></li>
+          <li class="gnode gnode--rule"><span class="gnode__head"><i><svg viewBox="0 0 16 16" aria-hidden="true" focusable="false"><circle cx="8" cy="8" r="5.5"/><path d="M4.2 11.8l7.6-7.6"/></svg></i>Against a rule</span><span class="glevels"><span class="glvl">Warn</span><span class="glvl glvl--throttle">Throttle</span><span class="glvl glvl--escalate">Escalate</span><span class="glvl glvl--deny">Deny</span></span><span class="gnode__text">Logged with the rule that caught it.</span></li>
+          <li class="gnode gnode--more"><span class="gnode__head"><i><svg viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M8 3.5v9M3.5 8h9"/></svg></i>Needs more</span><span class="gsteps"><span>Request</span><i aria-hidden="true">→</i><span>Approved</span></span><span class="gnode__text">Then it applies to the whole space, so the next builder doesn’t have to ask.</span></li>
+        </ul>
+      </div>
+      <p class="loop__back"><b>No space starts without one:</b> a new space runs on the default governance policy until the admin gives it one of its own.</p>
+    </section>
+
+    <section class="sec" id="iterating" aria-labelledby="s-iter">
+      <header class="head col reveal">
+        <h2 id="s-iter">Three early decisions I reversed</h2>
+        <p>Each one fit how the platform was built, not how admins work: policy set agent by agent, rules that could only allow or block, and a rule builder only experts could use. Each was rebuilt around the admin.</p>
+      </header>
+      <div class="iter wide">
+        <article class="reveal">
+          <div class="well"><div class="ba__card" role="img" aria-label="Before: Agent A, Agent B and Agent C each have their own set of rules, models and budget, set up again for every new agent.">
+            <div class="ba__row" aria-hidden="true"><span class="ba__chip"><svg><use href="#i-agent"/></svg>Agent A</span><span class="ba__link"></span><span class="ba__set">Rules · models · budget</span></div>
+            <div class="ba__row" aria-hidden="true"><span class="ba__chip"><svg><use href="#i-agent"/></svg>Agent B</span><span class="ba__link"></span><span class="ba__set">Rules · models · budget</span></div>
+            <div class="ba__row" aria-hidden="true"><span class="ba__chip"><svg><use href="#i-agent"/></svg>Agent C</span><span class="ba__link"></span><span class="ba__set">Rules · models · budget</span></div>
+            <p class="ba__note" aria-hidden="true">Set up again for every new agent</p>
+          </div></div>
+          <div class="iter__copy"><span class="kicker">Where policy lives · Before</span><h3>A policy per agent</h3><p>Each agent carried its own rules, models and budget, because that is how the platform was built. Every new agent meant setting it all up again.</p></div>
+        </article>
+        <article class="reveal">
+          <div class="well"><div class="ba__card" role="img" aria-label="After: the Human Resources space has one HR Standard Policy, and Agent A, Agent B and Agent C all inherit it.">
+            <div class="ba__space" aria-hidden="true">
+              <span class="ba__scope">Human Resources space</span>
+              <span class="ba__policy"><svg><use href="#i-policy"/></svg>HR Standard Policy</span>
+              <div class="ba__agents"><span class="ba__chip"><svg><use href="#i-agent"/></svg>Agent A</span><span class="ba__chip"><svg><use href="#i-agent"/></svg>Agent B</span><span class="ba__chip"><svg><use href="#i-agent"/></svg>Agent C</span></div>
+            </div>
+            <p class="ba__note" aria-hidden="true">Set once, inherited by every agent and solution</p>
+          </div></div>
+          <div class="iter__copy"><span class="kicker">Where policy lives · After</span><h3>A policy per space</h3><p>One policy per department, inherited by every agent and solution built in it, with a default so that no space starts without one.</p></div>
+        </article>
+      </div>
+
+      <div class="iter wide">
+        <article class="reveal">
+          <div class="well"><div class="ba__card" role="img" aria-label="Before: when a rule matched, the only outcomes were allow or block, so a false block got the rule switched off.">
+            <div class="ba__flow" aria-hidden="true">
+              <span class="ba__chip"><svg><use href="#i-policy"/></svg>A rule matches</span>
+              <span class="ba__drop"></span>
+              <div class="ba__levels"><span class="ba__lvl ba__lvl--allow">Allow</span><span class="ba__lvl ba__lvl--deny">Block</span></div>
+            </div>
+            <p class="ba__note" aria-hidden="true">A false block, and someone switches the rule off</p>
+          </div></div>
+          <div class="iter__copy"><span class="kicker">Enforcement · Before</span><h3>Allow or block</h3><p>A matching rule could only let the action through or stop it. Follow a false block, though, and someone switches the rule off to get work moving. The rule stays in the list, doing nothing.</p></div>
+        </article>
+        <article class="reveal">
+          <div class="well"><div class="ba__card" role="img" aria-label="After: when a rule matches, it acts at one of four levels, from lightest to strongest: warn, throttle, escalate or deny, so the rule stays on.">
+            <div class="ba__flow" aria-hidden="true">
+              <span class="ba__chip"><svg><use href="#i-policy"/></svg>A rule matches</span>
+              <span class="ba__drop"></span>
+              <div class="ba__range">
+                <div class="ba__levels"><span class="ba__lvl ba__lvl--warn">Warn</span><span class="ba__lvl ba__lvl--throttle">Throttle</span><span class="ba__lvl ba__lvl--escalate">Escalate</span><span class="ba__lvl ba__lvl--deny">Deny</span></div>
+                <div class="ba__scale"><span>Lightest</span><span>Strongest</span></div>
+              </div>
+            </div>
+            <p class="ba__note" aria-hidden="true">A borderline case warns or slows, and the rule stays on</p>
+          </div></div>
+          <div class="iter__copy"><span class="kicker">Enforcement · After</span><h3>Four levels</h3><p>Agents act with nobody watching, so the rule has to handle the borderline case itself. Each rule now acts as hard as the case needs: warn, throttle, escalate or deny.</p></div>
+        </article>
+      </div>
+
+      <div class="iter wide">
+        <article class="reveal">
+          <div class="well"><div class="media">
+            <video width="1440" height="1294" playsinline muted loop preload="metadata" poster="assets/rule-manual-poster.jpg" aria-label="Screen recording: the four-step manual rule builder, through to scope and review.">
+              <source src="assets/rule-manual.mp4" type="video/mp4">
+            </video>
+            <button class="media__toggle" type="button" hidden aria-label="Pause" data-state="playing"><svg viewBox="0 0 16 16" aria-hidden="true" focusable="false"><g class="ic-pause"><rect x="4" y="3" width="3" height="10" rx="1"/><rect x="9" y="3" width="3" height="10" rx="1"/></g><path class="ic-play" d="M5.5 3.2 L12.5 8 L5.5 12.8 Z"/></svg></button>
+          </div></div>
+          <div class="iter__copy"><span class="kicker">Adding a rule · First</span><h3>One builder, written for experts</h3><p>Four steps, from the rule’s name through condition and enforcement to scope. It suited admins who already knew a regex from a data class. For everyone else the barrier was the vocabulary, not the number of steps, so cutting steps wouldn’t have helped, and simplifying the builder would have capped what an expert could write.</p></div>
+        </article>
+        <article class="reveal">
+          <div class="well"><div class="media">
+            <video width="1440" height="1294" playsinline muted loop preload="metadata" poster="assets/rule-guided-poster.jpg" aria-label="Screen recording: the guided rule setup, from a plain-language description to a finished rule.">
+              <source src="assets/rule-guided.mp4" type="video/mp4">
+            </video>
+            <button class="media__toggle" type="button" hidden aria-label="Pause" data-state="playing"><svg viewBox="0 0 16 16" aria-hidden="true" focusable="false"><g class="ic-pause"><rect x="4" y="3" width="3" height="10" rx="1"/><rect x="9" y="3" width="3" height="10" rx="1"/></g><path class="ic-play" d="M5.5 3.2 L12.5 8 L5.5 12.8 Z"/></svg></button>
+          </div></div>
+          <div class="iter__copy"><span class="kicker">Adding a rule · Added</span><h3>Two ways in, one rule</h3><p>Guided setup takes a plain-language description and asks for the three choices the builder would: what to match, how hard to enforce, and where it applies. It answers with the rule it wrote, its condition and action in view, to tune later from the policy. The manual builder stays for admins who know what they want.</p></div>
+        </article>
+      </div>
+    </section>
+
+    <section class="sec" id="console" aria-labelledby="s-console">
+      <header class="head col reveal">
+        <h2 id="s-console">A day in the console</h2>
+        <p>Five steps from one admin’s day, from the first signal to a release record.</p>
+      </header>
+
+      <div class="cgroup col reveal">
+        <span class="kicker">Step 01</span>
+        <h3>See what needs attention</h3>
+        <p>The Observatory opens on what an admin may need to act on: cost, runs, agents at risk and policy violations, with governance events arriving as they happen. An agent in warning can be stopped right from the table, and stopping suspends it rather than deleting it.</p>
+      </div>
+      <figure class="console wide reveal">
+        <div class="well"><img src="assets/admin/observatory-attention.jpg" width="1590" height="732" loading="lazy" alt="The lower half of the Observatory: spend by space against budget, a feed of governance events such as a trust breach and a blocked prompt injection, and the agents health table with kill actions on agents in warning."></div>
+      </figure>
+
+      <div class="cgroup col reveal">
+        <span class="kicker">Step 02</span>
+        <h3>Set up a space for each department</h3>
+        <p>Each department gets its own space in two steps: name it and choose its policy, then add its builders. A new space starts on the default policy, never a blank one, because a blank policy hands the hardest decision to whoever happens to be setting up the space. The form shows what that policy grants before anything is saved.</p>
+      </div>
+      <figure class="console wide reveal">
+        <div class="well"><img src="assets/admin/space-detail.png" width="1920" height="1080" loading="lazy" alt="The Human Resources space: its description, its active policy (the default ZBrain policy) with the models, token budget, rules and compliance it governs, and its members, each with a role."></div>
+        <figcaption>A finished space: its policy, what that policy governs, and its members.</figcaption>
+      </figure>
+
+      <div class="cgroup col reveal">
+        <span class="kicker">Step 03</span>
+        <h3>Define the policy</h3>
+        <p>Rules, models, budget, compliance and exceptions each have their own page, so the person setting a rate limit never has to touch SOC 2. Rules inherited from the base are locked, and frameworks like HIPAA are switched on, not written by hand.</p>
+      </div>
+      <figure class="console wide reveal">
+        <div class="well"><img src="assets/admin/policies.png" width="1920" height="1080" loading="lazy" alt="Policies list: each policy with the spaces it applies to, its base grants and overrides."></div>
+        <figcaption>Every policy starts from a base, so what’s worth governing is decided once, not rediscovered by every department.</figcaption>
+      </figure>
+      <div class="console__row wide">
+        <figure class="reveal"><div class="well"><img src="assets/admin/policy-rules.png" width="1920" height="1080" loading="lazy" alt="Policy rules: default-deny, audit-all-actions, approve-risk-ops, require-human-finance, rate-limit-api, block-pii-export and log-admin-access, each with a condition and action."></div><figcaption>Rules: a condition and one of the four actions.</figcaption></figure>
+        <figure class="reveal"><div class="well"><img src="assets/admin/policy-models.png" width="1920" height="1080" loading="lazy" alt="Model and provider access: Anthropic models allowed, OpenAI models blocked, each with its use cases."></div><figcaption>Models: which providers, for which use cases.</figcaption></figure>
+        <figure class="reveal"><div class="well"><img src="assets/admin/policy-budget.png" width="1920" height="1080" loading="lazy" alt="Budget: a credit limit of $10 every day, applied individually to each key."></div><figcaption>Budget: a limit per key, not per space.</figcaption></figure>
+      </div>
+      <div class="console__row console__row--2 wide">
+        <figure class="reveal"><div class="well"><img src="assets/admin/policy-compliance.png" width="1920" height="1080" loading="lazy" alt="Compliance: GDPR, HIPAA and SOC 2 switched on; EU AI Act, NIST AI RMF, ISO 27001, CCPA and OWASP Agentic Top 10 available."></div><figcaption>Compliance: frameworks switched on per policy.</figcaption></figure>
+        <figure class="reveal"><div class="well"><img src="assets/admin/policy-exceptions.png" width="1920" height="1080" loading="lazy" alt="Exceptions: a budget raise for one month, a model exception, a deterministic rule change and a HIPAA permission, each scoped and dated."></div><figcaption>Exceptions: each one scoped and dated.</figcaption></figure>
+      </div>
+
+      <div class="cgroup col reveal">
+        <span class="kicker">Step 04</span>
+        <h3>Answer builder requests</h3>
+        <p>When a builder needs something the policy doesn’t give them, such as a model, a connection, API access or more budget, they ask. One approval covers the whole space, so the next builder doesn’t have to ask again, and every decision stays in the history.</p>
+      </div>
+      <div class="console__row console__row--2 wide">
+        <figure class="reveal"><div class="well"><img src="assets/admin/requests.png" width="1920" height="1147" loading="lazy" alt="Pending requests: deployments, API access, a data source and a budget change, each with a review action."></div><figcaption>Pending requests, each with a review action.</figcaption></figure>
+        <figure class="reveal"><div class="well"><img src="assets/admin/requests-history.png" width="1920" height="1147" loading="lazy" alt="Request history: two requests for API and connection access, one for the Sales space approved and one for Human Resources denied, each with its solution and when it was decided."></div><figcaption>The history, with every decision kept.</figcaption></figure>
+      </div>
+
+      <div class="cgroup col reveal">
+        <span class="kicker">Step 05</span>
+        <h3>Trace what happened, and what shipped</h3>
+        <p>The record has to make sense weeks later to someone who wasn’t there. Every blocked call names the rule that stopped it, usage shows where the money went by space, model and provider, and every release records its version, space, cloud target and approver. A target that fails its checks can’t take releases, and the console says why.</p>
+      </div>
+      <div class="console__row wide">
+        <figure class="reveal"><div class="well"><img src="assets/admin/key-violations.png" width="1920" height="1080" loading="lazy" alt="API key detail showing the violation logs tab: calls blocked by a rules engine or a rate limit, with what happened."></div><figcaption>A blocked call, with the rule that stopped it.</figcaption></figure>
+        <figure class="reveal"><div class="well"><img src="assets/admin/usage-log.png" width="1920" height="1158" loading="lazy" alt="Usage log: spend, tokens, runs and violations, daily spend by space and a breakdown by solution."></div><figcaption>Spend and runs by space, model and provider.</figcaption></figure>
+        <figure class="reveal"><div class="well"><img src="assets/admin/deployments.png" width="1920" height="1147" loading="lazy" alt="Release history: solution versions with space, environment, target, releaser and status."></div><figcaption>Every release, with its target and approver.</figcaption></figure>
+      </div>
+    </section>
+
+    <section class="sec" id="states" aria-labelledby="s-states">
+      <header class="head col reveal">
+        <h2 id="s-states">The states around the screens</h2>
+        <p>Irreversible takes more than a click: deleting a user is typed, a key says what will break before it’s regenerated, and a deletion shows its progress, then what it removed. Edits open beside the list, not on top of it.</p>
+      </header>
+      <div class="cards cards--shots wide">
+        <article class="reveal"><div class="well"><img src="assets/admin/details/state-delete-user-short.jpg" width="680" height="340" loading="lazy" alt="Delete user dialog asking the admin to type DELETE to confirm."></div><div class="card__copy"><span class="kicker">Delete a user</span><h3>Typed, not clicked</h3><p>The admin types DELETE to confirm.</p></div></article>
+        <article class="reveal"><div class="well"><img src="assets/admin/details/state-regenerate-short.jpg" width="680" height="340" loading="lazy" alt="Regenerate key dialog explaining that the current key stops working immediately."></div><div class="card__copy"><span class="kicker">Regenerate a key</span><h3>Says what will break</h3><p>The current key stops working immediately, and the dialog says so first.</p></div></article>
+        <article class="reveal"><div class="well"><img src="assets/admin/details/state-regenerated-short.jpg" width="680" height="340" loading="lazy" alt="Key regenerated panel with the new key, the SDK code and a markdown document to download."></div><div class="card__copy"><span class="kicker">New key</span><h3>Arrives with the code to use it</h3><p>The new key comes with its SDK code and a document to download.</p></div></article>
+        <article class="reveal"><div class="well"><img src="assets/admin/details/state-deleting-short.jpg" width="680" height="340" loading="lazy" alt="Deleting a deployment: a progress panel analysing the architecture before removing resources."></div><div class="card__copy"><span class="kicker">Delete a deployment</span><h3>Progress, shown</h3><p>The architecture is analysed before any resource is removed, and the panel shows it.</p></div></article>
+        <article class="reveal"><div class="well"><img src="assets/admin/details/state-deleted-short.jpg" width="680" height="340" loading="lazy" alt="A banner confirming the bucket was deleted, above the remaining deployment buckets."></div><div class="card__copy"><span class="kicker">Confirmation</span><h3>Says what was removed</h3><p>A banner confirms the bucket was deleted, above the ones that remain.</p></div></article>
+        <article class="reveal"><div class="well"><img src="assets/admin/details/policy-models-edit-short.jpg" width="680" height="340" loading="lazy" alt="Edit model access side panel beside the model list."></div><div class="card__copy"><span class="kicker">Edit</span><h3>Beside the list, not on top of it</h3><p>Model access opens in a side panel, with the list still in view.</p></div></article>
+      </div>
+
+      <div class="cgroup col reveal">
+        <span class="kicker">Design QA</span>
+        <h3>Held to the build</h3>
+        <p>I review each build against the designs and raise visual and functional issues for engineering. One pass on spaces and users raised 13 subtasks.</p>
+      </div>
+      <figure class="console wide reveal">
+        <div class="well"><img src="assets/admin/design-qa.webp" width="2000" height="1007" loading="lazy" alt="The QA ticket for ZBrain admin frontend development, listing subtasks such as menu font colour, add space button alignment, add space opening in a new page instead of the sidebar, adding a member not reflecting, a missing reach filter and models table data differing from the designs."></div>
+      </figure>
+    </section>
+
+    <section class="sec" id="stands" aria-labelledby="s-stands">
+      <header class="head col reveal">
+        <span class="kicker">Where it stands</span>
+        <h2 id="s-stands">Live with customers</h2>
+        <p>The console is live on ZBrain, and the enterprises on the platform govern their agents through it.</p>
+      </header>
+      <div class="metrics wide reveal">
+        <div class="metric"><strong>12+</strong><span>Enterprises govern their agents through the console</span></div>
+        <div class="metric"><strong>12</strong><span>Areas designed end to end, from the Observatory to deployments and audit</span></div>
+      </div>
+    </section>
+
+  </article>
+
+  <section class="reflect" id="reflect" aria-labelledby="s-reflect">
+    <div class="col">
+      <header class="head reveal"><h2 id="s-reflect">Reflections and learnings</h2></header>
+      <ul class="reveal">
+        <li>I got three things wrong the first time: policy on every agent, rules that could only allow or block, and a rule builder only experts could use. Each time, I had designed the system before I understood the people who would use it.</li>
+        <li>Admins think in departments, not in single agents. A rule that blocks work by mistake soon gets switched off, and most admins don’t write regex.</li>
+        <li>One change from an admin can reach a whole department, so the console always shows what will happen before anyone confirms it.</li>
+      </ul>
+    </div>
+  </section>
+
+</main>
+
+<footer class="next-wrap col">
+  <a class="next" href="/ce-copilot-v2" data-cursor="View<br>project">
+    <h2 class="next__word" aria-hidden="true">next<br>project</h2>
+    <div class="next__card">
+      <div class="next__media"><img src="assets/cecopilot/cover-card.jpg?v=7" width="1600" height="1143" alt="CE CoPilot across the admin console and the mobile app" loading="lazy"></div>
+      <p class="next__title"><span class="sr-only">Next project: </span>CE CoPilot</p>
+      <p class="next__cat">AI assistant</p>
+    </div>
+  </a>
+</footer>
+
+<dialog class="lb" id="lightbox" aria-label="Enlarged screen">
+  <button class="lb__close" type="button" aria-label="Close"><svg viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M3.5 3.5l9 9M12.5 3.5l-9 9"/></svg></button>
+  <img alt="">
+</dialog>
+
+<script>
+/* the case studies have no theme switch of their own: the homepage's choice carries over through
+   localStorage, and until one is made a change in the system's preference is followed */
+(function () {
+  matchMedia('(prefers-color-scheme: light)').addEventListener('change', function (e) {
+    var chosen = null;
+    try { chosen = localStorage.getItem('theme'); } catch (err) {}
+    if (!chosen) { var t = e.matches ? 'light' : 'dark'; document.documentElement.setAttribute('data-theme', t); document.documentElement.style.colorScheme = t; }
+  });
+})();
+
+/* reveal on scroll. A plain position check backs up the observer, because an observer can be
+   throttled (a background tab, some iframes) and content must never stay hidden. ?static shows all. */
+(function () {
+  var els = [].slice.call(document.querySelectorAll('.reveal'));
+  function show(e) { e.classList.add('is-in'); }
+  if (/[?&]static\b/.test(location.search) || !('IntersectionObserver' in window)) { els.forEach(show); return; }
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (en) { if (en.isIntersecting) { show(en.target); io.unobserve(en.target); } });
+  }, { rootMargin: '0px 0px -8% 0px', threshold: 0.08 });
+  els.forEach(function (e) { io.observe(e); });
+  var queued = false;
+  function check() {
+    queued = false;
+    var line = innerHeight * 0.95;
+    els = els.filter(function (e) { if (e.getBoundingClientRect().top < line) { show(e); io.unobserve(e); return false; } return true; });
+    if (!els.length) { removeEventListener('scroll', onScroll); removeEventListener('resize', onScroll); }
+  }
+  function onScroll() { if (!queued) { queued = true; requestAnimationFrame(check); } }
+  addEventListener('scroll', onScroll, { passive: true });
+  addEventListener('resize', onScroll);
+  check();
+})();
+
+/* the sticky picture follows whichever step is in the middle of the screen */
+(function () {
+  var steps = document.querySelectorAll('.context__step');
+  var imgs = document.querySelectorAll('.context__visual img');
+  if (!steps.length || !('IntersectionObserver' in window)) return;
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (en) {
+      if (!en.isIntersecting) return;
+      var i = +en.target.getAttribute('data-step');
+      imgs.forEach(function (im, n) { im.classList.toggle('is-active', n === i); });
+    });
+  }, { rootMargin: '-45% 0px -45% 0px' });
+  steps.forEach(function (s) { io.observe(s); });
+})();
+
+/* the rail: marks the section whose top has passed the upper third of the screen, and steps
+   aside while a wide picture passes beneath it, as on the live case study */
+(function () {
+  var toc = document.querySelector('.toc'), list = toc && toc.querySelector('.toc__list');
+  if (!list) return;
+  var links = [].slice.call(list.querySelectorAll('a'));
+  var targets = links.map(function (a) { return document.getElementById(a.getAttribute('href').slice(1)); });
+  var wides = [].slice.call(document.querySelectorAll('.wide'));
+  var queued = false;
+  function update() {
+    queued = false;
+    var line = innerHeight * 0.33, active = 0;
+    targets.forEach(function (el, i) { if (el && el.getBoundingClientRect().top <= line) active = i; });
+    if (innerHeight + scrollY >= document.documentElement.scrollHeight - 2) active = links.length - 1;
+    links.forEach(function (a, i) { if (i === active) a.setAttribute('aria-current', 'location'); else a.removeAttribute('aria-current'); });
+    if (innerWidth >= 1240) {
+      var t = list.getBoundingClientRect();
+      var hit = wides.some(function (w) { var r = w.getBoundingClientRect(); return r.left < t.right && r.top < t.bottom && r.bottom > t.top; });
+      toc.classList.toggle('is-covered', hit);
+    } else toc.classList.remove('is-covered');
+  }
+  function q() { if (!queued) { queued = true; requestAnimationFrame(update); } }
+  addEventListener('scroll', q, { passive: true });
+  addEventListener('resize', q);
+  update();
+})();
+
+/* below 1240px the menu button opens the rail as a panel */
+(function () {
+  var btn = document.querySelector('.menu-btn'), toc = document.querySelector('.toc'), root = document.documentElement;
+  if (!btn || !toc) return;
+  function isOpen() { return root.classList.contains('menu-open'); }
+  function set(open) {
+    root.classList.toggle('menu-open', open);
+    btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+    btn.setAttribute('aria-label', open ? 'Close sections menu' : 'Open sections menu');
+  }
+  btn.addEventListener('click', function () { set(!isOpen()); });
+  toc.addEventListener('click', function (e) { if (isOpen() && e.target.closest('a')) set(false); });
+  addEventListener('pointerdown', function (e) { if (isOpen() && !toc.contains(e.target) && !btn.contains(e.target)) set(false); });
+  addEventListener('keydown', function (e) { if (e.key === 'Escape' && isOpen()) { set(false); btn.focus(); } });
+  addEventListener('resize', function () { if (innerWidth >= 1240 && isOpen()) set(false); });
+})();
+
+/* admin screens open full size: each becomes a button, and the dialog closes on any click or Escape */
+(function () {
+  var lb = document.getElementById('lightbox');
+  if (!lb || typeof lb.showModal !== 'function') return;
+  var big = lb.querySelector('img');
+  [].forEach.call(document.querySelectorAll('.console .well img, .console__row .well img, .iter .well img, .cards--shots .well img'), function (img) {
+    var b = document.createElement('button');
+    b.type = 'button'; b.className = 'zoom';
+    b.setAttribute('aria-label', 'Enlarge: ' + img.alt);
+    img.parentNode.insertBefore(b, img); b.appendChild(img);
+    b.addEventListener('click', function () { big.src = img.currentSrc || img.src; big.alt = img.alt; lb.showModal(); });
+  });
+  lb.addEventListener('click', function () { lb.close(); });
+})();
+
+/* Recordings start when they scroll into view and restart from the first frame, so the flow is
+   never joined halfway; scrolling away pauses them. A manual pause is sticky. Reduced motion
+   never autoplays. As on the live ZBrain case study. */
+(function () {
+  var still = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var VISIBLE = 0.3;
+  var io = window.IntersectionObserver ? new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) {
+      var v = e.target;
+      var nowIn = e.isIntersecting && e.intersectionRatio >= VISIBLE;
+      if (nowIn === (v.dataset.inview === 'true')) return;
+      v.dataset.inview = nowIn ? 'true' : 'false';
+      if (nowIn) {
+        if (still || v.dataset.held === 'true') return;
+        try { v.currentTime = 0; } catch (err) {}
+        var r = v.play(); if (r && r.catch) r.catch(function () {});
+      } else if (!v.paused) {
+        v.pause();
+      }
+    });
+  }, { threshold: [0, VISIBLE] }) : null;
+  document.querySelectorAll('.media').forEach(function (wrap) {
+    var v = wrap.querySelector('video'), btn = wrap.querySelector('.media__toggle');
+    if (!v || !btn) return;
+    function sync() {
+      btn.dataset.state = v.paused ? 'paused' : 'playing';
+      btn.setAttribute('aria-label', v.paused ? 'Play' : 'Pause');
+    }
+    btn.addEventListener('click', function () {
+      if (v.paused) { v.dataset.held = 'false'; var r = v.play(); if (r && r.catch) r.catch(function () {}); }
+      else { v.dataset.held = 'true'; v.pause(); }
+    });
+    v.addEventListener('play', sync);
+    v.addEventListener('pause', sync);
+    function reveal() { btn.hidden = false; }
+    v.addEventListener('loadedmetadata', reveal);
+    if (v.readyState >= 1) reveal();
+    if (io) io.observe(v);
+    sync();
+  });
+})();
+</script>
+<script src="assets/cursor.js?v=1"></script>
+</body>
+</html>

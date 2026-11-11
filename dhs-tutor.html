@@ -28,7 +28,7 @@
 <meta name="twitter:image:alt" content="Portfolio27. Indrajit Sasmal, Product Designer">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Mona+Sans:wght@200..900&family=Plus+Jakarta+Sans:wght@300..800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300..800&display=swap" rel="stylesheet">
 <style>
 /* tokens: spacing is a multiple of 8 and comes from `gap`; dark.css swaps the colours */
 :root{
@@ -200,8 +200,72 @@ a:hover{text-decoration:underline;text-underline-offset:3px;}
 html.lenis,html.lenis body{height:auto;}
 .lenis.lenis-smooth{scroll-behavior:auto !important;}
 .lenis.lenis-stopped{overflow:hidden;}
+
+/* Screenshots show whole: each keeps its own shape and scales with its frame, with nothing cut from
+   the foot or, on a phone, from the sides. */
+.screen--crop,.screens--2 .screen{aspect-ratio:auto;}
+.screen--crop img,.screens--2 .screen img{height:auto;object-fit:fill;}
+@media (max-width:760px){.screen--crop{aspect-ratio:auto;}.screen--crop img{object-position:0 0;}}
+
+/* The twelve rules: one cell each (number, the rule, its detail) in a ruled grid, three across on
+   desktop, two on a tablet and one on a phone. The hairlines are the grid's own 1px gaps showing the
+   rule colour through, so they stay right whatever the column count. */
+.hardrules{grid-template-columns:repeat(3,minmax(0,1fr));gap:1px;padding:0;background:var(--rule);border:1px solid var(--rule);border-radius:16px;overflow:hidden;}
+.hardrules li{display:flex;flex-direction:column;gap:6px;padding:22px 24px 24px;background:var(--bg);}
+.hardrules .n{font-size:12px;line-height:18px;font-weight:700;letter-spacing:.08em;color:var(--lime);}
+.hardrules b{margin-top:4px;font-size:16px;line-height:22px;font-weight:600;color:var(--ink);}
+.hardrules li > span:last-child{font-size:14px;line-height:21px;color:var(--ink-3);}
+@media (max-width:900px){.hardrules{grid-template-columns:repeat(2,minmax(0,1fr));}}
+@media (max-width:560px){.hardrules{grid-template-columns:1fr;}}
 </style>
 <link rel="stylesheet" href="dark.css?v=43">
+<style>
+/* ==========================================================================
+   TYPE SYSTEM, as in type-guideline.md (shared with the ZBrain, CE CoPilot and design system case studies).
+   Plus Jakarta Sans 500 for display only; Plus Jakarta Sans for everything else in 400, 600 and 700.
+   It sits after dark.css, which still sets headings in Mona Sans 700 for the older pages, so every
+   role is set in full here and overrides any earlier size on the same element. Colours are unchanged.
+   Left alone: the section rail, and everything drawn inside the screenshots.
+   ========================================================================== */
+:root{
+  --serif:"Plus Jakarta Sans", system-ui, sans-serif;
+  --t-d1:clamp(44px, 5vw, 72px); --t-d2:clamp(40px, 5.2vw, 68px);
+  --t-h3:clamp(27px, 2.64vw, 38px); --t-h4:clamp(21px, 1.875vw, 27px); --t-h5:16px; --t-h6:14px;
+  --t-lead-l:clamp(17px, 1.53vw, 22px); --t-lead:clamp(17px, 1.39vw, 20px);
+  --t-body:16px; --t-body-s:15px; --t-small:13px; --t-micro:12px;
+}
+/* display: Plus Jakarta Sans 600 (was Fraunces 500) */
+h1.t-display{font:600 var(--t-d1)/.96 var(--serif);letter-spacing:-.052em;text-wrap:balance;}
+h2.t-title{font:600 var(--t-d2)/1.02 var(--serif);letter-spacing:-.045em;}
+h1.t-display,h2.t-title{word-spacing:.06em;}   /* the tight display tracking was set for a serif; at 600 the sans needs its word gaps back */
+.next__word{font-family:var(--serif);font-weight:600;}   /* size, leading and tracking already match the Next role in dark.css */
+/* headings */
+.stepb__title{font:700 var(--t-h3)/1.1 var(--sans);letter-spacing:-.04em;}
+.rules b,.next__title{font:700 var(--t-h4)/1.14 var(--sans);letter-spacing:-.035em;}
+.dcard b,.parts li{font:600 var(--t-h5)/1.3 var(--sans);letter-spacing:-.01em;}
+/* text */
+#top .intro{font:400 var(--t-lead-l)/1.55 var(--sans);letter-spacing:0;}
+.t-body{font:400 var(--t-body)/1.65 var(--sans);letter-spacing:0;}
+.stack.gap-8 + .t-body,.claim .t-lead{font:400 var(--t-lead)/1.65 var(--sans);letter-spacing:0;}   /* section intros, and the lime-ruled claims */
+.rules span,.dcard span,.hardrules span{font:400 var(--t-body-s)/1.6 var(--sans);letter-spacing:0;}
+.meta dd{font:600 var(--t-body-s)/1.3 var(--sans);letter-spacing:0;}
+.cap,.meta dt{font:400 var(--t-small)/1.5 var(--sans);letter-spacing:0;text-transform:none;}
+/* labels and numbers */
+.eyebrow,.stepb__n,.rules .n,.hardrules .n,.next__cat{font:700 12px/1.65 var(--sans);letter-spacing:.04em;text-transform:uppercase;}
+.hardrules li{align-items:baseline;}   /* the label is now shorter than the rule beside it */
+/* phones: only the title has its own size; every other role uses its clamp floor */
+@media (max-width:760px){ h1.t-display{font-size:min(11vw, 44px);} }
+
+/* ==========================================================================
+   HERO META, as on the ZBrain and CE CoPilot case studies: four short values in a row,
+   ruled above, 64px under the summary (the hero stack's 40px gap plus 24px here).
+   ========================================================================== */
+#top .intro{margin-top:4px;}   /* 20px under the title, as there */
+.meta{grid-template-columns:repeat(4,auto);justify-content:start;gap:0 40px;margin-top:24px;padding-top:24px;border-top:1px solid var(--rule);}
+.meta dd{margin-top:4px;padding-bottom:0;}
+@media (max-width:900px){ .meta{grid-template-columns:1fr 1fr;row-gap:20px;} }
+</style>
+<link rel="stylesheet" href="assets/cursor.css?v=1">
 </head>
 <body>
 <svg class="ico-defs" width="0" height="0" aria-hidden="true" focusable="false" style="position:absolute;width:0;height:0;overflow:hidden"><defs>
@@ -235,19 +299,17 @@ html.lenis,html.lenis body{height:auto;}
     <div class="col stack gap-40">
       <div class="stack gap-16">
         <h1 class="t-display">DHS Tutor: an exam tutor that can only quote the book</h1>
-        <p class="t-body intro">The NBDHE is a licensure exam, and Dental Hygiene Seminars students prepare for it from one source: the DHS Review Book. A study tool built on that book inherits its authority whether or not it has earned it. DHS Tutor answers from the book and nothing else, shows the page every answer came from, and says plainly when the book doesn’t cover the question.</p>
+        <p class="t-body intro">The NBDHE is a licensure exam, and Dental Hygiene Seminars students prepare for it from one source: the DHS Review Book. A study tool built on that book inherits its authority whether or not it has earned it. DHS Tutor answers from the book and nothing else, shows the page every answer came from, and says plainly when the book doesn’t cover the question. I built it as a working prototype for a sales proposal, to show the client in a meeting.</p>
       </div>
       <dl class="meta">
-        <dt>Product</dt>
-        <dd class="t-body">DHS Tutor, an NBDHE study app built around the DHS Review Book</dd>
-        <dt>Role</dt>
-        <dd class="t-body">Product definition, interaction design, the design system, the front-end build, and design QA against the incoming restyle</dd>
-        <dt>Status</dt>
-        <dd class="t-body">Built and running on sample content, pending the official Review Book</dd>
+        <div><dt>Role</dt><dd>Senior UI/UX Designer</dd></div>
+        <div><dt>Platform</dt><dd>Responsive web app</dd></div>
+        <div><dt>Status</dt><dd>Prototype for a sales proposal</dd></div>
+        <div><dt>Year</dt><dd>2026</dd></div>
       </dl>
     </div>
     <figure class="case-hero col-wide">
-      <div class="case-hero__visual step frame"><div class="screens"><div class="screen screen--crop" style="--ar:2240/1060"><img src="assets/dhs/dashboard-hero.jpg" width="2240" height="1400" fetchpriority="high" alt="The DHS Tutor dashboard: an exam countdown reading 51 days to your NBDHE, a continue-reading card for Ch 4, four metrics (exam readiness, quiz accuracy, flashcards mastered and tutor questions) and a focus-areas table listing the weakest chapters with score bars."></div></div></div>
+      <div class="case-hero__visual step frame"><div class="screens"><div class="screen screen--crop"><img src="assets/dhs/dashboard-hero.jpg" width="2240" height="1400" fetchpriority="high" alt="The DHS Tutor dashboard: an exam countdown reading 51 days to your NBDHE, a continue-reading card for Ch 4, four metrics (exam readiness, quiz accuracy, flashcards mastered and tutor questions) and a focus-areas table listing the weakest chapters with score bars."></div></div></div>
     </figure>
   </div>
 
@@ -276,9 +338,9 @@ html.lenis,html.lenis body{height:auto;}
       <div class="col stack gap-16">
         <div class="stack gap-8">
           <p class="eyebrow">The brief</p>
-          <h2 class="t-title" id="s-brief">Three rules the product could not break</h2>
+          <h2 class="t-title" id="s-brief">The book first, the page always, no guessing</h2>
         </div>
-        <p class="t-body">Everything in DHS Tutor follows from them.</p>
+        <p class="t-body">Three rules, and everything in DHS Tutor follows from them.</p>
       </div>
 
       <ul class="col-wide rules">
@@ -292,7 +354,7 @@ html.lenis,html.lenis body{height:auto;}
       <div class="col stack gap-16">
         <div class="stack gap-8">
           <p class="eyebrow">Design decisions</p>
-          <h2 class="t-title" id="s-decisions">Small calls that keep the book in charge</h2>
+          <h2 class="t-title" id="s-decisions">Four decisions that keep the book in charge</h2>
         </div>
         <p class="t-body">Each one protects the student’s ability to check an answer, or keeps the interface from competing with the page it is quoting.</p>
       </div>
@@ -321,15 +383,15 @@ html.lenis,html.lenis body{height:auto;}
           <header class="col stepb__head">
             <div class="stepb__lead"><p class="stepb__n">01</p><h3 class="stepb__title">Ask, and get the book back</h3></div>
             <p class="t-body stepb__desc">The question goes to a ranked set of passages before it goes anywhere else. The answer carries numbered markers, each source names its chapter and page, and opening one puts the book page beside the answer with the cited sentences highlighted on it. The composer repeats the rule under every message: answers come only from the DHS Review Book.</p>
-            <ol class="parts" aria-label="What an answer carries"><li><i>1</i>The answer</li><li><i>2</i>Numbered markers</li><li><i>3</i>Chapter and page</li><li><i>4</i>The page itself</li></ol>
+            <ul class="parts" aria-label="What an answer carries"><li>The answer</li><li>Numbered markers</li><li>Chapter and page</li><li>The page itself</li></ul>
           </header>
           <figure class="col-wide shot">
             <div class="step frame">
               <div class="screens">
-                <div class="screen screen--crop" style="--ar:2240/1050"><img src="assets/dhs/tutor-answer.jpg" width="2240" height="1050" loading="lazy" alt="The tutor chat with a source open: an answer citing Ch 13 Ethics and Board Format P27 and Ch 7 Clinical Board Prep P15, and beside it the book page for P15 with the cited sentences highlighted in yellow under a note reading, highlighted: where the answer comes from on this page."></div>
+                <div class="screen screen--crop"><img src="assets/dhs/tutor-answer.jpg" width="2240" height="1050" loading="lazy" alt="The tutor chat with a source open: an answer citing Ch 13 Ethics and Board Format P27 and Ch 7 Clinical Board Prep P15, and beside it the book page for P15 with the cited sentences highlighted in yellow under a note reading, highlighted: where the answer comes from on this page."></div>
               </div>
             </div>
-            <figcaption class="cap">Source 2 is open, so the sentence about screening patients sits beside the page it was taken from, highlighted on P15. Checking an answer costs one click, which is the whole argument for the panel.</figcaption>
+            <figcaption class="cap">Source 2 open beside the answer, with the cited sentence highlighted on P15.</figcaption>
           </figure>
         </div>
 
@@ -341,25 +403,25 @@ html.lenis,html.lenis body{height:auto;}
           <figure class="col-wide shot">
             <div class="step frame">
               <div class="screens">
-                <div class="screen screen--crop" style="--ar:2240/1060"><img src="assets/dhs/reader.jpg" width="2240" height="1400" loading="lazy" alt="The reader: a contents list with page numbers on the left, a book page with a highlighted sentence in the centre, and a study panel on the right listing notes and highlights, each led by its page."></div>
+                <div class="screen screen--crop"><img src="assets/dhs/reader.jpg" width="2240" height="1400" loading="lazy" alt="The reader: a contents list with page numbers on the left, a book page with a highlighted sentence in the centre, and a study panel on the right listing notes and highlights, each led by its page."></div>
               </div>
             </div>
-            <figcaption class="cap">Every item in the right-hand panel leads with its page, P3, P9, P11, P12, P14, P25, before it shows the note. The page reference is the sort key, not a citation nicety.</figcaption>
+            <figcaption class="cap">Every note, highlight and bookmark leads with its page.</figcaption>
           </figure>
         </div>
 
         <div class="stepb">
           <header class="col stepb__head">
             <div class="stepb__lead"><p class="stepb__n">03</p><h3 class="stepb__title">See where the weak chapters are</h3></div>
-            <p class="t-body stepb__desc">The dashboard opens on the exam countdown, then readiness, accuracy and flashcard progress, then the chapters the student is weakest in, each with a way straight back into the book.</p>
+            <p class="t-body stepb__desc">The dashboard opens on the exam countdown, then readiness, accuracy and flashcard progress, then every chapter scoring under 70%, in book order, each with a way straight back into the book.</p>
           </header>
           <figure class="col-wide shot">
             <div class="step frame">
               <div class="screens">
-                <div class="screen screen--crop" style="--ar:2240/1060"><img src="assets/dhs/dashboard.jpg" width="2240" height="1400" loading="lazy" alt="The dashboard's focus areas: a table of the weakest chapters with a score bar, quiz answers and flashcard counts on each row, and Read, Flashcards and Quiz beside it."></div>
+                <div class="screen screen--crop"><img src="assets/dhs/dashboard.jpg" width="2240" height="1400" loading="lazy" alt="The dashboard's focus areas: a table of the weakest chapters with a score bar, quiz answers and flashcard counts on each row, and Read, Flashcards and Quiz beside it."></div>
               </div>
             </div>
-            <figcaption class="cap">Score is the only coloured column on the table, because it is the only one that has to be scanned. Everything else is text on white, separated by single-pixel borders.</figcaption>
+            <figcaption class="cap">Only the score carries colour, because it is the only column anyone scans.</figcaption>
           </figure>
         </div>
       </div>
@@ -369,22 +431,22 @@ html.lenis,html.lenis body{height:auto;}
       <div class="col stack gap-16">
         <div class="stack gap-8">
           <p class="eyebrow">The build</p>
-          <h2 class="t-title" id="s-build">The specification was a picture and a paragraph</h2>
+          <h2 class="t-title" id="s-build">It started as <span style="white-space:nowrap">AI-generated</span> screens, full of data and colour</h2>
         </div>
-        <p class="t-body">A developer handoff arrived for the student experience: 44 screens with a restyled counterpart, 15 that existed only as a new idea, and 56 admin screens that were never restyled at all. Each one was a flat image with a paragraph under it saying roughly what should go where.</p>
+        <p class="t-body">The student experience started as a set of AI-generated screens: 44 with a restyled counterpart, 15 that existed only as a new idea, and 56 admin screens that were never restyled at all. Every one was filled with data and colour, with everything the business asked for on the page at once.</p>
       </div>
 
       <figure class="col-wide shot">
         <div class="step frame">
           <div class="screens">
-            <div class="screen screen--crop" style="--ar:1440/700"><img src="assets/dhs/handoff-screen.jpg" width="1440" height="900" loading="lazy" alt="A screen as it was handed over: a timed quiz question with four lettered options, a green page banner, a running clock and Previous and Next buttons. A flat image with nothing behind it."></div>
+            <div class="screen screen--crop"><img src="assets/dhs/handoff-screen.jpg" width="1440" height="900" loading="lazy" alt="One of the AI-generated screens: a timed quiz question with four lettered options in four colours, a green page banner, a running clock and Previous and Next buttons."></div>
           </div>
         </div>
-        <figcaption class="cap">One screen, as handed over. The note that came with it, in part: “REMOVED the 220-cell question grid and the case-study chips (approved). Now one question at a time on the standard question screen. No answers or rationales during the timed test. Flag question toggle under the stem. Back/Next arrows.”</figcaption>
+        <figcaption class="cap">One of the AI-generated screens: a green banner, a timer, a flag and four answer letters in four colours.</figcaption>
       </figure>
 
       <div class="col stack gap-16">
-        <p class="t-body">That paragraph is the whole brief for the screen. It names the furniture: what to take out, what to put where, what to call it. It cannot say what the screen does before anything has been answered, when the clock runs out, when the question fails to load, at 375 pixels wide, or in the dark theme. Those are most of a screen, and none of them can be approved from a picture.</p>
+        <p class="t-body">I kept a balance between the business requirements and what a student needs in the moment. Each screen shows only the data that matters most at that point, and the rest is disclosed progressively, one step or one click away when the student asks for it. A generated screen also shows a single moment. It cannot say what happens before anything has been answered, when the clock runs out, when a question fails to load, at 375 pixels wide, or in the dark theme. Those are most of a screen, and none of them can be approved from a picture.</p>
         <p class="t-body">So I built the rest of it. The high-fidelity screens first, then a working prototype, then the front end itself: thirteen pages covering the reader, the tutor, quizzes, flashcards, questions, case studies, lectures and the account, over seven shared components and one stylesheet, running against a real API rather than clicking between frames. It was written in Claude Code, and one stylesheet carries two brands, the original purple and the Dental Hygiene Seminars green, without a second design.</p>
         <div class="claim"><p class="t-lead">A picture of a screen can be approved without anyone finding out what is missing from it. A built screen cannot.</p></div>
       </div>
@@ -396,7 +458,7 @@ html.lenis,html.lenis body{height:auto;}
           <p class="eyebrow">The restyle</p>
           <h2 class="t-title" id="s-restyle">103 screens, and twelve things wrong with them</h2>
         </div>
-        <p class="t-body">The same handoff had a palette problem running through it: teal, purple, lime, indigo and red rotating across card bands, icon tiles, page heroes and even the A–D answer letters. It could not be argued with on taste, so I reviewed it screen by screen and wrote up what was there.</p>
+        <p class="t-body">The generated screens had a palette problem running through them: teal, purple, lime, indigo and red rotating across card bands, icon tiles, page heroes and even the A–D answer letters. It could not be argued with on taste, so I reviewed all 103 screens, the 44 originals beside their restyles and the 15 new ones, and wrote up what was there.</p>
       </div>
 
       <figure class="col-wide shot">
@@ -405,7 +467,7 @@ html.lenis,html.lenis body{height:auto;}
             <div class="screen"><img src="assets/dhs/bold-restyle.jpg" width="1856" height="541" loading="lazy" alt="Two cards from the restyled dashboard side by side, each showing a list of chapters with coloured progress bars in unrelated hues."></div>
           </div>
         </div>
-        <figcaption class="cap">Two neighbouring cards from the restyle carry five hues between them: purple eyebrows and links, crimson, brown and green bars, and an amber chip. Both sit on a shadow, and they end at different heights.</figcaption>
+        <figcaption class="cap">Two neighbouring cards from the restyle: five hues, two shadows, two heights.</figcaption>
       </figure>
 
       <div class="col stack gap-16">
@@ -420,31 +482,31 @@ html.lenis,html.lenis body{height:auto;}
           <p class="eyebrow">The system</p>
           <h2 class="t-title" id="s-system">Twelve rules, and a page that proves them</h2>
         </div>
-        <p class="t-body">The system is defined by what it refuses. Each hard rule answers a pattern the audit named.</p>
+        <p class="t-body">The system is defined by what it refuses. Seven of the rules answer a pattern the audit named: R1 and R2 the uneven raised edges, R4 and R11 the colour that meant nothing, R7 and R8 the icon tiles and loud page heroes, R9 the unequal heights. The other five keep a one-person build from drifting.</p>
       </div>
 
       <ul class="col-wide hardrules">
-        <li><span class="n">R1</span><span>No shadows on buttons, in any state or theme.</span></li>
-        <li><span class="n">R2</span><span>No shadows on surfaces. Cards, menus and modals use a border.</span></li>
-        <li><span class="n">R3</span><span>White background. Light theme is pure <code>#ffffff</code>, untinted.</span></li>
-        <li><span class="n">R4</span><span>Tokens only. Colours come from CSS variables.</span></li>
-        <li><span class="n">R5</span><span>No native select. One component, everywhere.</span></li>
-        <li><span class="n">R6</span><span>No decorative eyebrows. An eyebrow must name its content.</span></li>
-        <li><span class="n">R7</span><span>No icon tiles on dashboard cards.</span></li>
-        <li><span class="n">R8</span><span>One gradient, on the exam countdown number.</span></li>
-        <li><span class="n">R9</span><span>Equal-height neighbours. Extra content scrolls inside.</span></li>
-        <li><span class="n">R10</span><span>Links don’t underline; they change colour.</span></li>
-        <li><span class="n">R11</span><span>Yellow means highlight, only on book pages.</span></li>
-        <li><span class="n">R12</span><span>No icon library. One icon file.</span></li>
+        <li><span class="n">R1</span><b>No shadows on buttons</b><span>In any state or theme.</span></li>
+        <li><span class="n">R2</span><b>No shadows on surfaces</b><span>Cards, menus and modals use a border.</span></li>
+        <li><span class="n">R3</span><b>White background</b><span>Light theme is pure <code>#ffffff</code>, untinted.</span></li>
+        <li><span class="n">R4</span><b>Tokens only</b><span>Colours come from CSS variables.</span></li>
+        <li><span class="n">R5</span><b>No native select</b><span>One component, everywhere.</span></li>
+        <li><span class="n">R6</span><b>No decorative eyebrows</b><span>An eyebrow must name its content.</span></li>
+        <li><span class="n">R7</span><b>No icon tiles</b><span>None on dashboard cards.</span></li>
+        <li><span class="n">R8</span><b>One gradient</b><span>The green wash behind the exam countdown and the flashcard.</span></li>
+        <li><span class="n">R9</span><b>Equal-height neighbours</b><span>Extra content scrolls inside.</span></li>
+        <li><span class="n">R10</span><b>Links don’t underline</b><span>They change colour.</span></li>
+        <li><span class="n">R11</span><b>Yellow means highlight</b><span>Only on book pages.</span></li>
+        <li><span class="n">R12</span><b>No icon library</b><span>One icon file.</span></li>
       </ul>
 
       <figure class="col-wide shot">
         <div class="step frame">
           <div class="screens">
-            <div class="screen screen--crop" style="--ar:2240/1060"><img src="assets/dhs/design-system.jpg" width="2240" height="1400" loading="lazy" alt="The live design system page: six principle cards above a numbered table of hard rules, with a light and dark switch in the sidebar."></div>
+            <div class="screen screen--crop"><img src="assets/dhs/design-system.jpg" width="2240" height="1400" loading="lazy" alt="The live design system page: six principle cards above a numbered table of hard rules, with a light and dark switch in the sidebar."></div>
           </div>
         </div>
-        <figcaption class="cap">The page carries a copy of the app’s real stylesheet and icon set, refreshed by a script, so every sample on it is the component itself in both themes.</figcaption>
+        <figcaption class="cap">Every sample on the page is the app’s real component, in both themes.</figcaption>
       </figure>
 
       <div class="col stack gap-16">
@@ -458,7 +520,7 @@ html.lenis,html.lenis body{height:auto;}
           <p class="eyebrow">The screens</p>
           <h2 class="t-title" id="s-screens">Twenty-five screens, and not one new component</h2>
         </div>
-        <p class="t-body">A system is only worth writing down if it survives the twenty-fifth screen. Twenty-five were designed and built, covering the dashboard, the chat, the reader, flashcards, quizzes, questions, case studies, lectures, search, notifications and the account. None of them introduced a new component. Six are below; the three the page has already walked through are left out.</p>
+        <p class="t-body">A system is only worth writing down if it survives the twenty-fifth screen. The thirteen pages of the build hold twenty-five screens between them, since the tutor alone is four: a new chat, a conversation, follow-ups and an open source. None of them introduced a new component. Six are below; the three the page has already walked through are left out.</p>
       </div>
 
       <div class="col-wide step step--inset frame">
@@ -505,12 +567,12 @@ html.lenis,html.lenis body{height:auto;}
       <div class="col stack gap-16">
         <div class="stack gap-8">
           <p class="eyebrow">What I learned</p>
-          <h2 class="t-title" id="s-learned">Critique is cheaper than construction</h2>
+          <h2 class="t-title" id="s-learned">A missing rule looks like five faults</h2>
         </div>
       </div>
 
       <div class="col stack gap-16">
-        <p class="t-body"><b class="lead-in">I audited before I had a replacement:</b> I named twelve faults across 103 screens before writing the rules that answer them. It worked, but in the wrong order. Several findings were the same missing rule observed five times, and drafting the system first would have found that faster.</p>
+        <p class="t-body"><b class="lead-in">I audited before I had a replacement:</b> I named twelve faults across 103 screens before writing a single rule. It worked, but in the wrong order. Several findings were the same missing rule observed five times, and drafting the system first would have found that faster.</p>
         <p class="t-body"><b class="lead-in">A refusal is a feature:</b> the hardest thing to design was not the answer, it was what happens when the book has nothing to say. Getting that wrong makes the product look broken; getting it right makes it trustworthy.</p>
         <p class="t-body"><b class="lead-in">Restraint is an argument:</b> the flat, white, single-accent system is not a taste preference. It is what makes a page reference and a highlighted passage the loudest things on the screen.</p>
       </div>
@@ -518,7 +580,7 @@ html.lenis,html.lenis body{height:auto;}
   </main>
 
   <footer class="next-wrap">
-    <a class="next" href="/zbrain">
+    <a class="next" href="/zbrain-v2" data-cursor="View<br>project">
       <h2 class="next__word" aria-hidden="true">next<br>project</h2>
       <div class="next__card">
         <div class="next__media"><img src="assets/admin/monitor-observatory.webp?v=2" width="2400" height="1570" alt="ZBrain Admin Console on a desktop monitor, open on the Observatory" loading="lazy"></div>
@@ -573,5 +635,6 @@ html.lenis,html.lenis body{height:auto;}
 <script src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js" defer></script>
 <script src="smooth-scroll.js" defer></script>
 <script src="assets/theme.js?v=3" defer></script>
+<script src="assets/cursor.js?v=1"></script>
 </body>
 </html>

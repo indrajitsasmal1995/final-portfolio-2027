@@ -1,0 +1,31 @@
+/* ==========================================================================
+   CURSOR FOLLOWER, shared by the homepage and the case studies (assets/cursor.js
+   drives it). A small disc that trails the pointer and inverts what is under it.
+   Over a link it grows and fades, leaving the link's own hover in view; over a
+   button it steps aside; over anything with data-cursor it becomes a labelled disc
+   ("View project"). Pointer screens only; the system cursor is hidden wherever it runs.
+   z-index sits above the case studies' menus and lightboxes (100).
+   ========================================================================== */
+:root{ --cursor-fill: #fff; --cursor-ink: #000; }
+:root[data-theme="light"]{ --cursor-fill: #15140f; --cursor-ink: #f7f5f2; }
+
+.cursor { position: fixed; left: 0; top: 0; z-index: 10000; pointer-events: none; width: 14px; height: 14px; margin: -7px 0 0 -7px;
+  border-radius: 50%; background: var(--cursor-fill); display: grid; place-items: center; mix-blend-mode: difference;
+  transition: width .5s var(--ease, cubic-bezier(.2, .7, .1, 1)), height .5s var(--ease, cubic-bezier(.2, .7, .1, 1)),
+    margin .5s var(--ease, cubic-bezier(.2, .7, .1, 1)), opacity .3s; opacity: 0; }
+.cursor span { font-size: 15px; font-weight: 600; text-transform: uppercase; letter-spacing: -.03em; line-height: .95; text-align: center;
+  color: var(--cursor-ink); opacity: 0; transition: opacity .2s, transform .4s var(--ease, cubic-bezier(.2, .7, .1, 1)); }
+.cursor.is-on { opacity: 1; }
+/* steps aside over buttons, and over anything a page hides it for (the homepage's framed works) */
+.cursor.is-hidden, .cursor.is-btn { width: 0; height: 0; margin: 0; }
+/* over a link it grows and fades */
+.cursor.is-link { width: 56px; height: 56px; margin: -28px 0 0 -28px; }
+.cursor.is-on.is-link { opacity: .32; }
+/* over the homepage headline it swells */
+.cursor.is-big { width: 260px; height: 260px; margin: -130px 0 0 -130px; }
+/* over a project link it becomes a small labelled disc */
+.cursor.is-label { width: 120px; height: 120px; margin: -60px 0 0 -60px; mix-blend-mode: normal; }
+.cursor.is-label span { opacity: 1; transform: rotate(-12deg); }
+
+@media (hover: none), (pointer: coarse) { .cursor { display: none; } }
+html.has-cursor, html.has-cursor * { cursor: none !important; }
