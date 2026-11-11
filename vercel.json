@@ -4,6 +4,17 @@
   "trailingSlash": false,
   "redirects": [
     {
+      "source": "/",
+      "has": [
+        {
+          "type": "host",
+          "value": "indrajitwork.vercel.app"
+        }
+      ],
+      "destination": "https://indrajit.work/",
+      "permanent": true
+    },
+    {
       "source": "/:path*",
       "has": [
         {
