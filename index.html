@@ -275,9 +275,9 @@
       opacity: 0; transition: opacity .5s var(--ease); }
     .top-fade.is-on { opacity: 1; }
     .header { display: flex; align-items: center; justify-content: space-between; height: 84px; }
-    .wordmark { font-size: 22px; font-weight: 600; letter-spacing: -.02em; }
-    .wordmark .reg { font-size: .5em; vertical-align: super; margin-left: 1px; }
-    /* links sit a clear step below the wordmark (about two-thirds its size), so the logo leads */
+    /* the full name, set smaller than the old one-word mark so it stays quiet in the bar */
+    .wordmark { font-size: 18px; font-weight: 600; letter-spacing: -.02em; white-space: nowrap; }
+    /* links sit a clear step below the wordmark, so the name leads */
     .nav { display: flex; gap: 32px; margin-left: auto; }
     /* the theme switch: last thing in the bar, after the links. One glyph, swapped by state —
        the sun shows while the page is dark, because that is what pressing it gives you. */
@@ -1021,7 +1021,7 @@
   <div class="top-fade" aria-hidden="true"></div>
   <header class="site-header" id="header">
     <div class="header wrap">
-      <a class="wordmark" href="#top" aria-label="Indrajit, home">Indrajit<span class="reg">®</span></a>
+      <a class="wordmark" href="#top" aria-label="Indrajit Sasmal, home">Indrajit Sasmal</a>
       <nav class="nav" aria-label="Sections">
         <a href="#work">Work</a>
         <a href="#about">About</a>
