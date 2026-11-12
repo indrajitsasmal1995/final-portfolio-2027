@@ -391,20 +391,25 @@
     /* The whole set, standing still, across the width of the hero. The markup still holds it
        twice over, from when it rolled: the second copy was there to give the loop no seam, and
        was always hidden from screen readers so each client is heard once. It is hidden outright
-       now. Each place in the row is a fixed share of the row rather than the logo's own width,
-       so the marks keep even spacing however wide their artwork is. */
+       now. Each mark takes its own width and the row shares out what is left, so the space
+       between every pair is the same however wide each mark is, and the first and last sit on
+       the edges of the page's column. The sizes in the markup are optical, not equal: each mark
+       is set to about the same area, nudged up where the artwork is light (Hackett's thin serif,
+       Americold's hairline letters) and down where it is heavy (Safe-Guard's bold italic), so no
+       one of them reads louder than the rest. */
     .team-marq { overflow: visible; }
-    .hero-teams { --logos: 6; }
     .team-track { display: flex; width: 100%; }
-    .team-logos { list-style: none; display: flex; align-items: center; width: 100%; flex-wrap: wrap; justify-content: center; }
+    .team-logos { list-style: none; display: flex; align-items: center; width: 100%; flex-wrap: wrap; justify-content: space-between; column-gap: 24px; }
     .team-logos[aria-hidden] { display: none; }
-    .team-logos li { position: relative; flex: 0 0 calc(100% / var(--logos)); display: flex; align-items: center; justify-content: center; height: 60px; }
-    .team-logos img { height: var(--h, 26px); width: auto; max-width: 100%; object-fit: contain; opacity: .55; }   /* each logo is its brand's own white artwork, faded back so the headline leads */
-    /* narrow enough that five at a time squeezes the wider marks: show three, and let the roll
-       bring the rest round as it always does */
+    .team-logos li { position: relative; flex: 0 0 auto; display: flex; align-items: center; justify-content: center; height: 60px; }
+    .team-logos img { height: calc(var(--h, 26px) * var(--s, 1)); width: auto; object-fit: contain; opacity: .55; }   /* each logo is its brand's own white artwork, faded back so the headline leads */
+    /* narrower, every mark a little smaller together, so the row stays one row with room between */
+    @media (max-width: 999px) { .team-logos { --s: .85; } }
+    @media (max-width: 860px) { .team-logos { --s: .75; } }
     @media (max-width: 760px) {
-      .team-logos li { height: 44px; flex-basis: calc(100% / 3); padding-inline: 12px; }   /* three to a row, two rows, each mark with clear space either side */
-      .team-logos img { height: calc(var(--h, 26px) * .72); }   /* the same optical balance between the marks, scaled down for a phone */
+      /* a phone: the row wraps, so each line is centred with the same fixed gap between its marks */
+      .team-logos { --s: .72; justify-content: center; column-gap: 28px; }
+      .team-logos li { height: 44px; }
       .hero-stage { padding: 72px var(--pad) 44px; }
       .hero-teams { padding-bottom: 24px; }
     }
@@ -977,20 +982,20 @@
           <div class="team-marq">
             <div class="team-track">
               <ul class="team-logos">
-                <li><img src="assets/brands/fresenius-white.svg" alt="Fresenius Medical Care" style="--h:28px"></li>
-                <li><img src="assets/brands/americold-white.png" width="416" height="128" alt="Americold" style="--h:30px"></li>
-                <li><img src="assets/brands/safeguard-logo.svg" alt="Safe-Guard Products International" style="--h:22px"></li>
-                <li><img src="assets/brands/mastec-white.svg" alt="MasTec" style="--h:21px"></li>
-                <li><img src="assets/brands/tvt-capital-white.png" width="245" height="160" alt="TVT Capital" style="--h:38px"></li>
-                <li><img src="assets/brands/scrut-white.svg" alt="Scrut Automation" style="--h:30px"></li>
+                <li><img src="assets/brands/fresenius-white.svg" alt="Fresenius Medical Care" style="--h:25px"></li>
+                <li><img src="assets/brands/americold-white.png" width="416" height="128" alt="Americold" style="--h:31px"></li>
+                <li><img src="assets/brands/safeguard-logo.svg" alt="Safe-Guard Products International" style="--h:23px"></li>
+                <li><img src="assets/brands/hackett-group-white.svg" alt="The Hackett Group" style="--h:19px"></li>
+                <li><img src="assets/brands/xinfin-white.png" width="487" height="484" alt="XinFin" style="--h:54px"></li>
+                <li><img src="assets/brands/scrut-white.svg" alt="Scrut Automation" style="--h:27px"></li>
               </ul>
               <ul class="team-logos" aria-hidden="true">
-                <li><img src="assets/brands/fresenius-white.svg" alt="" style="--h:28px"></li>
-                <li><img src="assets/brands/americold-white.png" width="416" height="128" alt="" style="--h:30px"></li>
-                <li><img src="assets/brands/safeguard-logo.svg" alt="" style="--h:22px"></li>
-                <li><img src="assets/brands/mastec-white.svg" alt="" style="--h:21px"></li>
-                <li><img src="assets/brands/tvt-capital-white.png" width="245" height="160" alt="" style="--h:38px"></li>
-                <li><img src="assets/brands/scrut-white.svg" alt="" style="--h:30px"></li>
+                <li><img src="assets/brands/fresenius-white.svg" alt="" style="--h:25px"></li>
+                <li><img src="assets/brands/americold-white.png" width="416" height="128" alt="" style="--h:31px"></li>
+                <li><img src="assets/brands/safeguard-logo.svg" alt="" style="--h:23px"></li>
+                <li><img src="assets/brands/hackett-group-white.svg" alt="" style="--h:19px"></li>
+                <li><img src="assets/brands/xinfin-white.png" width="487" height="484" alt="" style="--h:54px"></li>
+                <li><img src="assets/brands/scrut-white.svg" alt="" style="--h:27px"></li>
               </ul>
             </div>
           </div>
