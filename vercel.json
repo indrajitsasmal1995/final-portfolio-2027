@@ -26,6 +26,26 @@
       "permanent": true
     },
     {
+      "source": "/uniwave",
+      "destination": "https://uniwaveradio.vercel.app/",
+      "permanent": true
+    },
+    {
+      "source": "/uniwave/:path*",
+      "destination": "https://uniwaveradio.vercel.app/",
+      "permanent": true
+    },
+    {
+      "source": "/motion-bucket",
+      "destination": "https://motion-bucket.vercel.app/",
+      "permanent": true
+    },
+    {
+      "source": "/motion-bucket/:path*",
+      "destination": "https://motion-bucket.vercel.app/",
+      "permanent": true
+    },
+    {
       "source": "/zbrain-v2",
       "destination": "/zbrain",
       "permanent": false
