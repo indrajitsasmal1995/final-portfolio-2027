@@ -24,23 +24,23 @@
 /* over the homepage headline it swells */
 .cursor.is-big { width: 260px; height: 260px; margin: -130px 0 0 -130px; }
 /* over an image that opens larger (the case studies' .zoom buttons) it becomes a small, quiet disc
-   with a plus: tinted rather than inverted, so it reads the same over a white screenshot or the dark
-   well around it, with a faint ring for the dark side */
-.cursor.is-zoom { width: 32px; height: 32px; margin: -16px 0 0 -16px; mix-blend-mode: normal;
+   with an expand icon, and inside the opened image the same disc with a collapse icon (cursor.js
+   moves the disc into the open dialog, which sits in the browser's top layer). Tinted rather than
+   inverted, so it reads the same over a white screenshot or the dark well around it, with a faint
+   ring for the dark side. The icon is a white fill cut to shape by a mask, so it stays one colour;
+   the expand shape is the default, so the mask still holds while the icon fades out. */
+.cursor.is-zoom, .cursor.is-zoomout { width: 32px; height: 32px; margin: -16px 0 0 -16px; mix-blend-mode: normal;
   background: rgba(21, 20, 15, .58); box-shadow: 0 0 0 1px rgba(255, 255, 255, .16), 0 3px 10px rgba(0, 0, 0, .1);
   -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px); }
-.cursor::before, .cursor::after { content: ""; position: absolute; left: 50%; top: 50%; width: 11px; height: 1.25px;
-  margin: -.625px 0 0 -5.5px; border-radius: 1px; background: #fff; opacity: 0; transition: opacity .2s; }
-.cursor::after { transform: rotate(90deg); }
-.cursor.is-zoom::before, .cursor.is-zoom::after { opacity: 1; }
+.cursor { --cursor-icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7'/%3E%3C/svg%3E"); }
+.cursor.is-zoomout { --cursor-icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M4 14h6v6M20 10h-6V4M14 10l7-7M3 21l7-7'/%3E%3C/svg%3E"); }
+.cursor::before { content: ""; position: absolute; left: 50%; top: 50%; width: 13px; height: 13px; margin: -6.5px 0 0 -6.5px;
+  background: #fff; opacity: 0; transition: opacity .2s;
+  -webkit-mask: var(--cursor-icon) center / contain no-repeat; mask: var(--cursor-icon) center / contain no-repeat; }
+.cursor.is-zoom::before, .cursor.is-zoomout::before { opacity: 1; }
 /* over a project link it becomes a small labelled disc */
 .cursor.is-label { width: 120px; height: 120px; margin: -60px 0 0 -60px; mix-blend-mode: normal; }
 .cursor.is-label span { opacity: 1; transform: rotate(-12deg); }
 
 @media (hover: none), (pointer: coarse) { .cursor { display: none; } }
 html.has-cursor, html.has-cursor * { cursor: none !important; }
-/* An open lightbox is a modal dialog, which the browser draws in its top layer, above any z-index,
-   so the disc cannot follow into it. The system cursor comes back there instead: zoom-out, since a
-   click anywhere closes it, and a pointer on its buttons. */
-html.has-cursor dialog[open], html.has-cursor dialog[open] * { cursor: zoom-out !important; }
-html.has-cursor dialog[open] button { cursor: pointer !important; }

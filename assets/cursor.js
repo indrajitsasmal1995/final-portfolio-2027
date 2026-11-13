@@ -37,11 +37,15 @@
     queued = false;
     const hit = document.elementFromPoint(x, y);
     const el = hit ? hit.closest('[data-cursor]') : null;
-    const zoom = !el && !!(hit && hit.closest('.zoom'));   // an image that opens larger: a disc with a plus, so the click has a promise
-    const btn = !el && !zoom && !!(hit && hit.closest('.pill, button, [role="button"]'));   // buttons: the dot steps aside, the button's own hover shows
+    const dlg = hit ? hit.closest('dialog[open]') : null;
+    const onBtn = !!(hit && hit.closest('.pill, button, [role="button"]'));
+    const zoom = !el && !dlg && !!(hit && hit.closest('.zoom'));   // an image that opens larger: a disc with a plus, so the click has a promise
+    const zoomOut = !el && !!dlg && !onBtn;                        // inside an open image, where a click anywhere closes it: the same disc with a minus
+    const btn = !el && !zoom && onBtn;                             // buttons: the dot steps aside, the button's own hover shows
     cur.classList.toggle('is-zoom', zoom);
+    cur.classList.toggle('is-zoomout', zoomOut);
     cur.classList.toggle('is-btn', btn);
-    cur.classList.toggle('is-link', !el && !btn && !zoom && !!(hit && hit.closest('a[href], summary, label[for]')));
+    cur.classList.toggle('is-link', !el && !btn && !zoom && !zoomOut && !!(hit && hit.closest('a[href], summary, label[for]')));
     if (el === card) return;
     if (el) {
       lab.innerHTML = el.dataset.cursor;
@@ -55,6 +59,17 @@
   const queue = () => { if (!queued) { queued = true; requestAnimationFrame(sync); } };
   addEventListener('pointermove', queue, { passive: true });
   addEventListener('scroll', queue, { passive: true });
+  // An open image is a modal dialog, which the browser draws in its top layer, above any z-index.
+  // The disc goes in with it while it is open, so it can follow there, and comes back out after.
+  const home = () => {
+    const host = document.querySelector('dialog[open]') || document.body;
+    if (cur.parentNode !== host) host.appendChild(cur);
+    queue();
+  };
+  document.querySelectorAll('dialog').forEach(d => {
+    new MutationObserver(home).observe(d, { attributes: true, attributeFilter: ['open'] });
+    d.addEventListener('close', home);
+  });
   const loop = () => {
     cx += (x - cx) * 0.18; cy += (y - cy) * 0.18;
     cur.style.transform = `translate3d(${cx}px, ${cy}px, 0)`;
