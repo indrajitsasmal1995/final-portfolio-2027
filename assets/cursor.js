@@ -37,9 +37,11 @@
     queued = false;
     const hit = document.elementFromPoint(x, y);
     const el = hit ? hit.closest('[data-cursor]') : null;
-    const btn = !el && !!(hit && hit.closest('.pill, button, [role="button"]'));   // buttons: the dot steps aside, the button's own hover shows
+    const zoom = !el && !!(hit && hit.closest('.zoom'));   // an image that opens larger: a disc with a plus, so the click has a promise
+    const btn = !el && !zoom && !!(hit && hit.closest('.pill, button, [role="button"]'));   // buttons: the dot steps aside, the button's own hover shows
+    cur.classList.toggle('is-zoom', zoom);
     cur.classList.toggle('is-btn', btn);
-    cur.classList.toggle('is-link', !el && !btn && !!(hit && hit.closest('a[href], summary, label[for]')));
+    cur.classList.toggle('is-link', !el && !btn && !zoom && !!(hit && hit.closest('a[href], summary, label[for]')));
     if (el === card) return;
     if (el) {
       lab.innerHTML = el.dataset.cursor;

@@ -611,41 +611,11 @@ h1{text-wrap:balance;}
   .gpolicy::after{top:100%;height:30px;}
 }
 
-/* before/after diagrams, inside the iteration wells where a screenshot would sit */
-.iter .well .ba__card{width:100%;max-width:440px;}
-.iter .well:has(.ba__card){padding:32px;}
-.ba__card{display:flex;flex-direction:column;justify-content:center;gap:12px;padding:26px 24px;background:#fff;border-radius:10px;box-shadow:var(--shot);color:var(--ui-ink);font:400 13px/18px var(--sans);}
-.ba__row{display:grid;grid-template-columns:auto 28px 1fr;align-items:center;}
-.ba__chip{display:inline-flex;align-items:center;gap:7px;padding:7px 11px;border:1px solid var(--ui-line);border-radius:8px;background:#fff;font-weight:500;white-space:nowrap;}
-.ba__chip svg{width:16px;height:16px;flex:none;fill:none;stroke:var(--ui-ink-3);stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round;}
-.ba__set{padding:7px 11px;border:1px dashed var(--ui-wire);border-radius:8px;color:var(--ui-ink-3);}
-.ba__link{position:relative;height:1px;margin:0 4px;background:var(--ui-wire);}
-.ba__link::after{content:"";position:absolute;right:-1px;top:-3.5px;border:4px solid transparent;border-left:6px solid var(--ui-wire);border-right:0;}
-.ba__note{margin-top:6px;font-size:13px;color:var(--ui-ink-3);text-align:center;}
-.ba__space{position:relative;display:flex;flex-direction:column;align-items:center;padding:30px 18px 20px;border:1px dashed var(--ui-wire);border-radius:14px;}
-.ba__scope{position:absolute;top:-9px;left:16px;padding:0 8px;background:#fff;font-size:12px;line-height:18px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--ui-ink-3);}
-.ba__policy{position:relative;display:inline-flex;align-items:center;gap:8px;padding:8px 14px;border:1px solid var(--ui-blue);border-radius:8px;background:#EFF4FF;font-weight:600;color:#1D4ED8;}
-.ba__policy svg{width:16px;height:16px;fill:none;stroke:var(--ui-blue);stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round;}
-.ba__policy::after{content:"";position:absolute;top:100%;left:50%;height:16px;border-left:1px solid var(--ui-blue);}
-/* equal tracks, so the rule across the three drops starts and stops at the outer chips' centres */
-.ba__agents{--ba-gap:10px;position:relative;display:grid;grid-template-columns:repeat(3,1fr);gap:var(--ba-gap);margin-top:32px;width:100%;}
-.ba__agents .ba__chip{position:relative;justify-self:center;}
-.ba__agents::before{content:"";position:absolute;top:-16px;left:calc((100% - 2 * var(--ba-gap)) / 6);right:calc((100% - 2 * var(--ba-gap)) / 6);border-top:1px solid var(--ui-blue);}
-.ba__agents .ba__chip::before{content:"";position:absolute;bottom:100%;left:50%;height:16px;border-left:1px solid var(--ui-blue);}
-.ba__flow{display:flex;flex-direction:column;align-items:center;}
-.ba__drop{position:relative;width:1px;height:22px;margin:4px 0 10px;background:var(--ui-wire);}
-.ba__drop::after{content:"";position:absolute;left:-3.5px;bottom:-1px;border:4px solid transparent;border-top:6px solid var(--ui-wire);border-bottom:0;}
-.ba__levels{display:flex;flex-wrap:nowrap;justify-content:center;gap:8px;}
-/* the pill colours are the ones the product's rules table uses for the same four actions */
-.ba__lvl{display:inline-flex;align-items:center;gap:6px;padding:5px 11px;border:1px solid;border-radius:999px;font-size:12.5px;line-height:16px;font-weight:500;white-space:nowrap;}
-.ba__lvl::before{content:"";width:6px;height:6px;border-radius:50%;background:currentColor;}
-.ba__lvl--allow{color:#3A4560;background:#F3F4F6;border-color:#E5E7EB;}
-.ba__lvl--warn{color:#15803D;background:#ECF8F0;border-color:#B5E3C5;}
-.ba__lvl--throttle{color:#1D4ED8;background:#EEF3FF;border-color:#C3D3FB;}
-.ba__lvl--escalate{color:#C2410C;background:#FFF4EA;border-color:#FAD0A8;}
-.ba__lvl--deny{color:#C81E1E;background:#FEEFEF;border-color:#F6BDBD;}
-.ba__range{display:grid;max-width:100%;}
-.ba__scale{display:flex;justify-content:space-between;margin-top:10px;font-size:11px;line-height:16px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--ui-ink-3);}
+/* before/after diagrams, inside the iteration wells where a screenshot would sit. Each is a picture
+   of the diagram drawn at 440px, so it scales down as one piece on a narrow screen instead of
+   reflowing; never past its drawn size on a wide one. */
+.iter .well .ba__img{width:auto;height:auto;max-width:min(100%,440px);max-height:100%;}
+.iter .well:has(.ba__img){padding:32px;}
 
 /* the two rule-builder recordings, in the iteration wells */
 .iter .well .media{position:relative;height:100%;max-width:100%;aspect-ratio:1440/1294;}
@@ -676,18 +646,8 @@ h1{text-wrap:balance;}
   .cards--shots + .cgroup{margin-top:80px;}
 }
 @media (max-width:560px){
-  .ba__card{padding:20px 14px;}
-  .ba__chip{padding:6px 8px;gap:5px;font-size:12px;}
-  .ba__set{padding:6px 8px;font-size:12px;}
-  .ba__space{padding-inline:10px;}
-  .ba__agents{--ba-gap:4px;grid-template-columns:repeat(3,minmax(0,1fr));}
-  .ba__agents .ba__chip{padding:6px;gap:4px;}
-  .ba__agents .ba__chip svg{width:14px;height:14px;}
-  .ba__levels{gap:4px;}
-  .ba__lvl{padding:4px 7px;gap:4px;font-size:11px;}
-  .iter .well,.iter .well:has(.ba__card){padding:16px;}
+  .iter .well,.iter .well:has(.ba__img){padding:16px;}
 }
-@media (max-width:359px){.ba__agents .ba__chip svg{display:none;}.ba__lvl{padding:4px 6px;}.ba__lvl::before{display:none;}}
 
 /* Screenshot frames: every screen except the hero sits in the page's grey well, inset at the top
    and sides and running off the well's bottom edge, as v1 does on its mesh (the crops are lifted further down: every screen shows whole). The rule-builder recordings and the before/after diagrams keep their plain wells. */
@@ -766,7 +726,7 @@ figcaption,.gnode__text,.branch li,.gpolicy__list span,.metric span,.meta dt{fon
 /* phones: only the title has its own size; every other role uses its clamp floor */
 @media (max-width:760px){ h1{font-size:min(11vw, 44px);} }
 </style>
-<link rel="stylesheet" href="assets/cursor.css?v=1">
+<link rel="stylesheet" href="assets/cursor.css?v=3">
 </head>
 <body>
 <a class="skip" href="#main">Skip to content</a>
@@ -929,51 +889,22 @@ figcaption,.gnode__text,.branch li,.gpolicy__list span,.metric span,.meta dt{fon
       </header>
       <div class="iter wide">
         <article class="reveal">
-          <div class="well"><div class="ba__card" role="img" aria-label="Before: Agent A, Agent B and Agent C each have their own set of rules, models and budget, set up again for every new agent.">
-            <div class="ba__row" aria-hidden="true"><span class="ba__chip"><svg><use href="#i-agent"/></svg>Agent A</span><span class="ba__link"></span><span class="ba__set">Rules · models · budget</span></div>
-            <div class="ba__row" aria-hidden="true"><span class="ba__chip"><svg><use href="#i-agent"/></svg>Agent B</span><span class="ba__link"></span><span class="ba__set">Rules · models · budget</span></div>
-            <div class="ba__row" aria-hidden="true"><span class="ba__chip"><svg><use href="#i-agent"/></svg>Agent C</span><span class="ba__link"></span><span class="ba__set">Rules · models · budget</span></div>
-            <p class="ba__note" aria-hidden="true">Set up again for every new agent</p>
-          </div></div>
+          <div class="well"><img class="ba__img" src="assets/admin/ba-policy-before.png" width="880" height="428" loading="lazy" alt="Before: Agent A, Agent B and Agent C each have their own set of rules, models and budget, set up again for every new agent."></div>
           <div class="iter__copy"><span class="kicker">Where policy lives · Before</span><h3>A policy per agent</h3><p>Each agent carried its own rules, models and budget, because that is how the platform was built. Every new agent meant setting it all up again.</p></div>
         </article>
         <article class="reveal">
-          <div class="well"><div class="ba__card" role="img" aria-label="After: the Human Resources space has one HR Standard Policy, and Agent A, Agent B and Agent C all inherit it.">
-            <div class="ba__space" aria-hidden="true">
-              <span class="ba__scope">Human Resources space</span>
-              <span class="ba__policy"><svg><use href="#i-policy"/></svg>HR Standard Policy</span>
-              <div class="ba__agents"><span class="ba__chip"><svg><use href="#i-agent"/></svg>Agent A</span><span class="ba__chip"><svg><use href="#i-agent"/></svg>Agent B</span><span class="ba__chip"><svg><use href="#i-agent"/></svg>Agent C</span></div>
-            </div>
-            <p class="ba__note" aria-hidden="true">Set once, inherited by every agent and solution</p>
-          </div></div>
+          <div class="well"><img class="ba__img" src="assets/admin/ba-policy-after.png" width="880" height="484" loading="lazy" alt="After: the Human Resources space has one HR Standard Policy, and Agent A, Agent B and Agent C all inherit it."></div>
           <div class="iter__copy"><span class="kicker">Where policy lives · After</span><h3>A policy per space</h3><p>One policy per department, inherited by every agent and solution built in it, with a default so that no space starts without one.</p></div>
         </article>
       </div>
 
       <div class="iter wide">
         <article class="reveal">
-          <div class="well"><div class="ba__card" role="img" aria-label="Before: when a rule matched, the only outcomes were allow or block, so a false block got the rule switched off.">
-            <div class="ba__flow" aria-hidden="true">
-              <span class="ba__chip"><svg><use href="#i-policy"/></svg>A rule matches</span>
-              <span class="ba__drop"></span>
-              <div class="ba__levels"><span class="ba__lvl ba__lvl--allow">Allow</span><span class="ba__lvl ba__lvl--deny">Block</span></div>
-            </div>
-            <p class="ba__note" aria-hidden="true">A false block, and someone switches the rule off</p>
-          </div></div>
+          <div class="well"><img class="ba__img" src="assets/admin/ba-enforce-before.png" width="880" height="372" loading="lazy" alt="Before: when a rule matched, the only outcomes were allow or block, so a false block got the rule switched off."></div>
           <div class="iter__copy"><span class="kicker">Enforcement · Before</span><h3>Allow or block</h3><p>A matching rule could only let the action through or stop it. Follow a false block, though, and someone switches the rule off to get work moving. The rule stays in the list, doing nothing.</p></div>
         </article>
         <article class="reveal">
-          <div class="well"><div class="ba__card" role="img" aria-label="After: when a rule matches, it acts at one of four levels, from lightest to strongest: warn, throttle, escalate or deny, so the rule stays on.">
-            <div class="ba__flow" aria-hidden="true">
-              <span class="ba__chip"><svg><use href="#i-policy"/></svg>A rule matches</span>
-              <span class="ba__drop"></span>
-              <div class="ba__range">
-                <div class="ba__levels"><span class="ba__lvl ba__lvl--warn">Warn</span><span class="ba__lvl ba__lvl--throttle">Throttle</span><span class="ba__lvl ba__lvl--escalate">Escalate</span><span class="ba__lvl ba__lvl--deny">Deny</span></div>
-                <div class="ba__scale"><span>Lightest</span><span>Strongest</span></div>
-              </div>
-            </div>
-            <p class="ba__note" aria-hidden="true">A borderline case warns or slows, and the rule stays on</p>
-          </div></div>
+          <div class="well"><img class="ba__img" src="assets/admin/ba-enforce-after.png" width="880" height="424" loading="lazy" alt="After: when a rule matches, it acts at one of four levels, from lightest to strongest: warn, throttle, escalate or deny, so the rule stays on."></div>
           <div class="iter__copy"><span class="kicker">Enforcement · After</span><h3>Four levels</h3><p>Agents act with nobody watching, so the rule has to handle the borderline case itself. Each rule now acts as hard as the case needs: warn, throttle, escalate or deny.</p></div>
         </article>
       </div>
@@ -1098,7 +1029,7 @@ figcaption,.gnode__text,.branch li,.gpolicy__list span,.metric span,.meta dt{fon
       </header>
       <div class="metrics wide reveal">
         <div class="metric"><strong>12+</strong><span>Enterprises govern their agents through the console</span></div>
-        <div class="metric"><strong>12</strong><span>Areas designed end to end, from the Observatory to deployments and audit</span></div>
+        <div class="metric"><strong>20+</strong><span>Solutions deployed and being monitored through the console</span></div>
       </div>
     </section>
 
@@ -1231,7 +1162,7 @@ figcaption,.gnode__text,.branch li,.gpolicy__list span,.metric span,.meta dt{fon
   var lb = document.getElementById('lightbox');
   if (!lb || typeof lb.showModal !== 'function') return;
   var big = lb.querySelector('img');
-  [].forEach.call(document.querySelectorAll('.console .well img, .console__row .well img, .iter .well img, .cards--shots .well img'), function (img) {
+  [].forEach.call(document.querySelectorAll('.console .well img, .console__row .well img, .iter .well img:not(.ba__img), .cards--shots .well img'), function (img) {
     var b = document.createElement('button');
     b.type = 'button'; b.className = 'zoom';
     b.setAttribute('aria-label', 'Enlarge: ' + img.alt);
@@ -1285,6 +1216,6 @@ figcaption,.gnode__text,.branch li,.gpolicy__list span,.metric span,.meta dt{fon
 </script>
 <script src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js" defer></script>
 <script src="smooth-scroll.js" defer></script>
-<script src="assets/cursor.js?v=1"></script>
+<script src="assets/cursor.js?v=2"></script>
 </body>
 </html>
