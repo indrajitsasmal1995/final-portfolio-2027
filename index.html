@@ -398,6 +398,11 @@
        Americold's hairline letters) and down where it is heavy (Safe-Guard's bold italic), so no
        one of them reads louder than the rest. */
     .team-marq { overflow: visible; }
+    /* a quiet line naming the row, centred over it between two short rules; the logos' own 60px rows
+       carry the gap below */
+    .team-label { display: flex; align-items: center; justify-content: center; gap: 12px; margin-bottom: 6px;
+      font-size: 13px; line-height: 1.4; font-weight: 400; letter-spacing: 0; color: var(--muted); }
+    .team-label::before, .team-label::after { content: ""; flex: none; width: 24px; height: 1px; background: currentColor; opacity: .55; }
     .team-track { display: flex; width: 100%; }
     .team-logos { list-style: none; display: flex; align-items: center; width: 100%; flex-wrap: wrap; justify-content: space-between; column-gap: 24px; }
     .team-logos[aria-hidden] { display: none; }
@@ -979,6 +984,7 @@
 
       <div class="hero-teams">
         <div class="wrap">
+          <p class="team-label">Clients I’ve designed for</p>
           <div class="team-marq">
             <div class="team-track">
               <ul class="team-logos">
