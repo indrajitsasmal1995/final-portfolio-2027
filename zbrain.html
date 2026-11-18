@@ -150,7 +150,7 @@ section[id]{scroll-margin-top:96px;}
 .project-line{font-size:12px;line-height:24px;letter-spacing:1.2px;text-transform:uppercase;color:var(--ink-3);}
 h1{margin-top:12px;font:700 clamp(40px,5vw,60px)/1 var(--display);letter-spacing:-.042em;}
 .summary{margin-top:20px;font-size:18px;line-height:28px;color:var(--ink-2);}
-.meta{display:grid;grid-template-columns:repeat(4,auto);justify-content:start;column-gap:40px;margin-top:64px;padding-top:24px;}
+.meta{display:grid;grid-template-columns:repeat(4,auto);justify-content:start;column-gap:40px;row-gap:24px;margin-top:64px;padding-top:24px;}
 .meta dt{font-size:12px;line-height:24px;letter-spacing:1.8px;text-transform:uppercase;color:var(--ink-3);}
 .meta dd{margin-top:4px;font-size:15px;line-height:24px;}
 .live{display:inline-flex;align-items:center;gap:8px;vertical-align:top;}   /* top, not baseline: the dot has no baseline, so on the baseline it pushed "Live" 2px below the other values */
@@ -276,6 +276,9 @@ h2{font:700 34px/38px var(--display);letter-spacing:-.036em;}
 .iter__copy{padding-top:26px;}
 .iter__copy h3{margin-top:6px;font-size:22px;line-height:28px;font-weight:600;letter-spacing:-.02em;}
 .iter__copy p{max-width:527px;margin-top:10px;font-size:15px;line-height:24px;color:var(--ink-3);}
+/* what each reversed decision gave up, set apart under its description */
+.iter__copy .iter__cost{margin-top:16px;padding-top:14px;border-top:1px solid var(--line);}
+.iter__copy .iter__cost .kicker{margin-bottom:2px;color:var(--ink-2);}
 
 /* admin console */
 .console{margin-top:72px;}
@@ -768,6 +771,9 @@ figcaption,.gnode__text,.branch li,.gpolicy__list span,.metric span,.meta dt{fon
       <p class="summary">I designed the admin console for ZBrain, LeewayHertz’s enterprise AI platform, where admins give each department a space and one policy that decides what its builders can use, spend and do, with logs that show what it did.</p>
       <dl class="meta">
         <div><dt>Role</dt><dd>Senior UI/UX Designer</dd></div>
+        <div><dt>Scope</dt><dd>Admin console, end to end</dd></div>
+        <div><dt>Team</dt><dd>Kapil, Design Head<br>Vivek, builder portal<br>Engineering</dd></div>
+        <div><dt>Users</dt><dd>Super admins and IT</dd></div>
         <div><dt>Platform</dt><dd>Web admin console</dd></div>
         <div><dt>Status</dt><dd><span class="live">Live</span></dd></div>
         <div><dt>Year</dt><dd>2026</dd></div>
@@ -894,7 +900,7 @@ figcaption,.gnode__text,.branch li,.gpolicy__list span,.metric span,.meta dt{fon
         </article>
         <article class="reveal">
           <div class="well"><img class="ba__img" src="assets/admin/ba-policy-after.png" width="880" height="484" loading="lazy" alt="After: the Human Resources space has one HR Standard Policy, and Agent A, Agent B and Agent C all inherit it."></div>
-          <div class="iter__copy"><span class="kicker">Where policy lives · After</span><h3>A policy per space</h3><p>One policy per department, inherited by every agent and solution built in it, with a default so that no space starts without one.</p></div>
+          <div class="iter__copy"><span class="kicker">Where policy lives · After</span><h3>A policy per space</h3><p>One policy per department, inherited by every agent and solution built in it, with a default so that no space starts without one.</p><p class="iter__cost"><span class="kicker">What it cost</span>Fine-tuning agent by agent. An agent that needs something different now gets a scoped exception with an end date, not a policy of its own.</p></div>
         </article>
       </div>
 
@@ -905,7 +911,7 @@ figcaption,.gnode__text,.branch li,.gpolicy__list span,.metric span,.meta dt{fon
         </article>
         <article class="reveal">
           <div class="well"><img class="ba__img" src="assets/admin/ba-enforce-after.png" width="880" height="424" loading="lazy" alt="After: when a rule matches, it acts at one of four levels, from lightest to strongest: warn, throttle, escalate or deny, so the rule stays on."></div>
-          <div class="iter__copy"><span class="kicker">Enforcement · After</span><h3>Four levels</h3><p>Agents act with nobody watching, so the rule has to handle the borderline case itself. Each rule now acts as hard as the case needs: warn, throttle, escalate or deny.</p></div>
+          <div class="iter__copy"><span class="kicker">Enforcement · After</span><h3>Four levels</h3><p>Agents act with nobody watching, so the rule has to handle the borderline case itself. Each rule now acts as hard as the case needs: warn, throttle, escalate or deny.</p><p class="iter__cost"><span class="kicker">What it cost</span>More for an admin to learn than on or off, and four outcomes to explain. So every block names the rule that caught it.</p></div>
         </article>
       </div>
 
@@ -926,7 +932,7 @@ figcaption,.gnode__text,.branch li,.gpolicy__list span,.metric span,.meta dt{fon
             </video>
             <button class="media__toggle" type="button" hidden aria-label="Pause" data-state="playing"><svg viewBox="0 0 16 16" aria-hidden="true" focusable="false"><g class="ic-pause"><rect x="4" y="3" width="3" height="10" rx="1"/><rect x="9" y="3" width="3" height="10" rx="1"/></g><path class="ic-play" d="M5.5 3.2 L12.5 8 L5.5 12.8 Z"/></svg></button>
           </div></div>
-          <div class="iter__copy"><span class="kicker">Adding a rule · Added</span><h3>Two ways in, one rule</h3><p>Guided setup takes a plain-language description and asks for the three choices the builder would: what to match, how hard to enforce, and where it applies. It answers with the rule it wrote, its condition and action in view, to tune later from the policy. The manual builder stays for admins who know what they want.</p></div>
+          <div class="iter__copy"><span class="kicker">Adding a rule · Added</span><h3>Two ways in, one rule</h3><p>Guided setup takes a plain-language description and asks for the three choices the builder would: what to match, how hard to enforce, and where it applies. It answers with the rule it wrote, its condition and action in view, to tune later from the policy. The manual builder stays for admins who know what they want.</p><p class="iter__cost"><span class="kicker">What it cost</span>Two ways in to design and keep in step. Both produce the same rule, so one set up the guided way can still be tuned by hand.</p></div>
         </article>
       </div>
     </section>
