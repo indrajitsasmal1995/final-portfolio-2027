@@ -1563,10 +1563,7 @@ main h4,.z-next h4{margin-top:0;margin-bottom:0;}
 /* the hero summary a step smaller on desktop (was up to 32px); phones keep 17px */
 @media (min-width:901px){ #main .hero__copy > .summary{font-size:clamp(20px, 1.875vw, 27px);line-height:1.35;} }
 
-/* menu: a hovered label is underlined (the 01/02/03 numbers stay plain), and the cursor stays a plain dot */
-.toc__list a:hover{text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:4px;}
-.toc__list a.toc__top:has(small):hover{text-decoration:none;}
-.toc__list a.toc__top:has(small):hover > span{text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:4px;}
+/* menu: hovered labels brighten only, with no underline; the cursor stays a plain dot over it */
 </style>
 </head>
 <body>
