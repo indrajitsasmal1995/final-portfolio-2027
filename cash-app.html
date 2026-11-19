@@ -1734,6 +1734,10 @@ main h4,.z-next h4{margin-top:0;margin-bottom:0;}
 @media (max-width:700px){.ds-hero{aspect-ratio:7 / 4;padding:16px 16px 0;}} /* a wide screen fills the frame and is cut at its bottom edge */
 
 /* menu: hovered labels brighten only, with no underline; the cursor stays a plain dot over it */
+
+/* menu hover: every link turns white, the main sections and their numbers included (their own colour rule used to win) */
+.toc__list a.toc__top, .toc__top small { transition: color .15s ease; }
+.toc__list a:hover, .toc__list a.toc__top:hover, .toc__list a.toc__top:hover small, .toc__sub a:hover { color: var(--ink); }
 </style>
 </head>
 <body>
