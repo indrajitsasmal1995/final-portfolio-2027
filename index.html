@@ -1856,38 +1856,22 @@
       folder.addEventListener('click', () => { folder.classList.remove('is-open'); tell(false); btn.click(); });
     })();
 
-    // The landing: while the letters rise, the head and then the folder pop in. On the first visit of a
-    // session the head then looks around, says hello, and the folder peeks open to show the work inside
-    // while the head points it out. It steps aside the moment the reader scrolls, or hovers the head or
-    // the folder; a moving pointer only takes over the head's turn.
+    // The landing: while the letters rise, the head and then the folder pop in, and on the first visit of a
+    // session the head says hello once. Scrolling, or hovering the head, ends the greeting early.
     (() => {
-      const head = document.querySelector('.hm-head'), folder = document.querySelector('.hm-folder');
-      if (!head || !folder || reduced || scrollY > 80) return;
+      const head = document.querySelector('.hm-head');
+      if (!head || reduced || scrollY > 80) return;
       let seen = false;
       try { seen = sessionStorage.getItem('landing-intro') === '1'; sessionStorage.setItem('landing-intro', '1'); } catch (e) {}
       if (seen) return;
-      const timers = [], at = (ms, fn) => timers.push(setTimeout(fn, ms));
-      const look = (x, y, slow, rest) => head.dispatchEvent(new CustomEvent('look', { detail: { x, y, slow, rest } }));
       const greet = v => head.dispatchEvent(new CustomEvent('greet', { detail: v }));
-      const tell = v => head.dispatchEvent(new CustomEvent('folder', { detail: v }));
-      let peeking = false, looking = true;
-      const peek = v => { if (folder.matches(':hover')) return; peeking = v; folder.classList.toggle('is-open', v); tell(v); };
-      at(1000, () => looking && look(-.85, -.05));
-      at(1650, () => looking && look(.85, -.05));
-      at(2300, () => looking && look(0, 0, false, true));
-      at(2700, () => greet(true));
-      at(4300, () => greet(false));
-      at(4700, () => peek(true));
-      at(6200, () => peek(false));
+      const timers = [setTimeout(() => greet(true), 1600), setTimeout(() => greet(false), 3400)];
       const stop = () => {
-        timers.forEach(clearTimeout); looking = false;
-        greet(false); if (peeking) peek(false);
+        timers.forEach(clearTimeout); greet(false);
         ['wheel', 'touchmove', 'keydown'].forEach(t => removeEventListener(t, stop));
       };
       ['wheel', 'touchmove', 'keydown'].forEach(t => addEventListener(t, stop, { passive: true }));
-      head.addEventListener('pointerenter', stop, { once: true });
-      folder.addEventListener('pointerenter', stop, { once: true });
-      addEventListener('pointermove', () => { looking = false; }, { once: true, passive: true });   // the pointer turns the head now
+      head.addEventListener('pointerenter', () => timers.forEach(clearTimeout), { once: true });   // its own hover takes over
     })();
 
     // Hero dots: a sparse field of tiny, faint dots drifting slowly behind the headline. Each has a
