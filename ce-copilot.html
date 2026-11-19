@@ -9,11 +9,11 @@
 <script>try{if(!matchMedia('(prefers-reduced-motion:reduce)').matches){var h=sessionStorage.getItem('ptHop');sessionStorage.removeItem('ptHop');var p=h?h.split('|'):0;if(p&&p.length==2&&Date.now()-(+p[1])<3000){var r=document.documentElement;r.setAttribute('data-pt',p[0]);r.classList.add('pt-held');setTimeout(function(){if(r.classList.contains('pt-held')){r.classList.remove('pt-held');r.removeAttribute('data-pt')}},6000)}}}catch(e){}</script>
 <script src="assets/page-transition.js?v=7" defer></script>
 <title>CE CoPilot | AI troubleshooting assistant case study</title>
-<meta name="description" content="Case study: CE CoPilot, an AI troubleshooting assistant for field engineers at a global semiconductor equipment maker, across a mobile app, a web app and an admin console.">
+<meta name="description" content="Case study: CE CoPilot, an AI troubleshooting assistant for field engineers at a global semiconductor equipment maker, and the admin console that turns every wrong answer into a fix.">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Indrajit Sasmal">
 <meta property="og:title" content="CE CoPilot | AI troubleshooting assistant case study">
-<meta property="og:description" content="Case study: CE CoPilot, an AI troubleshooting assistant for field engineers at a global semiconductor equipment maker, across a mobile app, a web app and an admin console.">
+<meta property="og:description" content="Case study: CE CoPilot, an AI troubleshooting assistant for field engineers at a global semiconductor equipment maker, and the admin console that turns every wrong answer into a fix.">
 <meta property="og:url" content="https://indrajit.work/ce-copilot">
 <meta property="og:image" content="https://indrajit.work/og-image.jpg">
 <meta property="og:image:width" content="1200">
@@ -21,7 +21,7 @@
 <meta property="og:image:alt" content="Portfolio27. Indrajit Sasmal, Product Designer">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="CE CoPilot | AI troubleshooting assistant case study">
-<meta name="twitter:description" content="Case study: CE CoPilot, an AI troubleshooting assistant for field engineers at a global semiconductor equipment maker, across a mobile app, a web app and an admin console.">
+<meta name="twitter:description" content="Case study: CE CoPilot, an AI troubleshooting assistant for field engineers at a global semiconductor equipment maker, and the admin console that turns every wrong answer into a fix.">
 <meta name="twitter:image" content="https://indrajit.work/og-image.jpg">
 <meta name="twitter:image:alt" content="Portfolio27. Indrajit Sasmal, Product Designer">
 <link rel="icon" href="favicon.svg?v=4" type="image/svg+xml">
@@ -29,17 +29,17 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300..800&display=swap" rel="stylesheet">
 <style>
-/* Local copy of the CE CoPilot case study, laid out on the benchmark case study's system
-   (164 + 108px between sections, oklch neutrals tinted blue): Plus Jakarta Sans 500 for the title, section
-   headings and pull quote, Plus Jakarta Sans for everything else (see the typography block near
-   the end), with CE CoPilot's teal as the one accent. Grids carry horizontal rules as well as
-   their column dividers, as the reference does; see the rules block at the end of this sheet. */
+/* ZBrain admin console, v3 redesign (built on v2): laid out on the CE CoPilot v2 system, copied as it stands (164 + 108px
+   between sections, oklch neutrals tinted blue, Plus Jakarta Sans 500 for the title, section headings and
+   pull quote, Plus Jakarta Sans for everything else), with ZBrain's blue as the one accent in place
+   of CE CoPilot's teal. What this page adds (the before/after diagrams, the screen recordings, the
+   governance panel and the screenshot cards) is in the block at the end of this sheet. */
 :root{
   --bg:oklch(0.978 0.004 255);
   --ink:oklch(0.22 0.014 255);
   --ink-2:oklch(0.42 0.014 255);
   --ink-3:oklch(0.515 0.016 255);
-  --accent:#0d7f8e;   /* CE CoPilot teal, as on the live case study */
+  --accent:#305cff;   /* ZBrain blue, as on the live case study */
   --surface:oklch(0.945 0.006 255);
   --surface-2:oklch(0.955 0.005 255);
   --line:oklch(0.22 0.014 255 / 0.12);
@@ -55,7 +55,7 @@
   --display:"Plus Jakarta Sans", system-ui, sans-serif;
   --sans:"Plus Jakarta Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
   --logo:Avenir, "Avenir Next", "Plus Jakarta Sans", system-ui, sans-serif;
-  --shot:0 2px 24px rgba(10,57,71,.14);
+  --shot:0 2px 24px rgba(27,45,84,.14);
 }
 :root[data-theme="dark"]{
   /* The original case study's dark mode, from dark.css: a warm black with warm greys,
@@ -64,7 +64,7 @@
   --ink:#f1ede6;
   --ink-2:#c9c4bb;
   --ink-3:#a29e97;
-  --accent:#7fd6e1;
+  --accent:#8fa6ff;
   --surface:#151515;
   --surface-2:#1b1b1b;
   --line:rgba(241,237,230,.14);
@@ -82,7 +82,7 @@
 }
 
 *,*::before,*::after{box-sizing:border-box;}
-html{-webkit-text-size-adjust:100%;scroll-behavior:smooth;}
+html{-webkit-text-size-adjust:100%;scroll-behavior:auto;}   /* a refresh lands where you were, with no glide from the top; Lenis smooths wheel scrolls and in-page links */
 /* Lenis drives the scroll; the browser's own smooth-scroll would fight it */
 html.lenis,html.lenis body{height:auto;}
 .lenis.lenis-smooth{scroll-behavior:auto !important;}
@@ -150,10 +150,10 @@ section[id]{scroll-margin-top:96px;}
 .project-line{font-size:12px;line-height:24px;letter-spacing:1.2px;text-transform:uppercase;color:var(--ink-3);}
 h1{margin-top:12px;font:700 clamp(40px,5vw,60px)/1 var(--display);letter-spacing:-.042em;}
 .summary{margin-top:20px;font-size:18px;line-height:28px;color:var(--ink-2);}
-.meta{display:grid;grid-template-columns:repeat(4,auto);justify-content:start;column-gap:40px;margin-top:64px;padding-top:24px;}
+.meta{display:grid;grid-template-columns:repeat(4,auto);justify-content:start;column-gap:40px;row-gap:24px;margin-top:64px;padding-top:24px;}
 .meta dt{font-size:12px;line-height:24px;letter-spacing:1.8px;text-transform:uppercase;color:var(--ink-3);}
 .meta dd{margin-top:4px;font-size:15px;line-height:24px;}
-.live{display:inline-flex;align-items:center;gap:8px;vertical-align:top;}   /* top, not baseline: the dot has no baseline, so on the baseline it pushed the status 2px below the other values */
+.live{display:inline-flex;align-items:center;gap:8px;vertical-align:top;}   /* top, not baseline: the dot has no baseline, so on the baseline it pushed "Live" 2px below the other values */
 .live::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--green);box-shadow:0 0 0 4px color-mix(in oklch, var(--green) 18%, transparent);}
 .hero__media{margin-top:52px;}
 .hero__media img{width:100%;border-radius:24px;}
@@ -172,6 +172,9 @@ h2{font:700 34px/38px var(--display);letter-spacing:-.036em;}
 .metric + .metric{border-left:1px solid var(--line);}
 .metric strong{display:block;font:700 40px/1 var(--display);letter-spacing:-.04em;}
 .metric span{display:block;margin-top:14px;font-size:14px;line-height:1.5;color:var(--ink-3);}
+.metrics--3{grid-template-columns:repeat(3,1fr);}
+.metric strong.live{display:flex;align-items:center;gap:14px;}
+#s-anatomy,#s-iter{text-wrap:balance;}   /* even lines, never one word left on its own */
 
 /* a sticky picture beside steps that scroll past it */
 .context{display:grid;grid-template-columns:minmax(0,468fr) minmax(0,600fr);gap:112px;margin-top:148px;}
@@ -192,6 +195,13 @@ h2{font:700 34px/38px var(--display);letter-spacing:-.036em;}
 .quote .kicker{margin-bottom:12px;color:var(--accent);}
 .quote__line{font:700 clamp(32px,4vw,48px)/1.08 var(--display);letter-spacing:-.04em;}
 .quote__sub{margin-top:16px;font-size:15px;line-height:24px;color:var(--ink-3);}
+.quote--card{padding:108px 0;border-radius:43.2px;background:var(--surface);}
+.sec > .quote:first-child{margin-top:0;}   /* "Why it matters" is the whole section now, so the card opens it */
+.quote--card .col{width:min(663px, calc(100% - 96px));}
+@media (max-width:900px){
+  .quote--card{padding:72px 0;border-radius:28px;}
+  .quote--card .col{width:calc(100% - 48px);}
+}
 
 /* principles */
 .claim{margin-top:16px;padding-left:16px;border-left:2px solid var(--accent);font-size:17px;line-height:24px;}
@@ -244,9 +254,6 @@ h2{font:700 34px/38px var(--display);letter-spacing:-.036em;}
 .status__seq span{display:flex;align-items:center;gap:8px;padding:9px 12px;border-radius:10px;background:#fff;box-shadow:0 0 0 1px rgb(0 0 0 / .05),0 2px 10px rgb(0 0 0 / .06);font:400 13px/18px Inter, system-ui, -apple-system, "Segoe UI", sans-serif;color:#8a8a8a;}
 .status__seq span::before{content:"";width:10px;height:10px;flex:none;border:1.5px solid #c8c8c8;border-top-color:transparent;border-radius:50%;}
 
-/* the title runs to several lines, so they are balanced and no word sits alone */
-h1{text-wrap:balance;}
-
 /* the dark panel */
 .panel{margin-top:164px;padding:84px;border-radius:43.2px;background:var(--panel);color:var(--panel-ink);}
 :root[data-theme="dark"] .panel{box-shadow:inset 0 0 0 1px var(--panel-line);}
@@ -269,6 +276,9 @@ h1{text-wrap:balance;}
 .iter__copy{padding-top:26px;}
 .iter__copy h3{margin-top:6px;font-size:22px;line-height:28px;font-weight:600;letter-spacing:-.02em;}
 .iter__copy p{max-width:527px;margin-top:10px;font-size:15px;line-height:24px;color:var(--ink-3);}
+/* what each reversed decision gave up, set apart under its description */
+.iter__copy .iter__cost{margin-top:16px;padding-top:14px;border-top:1px solid var(--line);}
+.iter__copy .iter__cost .kicker{margin-bottom:2px;color:var(--ink-2);}
 
 /* admin console */
 .console{margin-top:72px;}
@@ -422,7 +432,7 @@ h1{text-wrap:balance;}
    reference's own, read at 390, 900 and 1440 wide and joined with a clamp, so it scales the
    same way; line heights and tracking are its ratios. Colours are left as this page's. */
 :root{--serif:"Plus Jakarta Sans", system-ui, sans-serif;}
-h1{font-family:var(--serif);font-weight:600;font-size:clamp(50px, 7.2vw, 96px);line-height:.96;letter-spacing:-.052em;}
+h1{font-family:var(--serif);font-weight:600;font-size:clamp(44px, 5vw, 72px);line-height:.96;letter-spacing:-.052em;}   /* three lines at 1440, a step above the 68px section headings */
 h2:not(.next__word){font-family:var(--serif);font-weight:600;font-size:clamp(40px, 5.2vw, 68px);line-height:1.02;letter-spacing:-.045em;}
 .quote__line{font-family:var(--serif);font-weight:600;font-size:clamp(42px, 6vw, 76px);line-height:1.03;letter-spacing:-.045em;text-wrap:balance;}
 .quote__sub{font-size:clamp(17px, 1.32vw, 19px);line-height:1.65;font-weight:500;letter-spacing:-.005em;}
@@ -447,7 +457,7 @@ h2:not(.next__word){font-family:var(--serif);font-weight:600;font-size:clamp(40p
 .kicker{font-size:12px;line-height:1.65;font-weight:700;letter-spacing:.04em;text-transform:uppercase;}
 figcaption{font-size:13px;line-height:1.5;}
 @media (max-width:760px){
-  h1{font-size:min(13vw, 54px);}
+  h1{font-size:min(11vw, 44px);}
 }
 
 /* Horizontal rules, as the reference draws them: a line above the project details, the
@@ -495,9 +505,9 @@ figcaption{font-size:13px;line-height:1.5;}
 .anno--tall{height:100%;aspect-ratio:1298/1838;}
 .anno--wide{width:100%;aspect-ratio:2880/1800;}
 .pin,.tag{position:absolute;left:var(--x);top:var(--y);pointer-events:none;font-family:var(--sans);line-height:1;}
-.pin{display:grid;place-items:center;width:22px;height:22px;transform:translate(-50%,-50%);border-radius:50%;background:#0d7f8e;color:#fff;font-size:11px;font-weight:700;box-shadow:0 0 0 3px rgb(13 127 142 / .18);}
+.pin{display:grid;place-items:center;width:22px;height:22px;transform:translate(-50%,-50%);border-radius:50%;background:#305cff;color:#fff;font-size:11px;font-weight:700;box-shadow:0 0 0 3px rgb(48 92 255 / .18);}
 .pin--ghost{background:#fff;color:#6b7280;box-shadow:inset 0 0 0 1.5px #9aa1ab;}
-.tag{transform:translateY(-50%);padding:6px 11px;border-radius:999px;background:#0d7f8e;color:#fff;font-size:12px;font-weight:600;white-space:nowrap;box-shadow:0 2px 8px rgb(10 57 71 / .2);}
+.tag{transform:translateY(-50%);padding:6px 11px;border-radius:999px;background:#305cff;color:#fff;font-size:12px;font-weight:600;white-space:nowrap;box-shadow:0 2px 8px rgb(27 45 84 / .2);}
 @media (max-width:560px){
   .pin{width:18px;height:18px;font-size:10px;}
   .tag{padding:4px 8px;font-size:11px;}
@@ -509,8 +519,8 @@ figcaption{font-size:13px;line-height:1.5;}
    below the figure; description 14px/1.65, 23px below the title; 61px more to the foot of the
    column rule; columns 30px in from each rule. The figures keep this page's accent, with a light
    gradient across each one (inline-block, so the gradient spans the figure, not the column). */
-:root{--accent-2:#1aa6a0;}
-:root[data-theme="dark"]{--accent-2:#d2f3f6;}
+:root{--accent-2:#6f8fff;}
+:root[data-theme="dark"]{--accent-2:#dbe3ff;}
 .results{display:grid;grid-template-columns:repeat(3,1fr);margin-top:72px;border-top:1px solid var(--line);}
 .results article{padding:31px 30px 58px;}
 .results article:first-child{padding-left:0;}
@@ -525,67 +535,139 @@ figcaption{font-size:13px;line-height:1.5;}
   .results h3{margin-top:24px;}
 }
 
-/* Admin screen frames, as on the ZBrain case study: each admin console screen sits in the grey well,
-   inset at the top and sides and running off the well's bottom edge, cut from the bottom (2.23:1 for
-   the full-width overview, 2:1 in the rows of two). The phone screens and the before/after
-   comparisons keep their own wells. */
-.console .well,.console__row .well{display:block;padding:clamp(22px,2.8vw,40px) clamp(20px,3.4vw,48px) 0;overflow:hidden;}
-.console__row .well{padding:18px 18px 0;}
-.console .well img,.console__row .well img{display:block;width:100%;height:auto;aspect-ratio:var(--ar);object-fit:cover;object-position:left top;
+/* ---- ZBrain additions ---- */
+/* the title is longer than CE CoPilot's, so its lines are balanced and no word sits alone */
+h1{text-wrap:balance;}
+/* The diagrams stand in for the product's own screens, so they keep its ink, lines and pill
+   colours on white in both themes, as the status lines on CE CoPilot do. */
+:root{--ui-ink:#0F1115;--ui-ink-3:#5B616E;--ui-line:#E5E7EB;--ui-blue:#2563EB;--ui-wire:#C2C7D0;}
+
+/* the two context steps are text only, one above the other on the text column, so they take no
+   sticky picture and none of the full-screen height a scrolling step needs */
+.context--text{display:block;width:min(663px, calc(100% - 2 * var(--side)));}
+.context--text .context__steps{display:grid;gap:96px;}
+.context--text .context__step{min-height:0;justify-content:flex-start;padding:0;}
+@media (max-width:900px){.context--text .context__steps{gap:64px;}}
+
+/* the governance panel: the three places work runs feed one policy, and the policy sends each action
+   one of three ways. The panel is dark in both themes, so its colours are fixed rather than themed;
+   the four levels use the hues of the iteration diagram (warn green, throttle blue, escalate orange,
+   deny red), lifted for a dark ground. */
+.gflow{--cg:44px;--g-line:rgba(255,255,255,.24);--g-card:rgba(255,255,255,.045);--g-card-line:rgba(255,255,255,.12);
+  --g-blue:#8fa6ff;--g-green:oklch(0.78 0.16 150);--g-orange:#f4a261;--g-red:#ff8b8b;
+  display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.14fr) minmax(0,.96fr);column-gap:var(--cg);row-gap:20px;align-items:center;margin-top:64px;}
+.gflow ul{list-style:none;margin:0;padding:0;}
+.gflow svg{width:14px;height:14px;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round;}
+.gflow__label{align-self:end;text-align:center;font-size:12px;line-height:1.65;font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:var(--panel-ink-3);}
+.gflow__col{position:relative;display:grid;grid-template-rows:repeat(3,1fr);gap:14px;}
+.gnode{position:relative;display:flex;flex-direction:column;justify-content:center;gap:10px;padding:16px 18px;border:1px solid var(--g-card-line);border-radius:16px;background:var(--g-card);}
+.gnode__head{display:flex;align-items:center;gap:10px;font-size:15px;line-height:1.25;font-weight:600;color:var(--panel-ink);}
+.gnode__head i,.gpolicy__head i{flex:none;display:inline-grid;place-items:center;width:28px;height:28px;border-radius:50%;background:rgba(255,255,255,.1);color:var(--panel-ink-2);font-style:normal;}
+.gnode__text{font-size:13px;line-height:1.5;color:var(--panel-ink-3);}
+.gnode--ok{--c:var(--g-green);} .gnode--rule{--c:var(--g-orange);} .gnode--more{--c:var(--g-blue);}
+.gflow__col--out .gnode__head i{color:var(--c);background:color-mix(in oklch, var(--c) 16%, transparent);}
+.glevels,.gsteps{display:flex;flex-wrap:wrap;align-items:center;gap:6px;}
+.glvl{--l:var(--g-green);display:inline-flex;align-items:center;gap:5px;padding:3px 9px;border:1px solid color-mix(in oklch, var(--l) 40%, transparent);border-radius:999px;background:color-mix(in oklch, var(--l) 12%, transparent);color:var(--l);font-size:12px;line-height:16px;font-weight:500;}
+.glvl::before{content:"";width:5px;height:5px;border-radius:50%;background:currentColor;}
+.glvl--throttle{--l:var(--g-blue);} .glvl--escalate{--l:var(--g-orange);} .glvl--deny{--l:var(--g-red);}
+.gsteps{gap:5px;}
+.gsteps span{font-size:12px;line-height:16px;font-weight:500;color:var(--panel-ink-2);white-space:nowrap;}
+.gsteps i{font-style:normal;font-size:12px;color:var(--panel-ink-3);}
+/* the policy: one card in the middle, in the brand blue */
+.gpolicy{position:relative;padding:20px;border:1px solid color-mix(in oklch, var(--g-blue) 45%, transparent);border-radius:20px;background:color-mix(in oklch, var(--g-blue) 9%, transparent);box-shadow:0 0 0 6px color-mix(in oklch, var(--g-blue) 5%, transparent);}
+.gpolicy__head{display:flex;align-items:center;gap:10px;padding-bottom:16px;border-bottom:1px solid var(--g-card-line);}
+.gpolicy__head i{width:30px;height:30px;color:var(--g-blue);background:color-mix(in oklch, var(--g-blue) 18%, transparent);}
+.gpolicy__head b{display:block;font-size:16px;line-height:1.25;font-weight:600;color:var(--panel-ink);}
+.gpolicy__head small{display:block;margin-top:2px;font-size:12px;line-height:1.4;color:var(--panel-ink-3);}
+.gflow .gpolicy__list{display:grid;gap:14px;margin-top:18px;}   /* scoped, or ".gflow ul" resets the margin and the first item sits on the divider */
+.gpolicy__list li{display:grid;grid-template-columns:30px minmax(0,1fr);gap:10px;align-items:start;}
+.gpolicy__list svg{justify-self:center;margin-top:2px;color:var(--g-blue);}
+.gpolicy__list b{display:block;font-size:14px;line-height:1.3;font-weight:600;color:var(--panel-ink);}
+.gpolicy__list span{display:block;margin-top:2px;font-size:12.5px;line-height:1.45;color:var(--panel-ink-3);}
+/* connectors: a bracket gathers the three places into the policy, another sends the policy out to the
+   three endings. Each column's rows are equal, so the first and last centres sit a sixth of the way in. */
+.gflow__col--in::after,.gflow__col--out::before{content:"";position:absolute;top:calc(100% / 6 - 14px / 3);bottom:calc(100% / 6 - 14px / 3);width:calc(var(--cg) / 2);border:1px solid var(--g-line);pointer-events:none;}
+.gflow__col--in::after{left:100%;border-left:0;border-radius:0 10px 10px 0;}
+.gflow__col--out::before{right:100%;border-right:0;border-radius:10px 0 0 10px;}
+.gflow__col--in .gnode:nth-child(2)::before,.gflow__col--out .gnode:nth-child(2)::after,.gpolicy::before,.gpolicy::after{content:"";position:absolute;top:50%;width:calc(var(--cg) / 2);border-top:1px solid var(--g-line);pointer-events:none;}
+.gflow__col--in .gnode:nth-child(2)::before{left:100%;}
+.gflow__col--out .gnode:nth-child(2)::after{right:100%;}
+.gpolicy::before{right:100%;}
+.gpolicy::after{left:100%;}
+/* ports where a line meets a card: grey on the way in, blue on the policy, each ending's own colour on the way out */
+.gflow__col--in .gnode::after,.gflow__col--out .gnode::before,.gport{content:"";position:absolute;top:50%;z-index:1;width:7px;height:7px;margin-top:-3.5px;border-radius:50%;border:1px solid var(--g-line);background:var(--panel);}
+.gflow__col--in .gnode::after{right:-4px;}
+.gflow__col--out .gnode::before{left:-4px;border-color:var(--c);background:var(--c);}
+.gport{border-color:var(--g-blue);background:var(--g-blue);}
+.gport--l{left:-4px;} .gport--r{right:-4px;}
+/* narrow: one column, top to bottom, with a line into the policy and a line out of it */
+@media (max-width:860px){
+  .gflow{grid-template-columns:minmax(0,1fr);row-gap:0;margin-top:48px;}
+  .gflow__label{margin-bottom:14px;}
+  .gflow__label--in{order:1;} .gflow__col--in{order:2;} .gpolicy{order:3;} .gflow__label--out{order:4;} .gflow__col--out{order:5;}
+  .gflow__label--mid{display:none;}
+  .gflow__col{grid-template-rows:none;gap:10px;}
+  .gflow__col--in::after,.gflow__col--out::before,.gflow__col--in .gnode:nth-child(2)::before,.gflow__col--out .gnode:nth-child(2)::after,.gflow__col--in .gnode::after,.gflow__col--out .gnode::before,.gport{display:none;}
+  .gpolicy{margin:44px 0;}
+  .gpolicy::before,.gpolicy::after{left:50%;right:auto;top:auto;width:0;border-top:0;border-left:1px solid var(--g-line);}
+  .gpolicy::before{bottom:100%;height:44px;}
+  .gpolicy::after{top:100%;height:30px;}
+}
+
+/* before/after diagrams, inside the iteration wells where a screenshot would sit. Each is a picture
+   of the diagram drawn at 440px, so it scales down as one piece on a narrow screen instead of
+   reflowing; never past its drawn size on a wide one. */
+.iter .well .ba__img{width:auto;height:auto;max-width:min(100%,440px);max-height:100%;}
+.iter .well:has(.ba__img){padding:32px;}
+
+/* the two rule-builder recordings, in the iteration wells */
+.iter .well .media{position:relative;height:100%;max-width:100%;aspect-ratio:1440/1294;}
+.media video{width:100%;height:100%;object-fit:contain;border-radius:10px;box-shadow:var(--shot);background:#fff;}
+.media__toggle{position:absolute;bottom:14px;right:14px;display:inline-flex;align-items:center;justify-content:center;width:40px;height:40px;padding:0;border:1px solid rgba(31,42,68,.2);border-radius:50%;background:#fff;color:#1f2a44;cursor:pointer;opacity:0;transition:opacity .15s ease;}
+.media__toggle svg{width:20px;height:20px;fill:currentColor;display:block;}
+.media__toggle .ic-play{display:none;}
+.media__toggle[data-state="paused"] .ic-pause{display:none;}
+.media__toggle[data-state="paused"] .ic-play{display:block;}
+.media:hover .media__toggle,.media__toggle:focus-visible{opacity:1;}
+@media (hover:none){.media__toggle{opacity:1;}}
+
+/* screenshot cards: desktop crops in place of the phones, so they fill the well */
+.cards--shots .well{padding:24px;}
+.cards--shots .well img{width:100%;border-radius:8px;box-shadow:var(--shot);}
+.cards--shots + .cgroup{margin-top:120px;}
+/* the results band carries two notes under its numbers */
+.results + .decisions{margin-top:56px;}
+/* a pair's two halves stay equal, whatever is inside each well */
+@media (min-width:901px){
+  .iter{grid-template-columns:repeat(2,minmax(0,1fr));}
+  /* four decisions run two to a row: each row starts flush left, with a rule between the rows */
+  .decisions--2 article:nth-child(odd){padding-left:0;border-left:0;}
+  .decisions--2 article:nth-child(n+3){border-top:1px solid var(--line);}
+}
+
+@media (max-width:900px){
+  .cards--shots + .cgroup{margin-top:80px;}
+}
+@media (max-width:560px){
+  .iter .well,.iter .well:has(.ba__img){padding:16px;}
+}
+
+/* Screenshot frames: every screen except the hero sits in the page's grey well, inset at the top
+   and sides and running off the well's bottom edge, as v1 does on its mesh (the crops are lifted further down: every screen shows whole). The rule-builder recordings and the before/after diagrams keep their plain wells. */
+.console .well,.console__row .well,.cards--shots .well{display:block;padding:clamp(22px,2.8vw,40px) clamp(20px,3.4vw,48px) 0;overflow:hidden;}
+.console__row .well,.cards--shots .well{padding:18px 18px 0;}
+.console .well img,.console__row .well img,.cards--shots .well img{display:block;width:100%;height:auto;aspect-ratio:var(--ar);object-fit:cover;object-position:left top;
   border-radius:12px 12px 0 0;box-shadow:var(--shot);background:#fff;}
-.console .well img{--ar:2880/1290;}
+.console .well img{--ar:1920/860;}
 .console__row{--ar:2/1;}
-.console__row .well img{border-radius:8px 8px 0 0;}
+.cards--shots .well img{--ar:2/1;}
+.console__row .well img,.cards--shots .well img{border-radius:8px 8px 0 0;}
 @media (max-width:760px){
   .console .well{padding:16px 16px 0;}
-  .console .well img,.console__row .well img{aspect-ratio:1.45;object-position:30% top;}   /* set directly, so it wins over a screen's own desktop crop */   /* phones: the page body, not the sidebar */
-  .console__row .well{padding:14px 14px 0;}
+  .console .well img,.console__row .well img{aspect-ratio:1.45;object-position:30% top;}   /* set directly, so it wins over a screen's own desktop crop */   /* phones: the page body, not the sidebar, as v1 does */
+  .console__row .well,.cards--shots .well{padding:14px 14px 0;}
 }
 
-/* "How I worked" sits on its own under the two-column block, on the reading column, with no phone */
-.worked{margin-top:96px;}
-.worked h3{margin-top:8px;font-family:var(--sans);font-weight:600;font-size:clamp(30px, 3.8vw, 48px);line-height:1.08;letter-spacing:-.04em;}
-.worked ul{margin-top:28px;}
-@media (max-width:900px){ .worked{margin-top:40px;} }
-@media (max-width:760px){ .worked h3{font-size:28px;line-height:32px;} }
-
-/* ==========================================================================
-   TYPE SYSTEM, as in type-guideline.md (shared with the ZBrain and design system case studies).
-   Plus Jakarta Sans 500 for display only; Plus Jakarta Sans for everything else in 400, 600 and 700.
-   Every role is set in full here, so it overrides any earlier size on the same element.
-   Left alone: the status lines drawn as the app's own UI (Inter), and the pins and tags on
-   the screenshots.
-   ========================================================================== */
-:root{
-  --t-d1:clamp(44px, 5vw, 72px); --t-d2:clamp(40px, 5.2vw, 68px);
-  --t-h3:clamp(27px, 2.64vw, 38px); --t-h4:clamp(21px, 1.875vw, 27px); --t-h5:16px; --t-h6:14px;
-  --t-lead-l:clamp(17px, 1.53vw, 22px); --t-lead:clamp(17px, 1.39vw, 20px);
-  --t-body:16px; --t-body-s:15px; --t-small:13px; --t-micro:12px;
-  --t-metric:clamp(28px, 2.78vw, 40px);
-}
-/* display: Plus Jakarta Sans 600 (was Fraunces 500) */
-h1{font:600 var(--t-d1)/.96 var(--serif);letter-spacing:-.052em;}
-h2:not(.next__word),.quote__line{font:600 var(--t-d2)/1.02 var(--serif);letter-spacing:-.045em;}
-h1,h2:not(.next__word),.quote__line{word-spacing:.06em;}   /* the tight display tracking was set for a serif; at 600 the sans needs its word gaps back */
-/* headings */
-.context__step h3,.worked h3,.rules h3,.iter__copy h3,.cgroup h3{font:700 var(--t-h3)/1.1 var(--sans);letter-spacing:-.04em;}
-.card__copy h3,.state h3,.decisions h3,.next__title{font:700 var(--t-h4)/1.14 var(--sans);letter-spacing:-.035em;}
-.tree__root,.branch h3,.results h3,.outcomes h3,.chip{font:600 var(--t-h5)/1.3 var(--sans);letter-spacing:-.01em;}
-/* text */
-.summary{font:400 var(--t-lead-l)/1.55 var(--sans);letter-spacing:0;}
-.head > p,.cgroup > p,.loop__back,.quote__sub{font:400 var(--t-lead)/1.65 var(--sans);letter-spacing:0;}
-.dash li,.subhead{font:400 var(--t-body)/1.65 var(--sans);letter-spacing:0;}
-.reflect li{font:600 var(--t-body)/1.65 var(--sans);letter-spacing:0;}
-.card__copy p,.iter__copy p,.rules p,.decisions p,.results p,.outcomes p{font:400 var(--t-body-s)/1.6 var(--sans);letter-spacing:0;}
-.meta dd{font:600 var(--t-body-s)/1.3 var(--sans);letter-spacing:0;}
-figcaption,.loop figcaption,.branch li,.metric span,.meta dt,.note{font:400 var(--t-small)/1.5 var(--sans);letter-spacing:0;text-transform:none;}
-.chip i,.status__seq b{font:600 var(--t-micro)/1 var(--sans);letter-spacing:0;}
-/* labels and numbers */
-.kicker,.next__cat{font:700 12px/1.65 var(--sans);letter-spacing:.04em;text-transform:uppercase;}
-.project-line{font:600 14px/1.65 var(--sans);letter-spacing:.02em;text-transform:none;}
-.metric strong,.results strong{font:600 var(--t-metric)/1 var(--sans);letter-spacing:-.05em;}
-/* phones: only the title has its own size; every other role uses its clamp floor */
-@media (max-width:760px){ h1{font-size:min(11vw, 44px);} }
 
 /* Screenshots show whole: each keeps its own shape and scales with the column, with nothing cut from
    the foot or, on a phone, from the sides. In a row of screens of different heights the wells share
@@ -599,283 +681,1467 @@ figcaption,.loop figcaption,.branch li,.metric span,.meta dt,.note{font:400 var(
 @media (max-width:760px){
   .console .well img,.console__row .well img{aspect-ratio:auto;object-position:0 0;}
 }
+
+/* ==========================================================================
+   TYPE SYSTEM, the one source of truth for text on this page (type-guideline.md).
+   Plus Jakarta Sans 500 for display only; Plus Jakarta Sans for everything else in three weights:
+   400 reading text, 600 emphasis, values and small titles, 700 headings and kickers.
+   Every role is set in full here, so it overrides any earlier size on the same element.
+   ========================================================================== */
+:root{
+  --t-d1:clamp(32px, 3.4vw, 48px);
+  --t-d2:clamp(28px, 3vw, 42px);   /* section headings stay under the hero title (--t-d1) at every width */
+  --t-h3:clamp(27px, 2.64vw, 38px);
+  --t-h4:clamp(21px, 1.875vw, 27px);
+  --t-h5:16px;
+  --t-h6:14px;
+  --t-lead-l:clamp(17px, 1.53vw, 22px);
+  --t-lead:clamp(17px, 1.39vw, 20px);
+  --t-body:16px;
+  --t-body-s:15px;
+  --t-small:13px;
+  --t-micro:12px;
+  --t-metric:clamp(28px, 2.78vw, 40px);
+}
+/* display: Plus Jakarta Sans 600 (was Fraunces 500) */
+h1{font:600 var(--t-d1)/1.06 var(--serif);letter-spacing:-.052em;}
+h2:not(.next__word),.quote__line{font:600 var(--t-d2)/1.02 var(--serif);letter-spacing:-.045em;}
+h1,h2:not(.next__word),.quote__line{word-spacing:.06em;}   /* the tight display tracking was set for a serif; at 600 the sans needs its word gaps back */
+.quote .quote__line{font-size:clamp(28px, 3vw, 42px);line-height:1.1;}   /* kept under the hero title (--t-d1, 32 to 48px) at every width: smaller floor, slope and cap */
+/* headings */
+.context__step h3,.rules h3,.iter__copy h3,.cgroup h3{font:700 var(--t-h3)/1.1 var(--sans);letter-spacing:-.04em;}
+.card__copy h3,.next__title{font:700 var(--t-h4)/1.14 var(--sans);letter-spacing:-.035em;}
+.gpolicy__head b,.tree__root,.branch h3{font:600 var(--t-h5)/1.3 var(--sans);letter-spacing:-.01em;}
+.gnode__head,.gpolicy__list b{font:600 var(--t-h6)/1.3 var(--sans);letter-spacing:0;}
+/* text */
+.summary{font:400 var(--t-lead-l)/1.55 var(--sans);letter-spacing:0;}
+.head > p,.cgroup > p,.loop__back,.quote__sub{font:400 var(--t-lead)/1.65 var(--sans);letter-spacing:0;}
+.dash li,.subhead{font:400 var(--t-body)/1.65 var(--sans);letter-spacing:0;}
+.reflect li{font:600 var(--t-body)/1.65 var(--sans);letter-spacing:0;}
+.card__copy p,.iter__copy p,.rules p{font:400 var(--t-body-s)/1.6 var(--sans);letter-spacing:0;}
+.meta dd{font:600 var(--t-body-s)/1.3 var(--sans);letter-spacing:0;}
+figcaption,.gnode__text,.branch li,.gpolicy__list span,.metric span,.meta dt{font:400 var(--t-small)/1.5 var(--sans);letter-spacing:0;text-transform:none;}
+.gpolicy__head small,.gsteps i{font:400 var(--t-micro)/1.4 var(--sans);letter-spacing:0;}
+.glvl,.gsteps span{font:600 var(--t-micro)/1.4 var(--sans);letter-spacing:0;}
+/* labels and numbers */
+.kicker,.gflow__label,.next__cat{font:700 12px/1.65 var(--sans);letter-spacing:.04em;text-transform:uppercase;}
+.project-line{font:600 14px/1.65 var(--sans);letter-spacing:.02em;text-transform:none;}
+.metric strong{font:600 var(--t-metric)/1 var(--sans);letter-spacing:-.05em;}
+/* phones: only the title has its own size; every other role uses its clamp floor */
+@media (max-width:760px){ h1{font-size:min(9vw, 34px);} }
+
+/* ==========================================================================
+   V3 LAYOUT. Three changes on top of v2:
+   1. One content column, 1012px, set to the right of the rail and left aligned
+      (the geometry of Vivek's ZBrain case study: rail at the left edge, content
+      from about 343px to 1355px at 1440 wide). Text runs to a 720px measure.
+   2. A skim layer under the hero (Overview), measured from Vivek's: a 13px label,
+      two 24px lead paragraphs, then three columns under a 1px ink rule, split by
+      hairlines, each one link to its act.
+   3. The page grouped into three acts (Identify, Design, Impact), each opened by an
+      ink rule, a small "01 · Identify" label and the act title, and a grouped rail
+      in which only the group in view shows its sections.
+   The hero follows the DHS Tutor pattern: product name in the title, one screen on
+   a soft artboard that stays light in both themes, running off its bottom edge.
+   ========================================================================== */
+:root{--rail:0px;--side:32px;--content:1012px;--measure:720px;}
+@media (min-width:1240px){:root{--rail:300px;--side:56px;}}
+@media (max-width:760px){:root{--side:24px;}}
+
+main,.next-wrap.col{width:min(var(--content), calc(100% - var(--rail) - 2 * var(--side)));
+  margin-left:calc(var(--rail) + max(var(--side), (100% - var(--rail) - var(--content)) / 2));margin-right:0;}
+main .col,main .wide{margin-left:0;margin-right:0;}
+main .wide{width:100%;}
+main .col,main .context--text{width:min(var(--measure),100%);}
+section[id],.cgroup[id]{scroll-margin-top:88px;}
+
+/* type: a step for the acts, between the hero title and the section headings */
+:root{--t-h3:clamp(20px, 1.8vw, 24px);--t-h4:clamp(18px, 1.4vw, 20px);}
+h2.act__title{margin-top:14px;max-width:20em;font:600 clamp(28px, 3vw, 42px)/1.06 var(--serif);letter-spacing:-.045em;word-spacing:.06em;text-wrap:balance;}
+main .sec h2:not(.act__title),main .panel h2{font-size:clamp(24px, 2.4vw, 32px);line-height:1.12;letter-spacing:-.04em;text-wrap:balance;}
+.context__step h3{font-size:clamp(24px, 2.4vw, 32px);line-height:1.12;letter-spacing:-.04em;}
+main .sec h2.quote__line{font-size:clamp(26px, 2.6vw, 36px);line-height:1.1;}
+
+/* hero */
+.hero{padding-top:128px;}
+@media (max-width:1239px){.hero{padding-top:104px;}.hero__copy{margin-top:28px;}}
+.hero .summary{max-width:var(--measure);margin-top:20px;}
+.hero .meta{grid-template-columns:repeat(4,minmax(0,max-content));column-gap:48px;margin-top:40px;}
+.case-frame{margin:56px 0 0;padding:clamp(22px,2.8vw,40px) clamp(20px,3.4vw,48px) 0;overflow:hidden;border-radius:16px;
+  background:
+    radial-gradient(60% 70% at 15% 20%, #dfe6ff 0%, transparent 70%),
+    radial-gradient(55% 65% at 90% 30%, #e7ebfb 0%, transparent 70%),
+    radial-gradient(70% 70% at 50% 100%, #dbe7f7 0%, transparent 70%),
+    #edf0fa;}
+.case-frame__screen{overflow:hidden;border-radius:12px 12px 0 0;background:#fff;box-shadow:0 -2px 24px rgba(27,45,84,.14);}
+.case-frame__screen img{display:block;width:100%;height:auto;}
+@media (max-width:700px){.case-frame{padding:16px 16px 0;}.case-frame__screen{border-radius:8px 8px 0 0;}}
+@media (max-width:900px){.hero .meta{grid-template-columns:1fr 1fr;}}
+
+/* skim layer */
+.skim{margin-top:112px;}
+.skim__label,.act__label{font:400 13px/1.5 var(--sans);letter-spacing:.005em;color:var(--ink-3);}
+.skim__lead{max-width:none;margin-top:14px;font:400 clamp(19px, 1.67vw, 24px)/1.42 var(--sans);letter-spacing:-.012em;color:var(--ink);}
+.skim__lead + .skim__lead{color:var(--ink-3);}
+.skim__grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));margin-top:48px;border-top:1px solid var(--line);}
+.skim__col{display:flex;flex-direction:column;gap:14px;padding:20px 24px 24px;color:inherit;}
+.skim__col:first-child{padding-left:0;}
+.skim__col:last-child{padding-right:0;}
+.skim__col + .skim__col{border-left:1px solid var(--line);}
+.skim__head{display:flex;align-items:baseline;gap:10px;}
+.skim__head small{font:400 13px/1.5 var(--sans);color:var(--ink-3);}
+.skim__head h3{font:600 24px/1.18 var(--serif);letter-spacing:-.02em;}
+.skim__sub{font:400 13px/1.5 var(--sans);color:var(--ink-3);}
+.skim__text{font:400 15px/1.5 var(--sans);color:var(--ink-2);}
+.skim__list li{position:relative;padding-left:16px;font:400 15px/1.4 var(--sans);color:var(--ink-2);}
+.skim__list li + li{margin-top:8px;}
+.skim__list li::before{content:"";position:absolute;left:0;top:10px;width:7px;height:1px;background:var(--accent);}
+.skim__list b{font-weight:600;color:var(--ink);}
+.skim__rows li{display:grid;grid-template-columns:58px minmax(0,1fr);gap:12px;padding:12px 0;}
+.skim__rows li:first-child{padding-top:2px;}
+.skim__rows li + li{border-top:1px solid var(--line);}
+.skim__rows b{font:600 15px/1.4 var(--sans);color:var(--ink);}
+.skim__rows span{font:400 15px/1.4 var(--sans);color:var(--ink-2);}
+.skim__nums{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+.skim__nums dt{font:600 32px/1 var(--sans);letter-spacing:-.04em;color:var(--ink);}
+.skim__nums dd{margin-top:8px;font:400 13px/1.45 var(--sans);color:var(--ink-3);}
+.skim__go{margin-top:auto;padding-top:6px;font:500 13px/1.5 var(--sans);color:var(--ink);}
+.skim__go i{display:inline-block;font-style:normal;transition:transform .35s cubic-bezier(.2,.7,.1,1);}
+.skim__col:hover .skim__go i,.skim__col:focus-visible .skim__go i{transform:translateX(4px);}
+.skim__col:hover .skim__head h3{color:var(--accent);}
+.skim__head h3{transition:color .25s ease;}
+@media (max-width:900px){
+  .skim{margin-top:80px;}
+  .skim__grid{grid-template-columns:1fr;margin-top:36px;}
+  .skim__col,.skim__col:first-child,.skim__col:last-child{padding:22px 0 26px;}
+  .skim__col + .skim__col{border-left:0;border-top:1px solid var(--line);}
+  .skim__go{margin-top:4px;}
+}
+
+/* acts, and the sections inside them */
+.act{margin-top:176px;}
+.act__head{padding-top:20px;border-top:1px solid var(--line);}
+.act__lede{max-width:var(--measure);margin-top:18px;font:400 var(--t-lead)/1.65 var(--sans);color:var(--ink-2);}
+.sec{margin-top:128px;padding-top:0;}
+main .panel{margin-top:128px;}
+.act__head + .sec,.act__head + .panel{margin-top:80px;}
+#stands{margin-top:56px;}
+#stands .metrics{margin-top:0;}
+@media (max-width:900px){
+  .act{margin-top:112px;}
+  .sec,main .panel{margin-top:88px;}
+  .act__head + .sec,.act__head + .panel{margin-top:56px;}
+}
+
+/* cards that sat centred on the page now fill the column, their text on the same left edge */
+.quote--card{padding:72px clamp(28px, 6vw, 72px);}
+.quote--card .col{width:min(var(--measure),100%);margin:0;}
+.reflect{width:100%;margin:176px 0 0;padding:72px clamp(28px, 6vw, 72px) 88px;}
+.reflect .col{width:min(var(--measure),100%);margin:0;}
+@media (max-width:900px){
+  .quote--card{padding:56px 24px;}
+  .reflect{margin-top:112px;padding:56px 24px 64px;}
+}
+
+/* the rail, grouped: a label, the groups, and under the group in view its sections */
+.toc__label{display:none;}
+@media (min-width:1240px){
+  .toc{top:120px;left:56px;width:204px;gap:22px;}
+  .toc.is-covered{opacity:1;pointer-events:auto;}
+  .toc__label{display:block;margin-bottom:-8px;font:400 13px/1.5 var(--sans);color:var(--ink-3);}
+  .toc__list a{max-width:none;min-height:0;}
+  .toc__list a.toc__top{display:flex;align-items:baseline;gap:8px;padding:7px 0;font:400 15px/1.3 var(--sans);letter-spacing:-.007em;color:var(--ink-3);}
+  .toc__top small{min-width:16px;font:400 12px/1 var(--sans);color:var(--ink-3);}
+  .toc__grp.is-open > a.toc__top,.toc__list a.toc__top[aria-current]{color:var(--ink);font-weight:400;}
+  .toc__sub{display:none;padding:0 0 6px;}
+  .toc__grp.is-open .toc__sub{display:block;}
+  .toc__sub a{padding:5px 0 5px 24px;font:400 13px/1.3 var(--sans);color:var(--ink-3);}
+  .toc__sub a[aria-current]{color:var(--ink);font-weight:600;}
+}
+@media (max-width:1239px){
+  .toc__list a.toc__top{display:flex;align-items:baseline;gap:10px;}
+  .toc__top small{font:400 13px/1 var(--sans);color:var(--ink-3);}
+  .toc__sub a{padding:7px 0 7px 30px;border-top:0;font-size:15px;line-height:22px;font-weight:400;color:var(--ink-3);}
+  .toc__sub{padding-bottom:8px;}
+}
+
+/* ==========================================================================
+   V3 ALIGNMENT: one grid for every text block. Lead-size text (the hero
+   summary, the skim leads) runs the full column. Below that, a heading and its
+   label sit in the left half and the body text in the right half (a half lands
+   on the same line inside a padded card as on the page), so text ends on the same right edge as the rules, pictures and diagrams
+   instead of stopping short at a 720px measure. Act titles span both columns,
+   and a line that stands alone under a block (the opportunity line, "No space
+   starts without one") starts on the right column's edge.
+   ========================================================================== */
+:root{--gap:56px;--split:minmax(0,1fr) minmax(0,1fr);}
+.hero .summary{max-width:none;}
+main .head.col,main .cgroup.col,main .context--text{width:100%;}
+@media (min-width:861px){
+  main .head,.context__step,main .cgroup,.quote--card .col,.reflect .col,.act__head{display:grid;grid-template-columns:var(--split);column-gap:var(--gap);align-items:start;}
+  main .head > *,.context__step > *,main .cgroup > *,.reflect .col > *{grid-column:1;}
+  main .head > p,.context__step > ul,main .cgroup > p,.reflect .col > ul{grid-column:2;margin-top:0;}
+  .act__head > *{grid-column:1 / -1;}
+  .act__head > .act__lede{grid-column:2;}
+  /* the quote card reads like every other block: label and quote on the left, the reasoning on the right */
+  .quote--card .col > *{grid-column:1;}
+  .quote--card .col > .quote__sub{grid-column:2;margin-top:0;}
+  .quote--card .col > .quote__sub + .quote__sub{margin-top:16px;}
+  /* the first bullet's text level with the heading beside it, not a padding's depth below */
+  .context__step > ul{margin-top:-6px;}   /* the heading has 8px above it; the first item 14px of padding */
+  .quote--card .col,.reflect .col{width:100%;}
+  main .subhead.col,.panel .loop__back{width:auto;margin-left:calc((100% - var(--gap)) / 2 + var(--gap));}
+}
+
+/* everything else in two parts takes the same halves and gap, so the right half starts on one line
+   down the whole page: the before/after pairs, the four rules, two-up screens, the hero details */
+@media (min-width:901px){
+  .iter{column-gap:var(--gap);}
+  .rules article{padding-right:calc(var(--gap) / 2);}
+  .rules article:nth-child(even){padding-left:calc(var(--gap) / 2);padding-right:0;}
+  .console__row.console__row--2{column-gap:var(--gap);}
+  .hero .meta{grid-template-columns:repeat(4,minmax(0,1fr));column-gap:var(--gap);}
+  .metric{padding-inline:calc(var(--gap) / 2);}
+  .metric:first-child{padding-left:0;}
+}
+/* the three cards (quote, governance panel, reflections) share one inner padding, so their text starts on one line */
+main .panel{padding:72px clamp(28px, 6vw, 72px);}
+@media (max-width:900px){main .panel{padding:48px 24px;}}
+/* the reflections heading takes the section size, like every other heading in a card */
+.reflect h2{font-size:clamp(24px, 2.4vw, 32px);line-height:1.12;letter-spacing:-.04em;}
+@media (min-width:901px){
+  /* an act with a lede: the title on the left, the lede beside it on the right */
+  .act__head:has(.act__lede) > .act__title{grid-column:1;grid-row:2;}
+  .act__head:has(.act__lede) > .act__lede{grid-column:2;grid-row:2;margin-top:18px;}
+  /* the next project's card starts on the same line as every right half */
+  .next{column-gap:var(--gap);}
+}
+/* the reflections header is already the card's left half: it isn't split again */
+main .reflect .head{display:block;}
+/* the rules' text fills its half (or the column, once stacked) rather than a fixed 461px */
+.rules p{max-width:none;}
+
+/* ==========================================================================
+   V3 REDESIGN. The same content, told as pictures and groups instead of
+   paragraphs, after the way Vivek's ZBrain case study shows its data:
+   label rows (a muted label on the left, its items beside it, rows ruled
+   off), an icon, a title and one line for every idea, problem-to-answer
+   pairs, decisions asked as questions with what it cost, and steppers.
+   One grid holds it all: 12 columns with 24px gutters on the 1012px column,
+   so every block lands on quarters (259 / 518 / 777), thirds or halves.
+   ========================================================================== */
+:root{--gap:24px;--warn:#f4a261;}
+:root[data-theme="light"]{--warn:oklch(0.62 0.16 50);}
+main .head > h2{padding-right:32px;}
+
+/* icons: one line weight everywhere */
+main svg:has(> use){width:18px;height:18px;flex:none;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round;}
+.z-ic{flex:none;display:inline-grid;place-items:center;width:36px;height:36px;border-radius:10px;background:color-mix(in oklch, var(--accent) 14%, transparent);color:var(--accent);}
+.z-ic--muted{background:var(--tint);color:var(--ink-2);}
+.z-ic--warn{background:color-mix(in oklch, var(--warn) 14%, transparent);color:var(--warn);}
+
+/* label rows */
+.z-rows{margin-top:48px;}
+.z-row{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));column-gap:var(--gap);padding:32px 0;border-top:1px solid var(--line);}
+.z-rows > .z-row:last-child{border-bottom:1px solid var(--line);}
+.sec > .z-row,.z-sides + .z-row,.quote + .z-row{margin-top:56px;}
+.z-row + .z-row{margin-top:0;}
+.z-row__label{max-width:210px;font:600 14px/1.45 var(--sans);letter-spacing:-.005em;color:var(--ink-2);}
+.z-row__body{grid-column:2 / -1;min-width:0;}
+.z-items{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));column-gap:var(--gap);row-gap:28px;}
+/* four items take all four quarters, with the label above them */
+.z-row:has(> .z-items--4in3) > .z-row__label{grid-column:1 / -1;max-width:none;margin-bottom:24px;}
+.z-row > .z-items--4in3{grid-column:1 / -1;grid-template-columns:repeat(4,minmax(0,1fr));}
+.z-item h4{margin-top:14px;font:600 16px/1.3 var(--sans);letter-spacing:-.01em;color:var(--ink);}
+.z-item p{margin-top:6px;font:400 14.5px/1.55 var(--sans);color:var(--ink-3);}
+.z-item--note h4{color:var(--ink-2);}
+.z-chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:12px;}
+.z-chips i{padding:3px 9px;border:1px solid var(--line);border-radius:999px;font:500 12px/1.4 var(--sans);font-style:normal;color:var(--ink-2);}
+.z-foot{position:relative;margin-top:28px;padding-left:22px;font:400 15px/1.55 var(--sans);color:var(--ink-2);}
+.z-foot::before{content:"";position:absolute;left:0;top:11px;width:12px;height:1px;background:var(--accent);}
+
+/* at a glance */
+.z-glance{margin-top:104px;}
+.z-glance .z-row{padding:0;border-top:0;}
+.z-glance .z-row + .z-row{margin-top:40px;}
+.z-glance .z-row__label{color:var(--ink-3);}
+.z-lead{font:400 clamp(19px, 1.67vw, 24px)/1.42 var(--sans);letter-spacing:-.012em;color:var(--ink);}
+.z-lead--muted{margin-top:12px;color:var(--ink-3);}
+.z-gcard{display:flex;flex-direction:column;gap:10px;padding:24px;border:1px solid var(--line);border-radius:18px;background:var(--surface);color:inherit;transition:border-color .25s ease, transform .35s cubic-bezier(.2,.7,.1,1);}
+.z-gcard:hover,.z-gcard:focus-visible{border-color:color-mix(in oklch, var(--accent) 55%, transparent);transform:translateY(-2px);}
+.z-gcard .z-ic{margin-bottom:6px;}
+.z-gcard__num{font:600 12px/1.4 var(--sans);letter-spacing:.03em;color:var(--ink-3);}
+.z-gcard h3{font:600 20px/1.25 var(--sans);letter-spacing:-.02em;color:var(--ink);}
+.z-ticks{display:grid;gap:8px;margin-top:4px;}
+.z-ticks li{position:relative;padding-left:16px;font:400 14.5px/1.45 var(--sans);color:var(--ink-2);}
+.z-ticks li::before{content:"";position:absolute;left:0;top:9px;width:6px;height:6px;border-radius:50%;background:var(--warn);}
+.z-swaps{display:grid;margin-top:4px;}
+.z-swaps > div{padding:9px 0;border-top:1px solid var(--line);}
+.z-swaps > div:first-child{border-top:0;padding-top:0;}
+.z-swaps dt{font:600 12px/1.4 var(--sans);color:var(--ink-3);}
+.z-swaps dd{display:flex;flex-wrap:wrap;align-items:center;gap:6px;margin:3px 0 0;font:600 14.5px/1.4 var(--sans);color:var(--ink);}
+.z-swaps s{font-weight:400;color:var(--ink-3);text-decoration-color:color-mix(in oklch, var(--ink-3) 70%, transparent);}
+.z-swaps svg{width:14px !important;height:14px !important;color:var(--accent);}
+.z-nums{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:4px;}
+.z-nums dt{font:600 34px/1 var(--sans);letter-spacing:-.04em;color:var(--ink);}
+.z-nums dd{margin:8px 0 0;font:400 13px/1.45 var(--sans);color:var(--ink-3);}
+.z-go{display:inline-flex;align-items:center;gap:6px;margin-top:auto;padding-top:10px;font:600 13px/1.4 var(--sans);color:var(--ink);}
+.z-go svg{width:14px !important;height:14px !important;transition:transform .35s cubic-bezier(.2,.7,.1,1);}
+.z-gcard:hover .z-go svg{transform:translateX(4px);}
+
+/* two sides of ZBrain */
+.z-sides{position:relative;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--gap);margin-top:56px;}
+.z-side{display:flex;flex-direction:column;gap:12px;padding:28px;border:1px solid var(--line);border-radius:20px;background:var(--surface);}
+.z-side--mine{border-color:color-mix(in oklch, var(--accent) 45%, transparent);background:color-mix(in oklch, var(--accent) 7%, var(--surface));}
+.z-side .z-ic{margin-bottom:6px;}
+.z-side__kicker{font:700 12px/1.6 var(--sans);letter-spacing:.04em;text-transform:uppercase;color:var(--ink-3);}
+.z-side--mine .z-side__kicker{color:var(--accent);}
+.z-side h3{max-width:15em;font:600 clamp(20px, 1.9vw, 24px)/1.25 var(--sans);letter-spacing:-.025em;color:var(--ink);}
+.z-side__who{display:flex;align-items:center;gap:8px;margin-top:auto;padding-top:18px;font:500 13px/1.4 var(--sans);color:var(--ink-3);}
+.z-side__who svg{width:15px !important;height:15px !important;}
+.z-sides__link{position:absolute;left:50%;top:50%;z-index:1;display:inline-flex;align-items:center;gap:6px;padding:7px 12px;transform:translate(-50%,-50%);border:1px solid var(--line);border-radius:999px;background:var(--bg);font:500 12px/1 var(--sans);color:var(--ink-2);white-space:nowrap;}
+.z-sides__link svg{width:13px !important;height:13px !important;color:var(--accent);}
+
+/* my part, in order */
+.z-chain{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));margin-top:48px;}
+.z-chain li{position:relative;display:flex;flex-direction:column;gap:12px;font:600 15px/1.3 var(--sans);color:var(--ink);}
+.z-chain li:not(:last-child)::before{content:"";position:absolute;left:40px;right:8px;top:16px;border-top:1px solid var(--line);}
+.z-chain b{position:relative;z-index:1;display:grid;place-items:center;width:32px;height:32px;border:1px solid color-mix(in oklch, var(--accent) 50%, transparent);border-radius:50%;background:color-mix(in oklch, var(--accent) 10%, var(--bg));font:600 12px/1 var(--sans);color:var(--accent);}
+
+/* people */
+.z-person{display:flex;align-items:flex-start;gap:14px;}
+.z-person h4{font:600 16px/1.3 var(--sans);color:var(--ink);}
+.z-person p{margin-top:4px;font:400 14.5px/1.5 var(--sans);color:var(--ink-3);}
+.z-avatar{flex:none;display:grid;place-items:center;width:40px;height:40px;border-radius:50%;background:var(--tint);font:600 15px/1 var(--sans);color:var(--ink);}
+.z-avatar svg{width:18px !important;height:18px !important;color:var(--ink-2);}
+
+/* each team's own terms */
+.z-terms{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:var(--gap);}
+.z-terms > div{display:flex;flex-direction:column;gap:4px;padding:20px;border:1px solid var(--line);border-radius:16px;background:var(--surface);}
+.z-terms b{margin-top:12px;font:600 15.5px/1.35 var(--sans);color:var(--ink);}
+.z-terms span:last-child{font:400 13.5px/1.45 var(--sans);color:var(--ink-3);}
+
+/* four rules: the problem, then the rule that answers it */
+.z-fixes{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:var(--gap);margin-top:56px;}
+.z-fixes li{display:flex;flex-direction:column;padding:22px 22px 26px;border:1px solid var(--line);border-radius:18px;background:var(--surface);}
+.z-fixes__num{font:600 12px/1 var(--sans);letter-spacing:.04em;color:var(--ink-3);}
+.z-fixes__was{display:flex;gap:8px;min-height:4.4em;margin-top:16px;font:400 14px/1.45 var(--sans);color:var(--ink-3);}
+.z-fixes__was svg{width:16px !important;height:16px !important;margin-top:1px;color:var(--warn);}
+.z-fixes__arrow{display:block;margin:12px 0 14px;color:var(--ink-3);}
+.z-fixes__arrow svg{width:16px !important;height:16px !important;}
+.z-fixes h3{display:flex;flex-direction:column;align-items:flex-start;gap:14px;font:600 19px/1.25 var(--sans);letter-spacing:-.02em;color:var(--ink);}
+.z-fixes h3 + p{margin-top:8px;font:400 14.5px/1.5 var(--sans);color:var(--ink-2);}
+.z-idea{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));column-gap:var(--gap);align-items:baseline;margin-top:40px;padding-top:24px;border-top:1px solid var(--line);font:600 clamp(18px, 1.6vw, 22px)/1.4 var(--sans);letter-spacing:-.015em;color:var(--ink);}
+.z-idea > span{font:600 14px/1.45 var(--sans);letter-spacing:0;color:var(--accent);}
+.z-idea > b{grid-column:2 / -1;font-weight:600;}
+
+/* the menu, as a map */
+.z-ia{margin-top:64px;}
+.z-ia__root{display:flex;align-items:center;gap:10px;width:max-content;margin:0 auto;padding:12px 20px;border:1px solid color-mix(in oklch, var(--accent) 45%, transparent);border-radius:999px;background:color-mix(in oklch, var(--accent) 10%, var(--surface));font:600 15px/1.2 var(--sans);color:var(--ink);}
+.z-ia__root svg{color:var(--accent);}
+.z-ia__groups{position:relative;display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:16px;padding-top:56px;}
+.z-ia__groups::before{content:"";position:absolute;left:50%;top:0;height:28px;border-left:1px solid var(--line);}
+.z-ia__groups::after{content:"";position:absolute;left:calc((100% - 64px) / 10);right:calc((100% - 64px) / 10);top:28px;border-top:1px solid var(--line);}
+.z-ia__group{position:relative;padding:20px 18px 22px;border:1px solid var(--line);border-radius:16px;background:var(--surface);}
+.z-ia__group::before{content:"";position:absolute;left:50%;top:-29px;height:28px;border-left:1px solid var(--line);}
+.z-ia__group h3{margin-top:14px;font:600 16px/1.3 var(--sans);color:var(--ink);}
+.z-ia__q{margin-top:4px;font:400 13.5px/1.45 var(--sans);color:var(--ink-2);}
+.z-ia__group ul{display:grid;gap:8px;margin-top:16px;padding-top:14px;border-top:1px solid var(--line);}
+.z-ia__group li{position:relative;padding-left:12px;font:400 13px/1.4 var(--sans);color:var(--ink-3);}
+.z-ia__group li::before{content:"";position:absolute;left:0;top:8px;width:5px;height:1px;background:var(--accent);}
+
+/* decisions */
+.z-dec{margin-top:72px;padding-top:28px;border-top:1px solid var(--line);}
+.sec > .head + .z-dec{margin-top:56px;}
+.z-dec__head{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));column-gap:var(--gap);align-items:baseline;}
+.z-dec__num{font:600 13px/1.5 var(--sans);color:var(--accent);}
+.z-dec__head h3{grid-column:2 / -1;font:600 clamp(22px, 2.2vw, 28px)/1.2 var(--sans);letter-spacing:-.03em;color:var(--ink);}
+.iter.z-compare{margin-top:32px;}
+.z-compare__cap{display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin-top:16px;font:600 16px/1.35 var(--sans);color:var(--ink);}
+.z-tag{padding:3px 9px;border-radius:999px;background:var(--tint);font:700 11px/1.4 var(--sans);letter-spacing:.05em;text-transform:uppercase;color:var(--ink-3);}
+.z-tag--now{background:color-mix(in oklch, var(--accent) 16%, transparent);color:var(--accent);}
+.z-dec__rows{margin-top:32px;border-top:1px solid var(--line);}
+.z-dec__rows > div{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));column-gap:var(--gap);padding:18px 0;border-bottom:1px solid var(--line);}
+.z-dec__rows dt{font:600 14px/1.55 var(--sans);color:var(--ink-2);}
+.z-dec__rows dd{grid-column:2 / -1;max-width:660px;margin:0;font:400 16px/1.6 var(--sans);color:var(--ink-2);}
+
+/* a day in the console: the five moments as a stepper */
+.z-flow{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:var(--gap);margin-top:48px;padding:24px;border:1px solid var(--line);border-radius:20px;background:var(--surface);}
+.z-flow li{position:relative;}
+.z-flow li:not(:last-child)::after{content:"";position:absolute;top:18px;left:48px;right:calc(-1 * var(--gap) + 10px);border-top:1px dashed color-mix(in oklch, var(--ink-3) 45%, transparent);}
+.z-flow a{display:flex;flex-direction:column;gap:10px;font:600 15px/1.3 var(--sans);color:var(--ink);}
+.z-flow b{font:600 12px/1 var(--sans);color:var(--ink-3);}
+.z-flow .z-ic{transition:background-color .25s ease,color .25s ease;}
+.z-flow a:hover .z-ic,.z-flow a:focus-visible .z-ic{background:var(--accent);color:var(--bg);}
+.z-flow + .cgroup{margin-top:80px;}
+.cgroup[id]{scroll-margin-top:96px;}
+
+/* states */
+.z-statetag{display:inline-flex;align-items:center;gap:7px;font:700 11.5px/1.5 var(--sans);letter-spacing:.04em;text-transform:uppercase;color:var(--ink-3);}
+.z-statetag svg{width:14px !important;height:14px !important;color:var(--accent);}
+
+/* design QA: the count beside the ticket */
+.z-qa{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));column-gap:var(--gap);align-items:start;margin-top:40px;}
+.z-qa__stat{display:flex;flex-direction:column;gap:8px;}
+.z-qa__stat strong{margin-top:10px;font:600 64px/1 var(--sans);letter-spacing:-.05em;color:var(--ink);}
+.z-qa__stat > span:last-child{font:400 14.5px/1.5 var(--sans);color:var(--ink-3);}
+.z-qa .console{grid-column:2 / -1;margin-top:0;}
+
+/* impact */
+.z-stats{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--gap);}
+.z-stat{display:flex;flex-direction:column;gap:8px;padding:28px;border:1px solid var(--line);border-radius:20px;background:var(--surface);}
+.z-stat strong{margin-top:14px;font:500 clamp(52px, 5.2vw, 76px)/1 var(--sans);letter-spacing:-.055em;background:linear-gradient(100deg, var(--accent) 0%, var(--accent-2) 100%);-webkit-background-clip:text;background-clip:text;color:transparent;-webkit-text-fill-color:transparent;width:max-content;}
+.z-stat > span:last-child{font:400 15.5px/1.5 var(--sans);color:var(--ink-2);}
+.z-stats + .z-row{margin-top:56px;}
+
+/* what I learned */
+.z-lessons{counter-reset:lesson;}
+.reflect .z-lessons li{counter-increment:lesson;position:relative;padding:20px 0 20px 44px;border-top:1px solid var(--line);font:inherit;}
+.reflect .z-lessons li:first-child{padding-top:0;border-top:0;}
+.reflect .z-lessons li::before{content:counter(lesson, decimal-leading-zero);left:0;top:23px;width:auto;height:auto;background:none;font:600 13px/1 var(--sans);color:var(--accent);}
+.reflect .z-lessons li:first-child::before{top:3px;}
+.z-lessons b{display:block;font:600 17px/1.4 var(--sans);letter-spacing:-.01em;color:var(--ink);}
+.z-lessons span{display:block;margin-top:6px;font:400 15px/1.6 var(--sans);color:var(--ink-3);}
+
+/* tablet and phone */
+@media (max-width:900px){
+  .z-row{grid-template-columns:1fr;row-gap:18px;}
+  .z-row__body,.z-row > .z-items--4in3{grid-column:1;}
+  .z-row__label{max-width:none;}
+  .z-row:has(> .z-items--4in3) > .z-row__label{margin-bottom:0;}
+  .z-items,.z-row > .z-items--4in3,.z-fixes{grid-template-columns:repeat(2,minmax(0,1fr));}
+  .z-glance .z-row + .z-row{margin-top:28px;}
+  .z-chain{grid-template-columns:1fr;gap:12px;}
+  .z-chain li{flex-direction:row;align-items:center;}
+  .z-chain li:not(:last-child)::before{left:16px;right:auto;top:32px;height:12px;border-top:0;border-left:1px solid var(--line);}
+  .z-sides{grid-template-columns:1fr;gap:14px;}
+  .z-sides__link{position:static;justify-self:center;transform:none;}
+  .z-sides__link svg{transform:rotate(90deg);}
+  .z-terms{grid-template-columns:1fr;}
+  .z-idea{grid-template-columns:1fr;row-gap:6px;}
+  .z-idea > b{grid-column:1;}
+  .z-ia__groups{grid-template-columns:repeat(2,minmax(0,1fr));padding-top:24px;}
+  .z-ia__groups::before,.z-ia__groups::after,.z-ia__group::before{display:none;}
+  .z-dec__head,.z-dec__rows > div{grid-template-columns:1fr;row-gap:6px;}
+  .z-dec__head h3,.z-dec__rows dd{grid-column:1;}
+  .z-flow{grid-template-columns:1fr;gap:14px;padding:18px;}
+  .z-flow a{flex-direction:row;align-items:center;gap:12px;}
+  .z-flow li:not(:last-child)::after{display:none;}
+  .z-qa{grid-template-columns:1fr;row-gap:24px;}
+  .z-qa .console{grid-column:1;}
+}
+@media (max-width:560px){
+  .z-items,.z-row > .z-items--4in3,.z-fixes,.z-stats,.z-ia__groups{grid-template-columns:1fr;}
+  .z-fixes__was{min-height:0;}
+}
+/* labels keep their small size even when they are headings (a broader h2 rule would enlarge them) */
+main .z-row > .z-row__label{font:600 14px/1.45 var(--sans);letter-spacing:-.005em;word-spacing:0;}
+/* was / now: the old value struck through on one line, the arrow and the new value on the next */
+.z-swaps dd{display:block;}
+.z-swaps s{display:block;font-size:13px;}
+.z-swaps dd svg{display:inline-block;margin-right:6px;vertical-align:-2px;}
+/* the link between the two sides: a small arrow badge that sits in the gap, clear of both cards' text */
+.z-sides__link{justify-content:center;width:34px;height:34px;padding:0;border-radius:50%;}
+.z-sides__link svg{width:15px !important;height:15px !important;}
+/* the lessons list sits in the card's right half, beside its heading */
+@media (min-width:861px){ .reflect .col > ol{grid-column:2;margin-top:0;} }
+/* the impact card's two figures stack in two rows, ruled off like the design card's rows */
+.z-nums{grid-template-columns:1fr;gap:0;}
+.z-nums > div{padding:14px 0;border-top:1px solid var(--line);}
+.z-nums > div:first-child{padding-top:2px;border-top:0;}
+.z-nums dd{margin-top:6px;font-size:14px;}
+
+/* ---- round two: fewer identical cards ---- */
+/* text-only items (How I worked): no icon above, so no gap for one; the honest note set apart by a rule */
+.z-item > h4:first-child{margin-top:0;}
+.z-item--note{padding-left:16px;border-left:2px solid var(--line);}
+
+/* the four rules as a table: each rule, what it means, and where it shows up in the console */
+.z-table{margin-top:56px;border-top:1px solid var(--line);}
+.z-table__row{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));column-gap:var(--gap);align-items:baseline;padding:22px 0;border-bottom:1px solid var(--line);}
+.z-table__row > :nth-child(2){grid-column:2 / 4;}
+.z-table__row--head{padding:12px 0;}
+.z-table__row--head span{font:600 12px/1.5 var(--sans);letter-spacing:.04em;text-transform:uppercase;color:var(--ink-3);}
+.z-table__rule{display:flex;align-items:baseline;gap:12px;font:600 18px/1.3 var(--sans);letter-spacing:-.02em;color:var(--ink);}
+.z-table__rule b{flex:none;font:600 12px/1 var(--sans);color:var(--accent);}
+.z-table__row > span:nth-child(2){font:400 16px/1.55 var(--sans);color:var(--ink-2);}
+.z-table__row > a{display:flex;flex-direction:column;gap:2px;font:600 11.5px/1.5 var(--sans);letter-spacing:.04em;text-transform:uppercase;color:var(--accent);}
+.z-table__row > a span{font:500 14.5px/1.4 var(--sans);letter-spacing:0;text-transform:none;color:var(--ink);text-decoration:underline;text-decoration-color:var(--line);text-underline-offset:3px;transition:text-decoration-color .2s ease;}
+.z-table__row > a:hover span{text-decoration-color:var(--accent);}
+
+/* what admins were up against, and the need it adds up to: a list, an arrow, one answer */
+.z-why{position:relative;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));column-gap:var(--gap);align-items:center;}
+.z-why__list{grid-column:1 / 3;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));column-gap:var(--gap);row-gap:26px;}
+.z-why__list li{position:relative;padding-left:18px;}
+.z-why__list li::before{content:"";position:absolute;left:0;top:7px;width:7px;height:7px;border-radius:50%;background:var(--warn);}
+.z-why__list b{display:block;font:600 16px/1.3 var(--sans);color:var(--ink);}
+.z-why__list span{display:block;margin-top:6px;font:400 14.5px/1.5 var(--sans);color:var(--ink-3);}
+.z-why__arrow{position:absolute;top:50%;left:calc((100% - 2 * var(--gap)) * 2 / 3 + var(--gap) * 1.5);z-index:1;display:grid;place-items:center;width:30px;height:30px;transform:translate(-50%,-50%);border:1px solid var(--line);border-radius:50%;background:var(--bg);color:var(--accent);}
+.z-why__arrow svg{width:14px !important;height:14px !important;}
+.z-why__need{grid-column:3;display:flex;flex-direction:column;gap:14px;padding:20px 20px 22px;border:1px solid color-mix(in oklch, var(--accent) 45%, transparent);border-radius:16px;background:color-mix(in oklch, var(--accent) 7%, var(--surface));}
+.z-why__kicker{font:600 11.5px/1.5 var(--sans);letter-spacing:.04em;text-transform:uppercase;color:var(--accent);}
+.z-why__need > div{display:flex;align-items:center;gap:12px;}
+.z-why__need .z-ic{width:32px;height:32px;border-radius:9px;}
+.z-why__need p b{display:block;font:600 14.5px/1.3 var(--sans);color:var(--ink);}
+.z-why__need p span{display:block;margin-top:2px;font:400 13px/1.4 var(--sans);color:var(--ink-3);}
+
+/* what each person gets: who, then what changes for them */
+.z-who > div{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));column-gap:var(--gap);align-items:baseline;padding:16px 0;border-top:1px solid var(--line);}
+.z-who > div:first-child{padding-top:0;border-top:0;}
+.z-who dt{display:flex;align-items:center;gap:10px;font:600 16px/1.3 var(--sans);color:var(--ink);}
+.z-who dt svg{width:16px !important;height:16px !important;color:var(--accent);}
+.z-who dd{grid-column:2 / -1;margin:0;font:400 15.5px/1.55 var(--sans);color:var(--ink-2);}
+
+@media (max-width:900px){
+  .z-table__row{grid-template-columns:1fr;row-gap:8px;}
+  .z-table__row > :nth-child(2){grid-column:1;}
+  .z-table__row--head{display:none;}
+  .z-why{grid-template-columns:1fr;row-gap:20px;}
+  .z-why__list{grid-column:1;}
+  .z-why__arrow{position:static;justify-self:center;transform:rotate(90deg);}
+  .z-why__need{grid-column:1;}
+  .z-who > div{grid-template-columns:1fr;row-gap:6px;}
+  .z-who dd{grid-column:1;}
+}
+@media (max-width:560px){ .z-why__list{grid-template-columns:1fr;} }
+
+/* ---- the content centred on the page ----
+   The column sits in the middle of the window, with the same margin on both sides. The rail
+   moves in to the left edge (32px, 180px wide), and the column is narrowed only as far as it
+   must be to clear it: up to 1012px, and 236px kept free on each side (the rail, plus a gutter). */
+:root{--rail-clear:236px;}
+@media (min-width:1240px){
+  main,.next-wrap.col{width:min(var(--content), calc(100% - 2 * var(--rail-clear)));margin-left:auto;margin-right:auto;}
+  .toc{left:32px;width:180px;}
+}
+
+/* where the problems came from: customers, to the teams who heard them, to me; numbered, with an arrow in each gutter */
+.z-source > .z-item{position:relative;}
+.z-source > .z-item:not(:last-child)::after{content:"→";position:absolute;top:2px;right:calc(var(--gap) / -2);transform:translateX(50%);font:500 14px/1 var(--sans);color:var(--accent);}
+.z-step{display:grid;place-items:center;width:24px;height:24px;border:1px solid color-mix(in oklch, var(--accent) 50%, transparent);border-radius:50%;background:color-mix(in oklch, var(--accent) 10%, var(--bg));font:600 11px/1 var(--sans);color:var(--accent);}
+.z-step + h4{margin-top:12px;}
+.z-item--me h4{color:var(--accent);}
+@media (max-width:900px){ .z-source > .z-item:not(:last-child)::after{display:none;} }
+
+/* one line where two met: a decision's last row closes without a rule, because the next decision
+   opens with one; and "The idea" sits under the rules table's own bottom rule rather than a second one */
+.z-dec__rows > div:last-child{border-bottom:0;}
+.z-idea{padding-top:0;border-top:0;}
+
+/* hero: the title and summary take the left two thirds, the project details stand beside them on the
+   right third as a short spec list (label, value, a hairline between), top-aligned with the title */
+@media (min-width:901px){
+  .hero__copy{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));column-gap:var(--gap);align-items:start;}
+  .hero__copy > h1,.hero__copy > .summary{grid-column:1 / 3;}
+  .hero__copy > .meta{grid-column:3;grid-row:1 / span 2;display:block;margin-top:14px;padding:0 0 0 var(--gap);border-top:0;border-left:1px solid var(--line);}
+  .hero .meta > div{display:grid;grid-template-columns:62px minmax(0,1fr);column-gap:12px;align-items:baseline;padding:11px 0;border-top:1px solid var(--line);}
+  .hero .meta > div:first-child{padding-top:2px;border-top:0;}
+  .hero .meta > div:last-child{padding-bottom:2px;}
+  .hero .meta dd{margin-top:0;}
+}
+/* phones and tablets: the same spec list, full width under the summary */
+@media (max-width:900px){
+  .hero .meta{display:block;margin-top:32px;padding-top:4px;}
+  .hero .meta > div{display:grid;grid-template-columns:84px minmax(0,1fr);column-gap:12px;align-items:baseline;padding:11px 0;border-top:1px solid var(--line);}
+  .hero .meta > div:first-child{border-top:0;}
+  .hero .meta dd{margin-top:0;}
+}
+
+/* ---- at a glance, round three: one connected strip, problem to design to result ---- */
+.z-story{position:relative;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));margin-top:40px;border:1px solid var(--line);border-radius:20px;background:var(--surface);}
+.z-story__col{position:relative;display:flex;flex-direction:column;gap:14px;padding:28px 28px 26px;color:inherit;transition:background-color .25s ease;}
+.z-story__col:first-child{border-radius:20px 0 0 20px;}
+.z-story__col:last-child{border-radius:0 20px 20px 0;}
+.z-story__col + .z-story__col{border-left:1px solid var(--line);}
+.z-story__col--mine{background:color-mix(in oklch, var(--accent) 7%, transparent);}
+.z-story__col:hover{background:color-mix(in oklch, var(--ink) 3%, transparent);}
+.z-story__col--mine:hover{background:color-mix(in oklch, var(--accent) 11%, transparent);}
+/* an arrow on each divider: the story reads left to right */
+.z-story__col + .z-story__col::before{content:"→";position:absolute;left:0;top:50%;z-index:1;display:grid;place-items:center;width:30px;height:30px;transform:translate(-50%,-50%);border:1px solid var(--line);border-radius:50%;background:var(--bg);font:500 13px/1 var(--sans);color:var(--accent);}
+.z-story__kick{display:flex;align-items:center;gap:10px;font:600 12px/1.4 var(--sans);letter-spacing:.02em;color:var(--ink-3);}
+.z-story__kick .z-ic{width:32px;height:32px;border-radius:9px;}
+.z-story__col--mine .z-story__kick{color:var(--accent);}
+.z-story h3{font:600 clamp(19px, 1.6vw, 21px)/1.3 var(--sans);letter-spacing:-.02em;color:var(--ink);}
+.z-story h3 .live{gap:10px;}
+.z-jobs{display:grid;}
+.z-jobs li{display:grid;grid-template-columns:54px minmax(0,1fr);gap:10px;padding:10px 0;border-top:1px solid var(--line);}
+.z-jobs li:first-child{padding-top:2px;border-top:0;}
+.z-jobs b{font:600 14px/1.45 var(--sans);color:var(--accent);}
+.z-jobs span{font:400 14.5px/1.45 var(--sans);color:var(--ink-2);}
+.z-story .z-go{margin-top:auto;padding-top:12px;}
+.z-story__col:hover .z-go svg{transform:translateX(4px);}
+@media (max-width:900px){
+  .z-story{grid-template-columns:1fr;}
+  .z-story__col,.z-story__col:first-child,.z-story__col:last-child{border-radius:0;}
+  .z-story__col:first-child{border-radius:20px 20px 0 0;}
+  .z-story__col:last-child{border-radius:0 0 20px 20px;}
+  .z-story__col + .z-story__col{border-left:0;border-top:1px solid var(--line);}
+  .z-story__col + .z-story__col::before{content:"↓";left:50%;top:0;}
+}
+
+/* ==========================================================================
+   HEADER AND MENU, after Vivek's ZBrain case study (measured at 1728 wide):
+   a 1300px frame; the project name at 80px; the summary as a 32px statement on
+   the left (752px) and the project details on the right (423px), 13px labels
+   and 15px values in ruled rows; the hero picture 52px wider than the frame on
+   each side, with 14px corners. Below the header the frame splits in two: the
+   menu in a 210px column on the left, sticky 88px from the top, and the content
+   in the column beside it (1014px), 76px away.
+   ========================================================================== */
+:root{--wrap:1300px;--railcol:210px;--railgap:76px;}
+.hero h1{font:600 clamp(44px, 5.6vw, 80px)/1 var(--serif);letter-spacing:-.025em;word-spacing:normal;text-wrap:balance;}
+.z-hero-img{margin:112px 0 0;}
+.z-hero-img img{display:block;width:100%;height:auto;aspect-ratio:1404 / 790;object-fit:cover;object-position:50% 40%;border-radius:14px;}
+@media (min-width:901px){
+  .hero__copy{grid-template-columns:minmax(0,1fr) minmax(0,423px);column-gap:clamp(48px, 7vw, 125px);}
+  .hero__copy > h1{grid-column:1 / -1;}
+  .hero__copy > .summary{grid-column:1;grid-row:2;max-width:752px;margin-top:72px;font:500 clamp(22px, 2.2vw, 32px)/1.3 var(--sans);letter-spacing:-.016em;color:var(--ink);}
+  .hero__copy > .meta{grid-column:2;grid-row:2;margin-top:72px;padding:0;border-left:0;}
+  .hero .meta > div{grid-template-columns:96px minmax(0,1fr);column-gap:16px;padding:12px 0;border-top:0;border-bottom:1px solid var(--line);}
+  .hero .meta > div:first-child{padding-top:6px;}
+  .hero .meta > div:last-child{padding-bottom:12px;}
+  .hero .meta dt{font:400 13px/1.5 var(--sans);color:var(--ink-3);}
+  .hero .meta dd{font:400 15px/1.42 var(--sans);color:var(--ink);}
+}
+@media (min-width:1240px){
+  main{display:grid;grid-template-columns:var(--railcol) minmax(0,1fr);column-gap:var(--railgap);width:min(var(--wrap), calc(100% - 2 * var(--side)));margin-left:auto;margin-right:auto;}
+  main > .hero{grid-column:1 / -1;}
+  .z-hero-img{margin-inline:-52px;}
+  main > .toc{grid-column:1;grid-row:2;position:sticky;top:88px;left:auto;align-self:start;width:auto;max-height:calc(100vh - 120px);margin-top:104px;}
+  main > .z-body{grid-column:2;grid-row:2;min-width:0;}
+  .next-wrap.col{width:min(var(--wrap), calc(100% - 2 * var(--side)));margin-left:auto;margin-right:auto;padding-left:calc(var(--railcol) + var(--railgap));}
+}
+
+/* ---- how one policy works: no card. The section sits on the page like every other, and the
+   diagram's colours follow the theme instead of assuming a dark ground ---- */
+main .panel,:root[data-theme="dark"] main .panel{padding:0;border-radius:0;background:none;box-shadow:none;color:var(--ink);}
+#governance{--panel:var(--bg);--panel-ink:var(--ink);--panel-ink-2:var(--ink-2);--panel-ink-3:var(--ink-3);--panel-line:var(--line);}
+#governance h2{color:var(--ink);}
+#governance .head > p,#governance .loop__back{color:var(--ink-2);}
+#governance .loop__back b{color:var(--ink);}
+#governance .gflow{--g-line:color-mix(in oklch, var(--ink) 26%, transparent);--g-card:var(--surface);--g-card-line:var(--line);}
+:root[data-theme="light"] #governance .gflow{--g-blue:#305cff;--g-green:oklch(0.52 0.14 150);--g-orange:oklch(0.62 0.16 50);--g-red:#d64545;}
+#governance .gnode__head i{background:var(--tint);}
+
+/* ---- one text edge: a decision's question and its reasons start on the same half line as every
+   section's intro and the closing line under the diagram; "The idea" too ---- */
+.z-dec__head,.z-dec__rows > div,.z-idea{grid-template-columns:repeat(2,minmax(0,1fr));}
+.z-dec__head h3,.z-dec__rows dd,.z-idea > b{grid-column:2;}
+@media (max-width:900px){
+  .z-dec__head,.z-dec__rows > div,.z-idea{grid-template-columns:1fr;}
+  .z-dec__head h3,.z-dec__rows dd,.z-idea > b{grid-column:1;}
+}
+
+/* ---- next case studies: a one-line header like every section's, then two cards side by side,
+   each with its picture, its tag pills and its name ---- */
+.z-next{margin-top:144px;padding-bottom:120px;}
+.z-next__head{display:flex;align-items:baseline;justify-content:space-between;gap:24px;padding-top:20px;border-top:1px solid var(--line);}
+.z-next__head h2{font:600 clamp(24px, 2.4vw, 32px)/1.12 var(--serif);letter-spacing:-.04em;word-spacing:.06em;white-space:nowrap;color:var(--ink);}
+.z-next__all{display:inline-flex;align-items:center;gap:6px;font:600 14px/1.4 var(--sans);color:var(--ink-2);transition:color .2s ease;}
+.z-next__all svg{width:15px;height:15px;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round;transition:transform .35s cubic-bezier(.2,.7,.1,1);}
+.z-next__all:hover{color:var(--ink);}
+.z-next__all:hover svg{transform:translateX(4px);}
+.z-next__grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--gap);margin-top:32px;}
+.z-next__card{display:flex;flex-direction:column;color:inherit;}
+.z-next__media{overflow:hidden;aspect-ratio:1.4;border-radius:14px;background:var(--surface);}
+.z-next__media img{display:block;width:100%;height:100%;object-fit:cover;object-position:top center;transform:scale(1.02);transition:transform .8s cubic-bezier(.2,.7,.1,1);}
+.z-next__card:hover .z-next__media img{transform:scale(1.05);}
+.z-next__tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:18px;}
+.z-next__tags li{padding:4px 11px;border:1px solid var(--line);border-radius:999px;font:500 12.5px/1.4 var(--sans);color:var(--ink-2);}
+.z-next__card h3{margin-top:12px;font:600 clamp(20px, 1.9vw, 24px)/1.2 var(--sans);letter-spacing:-.02em;color:var(--ink);}
+@media (max-width:760px){
+  .z-next{margin-top:96px;padding-bottom:88px;}
+  .z-next__grid{grid-template-columns:1fr;row-gap:40px;}
+  .z-next__head h2{white-space:normal;}
+}
+/* the menu needs no "On this page" title */
+.toc .toc__label{display:none !important;}
+/* the monitor's screen sits in the middle of the hero frame: its bezel runs from row 271 to 1386 of the
+   2400 x 1570 picture, so the 1404:790 crop is placed 70% of the way down */
+.z-hero-img img{object-position:50% 70%;}
+
+/* ---- at a glance: three separate blocks, no hover, quiet colour ---- */
+.z-story{gap:var(--gap);border:0;border-radius:0;background:none;}
+.z-story__col,.z-story__col:first-child,.z-story__col:last-child,.z-story__col + .z-story__col{border:1px solid var(--line);border-radius:20px;background:var(--surface);transition:none;}
+.z-story__col--mine,.z-story__col:hover,.z-story__col--mine:hover{background:var(--surface);}
+.z-story__col:hover .z-go svg{transform:none;}
+.z-story .z-ic,.z-story .z-ic--warn{background:var(--tint);color:var(--ink-2);}
+.z-story__col--mine .z-story__kick{color:var(--ink-3);}
+.z-jobs b{color:var(--ink);}
+/* the arrow sits in the gap between two blocks, in grey */
+.z-story__col + .z-story__col::before{left:calc(var(--gap) / -2);width:26px;height:26px;font-size:12px;color:var(--ink-3);}
+@media (max-width:900px){
+  .z-story__col + .z-story__col::before{left:50%;top:calc(var(--gap) / -2);}
+}
+
+/* ---- the hero picture keeps to the frame: its left edge on the text's, its right edge on the
+   details table's, not 52px past them ---- */
+@media (min-width:1240px){ .z-hero-img{margin-inline:0;} }
+
+/* ---- top bar, as on the homepage ---- */
+.site-header{position:fixed;inset:0 0 auto;z-index:50;transition:transform .5s cubic-bezier(.2,.7,.1,1), background-color .4s ease;}
+.site-header.is-filled{background:color-mix(in oklch, var(--bg) 72%, transparent);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);}
+.site-header.is-hidden{transform:translateY(-100%);}
+.site-header__in{display:flex;align-items:center;height:84px;width:min(var(--wrap), calc(100% - 2 * var(--side)));margin-inline:auto;}
+.wordmark{font:600 18px/1 var(--sans);letter-spacing:-.02em;white-space:nowrap;color:var(--ink);}
+.site-nav{display:flex;gap:32px;margin-left:auto;}
+.site-nav a{position:relative;padding:4px 0;font:500 14px/1.4 var(--sans);letter-spacing:.01em;color:color-mix(in oklch, var(--ink) 72%, transparent);transition:color .3s ease;}
+.site-nav a:hover,.site-nav a:focus-visible{color:var(--ink);}
+.site-nav a::after{content:"";position:absolute;left:0;right:0;bottom:-2px;height:2px;background:currentColor;transform:scaleX(0);transform-origin:right;transition:transform .4s cubic-bezier(.2,.7,.1,1);}
+.site-nav a:hover::after{transform:scaleX(1);transform-origin:left;}
+.theme-toggle{display:grid;place-items:center;flex:none;width:38px;height:38px;margin-left:28px;padding:0;border:1px solid var(--line);border-radius:50%;background:none;color:var(--ink);cursor:pointer;transition:background-color .35s ease,border-color .35s ease;}
+.theme-toggle:hover{background:var(--tint);border-color:color-mix(in oklch, var(--ink) 30%, transparent);}
+.theme-toggle svg{display:block;width:19px;height:19px;fill:none;stroke:currentColor;stroke-width:1.7;}
+.theme-toggle .t-moon{display:none;}
+:root[data-theme="light"] .theme-toggle .t-sun,:root[data-theme="light"] .theme-toggle .t-rays{display:none;}
+:root[data-theme="light"] .theme-toggle .t-moon{display:block;}
+/* below 1240px the sections button sits in the top right corner, so the bar makes room for it */
+@media (max-width:1239px){
+  .site-header__in{padding-right:56px;}
+  .menu-btn{top:23px;}
+}
+@media (max-width:900px){ .site-nav{display:none;} .theme-toggle{margin-left:auto;} }
+@media (max-width:760px){ .site-header__in{height:64px;padding-right:44px;} .menu-btn{top:15px;} .wordmark{font-size:16px;} .theme-toggle{width:34px;height:34px;} }
+/* who I worked with: each person or role stacks like every other item on the page, the avatar
+   above the name and the line under it on the same left edge */
+.z-people{row-gap:32px;}
+.z-person{flex-direction:column;align-items:flex-start;gap:0;}
+.z-person h4{margin-top:14px;}
+.z-person p{margin-top:6px;}
+/* the four roles side by side, one column each, each stacked top to bottom */
+.z-people{grid-template-columns:repeat(4,minmax(0,1fr));}
+@media (max-width:900px){ .z-people{grid-template-columns:repeat(2,minmax(0,1fr));} }
+@media (max-width:560px){ .z-people{grid-template-columns:1fr;} }
+
+/* ---- how I worked: four rows on one grid, label on the left, content in the same columns,
+   one quiet colour throughout ---- */
+.z-steps5{position:relative;display:grid;grid-template-columns:repeat(5,minmax(0,1fr));column-gap:12px;}
+.z-steps5 li{position:relative;display:flex;flex-direction:column;gap:10px;font:600 15px/1.3 var(--sans);color:var(--ink);}
+.z-steps5 li:not(:last-child)::before{content:"";position:absolute;left:34px;right:-4px;top:13px;border-top:1px solid var(--line);}
+.z-steps5 b{position:relative;z-index:1;display:grid;place-items:center;width:26px;height:26px;border:1px solid var(--line);border-radius:50%;background:var(--bg);font:600 11px/1 var(--sans);color:var(--ink-2);}
+.z-source > .z-item:not(:last-child)::after{color:var(--ink-3);top:3px;}
+.z-team dd{color:var(--ink-3);}
+@media (max-width:900px){
+  .z-steps5{grid-template-columns:1fr;row-gap:12px;}
+  .z-steps5 li{flex-direction:row;align-items:center;gap:12px;}
+  .z-steps5 li:not(:last-child)::before{left:13px;right:auto;top:26px;height:12px;border-top:0;border-left:1px solid var(--line);}
+}
+
+/* ---- tighter spacing ----
+   1. Item titles are h4s, which the base reset missed: the browser's own 21px margin sat under
+      every title, so the line beneath started far from it. The title and its line now sit 6px apart.
+   2. The space between sections, acts and steps comes down by about a fifth. */
+main h4,.z-next h4{margin-top:0;margin-bottom:0;}
+.z-item h4,.z-person h4{margin-top:14px;}
+.z-item > h4:first-child{margin-top:0;}
+.sec,main .panel{margin-top:104px;}
+.act{margin-top:144px;}
+.act__head + .sec,.act__head + .panel{margin-top:64px;}
+.z-glance{margin-top:88px;}
+.reflect{margin-top:144px;}
+.z-dec{margin-top:56px;}
+.cgroup{margin-top:96px;}
+.z-flow + .cgroup{margin-top:64px;}
+.cards--shots + .cgroup{margin-top:96px;}
+.z-row{padding:28px 0;}
+.z-next{margin-top:120px;}
+@media (max-width:900px){
+  .sec,main .panel{margin-top:80px;}
+  .act{margin-top:104px;}
+  .act__head + .sec,.act__head + .panel{margin-top:48px;}
+  .cgroup{margin-top:72px;}
+}
+.z-story__col{gap:10px;}
+.z-story .z-ticks,.z-story .z-nums{margin-top:2px;}
+.z-story__kick{margin-bottom:4px;}
+/* each decision opens with its number and its question together on the left, the question under the number */
+.z-dec__head{display:block;}
+.z-dec__num{display:block;}
+.z-dec__head h3{margin-top:8px;}
+/* the table's three column headers share one style (the body-text rule for the middle column no longer reaches its header) */
+.z-table__row.z-table__row--head > span{font:600 12px/1.5 var(--sans);letter-spacing:.04em;text-transform:uppercase;color:var(--ink-3);}
+
+/* ---- one radius scale for the whole page: 24px for the two large text panels, 14px for every
+   card, frame and picture, 8px for small things (icon tiles, the screens inside a frame) ---- */
+:root{--r-l:24px;--r-m:14px;--r-s:8px;}
+.quote--card,.reflect{border-radius:var(--r-l);}
+.well,.branch,.z-gcard,.z-side,.z-ia__group,.z-terms > div,.z-stat,.z-flow,.z-fixes li,.z-why__need,
+.z-story__col,.z-story__col:first-child,.z-story__col:last-child,.z-story__col + .z-story__col,
+.z-hero-img img,.z-next__media,.next__media,.case-frame{border-radius:var(--r-m);}
+.console .well img,.console__row .well img,.cards--shots .well img{border-radius:var(--r-s) var(--r-s) 0 0;}
+.iter .well img,.iter .well .ba__img,.media video{border-radius:var(--r-s);}
+.z-ic,.z-story__kick .z-ic,.z-why__need .z-ic{border-radius:var(--r-s);}
+@media (max-width:900px){
+  .quote--card,.reflect{border-radius:20px;}
+  .well,.branch{border-radius:12px;}
+}
+#governance .gnode,#governance .gpolicy{border-radius:var(--r-m);}
+/* the reflections card: the same space above the heading as below the last lesson (the last
+   lesson's own bottom padding was adding 20px to the card's 88px) */
+.reflect{padding-top:64px;padding-bottom:64px;}
+.reflect .z-lessons li:last-child{padding-bottom:0;}
+@media (max-width:900px){ .reflect{padding-top:48px;padding-bottom:48px;} }
+
+/* ---- next case studies across the whole frame, then the site footer, as on the homepage ---- */
+@media (min-width:1240px){ .next-wrap.col{padding-left:0;} }
+.z-next{padding-bottom:96px;}
+:root{--site-green:#4fe6a3;}
+:root[data-theme="light"]{--site-green:#0b7a4f;}
+.site-foot{width:min(var(--wrap), calc(100% - 2 * var(--side)));margin:0 auto;}
+.site-foot__links{display:flex;flex-wrap:wrap;justify-content:center;gap:12px 40px;padding:28px 0 24px;border-top:1px solid var(--line);}
+.site-foot__links a{position:relative;display:inline-flex;align-items:center;gap:7px;font:400 17px/1.4 var(--sans);color:var(--ink-2);transition:color .4s ease;}
+.site-foot__links a:hover,.site-foot__links a:focus-visible{color:var(--site-green);}
+.site-foot__links .roll{position:relative;display:inline-block;overflow:hidden;vertical-align:top;}
+.site-foot__links .roll > span,.site-foot__links .roll::after{display:block;transition:transform .55s cubic-bezier(.2,.7,.1,1);}
+.site-foot__links .roll::after{content:attr(data-t);position:absolute;left:0;top:100%;}
+.site-foot__links a:hover .roll > span,.site-foot__links a:hover .roll::after,.site-foot__links a:focus-visible .roll > span,.site-foot__links a:focus-visible .roll::after{transform:translateY(-100%);}
+.site-foot__links a::after{content:"";position:absolute;left:0;right:0;bottom:-3px;height:1px;background:currentColor;transform:scaleX(0);transform-origin:right;transition:transform .55s cubic-bezier(.2,.7,.1,1);}
+.site-foot__links a:hover::after,.site-foot__links a:focus-visible::after{transform:scaleX(1);transform-origin:left;}
+.site-foot__links .arr{display:inline-block;font-size:.85em;transition:transform .55s cubic-bezier(.2,.7,.1,1);}
+.site-foot__links a:hover .arr,.site-foot__links a:focus-visible .arr{transform:translate(3px,-3px);}
+.site-foot__bar{display:flex;justify-content:space-between;align-items:center;gap:10px 24px;padding:18px 0 22px;border-top:1px solid var(--line);font:500 13px/1.4 ui-monospace, "SF Mono", Menlo, monospace;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-3);}
+.site-foot__status{display:inline-flex;align-items:center;gap:8px;}
+.site-foot__status i{width:6px;height:6px;border-radius:50%;background:var(--site-green);box-shadow:0 0 8px var(--site-green);}
+@media (max-width:760px){
+  .site-foot__links{gap:10px 26px;padding:22px 0 20px;}
+  .site-foot__links a{font-size:15px;}
+  .site-foot__bar{font-size:11px;letter-spacing:.12em;}
+}
+
+/* ---- neutral: no accent colour. The blue becomes the page's ink, so labels, icon tiles, tags,
+   numbers, the "mine" card, the menu map's root and the policy diagram all read in greys. The four
+   rule levels keep their own colours (they are the product's states), and the green status dot stays. ---- */
+:root,:root[data-theme="dark"],:root[data-theme="light"]{--accent:var(--ink);--accent-2:var(--ink-2);}
+#governance .gflow{--g-blue:var(--ink-2);}
+#governance .gpolicy{border-color:var(--line);background:var(--surface);box-shadow:none;}
+#governance .gpolicy__head i{background:var(--tint);color:var(--ink-2);}
+#governance .gport{border-color:var(--ink-3);background:var(--ink-3);}
+.z-ic{background:var(--tint);color:var(--ink-2);}
+.z-tag--now{background:var(--tint);color:var(--ink);}
+.z-side--mine{border-color:var(--line);background:var(--surface);}
+.z-side--mine .z-side__kicker{color:var(--ink-3);}
+.z-ia__root{border-color:var(--line);background:var(--surface);}
+.z-ia__root svg,.z-statetag svg,.z-who dt svg{color:var(--ink-2);}
+.z-ticks li::before,.z-ia__group li::before,.dash li::before,.z-foot::before{background:var(--ink-3);}
+.quote .kicker,.z-dec__num,.reflect .z-lessons li::before,.z-table__rule b,.z-table__row > a{color:var(--ink-3);}
+.z-table__row > a span{color:var(--ink);}
+.z-stat strong{background:none;-webkit-text-fill-color:currentColor;color:var(--ink);}
+/* light mode: a white page with neutral greys, no warm or blue tint */
+:root,:root[data-theme="light"]{--bg:#fff;--ink:#111;--ink-2:#4a4a4a;--ink-3:#6b6b6b;--surface:#f2f2f2;--surface-2:#f6f6f6;--line:rgba(0,0,0,.1);--tint:rgba(0,0,0,.05);--nav-bg:rgba(255,255,255,.88);--shot:0 2px 24px rgba(0,0,0,.1);}
+.media__toggle{border-color:rgba(0,0,0,.15);color:#1a1a1a;}
+:root[data-theme] #governance .gflow{--g-blue:var(--ink-2);}
+#governance .gnode--ok,#governance .gnode--rule,#governance .gnode--more{--c:var(--ink-2);}
+:root[data-theme] #governance .glvl--throttle{--l:oklch(0.55 0.12 255);}
+/* no arrows between the three at-a-glance blocks */
+.z-story__col + .z-story__col::before{content:none;display:none;}
 </style>
-<link rel="stylesheet" href="assets/cursor.css?v=5">
+<link rel="stylesheet" href="assets/cursor.css?v=17">
+<style>/* the "Next project" word stays under the hero title (32 to 48px) at every width, a step above the section headings */ a.next .next__word{font-size:clamp(30px, 3.2vw, 46px);}/* the "No space starts empty" note under the policy diagram starts on the content's left edge */
+#governance .loop__back,main .panel .loop__back{margin-left:0;max-width:none;}
+/* the page opens a little lower under the header */
+.hero{padding-top:184px;}
+@media (max-width:1239px){.hero{padding-top:144px;}}
+@media (max-width:760px){.hero{padding-top:120px;}}
+/* CE CoPilot: rows of phone screens, and three impact stats across */
+.cp-phones{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:40px;}
+.cp-phones figure{margin:0;}
+.cp-phones .well{padding:28px 18px;height:100%;flex-direction:column;align-items:center;justify-content:center;}
+.cp-phones .well img{width:min(100%,184px);height:auto;border-radius:0;box-shadow:none;filter:drop-shadow(0 10px 18px rgba(0,0,0,.16));}
+.cp-phones figcaption{margin-top:12px;}
+@media (max-width:760px){.cp-phones{grid-template-columns:1fr;}.cp-phones .well img{width:min(100%,260px);}}
+.z-stats--3{grid-template-columns:repeat(3,1fr);}
+@media (max-width:900px){.z-stats--3{grid-template-columns:1fr;}}
+/* impact numbers: a step smaller, so they sit with the section heading rather than shout over it */
+.z-stat strong{font-size:clamp(30px, 2.6vw, 40px);letter-spacing:-.035em;}
+/* CE CoPilot feedback loop: four steps in a row, each card carrying one real case through it,
+   and a return line from the last step back to the first */
+.cp-loop{margin-top:56px;}
+.cp-loop__track{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:28px;}
+.cp-loop__step{position:relative;display:flex;flex-direction:column;gap:10px;padding:24px 22px 0;border:1px solid var(--line);border-radius:20px;background:var(--surface-2);}
+.cp-loop__step:not(:last-child)::after{content:"";position:absolute;right:-22px;top:46px;width:16px;height:16px;border-radius:50%;background:var(--bg);border:1px solid var(--line);
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='%23888' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 4.5L9.5 8 6 11.5'/%3E%3C/svg%3E");background-size:12px;background-position:center;background-repeat:no-repeat;z-index:1;}
+.cp-loop__top{display:flex;align-items:center;justify-content:space-between;margin-bottom:6px;}
+.cp-loop__num{font:500 13px/1 var(--sans);letter-spacing:.06em;color:var(--ink-3);}
+.cp-loop__step h3{font:600 18px/1.3 var(--sans);letter-spacing:-.01em;color:var(--ink);}
+.cp-loop__step > p{font-size:14.5px;line-height:1.55;color:var(--ink-2);}
+.cp-loop__step .z-chips{margin-top:2px;}
+.cp-loop__eg{margin:auto -22px 0;padding:14px 22px 18px;border-top:1px dashed var(--line);font-size:13.5px;line-height:1.5;color:var(--ink);}
+.cp-loop__eg b{display:block;margin-bottom:4px;font:600 11px/1 var(--sans);letter-spacing:.12em;text-transform:uppercase;color:var(--ink-3);}
+.cp-loop__step{padding-bottom:0;}
+.cp-loop__step > .cp-loop__eg{margin-top:auto;}
+.cp-loop__return{position:relative;margin:0 12.5%;height:52px;border:1.5px dashed var(--ink-3);border-top:0;border-radius:0 0 28px 28px;opacity:.9;}
+.cp-loop__return::before{content:"";position:absolute;left:-7px;top:-2px;border:6px solid transparent;border-bottom:9px solid var(--ink-3);border-top:0;}
+.cp-loop__return span{position:absolute;left:50%;bottom:0;transform:translate(-50%,50%);display:inline-flex;align-items:center;gap:8px;padding:6px 14px;border-radius:999px;
+  background:var(--bg);border:1px solid var(--line);font-size:14px;line-height:1.3;color:var(--ink);white-space:nowrap;}
+.cp-loop__return svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round;flex:none;}
+@media (max-width:1000px){
+  .cp-loop__track{grid-template-columns:1fr 1fr;}
+  .cp-loop__step:nth-child(2)::after{display:none;}
+}
+@media (max-width:640px){
+  .cp-loop__track{grid-template-columns:1fr;gap:20px;}
+  .cp-loop__step:not(:last-child)::after{display:block;right:auto;left:50%;top:auto;bottom:-19px;transform:translateX(-50%) rotate(90deg);}
+  .cp-loop__return{margin:28px 0 0;height:auto;border:0;}
+  .cp-loop__return::before{display:none;}
+  .cp-loop__return span{position:static;transform:none;white-space:normal;}
+}
+@media (max-width:1000px) and (min-width:641px){ .cp-loop__return{margin:0 25%;} }
+.cp-phones figure{display:flex;flex-direction:column;}
+.cp-phones figure .well{flex:1;}
+/* the status lines under the cropped phone top, in the order they appear */
+.cp-status__seq{list-style:none;margin:-34px 0 0;padding:0;display:grid;gap:8px;width:min(100%,214px);position:relative;z-index:1;}
+.cp-status__seq li{display:grid;grid-template-columns:22px minmax(0,1fr);align-items:center;gap:10px;}
+.cp-status__seq b{display:grid;place-items:center;width:22px;height:22px;border:1px solid var(--line);border-radius:50%;background:var(--bg);font:600 10.5px/1 var(--sans);color:var(--ink-3);}
+.cp-status__seq span{display:flex;align-items:center;gap:8px;padding:8px 11px;border-radius:10px;background:#fff;color:#1a1a1a;box-shadow:0 0 0 1px rgb(0 0 0 / .06),0 2px 8px rgb(0 0 0 / .06);font:400 12.5px/16px var(--sans);}
+.cp-status__seq span::before{content:"";width:9px;height:9px;flex:none;border:1.5px solid #c4c4c4;border-top-color:transparent;border-radius:50%;}
+/* the status phone: one screen, and over it a live status line in the app's own place, size and grey:
+   the ring spins and the words change in place, Thinking through Reading documents, then again */
+.cp-live{position:relative;width:min(100%,184px);aspect-ratio:418/843;container-type:inline-size;}
+.cp-phones .cp-live img{position:absolute;inset:0;width:100%;height:100%;}
+.cp-live__line{position:absolute;left:8.85%;top:28.17%;transform:translateY(-50%);display:flex;align-items:center;gap:2.4cqw;}
+.cp-live__spin{display:block;width:3.1cqw;height:3.1cqw;border:.42cqw solid #8f8f8f;border-top-color:transparent;border-radius:50%;animation:cp-spin .8s linear infinite;}
+.cp-live__text{font:400 2.9cqw/1 Inter, "SF Pro Text", system-ui, sans-serif;color:#7a7a7a;white-space:nowrap;transition:opacity .2s ease;}
+.cp-live__text.is-out{opacity:0;}
+@keyframes cp-spin{to{transform:rotate(360deg);}}
+@media (prefers-reduced-motion:reduce){.cp-live__spin{animation:none;}}
+/* steps 01 to 04: the words beside their two phones, so each step is one row */
+.cp-step{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:clamp(28px,4vw,56px);align-items:center;margin-top:72px;}
+.z-flow + .cp-step{margin-top:56px;}
+.cp-step__copy h3{margin-top:6px;font:700 var(--t-h3)/1.1 var(--sans);letter-spacing:-.04em;}
+.cp-step__copy p{margin-top:14px;font:400 var(--t-lead)/1.65 var(--sans);color:var(--ink-2);}
+.cp-step .cp-phones{margin-top:0;}
+.cp-phones--2{grid-template-columns:repeat(2,minmax(0,1fr));}
+.cp-step + .cgroup{margin-top:96px;}
+@media (max-width:900px){.cp-step{grid-template-columns:1fr;gap:24px;margin-top:56px;}}
+@media (max-width:760px){.cp-phones--2{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;}.cp-phones--2 .well{padding:16px 10px;}}
+/* the title is a phrase, not just the product name, so it sits at the smaller case study title size */
+.hero h1{font-size:clamp(32px, 3.4vw, 48px);line-height:1.08;letter-spacing:-.03em;max-width:20ch;}
+@media (max-width:760px){.hero h1{font-size:min(9vw, 34px);}}
+/* the case study title, a step bigger and bolder */
+.hero h1{font-size:clamp(36px, 3.9vw, 56px);font-weight:700;letter-spacing:-.035em;}
+@media (max-width:760px){.hero h1{font-size:min(9.6vw, 38px);}}
+/* what comes next, under the lessons */
+.z-whatsnext{margin-top:40px;padding:22px 24px;border:1px solid var(--line);border-radius:16px;font-size:16px;line-height:1.6;color:var(--ink-2);}
+.z-whatsnext b{display:block;margin-bottom:6px;font:600 12px/1 var(--sans);letter-spacing:.12em;text-transform:uppercase;color:var(--ink);}
+.reflect .z-whatsnext{grid-column:1 / -1;}
+</style>
+<style>
+/* Impact in three sections: Where it stands, What is delivered, What's next (as on ZBrain v3) */
+#stands .z-stats{margin-top:48px;}
+.act__head + #stands{margin-top:64px;}   /* same gap under the act title as the other acts */
+@media (max-width:900px){ .act__head + #stands{margin-top:48px;} }
+/* the hero summary a step smaller on desktop (was up to 32px); phones keep 17px */
+@media (min-width:901px){ #main .hero__copy > .summary{font-size:clamp(20px, 1.875vw, 27px);line-height:1.35;} }
+
+/* menu: a hovered label is underlined (the 01/02/03 numbers stay plain), and the cursor stays a plain dot */
+.toc__list a:hover{text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:4px;}
+.toc__list a.toc__top:has(small):hover{text-decoration:none;}
+.toc__list a.toc__top:has(small):hover > span{text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:4px;}
+</style>
 </head>
 <body>
 <a class="skip" href="#main">Skip to content</a>
 
+<header class="site-header" id="site-header">
+  <div class="site-header__in">
+    <a class="wordmark" href="/" aria-label="Indrajit Sasmal, home">Indrajit Sasmal</a>
+    <nav class="site-nav" aria-label="Site">
+      <a href="/#work">Work</a>
+      <a href="/#about">About</a>
+      <a href="/#contact">Contact</a>
+    </nav>
+    <button class="theme-toggle" type="button" data-theme-toggle aria-pressed="false" aria-label="Switch to light mode">
+      <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+        <circle class="t-sun" cx="12" cy="12" r="4.6"/>
+        <g class="t-rays" stroke-linecap="round"><path d="M12 2.4v2.4M12 19.2v2.4M2.4 12h2.4M19.2 12h2.4M5.2 5.2l1.7 1.7M17.1 17.1l1.7 1.7M18.8 5.2l-1.7 1.7M6.9 17.1l-1.7 1.7"/></g>
+        <path class="t-moon" d="M20.2 14.4A8.6 8.6 0 0 1 9.6 3.8a8.6 8.6 0 1 0 10.6 10.6Z"/>
+      </svg>
+    </button>
+  </div>
+</header>
+<script>
+/* the top bar, as on the homepage: clear at the top, filled once the page moves, out of the way
+   while scrolling down and back as soon as the reader scrolls up. Its switch sets the theme for
+   the whole site (same storage key as the homepage). */
+(function () {
+  var h = document.getElementById('site-header'), root = document.documentElement;
+  if (!h) return;
+  var last = window.scrollY, queued = false;
+  function run() {
+    queued = false;
+    var y = window.scrollY;
+    h.classList.toggle('is-filled', y > 40);
+    if (!root.classList.contains('menu-open')) h.classList.toggle('is-hidden', y > last && y > 120);
+    last = y;
+  }
+  addEventListener('scroll', function () { if (!queued) { queued = true; requestAnimationFrame(run); } }, { passive: true });
+  run();
+  var btn = h.querySelector('[data-theme-toggle]');
+  function paint(t) {
+    root.setAttribute('data-theme', t); root.style.colorScheme = t;
+    btn.setAttribute('aria-pressed', String(t === 'light'));
+    btn.setAttribute('aria-label', t === 'light' ? 'Switch to dark mode' : 'Switch to light mode');
+  }
+  paint(root.getAttribute('data-theme') || 'dark');
+  btn.addEventListener('click', function () {
+    var next = root.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
+    paint(next);
+    try { localStorage.setItem('theme', next); } catch (e) {}
+  });
+})();
+</script>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <symbol id="z-eyeoff" viewBox="0 0 24 24"><path d="M3 3l18 18"/><path d="M10.6 6.1A9.6 9.6 0 0 1 12 6c5 0 8.5 4.5 9.5 6-.5.8-1.5 2.1-2.9 3.3M6.6 6.6C4.6 8 3.2 9.9 2.5 12c1 1.5 4.5 6 9.5 6 1.6 0 3-.4 4.3-1"/><path d="M9.9 9.9a3 3 0 0 0 4.2 4.2"/></symbol>
+  <symbol id="z-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="6.5"/><path d="M20 20l-4.2-4.2"/></symbol>
+  <symbol id="z-building" viewBox="0 0 24 24"><rect x="4" y="3.5" width="10" height="17" rx="1.5"/><path d="M14 9h4.5a1.5 1.5 0 0 1 1.5 1.5v10M7.5 7.5h3M7.5 11h3M7.5 14.5h3M3 20.5h18"/></symbol>
+  <symbol id="z-ripple" viewBox="0 0 24 24"><circle cx="12" cy="12" r="2"/><path d="M7.8 7.8a6 6 0 0 0 0 8.4M16.2 7.8a6 6 0 0 1 0 8.4M5 5a10 10 0 0 0 0 14M19 5a10 10 0 0 1 0 14"/></symbol>
+  <symbol id="z-shield" viewBox="0 0 24 24"><path d="M12 3l7.5 3v5.5c0 4.6-3.2 8.3-7.5 9.5-4.3-1.2-7.5-4.9-7.5-9.5V6z"/><path d="M8.8 12l2.2 2.2 4.3-4.4"/></symbol>
+  <symbol id="z-blocks" viewBox="0 0 24 24"><rect x="3.5" y="13" width="7" height="7" rx="1.5"/><rect x="13.5" y="13" width="7" height="7" rx="1.5"/><rect x="8.5" y="4" width="7" height="7" rx="1.5"/></symbol>
+  <symbol id="z-layers" viewBox="0 0 24 24"><path d="M12 3.5l8.5 4.5L12 12.5 3.5 8z"/><path d="M3.5 12l8.5 4.5 8.5-4.5M3.5 16l8.5 4.5 8.5-4.5"/></symbol>
+  <symbol id="z-key" viewBox="0 0 24 24"><circle cx="8" cy="15" r="4"/><path d="M11 12l8-8M16 7l2.5 2.5M14 9l2 2"/></symbol>
+  <symbol id="z-inbox" viewBox="0 0 24 24"><path d="M4 13.5V18a1.5 1.5 0 0 0 1.5 1.5h13A1.5 1.5 0 0 0 20 18v-4.5"/><path d="M4 13.5l2.4-7.2A1.5 1.5 0 0 1 7.8 5.3h8.4a1.5 1.5 0 0 1 1.4 1l2.4 7.2H15a3 3 0 0 1-6 0z"/></symbol>
+  <symbol id="z-users" viewBox="0 0 24 24"><circle cx="9" cy="8.5" r="3.5"/><path d="M2.5 19.5c.6-3.2 3.2-5.5 6.5-5.5s5.9 2.3 6.5 5.5M16 5.2a3.5 3.5 0 0 1 0 6.6M18.5 14.4c1.6.8 2.7 2.6 3 5.1"/></symbol>
+  <symbol id="z-coins" viewBox="0 0 24 24"><ellipse cx="12" cy="6.5" rx="7" ry="3"/><path d="M5 6.5v5c0 1.7 3.1 3 7 3s7-1.3 7-3v-5M5 11.5v5c0 1.7 3.1 3 7 3s7-1.3 7-3v-5"/></symbol>
+  <symbol id="z-sliders" viewBox="0 0 24 24"><path d="M4 7h10M18 7h2M4 17h4M12 17h8"/><circle cx="16" cy="7" r="2"/><circle cx="10" cy="17" r="2"/></symbol>
+  <symbol id="z-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/></symbol>
+  <symbol id="z-pulse" viewBox="0 0 24 24"><path d="M3 12h4l2.5-6 5 12 2.5-6h4"/></symbol>
+  <symbol id="z-box" viewBox="0 0 24 24"><path d="M12 3l8 4.5v9L12 21l-8-4.5v-9z"/><path d="M4 7.5l8 4.5 8-4.5M12 12v9"/></symbol>
+  <symbol id="z-scale" viewBox="0 0 24 24"><path d="M12 4v16M7 20h10M5 7h14"/><path d="M5 7l-2.5 6a2.5 2.5 0 0 0 5 0zM19 7l-2.5 6a2.5 2.5 0 0 0 5 0z"/></symbol>
+  <symbol id="z-card" viewBox="0 0 24 24"><rect x="3" y="5.5" width="18" height="13" rx="2"/><path d="M3 10h18M7 15h3"/></symbol>
+  <symbol id="z-briefcase" viewBox="0 0 24 24"><rect x="3.5" y="7.5" width="17" height="12" rx="2"/><path d="M9 7.5V6a1.5 1.5 0 0 1 1.5-1.5h3A1.5 1.5 0 0 1 15 6v1.5M3.5 12.5h17"/></symbol>
+  <symbol id="z-globe" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M3.5 12h17M12 3.5c2.4 2.4 3.5 5.3 3.5 8.5s-1.1 6.1-3.5 8.5c-2.4-2.4-3.5-5.3-3.5-8.5S9.6 5.9 12 3.5z"/></symbol>
+  <symbol id="z-info" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M12 11v5.5M12 7.8v.2"/></symbol>
+  <symbol id="z-doc" viewBox="0 0 24 24"><path d="M6.5 3.5h7l4 4v13h-11z"/><path d="M13.5 3.5v4h4M9 12.5h6M9 16h6"/></symbol>
+  <symbol id="z-plug" viewBox="0 0 24 24"><path d="M9 3.5V8M15 3.5V8M6.5 8h11v3a5.5 5.5 0 0 1-11 0zM12 16.5v4"/></symbol>
+  <symbol id="z-rocket" viewBox="0 0 24 24"><path d="M12 15l-3-3c1-4.5 4-8 9.5-8.5C18 9 14.5 12 12 15z"/><path d="M9 12H5.5l2-3.5H11M12 15v3.5l3.5-2V13M6.5 16.5c-1.5.5-2.5 2-2.5 3.5 1.5 0 3-1 3.5-2.5"/></symbol>
+  <symbol id="z-person" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4.5 20.5c.8-4 3.8-6.5 7.5-6.5s6.7 2.5 7.5 6.5"/></symbol>
+  <symbol id="z-check" viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></symbol>
+  <symbol id="z-arrow" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></symbol>
+  <symbol id="z-arrowdown" viewBox="0 0 24 24"><path d="M12 5v14M6 13l6 6 6-6"/></symbol>
+  <symbol id="z-pause" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M10 9v6M14 9v6"/></symbol>
+  <symbol id="z-spark" viewBox="0 0 24 24"><path d="M12 3.5l1.8 5 5 1.8-5 1.8-1.8 5-1.8-5-5-1.8 5-1.8z"/><path d="M18.5 15.5l.8 2 2 .8-2 .8-.8 2-.8-2-2-.8 2-.8z"/></symbol>
+  <symbol id="z-trash" viewBox="0 0 24 24"><path d="M4.5 7h15M9.5 7V4.5h5V7M6.5 7l1 13h9l1-13"/></symbol>
+  <symbol id="z-refresh" viewBox="0 0 24 24"><path d="M19.5 12a7.5 7.5 0 1 1-2.2-5.3"/><path d="M19.5 4v4.5H15"/></symbol>
+  <symbol id="z-type" viewBox="0 0 24 24"><path d="M4 7V5h16v2M12 5v14M9 19h6"/></symbol>
+  <symbol id="z-loader" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5" opacity=".35"/><path d="M12 3.5a8.5 8.5 0 0 1 8.5 8.5"/></symbol>
+  <symbol id="z-panel" viewBox="0 0 24 24"><rect x="3.5" y="4.5" width="17" height="15" rx="2"/><path d="M14 4.5v15"/></symbol>
+  <symbol id="z-bug" viewBox="0 0 24 24"><rect x="7.5" y="8" width="9" height="11" rx="4.5"/><path d="M12 8V5.5M7.5 12H4M20 12h-3.5M7.5 16H4.5M19.5 16h-3M5 8l2.5 2M19 8l-2.5 2"/></symbol>
+  <symbol id="z-receipt" viewBox="0 0 24 24"><path d="M6 3.5h12v17l-2-1.3-2 1.3-2-1.3-2 1.3-2-1.3-2 1.3z"/><path d="M9 8h6M9 11.5h6M9 15h4"/></symbol>
+  <symbol id="z-x" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M9 9l6 6M15 9l-6 6"/></symbol>
+  <symbol id="z-lock" viewBox="0 0 24 24"><rect x="5" y="10.5" width="14" height="10" rx="2"/><path d="M8 10.5V7.5a4 4 0 0 1 8 0v3"/></symbol>
+</svg>
+
 <button class="menu-btn" type="button" aria-controls="case-menu" aria-expanded="false" aria-label="Open sections menu"><span aria-hidden="true"></span><span aria-hidden="true"></span></button>
 
-<nav class="toc" id="case-menu" aria-label="Case study sections">
-  <a class="toc__back" href="/#work-ce-copilot">
-    <svg viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M6 4.5 2.5 8 6 11.5"/><path d="M2.5 8h7A3.5 3.5 0 0 0 13 4.5v-1"/></svg>
-    Go back
-  </a>
-  <ul class="toc__list">
-    <li><a href="#top">Overview</a></li>
-    <li><a href="#problem">Problem framing</a></li>
-    <li><a href="#rules">Design principles</a></li>
-    <li><a href="#anatomy">Information architecture</a></li>
-    <li><a href="#answer">Content design</a></li>
-    <li><a href="#question">Trust and transparency</a></li>
-    <li><a href="#states">States and edge cases</a></li>
-    <li><a href="#loop">Service design</a></li>
-    <li><a href="#iterating">Design iteration</a></li>
-    <li><a href="#console">Dashboard design</a></li>
-    <li><a href="#stands">Success metrics</a></li>
-    <li><a href="#reflect">Reflections</a></li>
-  </ul>
-</nav>
+
 
 <main id="main">
 
   <section class="hero" id="top">
-    <div class="col">
     <a class="back" href="/#work-ce-copilot"><span aria-hidden="true">←</span><span>Back to work</span></a>
     <div class="hero__copy reveal">
-      <p class="project-line">CE CoPilot · Semiconductor equipment · Field service</p>
-      <h1>Designing CE&nbsp;CoPilot and its admin console</h1>
-      <p class="summary">I designed an AI troubleshooting assistant that gives field engineers a step-by-step answer they can check, and the admin console where admins track adoption, conversations, resolution rate and response time, and refine its responses.</p>
+      <h1>CE CoPilot: an AI assistant and its admin console</h1>
+      <p class="summary">Field engineers at a global semiconductor equipment maker lost time hunting for the right procedure. I designed an AI assistant that answers in steps they can check, and the admin console that turns every wrong answer into a fix.</p>
       <dl class="meta">
-        <div><dt>Role</dt><dd>Senior UI/UX Designer</dd></div>
-        <div><dt>Platform</dt><dd>Mobile, web and admin</dd></div>
-        <div><dt>Status</dt><dd><span class="live">In pilot</span></dd></div>
-        <div><dt>Year</dt><dd>2026</dd></div>
+        <div><dt>Role</dt><dd>Product designer</dd></div>
+        <div><dt>Team</dt><dd>Business analyst, product manager, AI/ML engineers</dd></div>
+        <div><dt>Users</dt><dd>Field engineers, admins and support engineers</dd></div>
+        <div><dt>Platform</dt><dd>Mobile, web and admin console</dd></div>
+        <div><dt>Status</dt><dd>Shipped, in pilot with 100+ engineers</dd></div>
+        <div><dt>Timeline</dt><dd>4 months, 2026</dd></div>
       </dl>
     </div>
-    </div>
-    <figure class="hero__media wide reveal">
+    <figure class="z-hero-img reveal">
       <img src="assets/cecopilot/cover.jpg?v=9" width="2400" height="1500" fetchpriority="high" alt="CE CoPilot across its surfaces: the admin console overview behind three phone screens, a new chat, a step-by-step answer with sources and confidence, and an answer drawn as a flowchart.">
     </figure>
   </section>
 
-  <article>
+  <nav class="toc" id="case-menu" data-cursor-plain aria-label="Case study sections">
+    <a class="toc__back" href="/#work-ce-copilot">
+      <svg viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M6 4.5 2.5 8 6 11.5"/><path d="M2.5 8h7A3.5 3.5 0 0 0 13 4.5v-1"/></svg>
+      Go back
+    </a>
+    <p class="toc__label">On this page</p>
+    <ul class="toc__list">
+      <li class="toc__grp"><a class="toc__top" href="#overview">Overview</a></li>
+      <li class="toc__grp"><a class="toc__top" href="#identify"><small>01</small><span>Identify</span></a>
+        <ul class="toc__sub">
+          <li><a href="#sides">Scope and roles</a></li>
+          <li><a href="#process">Process</a></li>
+          <li><a href="#problem">Problem framing</a></li>
+        </ul>
+      </li>
+      <li class="toc__grp"><a class="toc__top" href="#design"><small>02</small><span>Design</span></a>
+        <ul class="toc__sub">
+          <li><a href="#rules">Design principles</a></li>
+          <li><a href="#anatomy">Answer anatomy</a></li>
+          <li><a href="#governance">Feedback loop</a></li>
+          <li><a href="#iterating">Design iteration</a></li>
+          <li><a href="#flow">Workflow design</a></li>
+          <li><a href="#console">Admin console</a></li>
+        </ul>
+      </li>
+      <li class="toc__grp"><a class="toc__top" href="#impact"><small>03</small><span>Impact</span></a>
+        <ul class="toc__sub">
+          <li><a href="#stands">Where it stands</a></li>
+          <li><a href="#delivery">What is delivered</a></li>
+          <li><a href="#next">What’s next</a></li>
+        </ul>
+      </li>
+      <li class="toc__grp"><a class="toc__top" href="#reflect">Reflection</a></li>
+    </ul>
+  </nav>
 
-    <section class="sec sec--context" id="context" aria-label="Scope and how I worked">
-      <div class="context wide">
-        <div class="context__visual" aria-hidden="true">
-          <img class="is-active" src="assets/cecopilot/p/new-chat.png?v=9" width="418" height="843" alt="">
+  <div class="z-body">
+
+  <!-- AT A GLANCE -->
+  <section class="z-glance" id="overview" aria-labelledby="s-overview">
+    <div class="z-row z-row--open">
+      <h2 class="z-row__label" id="s-overview">At a glance</h2>
+    </div>
+    <div class="z-story reveal">
+      <a class="z-story__col" href="#identify">
+        <span class="z-story__kick"><span class="z-ic z-ic--warn"><svg><use href="#z-search"/></svg></span>01 · The problem</span>
+        <h3>The fix was there. Finding it wasn’t.</h3>
+        <ul class="z-ticks">
+          <li>In a tool manual</li>
+          <li>In a past service case</li>
+          <li>In the system logs, searched by hand</li>
+        </ul>
+        <span class="z-go">Read the problem <svg><use href="#z-arrow"/></svg></span>
+      </a>
+      <a class="z-story__col z-story__col--mine" href="#design">
+        <span class="z-story__kick"><span class="z-ic"><svg><use href="#z-spark"/></svg></span>02 · What I designed</span>
+        <h3>One chat to ask, check and fix</h3>
+        <ul class="z-jobs">
+          <li><b>Ask</b><span>A step-by-step answer, safety first</span></li>
+          <li><b>Check</b><span>Sources and a confidence score on every answer</span></li>
+          <li><b>Fix</b><span>A flagged answer becomes a fix for everyone</span></li>
+        </ul>
+        <span class="z-go">See the design <svg><use href="#z-arrow"/></svg></span>
+      </a>
+      <a class="z-story__col" href="#impact">
+        <span class="z-story__kick"><span class="z-ic"><svg><use href="#z-check"/></svg></span>03 · Where it stands</span>
+        <h3>Shipped, in pilot with 100+ engineers</h3>
+        <dl class="z-nums">
+          <div><dt>60%</dt><dd>less time to find a fix</dd></div>
+          <div><dt>70%</dt><dd>fewer escalations</dd></div>
+        </dl>
+        <span class="z-go">See the impact <svg><use href="#z-arrow"/></svg></span>
+      </a>
+    </div>
+  </section>
+
+  <!-- 01 IDENTIFY -->
+  <section class="act" id="identify" aria-labelledby="a-identify">
+    <header class="act__head reveal"><p class="act__label">01 · Identify</p><h2 class="act__title" id="a-identify">The engineers, the console and the problem</h2></header>
+
+    <section class="sec" id="sides" aria-labelledby="s-sides">
+      <header class="head col reveal">
+        <h2 id="s-sides">Two sides of CE CoPilot</h2>
+        <p>An engineer asks the copilot at the tool, on a phone, or at a desk in the web app. Behind it, admins run the pilot in the console, and support engineers turn flagged answers into fixes. I designed both sides.</p>
+      </header>
+      <div class="z-sides reveal">
+        <div class="z-side z-side--mine">
+          <span class="z-ic"><svg><use href="#z-spark"/></svg></span>
+          <span class="z-side__kicker">Engineer app · mobile and web</span>
+          <h3>Engineers ask and get a procedure they can check</h3>
+          <span class="z-side__who"><svg><use href="#z-person"/></svg>Designed by me</span>
         </div>
-        <div class="context__steps">
-          <div class="context__step" data-step="0">
-            <span class="kicker">Three surfaces</span>
-            <h3>One chat for the engineer, one console behind it</h3>
-            <ul class="dash">
-              <li><b>Mobile app:</b> for the engineer standing at the tool.</li>
-              <li><b>Web app:</b> the same chat at a desk, with the sidebar open.</li>
-              <li><b>Admin console:</b> where admins run the pilot and support engineers turn flagged answers into fixes.</li>
-            </ul>
-            <figure class="step-visual"><img src="assets/cecopilot/p/new-chat.png?v=9" width="418" height="843" loading="lazy" alt="A new chat: a greeting, one field, and the scope one tap away."></figure>
-          </div>
+        <span class="z-sides__link" aria-hidden="true"><svg><use href="#z-arrow"/></svg></span>
+        <div class="z-side z-side--mine">
+          <span class="z-ic"><svg><use href="#z-shield"/></svg></span>
+          <span class="z-side__kicker">Admin console</span>
+          <h3>Admins run the pilot and fix what went wrong</h3>
+          <span class="z-side__who"><svg><use href="#z-person"/></svg>Designed by me</span>
         </div>
       </div>
-      <div class="worked col reveal">
-        <span class="kicker">How I worked</span>
-        <h3>Learned from the scope, tested with the engineers</h3>
-        <ul class="dash">
-          <li>Requirements came through our business analyst as the client’s scope of work, and the scope is where I learned the domain.</li>
-          <li>Our engineers worked alongside the client’s engineering team, and what they observed came back to me in our meetings.</li>
-          <li>The scope didn’t say how a flagged answer becomes a fix, so I worked that out with our own engineering team.</li>
-          <li>I ran the usability testing with the 100+ field engineers in the pilot myself. It showed why the answers had to change, and its test report is where two of the results below come from.</li>
-        </ul>
+      <div class="z-row reveal">
+        <h3 class="z-row__label">What happens in it</h3>
+        <div class="z-row__body z-items z-items--4in3">
+          <div class="z-item"><span class="z-ic"><svg><use href="#z-search"/></svg></span><h4>Ask</h4><p>An engineer describes the fault, at the tool or at a desk.</p></div>
+          <div class="z-item"><span class="z-ic"><svg><use href="#z-doc"/></svg></span><h4>Check</h4><p>Every answer names its sources and carries a confidence score.</p></div>
+          <div class="z-item"><span class="z-ic"><svg><use href="#z-inbox"/></svg></span><h4>Flag</h4><p>A wrong answer goes to the admin inbox, in the engineer’s words.</p></div>
+          <div class="z-item"><span class="z-ic"><svg><use href="#z-refresh"/></svg></span><h4>Fix</h4><p>An expert writes the fix once, and every later answer uses it.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="sec" id="process" aria-labelledby="s-process">
+      <header class="head col reveal">
+        <h2 id="s-process">How I worked</h2>
+        <p>I learned the domain from the client’s scope, and watched engineers use the answers before settling them.</p>
+      </header>
+      <div class="z-rows reveal">
+        <div class="z-row">
+          <h3 class="z-row__label">My role</h3>
+          <dl class="z-row__body z-who z-team">
+            <div><dt>What I owned</dt><dd>The end-to-end product design: the mobile app, the web app and the admin console.</dd></div>          </dl>
+        </div>
+        <div class="z-row">
+          <h3 class="z-row__label">My part</h3>
+          <ol class="z-row__body z-steps5" aria-label="My part, in order">
+            <li><b>01</b>Learn the domain</li>
+            <li><b>02</b>Answer format</li>
+            <li><b>03</b>Mobile and web</li>
+            <li><b>04</b>Usability testing</li>
+            <li><b>05</b>Console and fix loop</li>
+          </ol>
+        </div>
+        <div class="z-row">
+          <h3 class="z-row__label">Where the requirements came from</h3>
+          <div class="z-row__body z-items z-source">
+            <div class="z-item"><h4>The scope of work</h4><p>The client’s scope came through our business analyst, and it’s where I learned the domain.</p></div>
+            <div class="z-item"><h4>The engineers</h4><p>I ran usability testing with 4 field engineers, watching them find solutions and work in the platform.</p></div>
+            <div class="z-item"><h4>The gaps</h4><p>The scope didn’t say how a flagged answer becomes a fix, so I worked that out with our engineers.</p></div>
+          </div>
+        </div>
+        <div class="z-row">
+          <h3 class="z-row__label">What I had to learn</h3>
+          <div class="z-row__body">
+            <div class="z-items">
+              <div class="z-item"><h4>Where fixes live</h4><p>The three places an engineer looks.</p><span class="z-chips"><i>Tool manuals</i><i>Service cases</i><i>System logs</i></span></div>
+              <div class="z-item"><h4>Safety first</h4><p>What has to happen before anyone touches the tool.</p><span class="z-chips"><i>Lockout</i><i>Venting</i><i>Preconditions</i></span></div>
+              <div class="z-item"><h4>Grounded answers</h4><p>How an answer is built from the documents.</p><span class="z-chips"><i>Sources</i><i>Confidence</i><i>Revisions</i></span></div>
+            </div>
+          </div>
+        </div>
+        <div class="z-row">
+          <h3 class="z-row__label">Who I worked with</h3>
+          <dl class="z-row__body z-who z-team">
+            <div><dt>Business analyst</dt><dd>The client’s scope of work and its requirements.</dd></div>
+            <div><dt>Product manager</dt><dd>Priorities and scope for the pilot.</dd></div>
+            <div><dt>AI/ML engineers</dt><dd>Built the answers, worked beside the client’s team, and the fix flow with me.</dd></div>
+          </dl>
+        </div>
       </div>
     </section>
 
     <section class="sec" id="problem" aria-labelledby="s-problem">
-      <header class="head col reveal">
-        <h2 id="s-problem">The fix was in the documents. Finding it was the problem.</h2>
-        <p>When a tool faults, a field engineer needs the right procedure, fast. It sits in a tool manual, a past service case or the system logs, and finding it meant searching all three by hand. The client also wanted every engineer to reach the same approved answer.</p>
-      </header>
-      <div class="metrics wide reveal">
-        <div class="metric"><strong>1,400+</strong><span>Approved documents to search</span></div>
-        <div class="metric"><strong>100+</strong><span>Field engineers in the pilot</span></div>
+      <div class="quote quote--card wide reveal">
+        <div class="col">
+          <span class="kicker">Why it mattered</span>
+          <h2 id="s-problem" class="quote__line">One wrong number can break a machine worth millions.</h2>
+          <p class="quote__sub">That is why every answer shows where it came from, and safety steps always come first.</p>
+        </div>
       </div>
-
-      <div class="quote col reveal">
-        <span class="kicker">Why it matters</span>
-        <p class="quote__line">One wrong number can break a machine worth millions.</p>
-        <p class="quote__sub">That is why every answer shows where it came from, and safety steps always come first.</p>
+      <div class="z-row reveal">
+        <h3 class="z-row__label">What engineers were up against</h3>
+        <dl class="z-row__body z-who z-team">
+          <div><dt>Three places to search</dt><dd>A manual, a past case or the logs, searched by hand while the tool is down.</dd></div>
+          <div><dt>One right answer</dt><dd>The client wanted every engineer to reach the same approved procedure.</dd></div>
+          <div><dt>Safety can’t be skipped</dt><dd>Lockout and venting come before any step, however urgent the fault.</dd></div>
+        </dl>
+      </div>
+      <div class="z-row reveal">
+        <h3 class="z-row__label">The scale of it</h3>
+        <dl class="z-row__body z-who z-team">
+          <div><dt>1,400+</dt><dd>approved documents to search.</dd></div>
+          <div><dt>100+</dt><dd>field engineers in the pilot.</dd></div>
+        </dl>
       </div>
     </section>
+  </section>
+
+  <!-- 02 DESIGN -->
+  <section class="act" id="design" aria-labelledby="a-design">
+    <header class="act__head reveal"><p class="act__label">02 · Design</p><h2 class="act__title" id="a-design">Four rules, one answer, one loop</h2></header>
 
     <section class="sec" id="rules" aria-labelledby="s-rules">
       <header class="head col reveal">
         <h2 id="s-rules">Four rules the product could not break</h2>
-        <p class="claim">Everything in CE CoPilot follows from them.</p>
+        <p>Everything in CE CoPilot follows from these four. The last column shows where each one appears.</p>
       </header>
-      <div class="rules wide reveal">
-        <article><span class="kicker">01</span><h3>Only approved documents</h3><p>Answers come from approved technical documents and structured datasets, nothing else. Off-topic questions are declined.</p></article>
-        <article><span class="kicker">02</span><h3>Always show the source</h3><p>Answers are built from passages found in the documents, so each one can name its sources and carry a confidence score an engineer can question.</p></article>
-        <article><span class="kicker">03</span><h3>Safety before steps</h3><p>Lockout, venting and preconditions come before any diagnostic step, every time.</p></article>
-        <article><span class="kicker">04</span><h3>Every wrong answer becomes a fix</h3><p>A flag from an engineer turns into a scoped, versioned fix that later answers reuse.</p></article>
+      <div class="z-table reveal" role="table" aria-label="The four rules">
+        <div class="z-table__row z-table__row--head" role="row"><span role="columnheader">Rule</span><span role="columnheader">What it means</span><span role="columnheader">Where you see it</span></div>
+        <div class="z-table__row" role="row"><span role="cell" class="z-table__rule"><b>01</b>Only approved documents</span><span role="cell">Answers come from approved documents and datasets, nothing else. Off-topic questions are declined.</span><a role="cell" href="#step-1">Step 01<span>Ask</span></a></div>
+        <div class="z-table__row" role="row"><span role="cell" class="z-table__rule"><b>02</b>Always show the source</span><span role="cell">Each answer names its sources and carries a confidence score an engineer can question.</span><a role="cell" href="#step-3">Step 03<span>Check the answer</span></a></div>
+        <div class="z-table__row" role="row"><span role="cell" class="z-table__rule"><b>03</b>Safety before steps</span><span role="cell">Lockout, venting and preconditions come before any diagnostic step, every time.</span><a role="cell" href="#step-2">Step 02<span>Read the procedure</span></a></div>
+        <div class="z-table__row" role="row"><span role="cell" class="z-table__rule"><b>04</b>Every wrong answer becomes a fix</span><span role="cell">A flag turns into a scoped, versioned fix that later answers reuse.</span><a role="cell" href="#step-5">Step 05<span>Fix it for everyone</span></a></div>
       </div>
-      <p class="subhead col reveal">The opportunity was to make every answer <em>checkable</em> and every mistake <em>fixable</em>.</p>
     </section>
 
     <section class="sec" id="anatomy" aria-labelledby="s-anatomy">
       <header class="head col reveal">
         <h2 id="s-anatomy">What every answer had to account for</h2>
-        <p>An answer is more than text. These are the parts and states each one had to handle, from the moment a question is sent to the moment the chat is closed.</p>
+        <p>An answer is more than text. Each part answers one question an engineer has, from sending a question to closing the chat.</p>
       </header>
-      <div class="tree wide reveal">
-        <div class="tree__root">A troubleshooting answer</div>
-        <div class="tree__branches">
-          <article class="branch"><h3>Before the answer</h3><ul><li>A live status line</li><li>Five steps, shown in order</li></ul></article>
-          <article class="branch"><h3>The answer</h3><ul><li>Issue description</li><li>Safety and preconditions</li><li>Root cause</li><li>Diagnostic steps</li><li>Corrective actions</li></ul></article>
-          <article class="branch"><h3>The footer</h3><ul><li>Sources</li><li>Confidence score</li><li>Thumbs up or down</li><li>Share feedback</li></ul></article>
-          <article class="branch"><h3>Out of scope</h3><ul><li>Off-topic question</li><li>Too vague to answer</li><li>Asks for platform, part or code</li></ul></article>
-          <article class="branch"><h3>After the answer</h3><ul><li>Draw it as a flowchart</li><li>Mark as resolved</li><li>Category on close</li></ul></article>
+      <div class="z-ia reveal">
+        <div class="z-ia__root"><svg><use href="#z-spark"/></svg>A troubleshooting answer</div>
+        <div class="z-ia__groups">
+          <div class="z-ia__group"><span class="z-ic"><svg><use href="#z-loader"/></svg></span><h3>Before</h3><p class="z-ia__q">Is it working?</p><ul><li>A live status line</li><li>Five steps, in order</li></ul></div>
+          <div class="z-ia__group"><span class="z-ic"><svg><use href="#z-doc"/></svg></span><h3>The answer</h3><p class="z-ia__q">What’s wrong, and what do I do?</p><ul><li>Issue description</li><li>Safety and preconditions</li><li>Root cause</li><li>Diagnostic steps</li><li>Corrective actions</li></ul></div>
+          <div class="z-ia__group"><span class="z-ic"><svg><use href="#z-scale"/></svg></span><h3>The footer</h3><p class="z-ia__q">Can I trust it?</p><ul><li>Sources</li><li>Confidence score</li><li>Thumbs up or down</li><li>Share feedback</li></ul></div>
+          <div class="z-ia__group"><span class="z-ic"><svg><use href="#z-info"/></svg></span><h3>Out of scope</h3><p class="z-ia__q">Can it answer this?</p><ul><li>Off-topic question</li><li>Too vague to answer</li><li>Asks for platform, part or code</li></ul></div>
+          <div class="z-ia__group"><span class="z-ic"><svg><use href="#z-check"/></svg></span><h3>After</h3><p class="z-ia__q">What happens next?</p><ul><li>Draw it as a flowchart</li><li>Mark as resolved</li><li>Category on close</li></ul></div>
         </div>
       </div>
     </section>
 
-    <section class="sec" id="answer" aria-labelledby="s-answer">
+    <section class="sec" id="governance" aria-labelledby="s-gov">
       <header class="head col reveal">
-        <h2 id="s-answer">Read a procedure, not a paragraph</h2>
-        <p>The first answers ran on as one long reply. In usability testing, engineers read the whole message to find the right solution path, and it took them longer than it should have. The client’s manuals, alongside a set of sample questions and the answers engineers expected, showed how to break a reply into labelled parts, so an engineer can go straight to the one they need. Every troubleshooting answer now uses the same five, in the same order.</p>
+        <h2 id="s-gov">How a wrong answer becomes a better one</h2>
+        <p>The part I’m proudest of. A thumbs-down isn’t the end of the story: it starts a fix that every later answer benefits from.</p>
       </header>
-      <div class="iter iter--answer wide">
-        <article class="reveal">
-          <div class="well"><div class="anno">
-            <img src="assets/cecopilot/web-answer-paragraph-crop.jpg?v=1" width="840" height="720" loading="lazy" alt="The first version of a web answer about a chamber lid on Producer GT: the condition, the safety steps, the working hypothesis, the checks and the fix run on as paragraphs and bullets with no headings. Grey markers show where each of the five parts begins.">
-            <span class="pin pin--ghost" style="--x:3.6%;--y:2.4%" aria-hidden="true">1</span>
-            <span class="pin pin--ghost" style="--x:3.6%;--y:14.6%" aria-hidden="true">2</span>
-            <span class="pin pin--ghost" style="--x:3.6%;--y:39%" aria-hidden="true">3</span>
-            <span class="pin pin--ghost" style="--x:3.6%;--y:51.3%" aria-hidden="true">4</span>
-            <span class="pin pin--ghost" style="--x:3.6%;--y:72.6%" aria-hidden="true">5</span>
-          </div></div>
-          <div class="iter__copy"><span class="kicker">The answer · Before</span><h3>One continuous reply</h3><p>All five parts were there, run together as paragraphs and bullets with no headings. In testing, engineers read the whole reply to find the one step they needed.</p></div>
-        </article>
-        <article class="reveal">
-          <div class="well"><div class="anno">
-            <img src="assets/cecopilot/web-answer-structured-crop.jpg?v=1" width="840" height="720" loading="lazy" alt="The same answer after the change: issue description, safety and preconditions, root cause, recommended diagnostic steps and corrective actions, each under its own heading and numbered one to five.">
-            <span class="pin" style="--x:3.6%;--y:2.4%" aria-hidden="true">1</span>
-            <span class="pin" style="--x:3.6%;--y:17.6%" aria-hidden="true">2</span>
-            <span class="pin" style="--x:3.6%;--y:45.1%" aria-hidden="true">3</span>
-            <span class="pin" style="--x:3.6%;--y:60.4%" aria-hidden="true">4</span>
-            <span class="pin" style="--x:3.6%;--y:84.9%" aria-hidden="true">5</span>
-          </div></div>
-          <div class="iter__copy"><span class="kicker">The answer · After</span><h3>Five labelled parts, every time</h3><p>Issue, safety and preconditions, root cause, diagnostic steps and corrective actions, each under its own heading, so the safety notes and the fix are always in the same place.</p></div>
-        </article>
+      <div class="cp-loop wide reveal">
+        <ol class="cp-loop__track">
+          <li class="cp-loop__step">
+            <span class="cp-loop__top"><span class="z-ic"><svg><use href="#z-person"/></svg></span><span class="cp-loop__num">01</span></span>
+            <h3>An engineer flags it</h3>
+            <p>From the answer footer: status, category and what was wrong, in their own words.</p>
+            <span class="z-chips"><i>Incorrect</i><i>Outdated</i><i>Incomplete</i><i>Safety</i></span>
+            <p class="cp-loop__eg"><b>Example</b>A torque value looks wrong.</p>
+          </li>
+          <li class="cp-loop__step">
+            <span class="cp-loop__top"><span class="z-ic"><svg><use href="#z-inbox"/></svg></span><span class="cp-loop__num">02</span></span>
+            <h3>It lands in the inbox</h3>
+            <p>Sorted by type, and timed against a two-day target to refine.</p>
+            <span class="z-chips"><i>Pending</i><i>In review</i><i>Refined</i></span>
+            <p class="cp-loop__eg"><b>Example</b>The answer quoted 18 N·m from a superseded revision.</p>
+          </li>
+          <li class="cp-loop__step">
+            <span class="cp-loop__top"><span class="z-ic"><svg><use href="#z-doc"/></svg></span><span class="cp-loop__num">03</span></span>
+            <h3>An expert writes the fix</h3>
+            <p>With the whole thread in view, scoped and tied to its source document.</p>
+            <span class="z-chips"><i>One site</i><i>One tool family</i><i>Source cited</i></span>
+            <p class="cp-loop__eg"><b>Example</b>Points answers to Rev G, 22 N·m, for one site.</p>
+          </li>
+          <li class="cp-loop__step cp-loop__step--end">
+            <span class="cp-loop__top"><span class="z-ic"><svg><use href="#z-refresh"/></svg></span><span class="cp-loop__num">04</span></span>
+            <h3>Future answers use it</h3>
+            <p>Versioned, never deleted, and counted every time it’s applied.</p>
+            <span class="z-chips"><i>Versioned</i><i>Counted</i></span>
+            <p class="cp-loop__eg"><b>Example</b>The next torque question gets 22 N·m.</p>
+          </li>
+        </ol>
+        <div class="cp-loop__return"><span><svg viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M13 8a5 5 0 1 1-1.6-3.7"/><path d="M13 2.5v2.8h-2.8"/></svg>Then the loop starts again. In its first month, it lifted the resolution rate 4%</span></div>
       </div>
-      <div class="cards wide">
-        <article class="reveal"><div class="well"><img src="assets/cecopilot/p/structured.png?v=9" width="418" height="843" loading="lazy" alt="An answer opening with the issue description, safety and preconditions, and root cause."></div><div class="card__copy"><span class="kicker">Issue · Safety · Root cause</span><h3>What’s wrong, and what to make safe first</h3><p>Lockout and venting come before anything an engineer would touch.</p></div></article>
-        <article class="reveal"><div class="well"><img src="assets/cecopilot/p/steps.png?v=9" width="418" height="843" loading="lazy" alt="Diagnostic steps as short, checkable bullets in order."></div><div class="card__copy"><span class="kicker">Diagnostic steps</span><h3>Short, checkable steps, in order</h3><p>Each step is one check, so an engineer can work down the list at the tool.</p></div></article>
-        <article class="reveal"><div class="well"><img src="assets/cecopilot/p/diagram.png?v=1" width="418" height="843" loading="lazy" alt="An answer drawn as a flowchart: decision points and steps with zoom controls, still followed by its source and confidence score."></div><div class="card__copy"><span class="kicker">Corrective actions</span><h3>Long fixes, drawn as a flowchart</h3><p>A procedure with branches can be drawn as a flowchart in one tap, still with its source and confidence.</p></div></article>
-      </div>
-    </section>
-
-    <section class="sec" id="question" aria-labelledby="s-question">
-      <header class="head col reveal">
-        <h2 id="s-question">Question any answer</h2>
-        <p>The footer is where trust is earned: the sources, a confidence score explained in plain words, and a way to say what was wrong.</p>
-      </header>
-      <div class="cards wide">
-        <article class="reveal"><div class="well"><img src="assets/cecopilot/p/confidence-answer.png?v=1" width="418" height="843" loading="lazy" alt="The confidence score explained over a troubleshooting answer: how closely the documents match, lowered by details still missing."></div><div class="card__copy"><span class="kicker">Confidence</span><h3>A score you can question</h3><p>How closely the documents match the question, lowered by details still missing.</p></div></article>
-        <article class="reveal"><div class="well"><img src="assets/cecopilot/p/feedback-torque.png?v=1" width="418" height="843" loading="lazy" alt="Share feedback on a torque answer: status, category and what was wrong, in the engineer’s words."></div><div class="card__copy"><span class="kicker">Feedback</span><h3>Say what was wrong</h3><p>Status, category and the engineer’s own words, sent straight to the admin inbox.</p></div></article>
-        <article class="reveal"><div class="well"><img src="assets/cecopilot/p/resolve.png?v=9" width="418" height="843" loading="lazy" alt="Mark as resolved: closing the chat asks for a category."></div><div class="card__copy"><span class="kicker">Resolve</span><h3>One chat, one issue</h3><p>Resolving closes the chat, so every resolution rate in the console stays true.</p></div></article>
-      </div>
-    </section>
-
-    <section class="sec" id="states" aria-labelledby="s-states">
-      <header class="head col reveal">
-        <h2 id="s-states">While it works, it says what it’s doing</h2>
-        <p>Five states instead of one spinner. A wait feels shorter when you can see the work, and a question that’s off-topic or too thin gets a reply asking for the platform, part or code.</p>
-      </header>
-      <div class="states wide">
-        <article class="state reveal">
-          <div class="well">
-            <div class="status">
-              <img class="status__phone" src="assets/cecopilot/p/status-top.png?v=1" width="418" height="300" loading="lazy" alt="A question sent in the mobile app, with the space under it where the status line appears.">
-              <ol class="status__seq" aria-label="Status lines, in the order they appear">
-                <li><b aria-hidden="true">1</b><span>Thinking…</span></li>
-                <li><b aria-hidden="true">2</b><span>Working on it…</span></li>
-                <li><b aria-hidden="true">3</b><span>Reading context…</span></li>
-                <li><b aria-hidden="true">4</b><span>Searching knowledge…</span></li>
-                <li><b aria-hidden="true">5</b><span>Reading documents…</span></li>
-              </ol>
-            </div>
-          </div>
-          <h3>Five status lines, in order</h3>
-        </article>
-        <article class="state reveal">
-          <div class="well"><img class="state__phone" src="assets/cecopilot/p/out-of-scope-clean.png?v=1" width="418" height="843" loading="lazy" alt="A reply to a vague question: it asks for the equipment issue, platform, part or problem code before it answers."></div>
-          <h3>Too vague? It asks</h3>
-        </article>
-      </div>
-    </section>
-
-    <section class="panel wide reveal" id="loop" aria-labelledby="s-loop">
-      <header class="head">
-        <h2 id="s-loop">Wrong answers become better ones</h2>
-        <p>This is the part of the product I’m proudest of. A thumbs-down in the app isn’t the end of the story: it starts a fix that every later answer benefits from.</p>
-      </header>
-      <div class="loop">
-        <figure><span class="chip"><i>01</i>An engineer flags it</span><figcaption>Status, category and what was wrong, from the answer footer.</figcaption></figure>
-        <figure><span class="chip"><i>02</i>It lands in the inbox</span><figcaption>Sorted by type: incorrect, outdated, incomplete or a safety concern.</figcaption></figure>
-        <figure><span class="chip"><i>03</i>An expert writes the fix</span><figcaption>Scoped to one site or one tool family, with its source document.</figcaption></figure>
-        <figure><span class="chip"><i>04</i>Future answers use it</span><figcaption>Versioned, never deleted, counted every time it’s applied.</figcaption></figure>
-      </div>
-      <p class="loop__back"><b>Then it starts again:</b> the next engineer gets the corrected answer.</p>
     </section>
 
     <section class="sec" id="iterating" aria-labelledby="s-iter">
       <header class="head col reveal">
-        <h2 id="s-iter">Iterating on the feedback record</h2>
-        <p>The admin reads a wrong answer and writes its fix. The first version made that harder than it needed to be.</p>
+        <h2 id="s-iter">Three calls I reversed</h2>
+        <p>Each first version made sense until someone used it.</p>
       </header>
-      <div class="iter wide">
-        <article class="reveal">
-          <div class="well"><div class="anno anno--tall">
-            <img class="is-tall" src="assets/cecopilot/admin-fb-sidepanel.jpg?v=1" width="1298" height="1838" loading="lazy" alt="The first version of a feedback record, in a narrow side panel: the record details, the engineer’s question, the copilot’s answer, the report, the conversation and the refinement form, all in one column. The thread starts a quarter of the way down and the fix form two thirds of the way down.">
-            <span class="tag" style="--x:2.85%;--y:24.5%" aria-hidden="true">The thread</span>
-            <span class="tag" style="--x:2.85%;--y:69.7%" aria-hidden="true">The fix</span>
-          </div></div>
-          <div class="iter__copy"><span class="kicker">The feedback record · Rejected</span><h3>The record in a side panel</h3><p>Question, answer, report, conversation and fix form were stacked in one narrow column. Finding what had gone wrong meant scrolling past everything else.</p></div>
-        </article>
-        <article class="reveal">
-          <div class="well"><div class="anno anno--wide">
-            <img src="assets/cecopilot/admin-fb-record-filled.jpg?v=1" width="2880" height="1800" loading="lazy" alt="A feedback record on a full page: on the left the refinement points answers to Rev G at 22 N·m, applies to one site and names its source document; on the right the original thread and what the engineer said was wrong.">
-            <span class="tag" style="--x:20.4%;--y:22.4%" aria-hidden="true">The fix</span>
-            <span class="tag" style="--x:58.5%;--y:22.6%" aria-hidden="true">The thread</span>
-          </div></div>
-          <div class="iter__copy"><span class="kicker">The feedback record · Selected</span><h3>The record as a full page</h3><p>The fix on the left and the whole thread on the right, so the admin corrects an answer with its context in view. Here, the copilot quoted 18 N·m from a superseded revision, and the fix points later answers to Rev G.</p></div>
-        </article>
+
+      <article class="z-dec reveal">
+        <header class="z-dec__head"><span class="z-dec__num">Decision 01</span><h3>How should an answer read?</h3></header>
+        <div class="iter z-compare">
+          <div class="z-compare__item">
+            <div class="well"><img class="ba__img" src="assets/cecopilot/web-answer-paragraph-crop.jpg?v=1" width="840" height="720" loading="lazy" alt="The first version of a web answer about a chamber lid on a deposition tool: the condition, the safety steps, the working hypothesis, the checks and the fix run on as paragraphs and bullets with no headings."></div>
+            <p class="z-compare__cap"><span class="z-tag">First</span>One continuous reply</p>
+          </div>
+          <div class="z-compare__item">
+            <div class="well"><img class="ba__img" src="assets/cecopilot/web-answer-structured-crop.jpg?v=1" width="840" height="720" loading="lazy" alt="The same answer after the change: issue description, safety and preconditions, root cause, recommended diagnostic steps and corrective actions, each under its own heading and numbered one to five."></div>
+            <p class="z-compare__cap"><span class="z-tag z-tag--now">Now</span>Five labelled parts, every time</p>
+          </div>
+        </div>
+        <dl class="z-dec__rows">
+          <div><dt>Options we looked at</dt><dd>One continuous reply; a short summary that links to the manual; five labelled parts.</dd></div>
+          <div><dt>Why I changed it</dt><dd>Watching 4 engineers work in the platform, I saw them read the whole reply to find the one step they needed. The client’s manuals showed how to split it into parts they could jump to.</dd></div>
+          <div><dt>What it cost</dt><dd>A fixed template. A simple fault still gets all five parts, so some answers read longer than they need to.</dd></div>
+        </dl>
+      </article>
+
+      <article class="z-dec reveal">
+        <header class="z-dec__head"><span class="z-dec__num">Decision 02</span><h3>Where should an admin fix an answer?</h3></header>
+        <div class="iter z-compare">
+          <div class="z-compare__item">
+            <div class="well"><img class="ba__img" src="assets/cecopilot/admin-fb-sidepanel.jpg?v=1" width="1298" height="1838" loading="lazy" alt="The first version of a feedback record, in a narrow side panel: the record details, the engineer’s question, the copilot’s answer, the report, the conversation and the refinement form, all in one column."></div>
+            <p class="z-compare__cap"><span class="z-tag">First</span>In a side panel</p>
+          </div>
+          <div class="z-compare__item">
+            <div class="well"><img class="ba__img" src="assets/cecopilot/admin-fb-record-filled.jpg?v=1" width="2880" height="1800" loading="lazy" alt="A feedback record on a full page: on the left the refinement points answers to Rev G at 22 N·m, applies to one site and names its source document; on the right the original thread and what the engineer said was wrong."></div>
+            <p class="z-compare__cap"><span class="z-tag z-tag--now">Now</span>On a full page, fix beside the thread</p>
+          </div>
+        </div>
+        <dl class="z-dec__rows">
+          <div><dt>Options we looked at</dt><dd>A side panel beside the inbox; a modal over it; a full page with the fix beside the thread.</dd></div>
+          <div><dt>Why I changed it</dt><dd>Question, answer, report, conversation and fix form were stacked in one narrow column, so finding what went wrong meant scrolling past everything else.</dd></div>
+          <div><dt>What it cost</dt><dd>Leaving the inbox. Working through a run of flags now means going back and forth, where a panel let the admin skim them in place.</dd></div>
+        </dl>
+      </article>
+
+      <article class="z-dec reveal">
+        <header class="z-dec__head"><span class="z-dec__num">Decision 03</span><h3>How should adoption be counted?</h3></header>
+        <dl class="z-dec__rows">
+          <div><dt>Options we looked at</dt><dd>Engineers who have ever used it; weekly active engineers; the share using it on an average day.</dd></div>
+          <div><dt>First</dt><dd>Engineers who have ever used it.</dd></div>
+          <div><dt>Now</dt><dd>The share of engineers using it on an average day.</dd></div>
+          <div><dt>Why I changed it</dt><dd>“Ever used” only climbs, so it can’t show a pilot losing interest. The daily share is the number that moves.</dd></div>
+          <div><dt>What it cost</dt><dd>A smaller, less flattering number in pilot reviews, and one that dips on quiet days, so the tile has to explain it.</dd></div>
+        </dl>
+      </article>
+    </section>
+
+    <section class="sec" id="flow" aria-labelledby="s-flow">
+      <header class="head col reveal">
+        <h2 id="s-flow">A fault, start to finish</h2>
+        <p>Five moments from one fault, from the first question to the fix every later engineer gets.</p>
+      </header>
+      <ol class="z-flow reveal">
+        <li><a href="#step-1"><span class="z-ic"><svg><use href="#z-search"/></svg></span><b>01</b>Ask</a></li>
+        <li><a href="#step-2"><span class="z-ic"><svg><use href="#z-doc"/></svg></span><b>02</b>Read the procedure</a></li>
+        <li><a href="#step-3"><span class="z-ic"><svg><use href="#z-scale"/></svg></span><b>03</b>Check the answer</a></li>
+        <li><a href="#step-4"><span class="z-ic"><svg><use href="#z-check"/></svg></span><b>04</b>Flag or resolve</a></li>
+        <li><a href="#step-5"><span class="z-ic"><svg><use href="#z-refresh"/></svg></span><b>05</b>Fix it for everyone</a></li>
+      </ol>
+
+      <div class="cp-step wide reveal" id="step-1">
+        <div class="cp-step__copy"><span class="kicker">Step 01</span><h3>Ask</h3><p>A greeting, one field, and the scope one tap away. While it works, it says what it’s doing in five status lines instead of one spinner, and a question that’s off-topic or too thin gets a reply asking for the platform, part or code.</p></div>
+        <div class="cp-phones cp-phones--2"><figure><div class="well cp-cycle-well"><div class="cp-live"><img src="assets/cecopilot/p/status-live.png?v=1" width="418" height="843" loading="lazy" alt="The chat after a question is sent, with a live status line under it."><span class="cp-live__line" aria-live="off"><i class="cp-live__spin" aria-hidden="true"></i><span class="cp-live__text">Thinking…</span></span></div></div><figcaption>Five status lines instead of one spinner.</figcaption></figure><figure><div class="well"><img src="assets/cecopilot/p/out-of-scope-clean.png?v=1" width="418" height="843" loading="lazy" alt="A reply to a vague question: it asks for the equipment issue, platform, part or problem code before it answers."></div><figcaption>Too vague? It asks.</figcaption></figure></div>
       </div>
+
+      <div class="cp-step wide reveal" id="step-2">
+        <div class="cp-step__copy"><span class="kicker">Step 02</span><h3>Read the procedure</h3><p>What’s wrong, what to make safe first, then short checkable steps in order. A procedure with branches can be drawn as a flowchart in one tap, still with its source and confidence.</p></div>
+        <div class="cp-phones cp-phones--2"><figure><div class="well"><img src="assets/cecopilot/p/structured.png?v=9" width="418" height="843" loading="lazy" alt="An answer opening with the issue description, safety and preconditions, and root cause."></div><figcaption>Issue, safety, root cause.</figcaption></figure><figure><div class="well"><img src="assets/cecopilot/p/diagram.png?v=1" width="418" height="843" loading="lazy" alt="An answer drawn as a flowchart: decision points and steps with zoom controls, still followed by its source and confidence score."></div><figcaption>Long fixes, as a flowchart.</figcaption></figure></div>
+      </div>
+
+      <div class="cp-step wide reveal" id="step-3">
+        <div class="cp-step__copy"><span class="kicker">Step 03</span><h3>Check the answer</h3><p>The footer is where trust is earned: the sources, and a confidence score explained in plain words. It shows how closely the documents match the question, lowered by details still missing.</p></div>
+        <div class="cp-phones cp-phones--2"><figure><div class="well"><img src="assets/cecopilot/p/follow-up.png?v=1" width="418" height="843" loading="lazy" alt="An answer whose footer lists its source document and a confidence score of 82 percent, with thumbs up and down."></div><figcaption>Sources and confidence on every answer.</figcaption></figure><figure><div class="well"><img src="assets/cecopilot/p/confidence-answer.png?v=1" width="418" height="843" loading="lazy" alt="The confidence score explained over a troubleshooting answer: how closely the documents match, lowered by details still missing."></div><figcaption>A score you can question.</figcaption></figure></div>
+      </div>
+
+      <div class="cp-step wide reveal" id="step-4">
+        <div class="cp-step__copy"><span class="kicker">Step 04</span><h3>Flag or resolve</h3><p>An engineer says what was wrong in their own words, and it goes straight to the admin inbox. Resolving closes the chat and asks for a category, so every resolution rate in the console stays true.</p></div>
+        <div class="cp-phones cp-phones--2"><figure><div class="well"><img src="assets/cecopilot/p/feedback-torque.png?v=1" width="418" height="843" loading="lazy" alt="Share feedback on a torque answer: status, category and what was wrong, in the engineer’s words."></div><figcaption>Say what was wrong.</figcaption></figure><figure><div class="well"><img src="assets/cecopilot/p/resolve.png?v=9" width="418" height="843" loading="lazy" alt="Mark as resolved: closing the chat asks for a category."></div><figcaption>One chat, one issue.</figcaption></figure></div>
+      </div>
+
+      <div class="cgroup col reveal" id="step-5">
+        <span class="kicker">Step 05</span>
+        <h3>Fix it for everyone</h3>
+        <p>The flag lands in the inbox, sorted by type and timed against a two-day target. On the record, the fix sits beside the whole thread. Here the copilot had quoted 18 N·m from a superseded revision, and the fix points later answers to Rev G.</p>
+      </div>
+      <figure class="console wide reveal">
+        <div class="well"><img src="assets/cecopilot/admin-feedback.jpg?v=9" width="2880" height="1800" loading="lazy" alt="Feedback inbox: pending, in review, refined and median time to refine against a two-day target, then flagged answers with type, category, site, submitter, age and status."></div>
+        <figcaption>The inbox, against a two-day target to refine.</figcaption>
+      </figure>
     </section>
 
     <section class="sec" id="console" aria-labelledby="s-console">
       <header class="head col reveal">
         <h2 id="s-console">Three questions an admin asks every week</h2>
-        <p>The console is for the people behind the answers: admins who run the pilot, and support engineers who turn flagged answers into fixes. It is built around three questions.</p>
+        <p>The console is for the people behind the answers, built around the three things they need to know.</p>
       </header>
 
       <div class="cgroup col reveal">
         <span class="kicker">Question 01</span>
         <h3>Is it being used?</h3>
-        <p>The overview opens on activity by day, then five numbers: adoption, conversations, resolution rate, feedback coverage and response time.</p>
+        <p>The overview opens on activity by day, then five numbers: adoption, conversations, resolution rate, feedback coverage and response time. Each tile says how its number is worked out, because a number an admin can’t check is one they won’t trust.</p>
       </div>
       <figure class="console wide reveal">
         <div class="well"><img src="assets/cecopilot/admin-overview.jpg?v=9" width="2880" height="1800" loading="lazy" alt="CE CoPilot admin overview: an activity heatmap by day, then adoption, conversations, resolution rate, feedback coverage and response time, each with how it is calculated."></div>
       </figure>
-      <div class="decisions decisions--2 wide reveal">
-        <article><span class="kicker">Decision 01</span><h3>Adoption on an average day</h3><p>Not “ever used”, which only climbs. The share of engineers using it on a given day is the number that moves.</p></article>
-        <article><span class="kicker">Decision 02</span><h3>Every number shows its working</h3><p>Each tile says how its number is worked out. A number an admin can’t check is one they won’t trust.</p></article>
-      </div>
 
       <div class="cgroup col reveal">
         <span class="kicker">Question 02</span>
         <h3>Are the answers good?</h3>
-        <p>Every conversation is listed with its status, confidence and sources, and opens exactly as the engineer saw it.</p>
+        <p>Every conversation is listed with its status, confidence and sources, and opens exactly as the engineer saw it, with what went into the answer beside it.</p>
       </div>
       <div class="console__row console__row--2 wide">
         <figure class="reveal"><div class="well"><img src="assets/cecopilot/admin-conversations.jpg?v=9" width="2880" height="1800" loading="lazy" alt="Conversations list with tiles that double as filters: all, resolved, needs attention, awaiting rating, then each conversation with its user, category, status, confidence, messages and sources."></div><figcaption>The conversations list.</figcaption></figure>
-        <figure class="reveal"><div class="well"><img src="assets/cecopilot/admin-conv-detail.jpg?v=9" width="2880" height="1800" loading="lazy" alt="A single conversation: the question, the structured answer with its sources and confidence, and a side panel of category, documents used, off-topic replies, diagram and rating."></div><figcaption>One conversation, with what went into the answer beside it.</figcaption></figure>
-      </div>
-      <div class="decisions decisions--2 wide reveal">
-        <article><span class="kicker">Decision 03</span><h3>Tiles that double as filters</h3><p>Clicking a count narrows the table to it, so a number and its rows are one click apart.</p></article>
-        <article><span class="kicker">Decision 04</span><h3>Reading a transcript leaves a trace</h3><p>Opening a conversation is recorded in the audit log. These are engineers’ working chats, and looking at one should never be invisible.</p></article>
+        <figure class="reveal"><div class="well"><img src="assets/cecopilot/admin-conv-detail.jpg?v=9" width="2880" height="1800" loading="lazy" alt="A single conversation: the question, the structured answer with its sources and confidence, and a side panel of category, documents used, off-topic replies, diagram and rating."></div><figcaption>One conversation, with what went into the answer.</figcaption></figure>
       </div>
 
       <div class="cgroup col reveal">
@@ -883,55 +2149,117 @@ figcaption,.loop figcaption,.branch li,.metric span,.meta dt,.note{font:400 var(
         <h3>Where is the knowledge failing?</h3>
         <p>The knowledge base shows every approved document and whether it indexed. The feedback inbox is where a flagged answer starts on its way to a fix.</p>
       </div>
-      <div class="console__row console__row--2 wide">
-        <figure class="reveal"><div class="well"><img src="assets/cecopilot/admin-kb-detail.jpg?v=9" width="2880" height="1800" loading="lazy" alt="A site knowledge base: documents with source, category, revision, owner, indexing status and a failure reason with a retry, plus an activity log."></div><figcaption>A site’s documents, each with its revision, owner and status.</figcaption></figure>
-        <figure class="reveal"><div class="well"><img src="assets/cecopilot/admin-feedback.jpg?v=9" width="2880" height="1800" loading="lazy" alt="Feedback inbox: pending, in review, refined and median time to refine against a two-day target, then flagged answers with type, category, site, submitter, age and status."></div><figcaption>The inbox, against a two-day target to refine.</figcaption></figure>
+      <figure class="console wide reveal">
+        <div class="well"><img src="assets/cecopilot/admin-kb-detail.jpg?v=9" width="2880" height="1800" loading="lazy" alt="A site knowledge base: documents with source, category, revision, owner, indexing status and a failure reason with a retry, plus an activity log."></div>
+        <figcaption>A site’s documents, each with its revision, owner and status.</figcaption>
+      </figure>
+
+      <div class="z-row reveal">
+        <h3 class="z-row__label">Small decisions that build trust</h3>
+        <div class="z-row__body z-items">
+          <div class="z-item"><span class="z-ic"><svg><use href="#z-info"/></svg></span><h4>Every number shows its working</h4><p>Each tile says how its number is calculated.</p></div>
+          <div class="z-item"><span class="z-ic"><svg><use href="#z-sliders"/></svg></span><h4>Tiles double as filters</h4><p>Clicking a count narrows the table to it.</p></div>
+          <div class="z-item"><span class="z-ic"><svg><use href="#z-receipt"/></svg></span><h4>Reading a chat leaves a trace</h4><p>Opening an engineer’s conversation is recorded in the audit log.</p></div>
+          <div class="z-item"><span class="z-ic"><svg><use href="#z-bug"/></svg></span><h4>A failed file says why</h4><p>“Unreadable PDF structure”, with a retry, instead of a red dot.</p></div>
+          <div class="z-item"><span class="z-ic"><svg><use href="#z-doc"/></svg></span><h4>Revision beside every document</h4><p>The wrong torque answer came from an old revision, so it sits where an admin checks first.</p></div>
+        </div>
       </div>
-      <div class="decisions decisions--2 wide reveal">
-        <article><span class="kicker">Decision 05</span><h3>A failed file says why</h3><p>“Unreadable PDF structure”, with a retry beside it, instead of a red dot. An admin can fix what they can read.</p></article>
-        <article><span class="kicker">Decision 06</span><h3>Revision beside every document</h3><p>The wrong torque answer came from a superseded revision, so the revision sits next to every document, where an admin checks it first.</p></article>
+    </section>
+  </section>
+
+  <!-- 03 IMPACT -->
+  <section class="act" id="impact" aria-labelledby="a-impact">
+    <header class="act__head reveal"><p class="act__label">03 · Impact</p><h2 class="act__title" id="a-impact">Shipped, and working in pilot</h2></header>
+    <section class="sec" id="stands" aria-labelledby="s-stands">
+      <header class="head col reveal">
+        <h2 id="s-stands">Where it stands</h2>
+        <p>Three sources, each a different kind of evidence: a survey of field engineers a few days into the pilot, the escalation board counted over a month, and the admin console across 600+ chats.</p>
+      </header>
+      <div class="z-stats z-stats--3 reveal">
+        <div class="z-stat"><span class="z-ic"><svg><use href="#z-clock"/></svg></span><strong>60%</strong><span>less time to find a fix, as reported by field engineers in a pilot survey</span></div>
+        <div class="z-stat"><span class="z-ic"><svg><use href="#z-users"/></svg></span><strong>70%</strong><span>fewer escalations, counted on the escalation board over a month</span></div>
+        <div class="z-stat"><span class="z-ic"><svg><use href="#z-check"/></svg></span><strong>64%</strong><span>of 600+ chats marked resolved, measured in the admin console, and up 4% in a month as fixes went in</span></div>
       </div>
     </section>
 
-  </article>
-
-  <section class="band" id="stands" aria-labelledby="s-stands">
-    <div>
+    <section class="sec" id="delivery" aria-labelledby="s-delivery">
       <header class="head col reveal">
-        <h2 id="s-stands">The results</h2>
-        <p>Two figures come from the test report of the usability testing I ran with the 100+ field engineers in the pilot, and one from the admin console, across 600+ chats.</p>
+        <h2 id="s-delivery">What is delivered</h2>
+        <p>The copilot as each person meets it.</p>
       </header>
-      <div class="results wide reveal">
-        <article><strong>60%</strong><h3>Shorter time to find a fix</h3><p>Engineers reached the right procedure faster than searching manuals.</p></article>
-        <article><strong>70%</strong><h3>Fewer escalations</h3><p>More faults solved at the tool, without calling senior support.</p></article>
-        <article><strong>64%</strong><h3>Resolution rate</h3><p>Of 600+ chats in the pilot, 64% were marked resolved, measured in the admin console.</p></article>
+      <div class="z-row reveal">
+        <h3 class="z-row__label">What shipped for each person</h3>
+        <dl class="z-row__body z-who">
+          <div><dt><svg><use href="#z-person"/></svg>Field engineers</dt><dd>The right procedure in five labelled parts, safety first, with its source.</dd></div>
+          <div><dt><svg><use href="#z-shield"/></svg>Admins</dt><dd>Adoption, resolution and response time, each showing how it’s worked out.</dd></div>
+          <div><dt><svg><use href="#z-inbox"/></svg>Support engineers</dt><dd>A flagged answer with its whole thread, fixed once for every later answer.</dd></div>
+        </dl>
       </div>
-    </div>
+    </section>
+
+    <section class="sec" id="next" aria-labelledby="s-next-steps">
+      <header class="head col reveal">
+        <h2 id="s-next-steps">What’s next</h2>
+        <p>One feature the usability testing pointed to, and three numbers to track as the pilot grows.</p>
+      </header>
+      <div class="z-row reveal">
+        <h3 class="z-row__label">Next to build</h3>
+        <dl class="z-row__body z-who">
+          <div><dt>Images in procedures</dt><dd>An image beside each step of a procedure, which the usability testing pointed to.</dd></div>
+        </dl>
+      </div>
+      <div class="z-row reveal">
+        <h3 class="z-row__label">Three numbers to track</h3>
+        <dl class="z-row__body z-who">
+          <div><dt>Time to a fix</dt><dd>Track it in the app as the pilot grows.</dd></div>
+          <div><dt>Resolution rate</dt><dd>Track it as fixes build up.</dd></div>
+          <div><dt>Flags fixed on time</dt><dd>Track how many flags become fixes within the two-day target.</dd></div>
+        </dl>
+      </div>
+    </section>
   </section>
 
   <section class="reflect" id="reflect" aria-labelledby="s-reflect">
     <div class="col">
-      <header class="head reveal"><h2 id="s-reflect">Reflections and learnings</h2></header>
-      <ul class="reveal">
-        <li>An honest confidence score earns more trust than a confident tone.</li>
-        <li>Correcting an answer needs the whole conversation in view, so the fix got a page of its own.</li>
-        <li>Designing the way back from a wrong answer mattered more than any single screen.</li>
-        <li>The long reply only showed its cost when engineers used it at the tool. Next time I would put a rough answer in front of them before settling its format.</li>
-      </ul>
+      <header class="head reveal"><h2 id="s-reflect">What I learned</h2></header>
+      <ol class="z-lessons reveal">
+        <li><b>An honest confidence score earns more trust than a confident tone.</b><span>So the score says why it is lower, not just how low.</span></li>
+        <li><b>Correcting an answer needs the whole conversation in view.</b><span>So the fix got a page of its own.</span></li>
+        <li><b>The way back from a wrong answer mattered more than any single screen.</b><span>Every flag makes the next answer better.</span></li>
+        <li><b>Test the format before you settle it.</b><span>The long reply only showed its cost at the tool. Next time a rough answer goes in front of engineers first.</span></li>
+      </ol>
     </div>
   </section>
 
+  </div>
 </main>
 
-<footer class="next-wrap col">
-  <a class="next" href="/design-system" data-cursor="View<br>project">
-    <h2 class="next__word" aria-hidden="true">next<br>project</h2>
-    <div class="next__card">
-      <div class="next__media"><img src="assets/ds/cover-card.jpg?v=6" width="1600" height="1143" alt="ZBrain design system specimens on a soft lavender background" loading="lazy"></div>
-      <p class="next__title"><span class="sr-only">Next project: </span>ZBrain design system</p>
-      <p class="next__cat">Design systems</p>
-    </div>
-  </a>
+<section class="next-wrap col z-next" aria-labelledby="s-next">
+  <header class="z-next__head">
+    <h2 id="s-next">Next case studies</h2>
+    <a class="z-next__all" href="/#work">All work <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+  </header>
+  <div class="z-next__grid">
+    <a class="z-next__card" href="/cash-app">
+      <div class="z-next__media"><img src="assets/cashapp/cover.jpg" width="2400" height="1500" alt="The AR Cash App workbench and an item's details" loading="lazy"></div>
+      <ul class="z-next__tags"><li>Finance ops</li><li>Enterprise web app</li><li>Human in the loop</li></ul>
+      <h3>AR Cash App</h3>
+    </a>
+    <a class="z-next__card" href="/design-system">
+      <div class="z-next__media"><img src="assets/ds/card-specimens.webp?v=3" width="2400" height="1539" alt="ZBrain design system specimens: type scale, data table, charts, spacing, status, forms and feedback" loading="lazy"></div>
+      <ul class="z-next__tags"><li>Design system</li><li>Figma</li><li>AI prototyping</li></ul>
+      <h3>ZBrain Design System</h3>
+    </a>
+  </div>
+</section>
+
+<footer class="site-foot">
+  <ul class="site-foot__links">
+    <li><a href="https://www.linkedin.com/in/indrajit-sasmal/" target="_blank" rel="noopener noreferrer"><span class="roll" data-t="LinkedIn"><span>LinkedIn</span></span><span class="arr">↗</span><span class="vh">(opens in a new tab)</span></a></li>
+    <li><a href="https://dribbble.com/Indrajit1995" target="_blank" rel="noopener noreferrer"><span class="roll" data-t="Dribbble"><span>Dribbble</span></span><span class="arr">↗</span><span class="vh">(opens in a new tab)</span></a></li>
+    <li><a href="assets/Indrajit-Sasmal-Resume.pdf?v=19" target="_blank" rel="noopener noreferrer"><span class="roll" data-t="Resume"><span>Resume</span></span><span class="arr">↗</span><span class="vh">(opens in a new tab)</span></a></li>
+  </ul>
+  <div class="site-foot__bar"><span class="site-foot__status"><i aria-hidden="true"></i>Open to work</span><span>© 2026</span></div>
 </footer>
 
 <dialog class="lb" id="lightbox" aria-label="Enlarged screen">
@@ -988,26 +2316,25 @@ figcaption,.loop figcaption,.branch li,.metric span,.meta dt,.note{font:400 var(
   steps.forEach(function (s) { io.observe(s); });
 })();
 
-/* the rail: marks the section whose top has passed the upper third of the screen, and steps
-   aside while a wide picture passes beneath it, as on the live case study */
+/* the rail, grouped as Vivek's ZBrain case study groups it: the link of the section whose top has
+   passed the upper third of the screen is marked, and its group opens to show its sections, the
+   others closed. The content sits right of the rail, so nothing passes beneath it. */
 (function () {
   var toc = document.querySelector('.toc'), list = toc && toc.querySelector('.toc__list');
   if (!list) return;
   var links = [].slice.call(list.querySelectorAll('a'));
+  var groups = [].slice.call(list.querySelectorAll('.toc__grp'));
   var targets = links.map(function (a) { return document.getElementById(a.getAttribute('href').slice(1)); });
-  var wides = [].slice.call(document.querySelectorAll('.wide'));
   var queued = false;
   function update() {
     queued = false;
-    var line = innerHeight * 0.33, active = 0;
+    var hdr = document.querySelector('.site-header'), line = (hdr ? hdr.getBoundingClientRect().height : 0) + 72, active = 0;   // just under the header, where a clicked section's heading lands
     targets.forEach(function (el, i) { if (el && el.getBoundingClientRect().top <= line) active = i; });
     if (innerHeight + scrollY >= document.documentElement.scrollHeight - 2) active = links.length - 1;
+    if (window.__tocPin) links.forEach(function (a, i) { if (a.getAttribute('href') === window.__tocPin) active = i; });   // set by smooth-scroll.js on a click
+    var grp = links[active].closest('.toc__grp');
     links.forEach(function (a, i) { if (i === active) a.setAttribute('aria-current', 'location'); else a.removeAttribute('aria-current'); });
-    if (innerWidth >= 1240) {
-      var t = list.getBoundingClientRect();
-      var hit = wides.some(function (w) { var r = w.getBoundingClientRect(); return r.left < t.right && r.top < t.bottom && r.bottom > t.top; });
-      toc.classList.toggle('is-covered', hit);
-    } else toc.classList.remove('is-covered');
+    groups.forEach(function (g) { g.classList.toggle('is-open', g === grp); });
   }
   function q() { if (!queued) { queued = true; requestAnimationFrame(update); } }
   addEventListener('scroll', q, { passive: true });
@@ -1037,7 +2364,7 @@ figcaption,.loop figcaption,.branch li,.metric span,.meta dt,.note{font:400 var(
   var lb = document.getElementById('lightbox');
   if (!lb || typeof lb.showModal !== 'function') return;
   var big = lb.querySelector('img');
-  [].forEach.call(document.querySelectorAll('.console .well img, .console__row .well img, .iter .well img'), function (img) {
+  [].forEach.call(document.querySelectorAll('.console .well img, .console__row .well img, .iter .well img:not(.ba__img), .cards--shots .well img'), function (img) {
     var b = document.createElement('button');
     b.type = 'button'; b.className = 'zoom';
     b.setAttribute('aria-label', 'Enlarge: ' + img.alt);
@@ -1046,9 +2373,63 @@ figcaption,.loop figcaption,.branch li,.metric span,.meta dt,.note{font:400 var(
   });
   lb.addEventListener('click', function () { lb.close(); });
 })();
+
+/* Recordings start when they scroll into view and restart from the first frame, so the flow is
+   never joined halfway; scrolling away pauses them. A manual pause is sticky. Reduced motion
+   never autoplays. As on the live ZBrain case study. */
+(function () {
+  var still = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var VISIBLE = 0.3;
+  var io = window.IntersectionObserver ? new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) {
+      var v = e.target;
+      var nowIn = e.isIntersecting && e.intersectionRatio >= VISIBLE;
+      if (nowIn === (v.dataset.inview === 'true')) return;
+      v.dataset.inview = nowIn ? 'true' : 'false';
+      if (nowIn) {
+        if (still || v.dataset.held === 'true') return;
+        try { v.currentTime = 0; } catch (err) {}
+        var r = v.play(); if (r && r.catch) r.catch(function () {});
+      } else if (!v.paused) {
+        v.pause();
+      }
+    });
+  }, { threshold: [0, VISIBLE] }) : null;
+  document.querySelectorAll('.media').forEach(function (wrap) {
+    var v = wrap.querySelector('video'), btn = wrap.querySelector('.media__toggle');
+    if (!v || !btn) return;
+    function sync() {
+      btn.dataset.state = v.paused ? 'paused' : 'playing';
+      btn.setAttribute('aria-label', v.paused ? 'Play' : 'Pause');
+    }
+    btn.addEventListener('click', function () {
+      if (v.paused) { v.dataset.held = 'false'; var r = v.play(); if (r && r.catch) r.catch(function () {}); }
+      else { v.dataset.held = 'true'; v.pause(); }
+    });
+    v.addEventListener('play', sync);
+    v.addEventListener('pause', sync);
+    function reveal() { btn.hidden = false; }
+    v.addEventListener('loadedmetadata', reveal);
+    if (v.readyState >= 1) reveal();
+    if (io) io.observe(v);
+    sync();
+  });
+})();
 </script>
 <script src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js" defer></script>
-<script src="smooth-scroll.js" defer></script>
-<script src="assets/cursor.js?v=3"></script>
+<script src="smooth-scroll.js?v=2" defer></script>
+<script src="assets/cursor.js?v=8"></script>
+<script src="assets/hero-dots.js?v=2"></script>
+<script>
+/* CE CoPilot: the live status line changes its words in place while the phone is on screen */
+(() => {
+  const t = document.querySelector('.cp-live__text'); if (!t) return;
+  const words = ['Thinking…', 'Working on it…', 'Reading context…', 'Searching knowledge…', 'Reading documents…'];
+  if (matchMedia('(prefers-reduced-motion: reduce)').matches) { t.textContent = words[words.length - 1]; return; }
+  let n = 0, timer = 0;
+  const next = () => { t.classList.add('is-out'); setTimeout(() => { n = (n + 1) % words.length; t.textContent = words[n]; t.classList.remove('is-out'); }, 200); };
+  new IntersectionObserver(([e]) => { clearInterval(timer); if (e.isIntersecting) timer = setInterval(next, 1400); }).observe(t.closest('.cp-live'));
+})();
+</script>
 </body>
 </html>

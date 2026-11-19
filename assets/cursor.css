@@ -2,12 +2,12 @@
    CURSOR FOLLOWER, shared by the homepage and the case studies (assets/cursor.js
    drives it). A small disc that trails the pointer and inverts what is under it.
    Over a link it grows and fades, leaving the link's own hover in view; over a
-   button it steps aside; over anything with data-cursor it becomes a labelled disc
+   button it steps aside; over anything with data-cursor it becomes a speech bubble
    ("View project"). Pointer screens only; the system cursor is hidden wherever it runs.
    z-index sits above the case studies' menus and lightboxes (100).
    ========================================================================== */
 :root{ --cursor-fill: #fff; --cursor-ink: #000; }
-:root[data-theme="light"]{ --cursor-fill: #15140f; --cursor-ink: #f7f5f2; }
+:root[data-theme="light"]{ --cursor-fill: #111; --cursor-ink: #fff; }
 
 .cursor { position: fixed; left: 0; top: 0; z-index: 10000; pointer-events: none; width: 14px; height: 14px; margin: -7px 0 0 -7px;
   border-radius: 50%; background: var(--cursor-fill); display: grid; place-items: center; mix-blend-mode: difference;
@@ -20,9 +20,7 @@
 .cursor.is-hidden, .cursor.is-btn { width: 0; height: 0; margin: 0; }
 /* over a link it grows and fades */
 .cursor.is-link { width: 56px; height: 56px; margin: -28px 0 0 -28px; }
-.cursor.is-on.is-link { opacity: .32; }
-/* over the homepage headline it swells */
-.cursor.is-big { width: 260px; height: 260px; margin: -130px 0 0 -130px; }
+.cursor.is-on.is-link { opacity: .16; }
 /* over an image that opens larger (the case studies' .zoom buttons) it becomes a small, quiet disc
    with an expand icon, and inside the opened image the same disc with a collapse icon (cursor.js
    moves the disc into the open dialog, which sits in the browser's top layer). Tinted rather than
@@ -38,9 +36,29 @@
   background: #fff; opacity: 0; transition: opacity .2s;
   -webkit-mask: var(--cursor-icon) center / contain no-repeat; mask: var(--cursor-icon) center / contain no-repeat; }
 .cursor.is-zoom::before, .cursor.is-zoomout::before { opacity: 1; }
-/* over a project link it becomes a small labelled disc */
-.cursor.is-label { width: 120px; height: 120px; margin: -60px 0 0 -60px; mix-blend-mode: normal; }
-.cursor.is-label span { opacity: 1; transform: rotate(-12deg); }
+/* over a project link it becomes a speech bubble, the same as the homepage hero's "Hello!": a pill
+   with its tail corner at the pointer, an emoji and the label on one line. It inverts with the theme,
+   white on a dark page and black on a light one, and pops in from the tail. */
+:root{ --bubble-bg: #fff; --bubble-ink: #15140f; --bubble-shadow: 0 10px 28px -10px rgba(0, 0, 0, .55); }
+:root[data-theme="light"]{ --bubble-bg: #111; --bubble-ink: #fff; --bubble-shadow: 0 10px 24px -12px rgba(0, 0, 0, .35); }
+.cursor.is-label { width: auto; height: 36px; margin: -44px 0 0 10px; padding: 0 15px 0 12px; border-radius: 18px 18px 18px 5px;
+  mix-blend-mode: normal; background: var(--bubble-bg); box-shadow: var(--bubble-shadow);
+  transform-origin: 0 100%; animation: cursor-pop .45s cubic-bezier(.34, 1.56, .64, 1); }
+.cursor.is-label span { display: flex; align-items: center; gap: 7px; opacity: 1; transform: none; color: var(--bubble-ink);
+  font: 600 15px/1 var(--sans, inherit); letter-spacing: -.01em; text-transform: none; white-space: nowrap; }
+.cursor.is-label span::before { content: "\1F440"; font-size: 15px; }
+@keyframes cursor-pop { from { opacity: 0; scale: .6; } to { opacity: 1; scale: 1; } }
 
 @media (hover: none), (pointer: coarse) { .cursor { display: none; } }
 html.has-cursor, html.has-cursor * { cursor: none !important; }
+/* a button inside a labelled card (the homepage's "View case study"): the disc and its label step aside too */
+.cursor.is-hidden.is-label { opacity: 0; scale: .6; transition: opacity .2s, scale .3s; }
+/* hidden wins over the link state too (e.g. the homepage's side project pictures, which show their own "Open app") */
+.cursor.is-hidden.is-link { width: 0; height: 0; margin: 0; }
+/* over a picture that opens something (the homepage's side projects): the cursor grows into a frosted disc
+   that says what a click does, in both themes */
+.cursor.is-disc { width: 84px; height: 84px; margin: -42px 0 0 -42px; mix-blend-mode: normal; opacity: 1;
+  background: rgba(16, 16, 16, .5); box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .28);
+  -webkit-backdrop-filter: blur(14px) saturate(150%); backdrop-filter: blur(14px) saturate(150%); }
+.cursor.is-disc span { opacity: 1; transform: none; color: #fff; font: 500 13px/1 var(--sans, inherit); letter-spacing: -.005em;
+  text-transform: none; white-space: nowrap; }

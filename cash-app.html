@@ -1,0 +1,2557 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- page transitions: a page that arrived under the wipe is covered before its first paint -->
+<link rel="stylesheet" href="assets/page-transition.css?v=8">
+<script>try{var tm=localStorage.getItem('theme');if(!tm)tm=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';document.documentElement.setAttribute('data-theme',tm);document.documentElement.style.colorScheme=tm}catch(e){}document.documentElement.classList.add('js')</script>
+<script>try{if(!matchMedia('(prefers-reduced-motion:reduce)').matches){var h=sessionStorage.getItem('ptHop');sessionStorage.removeItem('ptHop');var p=h?h.split('|'):0;if(p&&p.length==2&&Date.now()-(+p[1])<3000){var r=document.documentElement;r.setAttribute('data-pt',p[0]);r.classList.add('pt-held');setTimeout(function(){if(r.classList.contains('pt-held')){r.classList.remove('pt-held');r.removeAttribute('data-pt')}},6000)}}}catch(e){}</script>
+<script src="assets/page-transition.js?v=7" defer></script>
+<title>AR Cash App | Cash application case study</title>
+<meta name="description" content="Case study: the AR Cash App, a workbench where a global healthcare company’s accounts receivable team checks what its AI and bots matched, resolves what they couldn’t, and teaches the extraction to read remittances.">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Indrajit Sasmal">
+<meta property="og:title" content="AR Cash App | Cash application case study">
+<meta property="og:description" content="Case study: the AR Cash App, a workbench where a global healthcare company’s accounts receivable team checks what its AI and bots matched, resolves what they couldn’t, and teaches the extraction to read remittances.">
+<meta property="og:url" content="https://indrajit.work/cash-app">
+<meta property="og:image" content="https://indrajit.work/og-image.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Portfolio27. Indrajit Sasmal, Product Designer">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="AR Cash App | Cash application case study">
+<meta name="twitter:description" content="Case study: the AR Cash App, a workbench where a global healthcare company’s accounts receivable team checks what its AI and bots matched, resolves what they couldn’t, and teaches the extraction to read remittances.">
+<meta name="twitter:image" content="https://indrajit.work/og-image.jpg">
+<meta name="twitter:image:alt" content="Portfolio27. Indrajit Sasmal, Product Designer">
+<link rel="icon" href="favicon.svg?v=4" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300..800&display=swap" rel="stylesheet">
+<style>
+/* ZBrain admin console, v3 redesign (built on v2): laid out on the CE CoPilot v2 system, copied as it stands (164 + 108px
+   between sections, oklch neutrals tinted blue, Plus Jakarta Sans 500 for the title, section headings and
+   pull quote, Plus Jakarta Sans for everything else), with ZBrain's blue as the one accent in place
+   of CE CoPilot's teal. What this page adds (the before/after diagrams, the screen recordings, the
+   governance panel and the screenshot cards) is in the block at the end of this sheet. */
+:root{
+  --bg:oklch(0.978 0.004 255);
+  --ink:oklch(0.22 0.014 255);
+  --ink-2:oklch(0.42 0.014 255);
+  --ink-3:oklch(0.515 0.016 255);
+  --accent:#305cff;   /* ZBrain blue, as on the live case study */
+  --surface:oklch(0.945 0.006 255);
+  --surface-2:oklch(0.955 0.005 255);
+  --line:oklch(0.22 0.014 255 / 0.12);
+  --tint:oklch(0.22 0.014 255 / 0.07);
+  --green:oklch(0.5 0.13 150);
+  --nav-bg:oklch(0.945 0.006 255 / 0.88);
+  --panel:rgb(5 6 8);
+  --panel-ink:oklch(0.97 0.008 255);
+  --panel-ink-2:oklch(0.78 0.012 255);
+  --panel-ink-3:oklch(0.66 0.014 255);
+  --panel-line:rgba(255,255,255,.12);
+  --foot:rgb(29 29 31);
+  --display:"Plus Jakarta Sans", system-ui, sans-serif;
+  --sans:"Plus Jakarta Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --logo:Avenir, "Avenir Next", "Plus Jakarta Sans", system-ui, sans-serif;
+  --shot:0 2px 24px rgba(27,45,84,.14);
+}
+:root[data-theme="dark"]{
+  /* The original case study's dark mode, from dark.css: a warm black with warm greys,
+     the same ground as the homepage, rather than the cool blue-black this page began on. */
+  --bg:#0b0b0b;
+  --ink:#f1ede6;
+  --ink-2:#c9c4bb;
+  --ink-3:#a29e97;
+  --accent:#8fa6ff;
+  --surface:#151515;
+  --surface-2:#1b1b1b;
+  --line:rgba(241,237,230,.14);
+  --tint:rgba(241,237,230,.07);
+  --green:oklch(0.78 0.16 150);
+  --nav-bg:rgba(21,21,21,.88);
+  --foot:#151515;
+  --shot:0 2px 24px rgba(0,0,0,.4);
+  /* the one panel (the feedback loop) sits on the surface, as panels do on the original */
+  --panel:#151515;
+  --panel-ink:#f1ede6;
+  --panel-ink-2:#c9c4bb;
+  --panel-ink-3:#a29e97;
+  --panel-line:rgba(241,237,230,.12);
+}
+
+*,*::before,*::after{box-sizing:border-box;}
+html{-webkit-text-size-adjust:100%;scroll-behavior:auto;}   /* a refresh lands where you were, with no glide from the top; Lenis smooths wheel scrolls and in-page links */
+/* Lenis drives the scroll; the browser's own smooth-scroll would fight it */
+html.lenis,html.lenis body{height:auto;}
+.lenis.lenis-smooth{scroll-behavior:auto !important;}
+.lenis.lenis-stopped{overflow:hidden;}
+body{margin:0;background:var(--bg);color:var(--ink);font:400 15px/24px var(--sans);-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;}
+img,video{display:block;max-width:100%;height:auto;}
+h1,h2,h3,p,ul,ol,figure,blockquote,dl,dd{margin:0;}
+ul,ol{padding:0;list-style:none;}
+a{color:inherit;text-decoration:none;}
+button{font:inherit;color:inherit;}
+.vh{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap;}
+.skip{position:absolute;left:16px;top:-60px;z-index:100;padding:10px 16px;border-radius:999px;background:var(--ink);color:var(--bg);font-weight:600;}
+.skip:focus{top:16px;}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:6px;}
+
+/* as on the live case study: the 663px text column is centred on the page, and pictures and grids
+   run wider, up to 1153px, centred on the same axis. From 1240px up each side margin is at least
+   256px, so the wide blocks clear the sections rail down the left. */
+:root{--side:32px;}
+@media (min-width:1240px){:root{--side:256px;}}
+.col,.wide{margin-inline:auto;}
+.col{width:min(663px, calc(100% - 2 * var(--side)));}
+.wide{width:min(1153px, calc(100% - 2 * var(--side)));}
+section[id]{scroll-margin-top:96px;}
+
+/* the sections rail, as on the live case study: fixed down the left from 1240px up */
+.toc{position:fixed;top:128px;left:88px;z-index:5;display:none;max-height:calc(100vh - 176px);transition:opacity .3s ease;}
+@media (min-width:1240px){.toc{display:flex;flex-direction:column;gap:24px;}}
+.toc.is-covered{opacity:0;pointer-events:none;}
+.toc__back{align-self:flex-start;display:inline-flex;align-items:center;gap:8px;min-height:24px;font-size:12px;line-height:24px;color:var(--ink-3);transition:color .15s ease;}
+.toc__back svg{width:14px;height:14px;flex:none;fill:none;stroke:currentColor;stroke-width:1.25;stroke-linecap:round;stroke-linejoin:round;}
+.toc__back:hover{color:var(--ink);}
+.toc__list{display:flex;flex-direction:column;min-height:0;overflow-y:auto;scrollbar-width:none;}
+.toc__list::-webkit-scrollbar{width:0;display:none;}
+.toc__list a{display:block;min-height:24px;max-width:200px;font-size:12px;line-height:24px;color:var(--ink-3);transition:color .15s ease;}
+.toc__list a:hover{color:var(--ink);}
+.toc__list a[aria-current]{color:var(--ink);font-weight:600;}
+
+/* below 1240px, as on the live case studies: a round menu button in the top right corner opens
+   the rail as a panel from the top */
+.menu-btn{display:none;}
+@media (max-width:1239px){
+  .menu-btn{position:fixed;top:22px;right:22px;z-index:96;display:grid;place-items:center;width:38px;height:38px;padding:0;border:1px solid var(--line);border-radius:50%;background:color-mix(in oklch, var(--bg) 72%, transparent);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);color:var(--ink);cursor:pointer;transition:border-color .35s ease;}
+  .menu-btn:hover{border-color:var(--ink-3);}
+  .menu-btn span{grid-area:1/1;width:16px;height:1.6px;border-radius:2px;background:currentColor;transition:transform .4s cubic-bezier(.2,.7,.1,1);}
+  .menu-btn span:first-child{transform:translateY(-3.5px);}
+  .menu-btn span:last-child{transform:translateY(3.5px);}
+  .menu-open .menu-btn span:first-child{transform:rotate(45deg);}
+  .menu-open .menu-btn span:last-child{transform:rotate(-45deg);}
+  .toc{display:flex;flex-direction:column;gap:0;top:0;left:0;right:0;z-index:95;max-height:100dvh;overflow-y:auto;overscroll-behavior:contain;padding:84px var(--side) 22px;background:color-mix(in oklch, var(--bg) 95%, transparent);-webkit-backdrop-filter:blur(16px);backdrop-filter:blur(16px);border-bottom:1px solid var(--line);opacity:0;visibility:hidden;pointer-events:none;transform:translateY(-10px);transition:opacity .3s ease,transform .45s cubic-bezier(.2,.7,.1,1),visibility 0s .45s;}
+  .menu-open .toc,.menu-open .toc.is-covered{opacity:1;visibility:visible;pointer-events:auto;transform:none;transition:opacity .3s ease,transform .45s cubic-bezier(.2,.7,.1,1),visibility 0s;}
+  .toc > *{flex-shrink:0;}
+  .toc__back{font-size:15px;padding-bottom:14px;}
+  .toc__back svg{width:16px;height:16px;}
+  .toc__list{overflow:visible;max-height:none;}
+  .toc__list a{max-width:none;min-height:0;padding:12px 0;border-top:1px solid var(--line);font-size:19px;line-height:26px;font-weight:500;letter-spacing:-.01em;}
+}
+
+/* hero */
+.hero{padding-top:128px;}
+.back{display:flex;width:max-content;align-items:center;gap:10px;height:44px;margin-left:-14px;padding:0 14px;border-radius:999px;font-size:14px;font-weight:600;color:var(--ink-2);}
+.back:hover{background:var(--tint);color:var(--ink);}
+.hero__copy{margin-top:32px;}
+@media (min-width:1240px){.hero .back{display:none;}.hero__copy{margin-top:0;}}
+.project-line{font-size:12px;line-height:24px;letter-spacing:1.2px;text-transform:uppercase;color:var(--ink-3);}
+h1{margin-top:12px;font:700 clamp(40px,5vw,60px)/1 var(--display);letter-spacing:-.042em;}
+.summary{margin-top:20px;font-size:18px;line-height:28px;color:var(--ink-2);}
+.meta{display:grid;grid-template-columns:repeat(4,auto);justify-content:start;column-gap:40px;row-gap:24px;margin-top:64px;padding-top:24px;}
+.meta dt{font-size:12px;line-height:24px;letter-spacing:1.8px;text-transform:uppercase;color:var(--ink-3);}
+.meta dd{margin-top:4px;font-size:15px;line-height:24px;}
+.live{display:inline-flex;align-items:center;gap:8px;vertical-align:top;}   /* top, not baseline: the dot has no baseline, so on the baseline it pushed "Live" 2px below the other values */
+.live::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--green);box-shadow:0 0 0 4px color-mix(in oklch, var(--green) 18%, transparent);}
+.hero__media{margin-top:52px;}
+.hero__media img{width:100%;border-radius:24px;}
+figcaption{margin-top:14px;font-size:14px;line-height:20px;color:var(--ink-3);}
+
+/* sections */
+.sec{margin-top:164px;padding-top:108px;}
+h2{font:700 34px/38px var(--display);letter-spacing:-.036em;}
+.head > p{margin-top:16px;font-size:15px;line-height:24px;color:var(--ink-2);}
+.kicker{display:block;font-size:12px;line-height:24px;letter-spacing:1.2px;text-transform:uppercase;color:var(--ink-3);}
+
+/* numbers across a row, divided by vertical rules */
+.metrics{display:grid;grid-template-columns:repeat(2,1fr);margin-top:72px;}
+.metric{padding:30px 28px 32px;}
+.metric:first-child{padding-left:0;}
+.metric + .metric{border-left:1px solid var(--line);}
+.metric strong{display:block;font:700 40px/1 var(--display);letter-spacing:-.04em;}
+.metric span{display:block;margin-top:14px;font-size:14px;line-height:1.5;color:var(--ink-3);}
+.metrics--3{grid-template-columns:repeat(3,1fr);}
+.metric strong.live{display:flex;align-items:center;gap:14px;}
+#s-anatomy,#s-iter{text-wrap:balance;}   /* even lines, never one word left on its own */
+
+/* a sticky picture beside steps that scroll past it */
+.context{display:grid;grid-template-columns:minmax(0,468fr) minmax(0,600fr);gap:112px;margin-top:148px;}
+.sec--context .context{margin-top:0;}
+.context__visual{position:sticky;top:120px;height:748px;}
+.context__visual img{position:absolute;inset:0;margin:auto;width:100%;height:100%;object-fit:contain;opacity:0;transform:scale(.98);transition:opacity .5s ease, transform .5s ease;}
+.context__visual img.is-active{opacity:1;transform:none;}
+.context__step{display:flex;flex-direction:column;justify-content:center;min-height:774px;padding:72px 0;}
+.context__step h3{margin-top:8px;font:700 34px/38px var(--display);letter-spacing:-.036em;}
+.context__step ul{margin-top:28px;}
+.dash li{position:relative;padding:14px 0 14px 34px;color:var(--ink-2);}
+.dash li::before{content:"";position:absolute;left:2px;top:26px;width:12px;height:1px;background:var(--accent);}
+.dash b{font-weight:600;color:var(--ink);}
+.step-visual{display:none;}
+
+/* the big quote */
+.quote{margin-top:168px;}
+.quote .kicker{margin-bottom:12px;color:var(--accent);}
+.quote__line{font:700 clamp(32px,4vw,48px)/1.08 var(--display);letter-spacing:-.04em;}
+.quote__sub{margin-top:16px;font-size:15px;line-height:24px;color:var(--ink-3);}
+.quote--card{padding:108px 0;border-radius:43.2px;background:var(--surface);}
+.sec > .quote:first-child{margin-top:0;}   /* "Why it matters" is the whole section now, so the card opens it */
+.quote--card .col{width:min(663px, calc(100% - 96px));}
+@media (max-width:900px){
+  .quote--card{padding:72px 0;border-radius:28px;}
+  .quote--card .col{width:calc(100% - 48px);}
+}
+
+/* principles */
+.claim{margin-top:16px;padding-left:16px;border-left:2px solid var(--accent);font-size:17px;line-height:24px;}
+.rules{display:grid;grid-template-columns:1fr 1fr;margin-top:72px;}
+.rules article{padding:32px 48px 44px;}
+.rules article:nth-child(odd){padding-left:0;}
+.rules article:nth-child(even){border-left:1px solid var(--line);}
+.rules h3{margin-top:24px;font-size:22px;line-height:28px;font-weight:600;letter-spacing:-.02em;}
+.rules p{max-width:461px;margin-top:10px;font-size:15px;line-height:24px;color:var(--ink-3);}
+.subhead{margin-top:44px;font-size:17px;line-height:24px;color:var(--ink-2);}
+.subhead em{font-style:normal;font-weight:600;color:var(--accent);}
+
+/* anatomy: a root and its branches */
+.tree{margin-top:76px;}
+.tree__root{width:max-content;margin:0 auto;padding:16px 24px;border:1px solid var(--line);border-radius:999px;background:var(--surface-2);font-size:15px;line-height:18px;font-weight:700;}
+.tree__branches{position:relative;display:grid;grid-template-columns:repeat(5,1fr);gap:18px;padding-top:64px;}
+.tree__branches::before{content:"";position:absolute;left:50%;top:0;height:32px;border-left:1px solid var(--line);}
+.tree__branches::after{content:"";position:absolute;left:calc(10% - 7px);right:calc(10% - 7px);top:32px;border-top:1px solid var(--line);}
+.branch{position:relative;padding:26px 20px 24px;border:1px solid var(--line);background:var(--surface);}
+.branch::before{content:"";position:absolute;left:50%;top:-33px;height:32px;border-left:1px solid var(--line);}
+.branch h3{font-size:15px;line-height:22px;font-weight:600;}
+.branch ul{display:grid;gap:10px;margin-top:22px;padding-top:22px;border-top:1px solid var(--line);}
+.branch li{position:relative;padding-left:14px;font-size:13px;line-height:1.45;color:var(--ink-3);}
+.branch li::before{content:"";position:absolute;left:0;top:9px;width:6px;height:1px;background:var(--accent);}
+
+/* cards with a phone in a grey well */
+.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:80px;}
+.well{display:flex;align-items:center;justify-content:center;padding:32px;border:1px solid var(--line);background:var(--surface);}
+.well img{width:min(100%,250px);}
+.card__copy{padding-top:24px;}
+.card__copy h3{margin-top:6px;font-size:18px;line-height:26px;font-weight:600;letter-spacing:-.01em;}
+.card__copy p{margin-top:6px;font-size:15px;line-height:24px;color:var(--ink-3);}
+
+/* states: the five status lines, laid out in order under the question they answer, beside the
+   reply to a vague question. A still sequence, not an animation: every state is readable at once.
+   The lines are drawn in the app's own grey on white, since they stand in for its screen. */
+.states{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-top:72px;}
+.state .well{flex-direction:column;gap:36px;min-height:620px;padding:40px;}
+.state h3{margin-top:18px;font-size:18px;line-height:26px;font-weight:600;letter-spacing:-.01em;}
+.state__phone{width:min(100%,250px);}
+/* The rows line up with the phone's screen (it runs 5% to 95% of the image), the numbers hang
+   outside it, and row 1 sits exactly where the status line is in the app: 80% down the 418x300
+   image, which is 57.7% of its width. Percentage margins resolve against that width. */
+.status{display:flex;flex-direction:column;align-items:flex-start;width:min(100%,320px);}
+.well .status__phone{width:100%;}
+.status__seq{position:relative;display:grid;gap:10px;width:calc(86% + 48px);margin:calc(-14.1% - 18px) 0 0 calc(7% - 48px);}
+.status__seq::before{content:"";position:absolute;left:11.5px;top:18px;bottom:18px;border-left:1px solid var(--line);}
+.status__seq li{position:relative;display:grid;grid-template-columns:24px minmax(0,1fr);align-items:center;gap:24px;}   /* the 24px gap keeps number 1 clear of the phone's bezel */
+.status__seq b{display:grid;place-items:center;width:24px;height:24px;border:1px solid var(--line);border-radius:50%;background:var(--surface);font:600 11px/1 var(--sans);color:var(--ink-3);}
+.status__seq span{display:flex;align-items:center;gap:8px;padding:9px 12px;border-radius:10px;background:#fff;box-shadow:0 0 0 1px rgb(0 0 0 / .05),0 2px 10px rgb(0 0 0 / .06);font:400 13px/18px Inter, system-ui, -apple-system, "Segoe UI", sans-serif;color:#8a8a8a;}
+.status__seq span::before{content:"";width:10px;height:10px;flex:none;border:1.5px solid #c8c8c8;border-top-color:transparent;border-radius:50%;}
+
+/* the dark panel */
+.panel{margin-top:164px;padding:84px;border-radius:43.2px;background:var(--panel);color:var(--panel-ink);}
+:root[data-theme="dark"] .panel{box-shadow:inset 0 0 0 1px var(--panel-line);}
+.panel h2{color:var(--panel-ink);}
+.panel .head > p{color:var(--panel-ink-2);}
+.loop{display:grid;grid-template-columns:1fr 1fr;margin-top:64px;}
+.loop figure{padding:32px 40px 34px;}
+.loop figure:nth-child(odd){padding-left:0;}
+.loop figure:nth-child(even){border-left:1px solid var(--panel-line);}
+.chip{display:inline-flex;align-items:center;gap:12px;padding:12px 20px 12px 14px;border:1px solid rgba(255,255,255,.14);border-radius:999px;background:rgba(255,255,255,.07);font-size:17px;line-height:1.2;font-weight:600;}
+.chip i{display:inline-grid;place-items:center;width:28px;height:28px;border-radius:50%;background:rgba(255,255,255,.12);font-style:normal;font-size:12px;letter-spacing:.04em;color:var(--panel-ink-2);}
+.loop figcaption{max-width:430px;margin-top:20px;font-size:14px;line-height:1.55;color:var(--panel-ink-3);}
+.loop__back{margin-top:44px;font-size:15px;line-height:1.6;color:var(--panel-ink-2);}
+.loop__back b{color:var(--panel-ink);font-weight:600;}
+
+/* iterations: rejected and selected */
+.iter{display:grid;grid-template-columns:1fr 1fr;gap:72px;margin-top:80px;}
+.iter .well{aspect-ratio:554/460;padding:44px;}
+.iter .well img{width:auto;max-width:100%;max-height:100%;border-radius:10px;box-shadow:var(--shot);}
+.iter__copy{padding-top:26px;}
+.iter__copy h3{margin-top:6px;font-size:22px;line-height:28px;font-weight:600;letter-spacing:-.02em;}
+.iter__copy p{max-width:527px;margin-top:10px;font-size:15px;line-height:24px;color:var(--ink-3);}
+/* what each reversed decision gave up, set apart under its description */
+.iter__copy .iter__cost{margin-top:16px;padding-top:14px;border-top:1px solid var(--line);}
+.iter__copy .iter__cost .kicker{margin-bottom:2px;color:var(--ink-2);}
+
+/* admin console */
+.console{margin-top:72px;}
+.console .well{padding:44px;}
+.console .well img{width:100%;border-radius:12px;box-shadow:var(--shot);}
+.console__row{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:24px;}
+.console__row .well{padding:20px;}
+.console__row .well img{width:100%;border-radius:8px;box-shadow:var(--shot);}
+/* the console, told one question at a time */
+.cgroup{margin-top:120px;}
+.cgroup h3{font-size:22px;line-height:28px;font-weight:600;letter-spacing:-.02em;}
+.cgroup > p{margin-top:12px;font-size:15px;line-height:24px;color:var(--ink-2);}
+.cgroup + .console{margin-top:40px;}
+.cgroup + .console__row{margin-top:40px;}
+.console__row.console__row--2{grid-template-columns:repeat(2,1fr);}
+@media (max-width:900px){
+  .cgroup{margin-top:80px;}
+  .console__row.console__row--2{grid-template-columns:1fr;}
+}
+.decisions{display:grid;grid-template-columns:repeat(3,1fr);margin-top:56px;}
+.decisions article{padding:8px 40px 8px;}
+.decisions article:first-child{padding-left:0;}
+.decisions article + article{border-left:1px solid var(--line);}
+.decisions h3{margin-top:8px;font-size:18px;line-height:26px;font-weight:600;letter-spacing:-.01em;}
+.decisions p{margin-top:8px;font-size:15px;line-height:24px;color:var(--ink-3);}
+.decisions + .console__row{margin-top:56px;}
+
+/* any screen can be opened full size */
+.zoom{display:block;width:100%;padding:0;border:0;background:none;cursor:zoom-in;}
+.iter .zoom{display:flex;align-items:center;justify-content:center;height:100%;}
+/* sized from the width and height attributes, so a lazy image has a box before it loads */
+.iter .zoom img{width:100%;height:auto;max-height:100%;}
+.iter .zoom img.is-tall{width:auto;height:100%;}
+.lb{width:100vw;max-width:none;height:100dvh;max-height:none;margin:0;padding:clamp(16px,4vw,48px);border:0;background:transparent;}
+.lb[open]{display:grid;place-items:center;}
+.lb::backdrop{background:rgb(5 6 8 / .88);}
+.lb img{max-width:100%;max-height:calc(100dvh - 2 * clamp(16px,4vw,48px));width:auto;height:auto;border-radius:10px;cursor:zoom-out;}
+.lb__close{position:fixed;top:18px;right:18px;display:grid;place-items:center;width:40px;height:40px;padding:0;border:1px solid rgba(255,255,255,.28);border-radius:50%;background:rgba(255,255,255,.08);color:#fff;cursor:pointer;transition:background .15s ease;}
+/* a drawn cross, not the × character, which the font sets small and below the middle */
+.lb__close svg{display:block;width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;}
+.lb__close:hover,.lb__close:focus-visible{background:rgba(255,255,255,.16);}
+
+/* results and reflections run full width */
+.band{margin-top:180px;padding:108px 0 128px;}
+.outcomes{display:grid;grid-template-columns:repeat(3,1fr);margin-top:72px;}
+.outcomes article{padding:32px 28px 0;}
+.outcomes article:first-child{padding-left:0;}
+.outcomes article + article{border-left:1px solid var(--line);}
+.outcomes h3{margin-top:8px;font-size:18px;line-height:26px;font-weight:600;letter-spacing:-.01em;}
+.outcomes p{max-width:365px;margin-top:8px;font-size:15px;line-height:24px;color:var(--ink-3);}
+.note{margin-top:56px;font-size:14px;line-height:1.6;color:var(--ink-3);}
+.reflect{padding:108px 0 144px;background:var(--surface);}
+.reflect ul{margin-top:40px;}
+.reflect li{position:relative;padding:20px 0 20px 40px;font-size:18px;line-height:28px;font-weight:500;}
+.reflect li::before{content:"";position:absolute;left:4px;top:33px;width:16px;height:2px;background:var(--accent);}
+
+/* next project, as on the live case studies */
+.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;}
+.next-wrap{margin-top:112px;padding-bottom:112px;}
+.next{display:grid;grid-template-columns:1fr 1fr;gap:32px;align-items:start;color:var(--ink);}
+.next__word{margin-top:-.02em;font-family:var(--display);font-weight:600;font-size:clamp(56px,7.4vw,98px);line-height:.88;letter-spacing:-.045em;transition:transform .6s cubic-bezier(.2,.7,.1,1);}
+.next:hover .next__word{transform:translateX(8px);}
+.next__card{display:flex;flex-direction:column;}
+.next__media{border-radius:14px;overflow:hidden;aspect-ratio:1.4;background:var(--surface);}
+.next__media img{width:100%;height:100%;object-fit:cover;object-position:top center;transform:scale(1.02);transition:transform .8s cubic-bezier(.2,.7,.1,1);}
+.next:hover .next__media img{transform:scale(1.05);}
+.next__title{margin-top:16px;font-size:24px;line-height:1.05;letter-spacing:-.02em;font-weight:500;}
+.next__cat{margin-top:12px;font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--accent);}
+@media (max-width:760px){
+  .next{grid-template-columns:1fr;}
+  .next__word{font-size:20vw;}
+}
+
+/* reveal on scroll, only once scripts have run */
+.js .reveal{opacity:0;transform:translateY(24px);transition:opacity .8s cubic-bezier(.2,.7,.2,1), transform .8s cubic-bezier(.2,.7,.2,1);}
+.js .reveal.is-in{opacity:1;transform:none;}
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto;}
+  .js .reveal{opacity:1;transform:none;transition:none;}
+  .context__visual img{transition:none;}
+}
+
+/* tablet and phone */
+@media (max-width:1100px){
+  .context{gap:56px;}
+  .panel{padding:64px 48px;}
+}
+@media (max-width:900px){
+  .hero{padding-top:120px;}
+  .meta{grid-template-columns:1fr 1fr;row-gap:20px;}
+  .sec{margin-top:96px;padding-top:64px;}
+  .context{display:block;margin-top:72px;}
+  .context__visual{display:none;}
+  .context__step{min-height:0;padding:40px 0;}
+  .step-visual{display:block;margin-top:32px;}
+  .step-visual img{width:min(100%,320px);margin-inline:auto;}
+  .quote{margin-top:96px;}
+  .rules{grid-template-columns:1fr;}
+  .rules article{padding:28px 0;}
+  .rules article:nth-child(even){border-left:0;}
+  .rules h3{margin-top:12px;}
+  .tree__branches{grid-template-columns:1fr 1fr;padding-top:24px;}
+  .tree__branches::before,.tree__branches::after,.branch::before{display:none;}
+  .cards,.iter,.console__row,.decisions,.outcomes{grid-template-columns:1fr;}
+  .decisions article,.decisions article:first-child{padding:20px 0;}
+  .decisions article + article{border-left:0;}
+  .iter{gap:56px;}
+  .state .well{min-height:0;}
+  .panel{margin-top:96px;padding:48px 28px;border-radius:28px;}
+  .loop{grid-template-columns:1fr;}
+  .loop figure,.loop figure:nth-child(odd){padding:20px 0;}
+  .loop figure:nth-child(even){border-left:0;}
+  .console .well{padding:20px;}
+  .band{margin-top:96px;padding:64px 0 80px;}
+  .outcomes article,.outcomes article:first-child{padding:28px 0 0;}
+  .outcomes article + article{border-left:0;}
+  .outcomes h3{margin-top:16px;}
+  .reflect{padding:72px 0 96px;}
+}
+@media (max-width:760px){
+  :root{--side:24px;}
+  .menu-btn{top:14px;right:14px;width:34px;height:34px;}
+  .toc{padding-top:66px;}
+  .hero{padding-top:104px;}
+  h1{font-size:38px;line-height:40px;}
+  h2,.context__step h3{font-size:28px;line-height:32px;}
+}
+@media (max-width:560px){
+  /* three metrics stack on a phone, each ruled off from the one above */
+  .metrics{grid-template-columns:1fr;}
+  .metric,.metric + .metric{padding:22px 0;border-left:0;}
+  .metric + .metric{border-top:1px solid var(--line);}
+  .tree__branches,.states{grid-template-columns:1fr;}
+}
+
+/* Every container on the page has rounded corners: the screenshot wells and the five
+   answer-anatomy boxes take one radius between them. The reflections band was full-bleed,
+   and a band running edge to edge can't take a radius, so it becomes a card the same width
+   and shape as the feedback-loop panel. */
+.well,.branch{border-radius:20px;}
+.reflect{width:min(1153px, calc(100% - 2 * var(--side)));margin-inline:auto;margin-top:164px;border-radius:43.2px;}
+.reflect .col{width:min(663px, calc(100% - 96px));}
+@media (max-width:900px){
+  .well,.branch{border-radius:16px;}
+  .reflect{margin-top:96px;border-radius:28px;}
+  .reflect .col{width:calc(100% - 48px);}
+}
+
+/* Typography, matched to the reference case study: Plus Jakarta Sans 500 for the title, the section
+   headings and the pull quote, Plus Jakarta Sans for everything else. Every size is the
+   reference's own, read at 390, 900 and 1440 wide and joined with a clamp, so it scales the
+   same way; line heights and tracking are its ratios. Colours are left as this page's. */
+:root{--serif:"Plus Jakarta Sans", system-ui, sans-serif;}
+h1{font-family:var(--serif);font-weight:600;font-size:clamp(44px, 5vw, 72px);line-height:.96;letter-spacing:-.052em;}   /* three lines at 1440, a step above the 68px section headings */
+h2:not(.next__word){font-family:var(--serif);font-weight:600;font-size:clamp(40px, 5.2vw, 68px);line-height:1.02;letter-spacing:-.045em;}
+.quote__line{font-family:var(--serif);font-weight:600;font-size:clamp(42px, 6vw, 76px);line-height:1.03;letter-spacing:-.045em;text-wrap:balance;}
+.quote__sub{font-size:clamp(17px, 1.32vw, 19px);line-height:1.65;font-weight:500;letter-spacing:-.005em;}
+.summary{font-size:clamp(17px, 1.53vw, 22px);line-height:1.55;}
+.project-line{font-size:14px;line-height:1.65;font-weight:600;letter-spacing:.02em;text-transform:none;}
+.meta dt{font-size:13px;line-height:1.2;font-weight:400;letter-spacing:0;text-transform:none;}
+.meta dd{font-size:15px;line-height:1.3;font-weight:600;}
+.head > p,.cgroup > p,.loop__back{font-size:clamp(17px, 1.39vw, 20px);line-height:1.65;}
+.subhead{font-size:17px;line-height:1.6;}
+.metric strong{font-family:var(--sans);font-weight:600;font-size:clamp(28px, 2.78vw, 40px);line-height:1;letter-spacing:-.05em;}
+.context__step h3{font-family:var(--sans);font-weight:600;font-size:clamp(30px, 3.8vw, 48px);line-height:1.08;letter-spacing:-.04em;}
+.dash li{font-size:16px;line-height:1.65;}
+.rules h3{font-weight:700;font-size:clamp(24px, 2.7vw, 34px);line-height:1.12;letter-spacing:-.035em;}
+.rules p{font-size:15px;line-height:1.6;}
+.card__copy h3{font-weight:700;font-size:clamp(21px, 1.875vw, 27px);line-height:1.14;letter-spacing:-.035em;}
+.card__copy p,.iter__copy p{font-size:15px;line-height:1.65;}
+.iter__copy h3,.cgroup h3{font-weight:700;font-size:clamp(27px, 2.64vw, 38px);line-height:1.1;letter-spacing:-.04em;}
+.state h3,.decisions h3{font-weight:700;font-size:20px;line-height:1.25;letter-spacing:-.025em;}
+.branch h3{font-weight:700;font-size:16px;line-height:1.35;letter-spacing:-.02em;}
+.outcomes h3{font-weight:700;font-size:18px;line-height:1.35;letter-spacing:0;}
+.reflect li{font-weight:600;font-size:17px;line-height:1.6;letter-spacing:-.01em;}   /* text size, so it takes body-text leading and only light tracking */
+.kicker{font-size:12px;line-height:1.65;font-weight:700;letter-spacing:.04em;text-transform:uppercase;}
+figcaption{font-size:13px;line-height:1.5;}
+@media (max-width:760px){
+  h1{font-size:min(11vw, 44px);}
+}
+
+/* Horizontal rules, as the reference draws them: a line above the project details, the
+   metrics ruled above and below, a line above each row of outcomes and decisions, and the
+   four rules ruled top, between rows and bottom (the loop's steps keep only the middle rule,
+   see below). Once a grid stacks
+   on a phone, each item after the first takes a line above it in place of the column
+   divider it had beside it. The state screenshots are left alone: each is already a box. */
+.meta{border-top:1px solid var(--line);}
+.metrics{border-top:1px solid var(--line);border-bottom:1px solid var(--line);}
+.rules{border-top:1px solid var(--line);}
+.rules article{border-bottom:1px solid var(--line);}
+.outcomes,.decisions{border-top:1px solid var(--line);}
+.decisions article{padding-top:32px;}
+/* the loop's four steps take only the rule between their two rows, with no line above or below */
+.loop figure:nth-child(-n+2){border-bottom:1px solid var(--panel-line);}
+@media (max-width:900px){
+  .loop figure:not(:last-child){border-bottom:1px solid var(--panel-line);}
+  .outcomes article + article,.decisions article + article{border-top:1px solid var(--line);}
+  .outcomes article,.outcomes article:first-child{padding:26px 0;}
+  .decisions article,.decisions article:first-child{padding:24px 0;}
+}
+
+/* the answer iteration: two crops of the same reply, shown as large as the card allows so
+   the run-on version and the labelled one can be told apart at a glance */
+.iter--answer .well{aspect-ratio:auto;padding:28px;}
+.iter + .iter{margin-top:112px;}
+@media (max-width:900px){ .iter + .iter{margin-top:72px;} }
+
+/* round two: the answer pair now sits with its claim, and the admin decisions run two to a row */
+.iter--answer + .cards{margin-top:112px;}
+.decisions.decisions--2{grid-template-columns:1fr 1fr;}
+@media (max-width:900px){
+  .iter--answer + .cards{margin-top:72px;}
+  .decisions.decisions--2{grid-template-columns:1fr;}
+}
+
+/* round three: callouts on the two before/after pairs. Pins and tags sit on the screenshot
+   itself, placed at percentages of the image, so they stay on their line at every width. They
+   take the product's own teal in both themes, because they always sit on a white screen. */
+.anno{position:relative;}
+.iter .anno > img,.iter .anno .zoom,.iter .anno .zoom img{width:100%;height:100%;max-height:none;}
+.iter--answer .anno{width:100%;}
+.iter--answer .anno > img,.iter--answer .anno .zoom,.iter--answer .anno .zoom img{height:auto;}
+.anno--tall{height:100%;aspect-ratio:1298/1838;}
+.anno--wide{width:100%;aspect-ratio:2880/1800;}
+.pin,.tag{position:absolute;left:var(--x);top:var(--y);pointer-events:none;font-family:var(--sans);line-height:1;}
+.pin{display:grid;place-items:center;width:22px;height:22px;transform:translate(-50%,-50%);border-radius:50%;background:#305cff;color:#fff;font-size:11px;font-weight:700;box-shadow:0 0 0 3px rgb(48 92 255 / .18);}
+.pin--ghost{background:#fff;color:#6b7280;box-shadow:inset 0 0 0 1.5px #9aa1ab;}
+.tag{transform:translateY(-50%);padding:6px 11px;border-radius:999px;background:#305cff;color:#fff;font-size:12px;font-weight:600;white-space:nowrap;box-shadow:0 2px 8px rgb(27 45 84 / .2);}
+@media (max-width:560px){
+  .pin{width:18px;height:18px;font-size:10px;}
+  .tag{padding:4px 8px;font-size:11px;}
+}
+/* The results, drawn as the reference results section is: a row of three, each a large figure,
+   a bold title and a muted line, with a rule along the top and between columns but none below.
+   Measured from the reference at 1759 wide, where its text sizes match this page's at 1440 and up:
+   figure 54px regular with -3px tracking, its top 40px below the rule; title 18px bold, 56px
+   below the figure; description 14px/1.65, 23px below the title; 61px more to the foot of the
+   column rule; columns 30px in from each rule. The figures keep this page's accent, with a light
+   gradient across each one (inline-block, so the gradient spans the figure, not the column). */
+:root{--accent-2:#6f8fff;}
+:root[data-theme="dark"]{--accent-2:#dbe3ff;}
+.results{display:grid;grid-template-columns:repeat(3,1fr);margin-top:72px;border-top:1px solid var(--line);}
+.results article{padding:31px 30px 58px;}
+.results article:first-child{padding-left:0;}
+.results article + article{border-left:1px solid var(--line);}
+.results strong{display:inline-block;font:400 clamp(40px,3.75vw,54px)/1 var(--sans);letter-spacing:-.055em;background:linear-gradient(100deg,var(--accent) 0%,var(--accent-2) 100%);-webkit-background-clip:text;background-clip:text;color:transparent;-webkit-text-fill-color:transparent;}
+.results h3{margin-top:44px;font:700 18px/1.3 var(--sans);color:var(--ink);}
+.results p{margin-top:12px;font-size:14px;line-height:1.65;color:var(--ink-3);}
+@media (max-width:560px){
+  .results{grid-template-columns:1fr;}
+  .results article,.results article:first-child{padding:28px 0 32px;border-left:0;}
+  .results article + article{border-left:0;border-top:1px solid var(--line);}
+  .results h3{margin-top:24px;}
+}
+
+/* ---- ZBrain additions ---- */
+/* the title is longer than CE CoPilot's, so its lines are balanced and no word sits alone */
+h1{text-wrap:balance;}
+/* The diagrams stand in for the product's own screens, so they keep its ink, lines and pill
+   colours on white in both themes, as the status lines on CE CoPilot do. */
+:root{--ui-ink:#0F1115;--ui-ink-3:#5B616E;--ui-line:#E5E7EB;--ui-blue:#2563EB;--ui-wire:#C2C7D0;}
+
+/* the two context steps are text only, one above the other on the text column, so they take no
+   sticky picture and none of the full-screen height a scrolling step needs */
+.context--text{display:block;width:min(663px, calc(100% - 2 * var(--side)));}
+.context--text .context__steps{display:grid;gap:96px;}
+.context--text .context__step{min-height:0;justify-content:flex-start;padding:0;}
+@media (max-width:900px){.context--text .context__steps{gap:64px;}}
+
+/* the governance panel: the three places work runs feed one policy, and the policy sends each action
+   one of three ways. The panel is dark in both themes, so its colours are fixed rather than themed;
+   the four levels use the hues of the iteration diagram (warn green, throttle blue, escalate orange,
+   deny red), lifted for a dark ground. */
+.gflow{--cg:44px;--g-line:rgba(255,255,255,.24);--g-card:rgba(255,255,255,.045);--g-card-line:rgba(255,255,255,.12);
+  --g-blue:#8fa6ff;--g-green:oklch(0.78 0.16 150);--g-orange:#f4a261;--g-red:#ff8b8b;
+  display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.14fr) minmax(0,.96fr);column-gap:var(--cg);row-gap:20px;align-items:center;margin-top:64px;}
+.gflow ul{list-style:none;margin:0;padding:0;}
+.gflow svg{width:14px;height:14px;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round;}
+.gflow__label{align-self:end;text-align:center;font-size:12px;line-height:1.65;font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:var(--panel-ink-3);}
+.gflow__col{position:relative;display:grid;grid-template-rows:repeat(3,1fr);gap:14px;}
+.gnode{position:relative;display:flex;flex-direction:column;justify-content:center;gap:10px;padding:16px 18px;border:1px solid var(--g-card-line);border-radius:16px;background:var(--g-card);}
+.gnode__head{display:flex;align-items:center;gap:10px;font-size:15px;line-height:1.25;font-weight:600;color:var(--panel-ink);}
+.gnode__head i,.gpolicy__head i{flex:none;display:inline-grid;place-items:center;width:28px;height:28px;border-radius:50%;background:rgba(255,255,255,.1);color:var(--panel-ink-2);font-style:normal;}
+.gnode__text{font-size:13px;line-height:1.5;color:var(--panel-ink-3);}
+.gnode--ok{--c:var(--g-green);} .gnode--rule{--c:var(--g-orange);} .gnode--more{--c:var(--g-blue);}
+.gflow__col--out .gnode__head i{color:var(--c);background:color-mix(in oklch, var(--c) 16%, transparent);}
+.glevels,.gsteps{display:flex;flex-wrap:wrap;align-items:center;gap:6px;}
+.glvl{--l:var(--g-green);display:inline-flex;align-items:center;gap:5px;padding:3px 9px;border:1px solid color-mix(in oklch, var(--l) 40%, transparent);border-radius:999px;background:color-mix(in oklch, var(--l) 12%, transparent);color:var(--l);font-size:12px;line-height:16px;font-weight:500;}
+.glvl::before{content:"";width:5px;height:5px;border-radius:50%;background:currentColor;}
+.glvl--throttle{--l:var(--g-blue);} .glvl--escalate{--l:var(--g-orange);} .glvl--deny{--l:var(--g-red);}
+.gsteps{gap:5px;}
+.gsteps span{font-size:12px;line-height:16px;font-weight:500;color:var(--panel-ink-2);white-space:nowrap;}
+.gsteps i{font-style:normal;font-size:12px;color:var(--panel-ink-3);}
+/* the policy: one card in the middle, in the brand blue */
+.gpolicy{position:relative;padding:20px;border:1px solid color-mix(in oklch, var(--g-blue) 45%, transparent);border-radius:20px;background:color-mix(in oklch, var(--g-blue) 9%, transparent);box-shadow:0 0 0 6px color-mix(in oklch, var(--g-blue) 5%, transparent);}
+.gpolicy__head{display:flex;align-items:center;gap:10px;padding-bottom:16px;border-bottom:1px solid var(--g-card-line);}
+.gpolicy__head i{width:30px;height:30px;color:var(--g-blue);background:color-mix(in oklch, var(--g-blue) 18%, transparent);}
+.gpolicy__head b{display:block;font-size:16px;line-height:1.25;font-weight:600;color:var(--panel-ink);}
+.gpolicy__head small{display:block;margin-top:2px;font-size:12px;line-height:1.4;color:var(--panel-ink-3);}
+.gflow .gpolicy__list{display:grid;gap:14px;margin-top:18px;}   /* scoped, or ".gflow ul" resets the margin and the first item sits on the divider */
+.gpolicy__list li{display:grid;grid-template-columns:30px minmax(0,1fr);gap:10px;align-items:start;}
+.gpolicy__list svg{justify-self:center;margin-top:2px;color:var(--g-blue);}
+.gpolicy__list b{display:block;font-size:14px;line-height:1.3;font-weight:600;color:var(--panel-ink);}
+.gpolicy__list span{display:block;margin-top:2px;font-size:12.5px;line-height:1.45;color:var(--panel-ink-3);}
+/* connectors: a bracket gathers the three places into the policy, another sends the policy out to the
+   three endings. Each column's rows are equal, so the first and last centres sit a sixth of the way in. */
+.gflow__col--in::after,.gflow__col--out::before{content:"";position:absolute;top:calc(100% / 6 - 14px / 3);bottom:calc(100% / 6 - 14px / 3);width:calc(var(--cg) / 2);border:1px solid var(--g-line);pointer-events:none;}
+.gflow__col--in::after{left:100%;border-left:0;border-radius:0 10px 10px 0;}
+.gflow__col--out::before{right:100%;border-right:0;border-radius:10px 0 0 10px;}
+.gflow__col--in .gnode:nth-child(2)::before,.gflow__col--out .gnode:nth-child(2)::after,.gpolicy::before,.gpolicy::after{content:"";position:absolute;top:50%;width:calc(var(--cg) / 2);border-top:1px solid var(--g-line);pointer-events:none;}
+.gflow__col--in .gnode:nth-child(2)::before{left:100%;}
+.gflow__col--out .gnode:nth-child(2)::after{right:100%;}
+.gpolicy::before{right:100%;}
+.gpolicy::after{left:100%;}
+/* ports where a line meets a card: grey on the way in, blue on the policy, each ending's own colour on the way out */
+.gflow__col--in .gnode::after,.gflow__col--out .gnode::before,.gport{content:"";position:absolute;top:50%;z-index:1;width:7px;height:7px;margin-top:-3.5px;border-radius:50%;border:1px solid var(--g-line);background:var(--panel);}
+.gflow__col--in .gnode::after{right:-4px;}
+.gflow__col--out .gnode::before{left:-4px;border-color:var(--c);background:var(--c);}
+.gport{border-color:var(--g-blue);background:var(--g-blue);}
+.gport--l{left:-4px;} .gport--r{right:-4px;}
+/* narrow: one column, top to bottom, with a line into the policy and a line out of it */
+@media (max-width:860px){
+  .gflow{grid-template-columns:minmax(0,1fr);row-gap:0;margin-top:48px;}
+  .gflow__label{margin-bottom:14px;}
+  .gflow__label--in{order:1;} .gflow__col--in{order:2;} .gpolicy{order:3;} .gflow__label--out{order:4;} .gflow__col--out{order:5;}
+  .gflow__label--mid{display:none;}
+  .gflow__col{grid-template-rows:none;gap:10px;}
+  .gflow__col--in::after,.gflow__col--out::before,.gflow__col--in .gnode:nth-child(2)::before,.gflow__col--out .gnode:nth-child(2)::after,.gflow__col--in .gnode::after,.gflow__col--out .gnode::before,.gport{display:none;}
+  .gpolicy{margin:44px 0;}
+  .gpolicy::before,.gpolicy::after{left:50%;right:auto;top:auto;width:0;border-top:0;border-left:1px solid var(--g-line);}
+  .gpolicy::before{bottom:100%;height:44px;}
+  .gpolicy::after{top:100%;height:30px;}
+}
+
+/* before/after diagrams, inside the iteration wells where a screenshot would sit. Each is a picture
+   of the diagram drawn at 440px, so it scales down as one piece on a narrow screen instead of
+   reflowing; never past its drawn size on a wide one. */
+.iter .well .ba__img{width:auto;height:auto;max-width:min(100%,440px);max-height:100%;}
+.iter .well:has(.ba__img){padding:32px;}
+
+/* the two rule-builder recordings, in the iteration wells */
+.iter .well .media{position:relative;height:100%;max-width:100%;aspect-ratio:1440/1294;}
+.media video{width:100%;height:100%;object-fit:contain;border-radius:10px;box-shadow:var(--shot);background:#fff;}
+.media__toggle{position:absolute;bottom:14px;right:14px;display:inline-flex;align-items:center;justify-content:center;width:40px;height:40px;padding:0;border:1px solid rgba(31,42,68,.2);border-radius:50%;background:#fff;color:#1f2a44;cursor:pointer;opacity:0;transition:opacity .15s ease;}
+.media__toggle svg{width:20px;height:20px;fill:currentColor;display:block;}
+.media__toggle .ic-play{display:none;}
+.media__toggle[data-state="paused"] .ic-pause{display:none;}
+.media__toggle[data-state="paused"] .ic-play{display:block;}
+.media:hover .media__toggle,.media__toggle:focus-visible{opacity:1;}
+@media (hover:none){.media__toggle{opacity:1;}}
+
+/* screenshot cards: desktop crops in place of the phones, so they fill the well */
+.cards--shots .well{padding:24px;}
+.cards--shots .well img{width:100%;border-radius:8px;box-shadow:var(--shot);}
+.cards--shots + .cgroup{margin-top:120px;}
+/* the results band carries two notes under its numbers */
+.results + .decisions{margin-top:56px;}
+/* a pair's two halves stay equal, whatever is inside each well */
+@media (min-width:901px){
+  .iter{grid-template-columns:repeat(2,minmax(0,1fr));}
+  /* four decisions run two to a row: each row starts flush left, with a rule between the rows */
+  .decisions--2 article:nth-child(odd){padding-left:0;border-left:0;}
+  .decisions--2 article:nth-child(n+3){border-top:1px solid var(--line);}
+}
+
+@media (max-width:900px){
+  .cards--shots + .cgroup{margin-top:80px;}
+}
+@media (max-width:560px){
+  .iter .well,.iter .well:has(.ba__img){padding:16px;}
+}
+
+/* Screenshot frames: every screen except the hero sits in the page's grey well, inset at the top
+   and sides and running off the well's bottom edge, as v1 does on its mesh (the crops are lifted further down: every screen shows whole). The rule-builder recordings and the before/after diagrams keep their plain wells. */
+.console .well,.console__row .well,.cards--shots .well{display:block;padding:clamp(22px,2.8vw,40px) clamp(20px,3.4vw,48px) 0;overflow:hidden;}
+.console__row .well,.cards--shots .well{padding:18px 18px 0;}
+.console .well img,.console__row .well img,.cards--shots .well img{display:block;width:100%;height:auto;aspect-ratio:var(--ar);object-fit:cover;object-position:left top;
+  border-radius:12px 12px 0 0;box-shadow:var(--shot);background:#fff;}
+.console .well img{--ar:1920/860;}
+.console__row{--ar:2/1;}
+.cards--shots .well img{--ar:2/1;}
+.console__row .well img,.cards--shots .well img{border-radius:8px 8px 0 0;}
+@media (max-width:760px){
+  .console .well{padding:16px 16px 0;}
+  .console .well img,.console__row .well img{aspect-ratio:1.45;object-position:30% top;}   /* set directly, so it wins over a screen's own desktop crop */   /* phones: the page body, not the sidebar, as v1 does */
+  .console__row .well,.cards--shots .well{padding:14px 14px 0;}
+}
+
+
+/* Screenshots show whole: each keeps its own shape and scales with the column, with nothing cut from
+   the foot or, on a phone, from the sides. In a row of screens of different heights the wells share
+   the row's height and the captions share the line below, and each screen sits on its well's bottom
+   edge, so the row stays level. */
+.console .well img,.console__row .well img,.cards--shots .well img{aspect-ratio:auto;height:auto;object-fit:fill;}
+.console__row{align-items:stretch;}
+.console__row figure{display:grid;grid-row:span 2;grid-template-rows:subgrid;row-gap:0;}
+.console__row figure .well{display:flex;align-items:flex-end;}
+.console__row figure .well > *{flex:1;}
+@media (max-width:760px){
+  .console .well img,.console__row .well img{aspect-ratio:auto;object-position:0 0;}
+}
+
+/* ==========================================================================
+   TYPE SYSTEM, the one source of truth for text on this page (type-guideline.md).
+   Plus Jakarta Sans 500 for display only; Plus Jakarta Sans for everything else in three weights:
+   400 reading text, 600 emphasis, values and small titles, 700 headings and kickers.
+   Every role is set in full here, so it overrides any earlier size on the same element.
+   ========================================================================== */
+:root{
+  --t-d1:clamp(32px, 3.4vw, 48px);
+  --t-d2:clamp(28px, 3vw, 42px);   /* section headings stay under the hero title (--t-d1) at every width */
+  --t-h3:clamp(27px, 2.64vw, 38px);
+  --t-h4:clamp(21px, 1.875vw, 27px);
+  --t-h5:16px;
+  --t-h6:14px;
+  --t-lead-l:clamp(17px, 1.53vw, 22px);
+  --t-lead:clamp(17px, 1.39vw, 20px);
+  --t-body:16px;
+  --t-body-s:15px;
+  --t-small:13px;
+  --t-micro:12px;
+  --t-metric:clamp(28px, 2.78vw, 40px);
+}
+/* display: Plus Jakarta Sans 600 (was Fraunces 500) */
+h1{font:600 var(--t-d1)/1.06 var(--serif);letter-spacing:-.052em;}
+h2:not(.next__word),.quote__line{font:600 var(--t-d2)/1.02 var(--serif);letter-spacing:-.045em;}
+h1,h2:not(.next__word),.quote__line{word-spacing:.06em;}   /* the tight display tracking was set for a serif; at 600 the sans needs its word gaps back */
+.quote .quote__line{font-size:clamp(28px, 3vw, 42px);line-height:1.1;}   /* kept under the hero title (--t-d1, 32 to 48px) at every width: smaller floor, slope and cap */
+/* headings */
+.context__step h3,.rules h3,.iter__copy h3,.cgroup h3{font:700 var(--t-h3)/1.1 var(--sans);letter-spacing:-.04em;}
+.card__copy h3,.next__title{font:700 var(--t-h4)/1.14 var(--sans);letter-spacing:-.035em;}
+.gpolicy__head b,.tree__root,.branch h3{font:600 var(--t-h5)/1.3 var(--sans);letter-spacing:-.01em;}
+.gnode__head,.gpolicy__list b{font:600 var(--t-h6)/1.3 var(--sans);letter-spacing:0;}
+/* text */
+.summary{font:400 var(--t-lead-l)/1.55 var(--sans);letter-spacing:0;}
+.head > p,.cgroup > p,.loop__back,.quote__sub{font:400 var(--t-lead)/1.65 var(--sans);letter-spacing:0;}
+.dash li,.subhead{font:400 var(--t-body)/1.65 var(--sans);letter-spacing:0;}
+.reflect li{font:600 var(--t-body)/1.65 var(--sans);letter-spacing:0;}
+.card__copy p,.iter__copy p,.rules p{font:400 var(--t-body-s)/1.6 var(--sans);letter-spacing:0;}
+.meta dd{font:600 var(--t-body-s)/1.3 var(--sans);letter-spacing:0;}
+figcaption,.gnode__text,.branch li,.gpolicy__list span,.metric span,.meta dt{font:400 var(--t-small)/1.5 var(--sans);letter-spacing:0;text-transform:none;}
+.gpolicy__head small,.gsteps i{font:400 var(--t-micro)/1.4 var(--sans);letter-spacing:0;}
+.glvl,.gsteps span{font:600 var(--t-micro)/1.4 var(--sans);letter-spacing:0;}
+/* labels and numbers */
+.kicker,.gflow__label,.next__cat{font:700 12px/1.65 var(--sans);letter-spacing:.04em;text-transform:uppercase;}
+.project-line{font:600 14px/1.65 var(--sans);letter-spacing:.02em;text-transform:none;}
+.metric strong{font:600 var(--t-metric)/1 var(--sans);letter-spacing:-.05em;}
+/* phones: only the title has its own size; every other role uses its clamp floor */
+@media (max-width:760px){ h1{font-size:min(9vw, 34px);} }
+
+/* ==========================================================================
+   V3 LAYOUT. Three changes on top of v2:
+   1. One content column, 1012px, set to the right of the rail and left aligned
+      (the geometry of Vivek's ZBrain case study: rail at the left edge, content
+      from about 343px to 1355px at 1440 wide). Text runs to a 720px measure.
+   2. A skim layer under the hero (Overview), measured from Vivek's: a 13px label,
+      two 24px lead paragraphs, then three columns under a 1px ink rule, split by
+      hairlines, each one link to its act.
+   3. The page grouped into three acts (Identify, Design, Impact), each opened by an
+      ink rule, a small "01 · Identify" label and the act title, and a grouped rail
+      in which only the group in view shows its sections.
+   The hero follows the DHS Tutor pattern: product name in the title, one screen on
+   a soft artboard that stays light in both themes, running off its bottom edge.
+   ========================================================================== */
+:root{--rail:0px;--side:32px;--content:1012px;--measure:720px;}
+@media (min-width:1240px){:root{--rail:300px;--side:56px;}}
+@media (max-width:760px){:root{--side:24px;}}
+
+main,.next-wrap.col{width:min(var(--content), calc(100% - var(--rail) - 2 * var(--side)));
+  margin-left:calc(var(--rail) + max(var(--side), (100% - var(--rail) - var(--content)) / 2));margin-right:0;}
+main .col,main .wide{margin-left:0;margin-right:0;}
+main .wide{width:100%;}
+main .col,main .context--text{width:min(var(--measure),100%);}
+section[id],.cgroup[id]{scroll-margin-top:88px;}
+
+/* type: a step for the acts, between the hero title and the section headings */
+:root{--t-h3:clamp(20px, 1.8vw, 24px);--t-h4:clamp(18px, 1.4vw, 20px);}
+h2.act__title{margin-top:14px;max-width:20em;font:600 clamp(28px, 3vw, 42px)/1.06 var(--serif);letter-spacing:-.045em;word-spacing:.06em;text-wrap:balance;}
+main .sec h2:not(.act__title),main .panel h2{font-size:clamp(24px, 2.4vw, 32px);line-height:1.12;letter-spacing:-.04em;text-wrap:balance;}
+.context__step h3{font-size:clamp(24px, 2.4vw, 32px);line-height:1.12;letter-spacing:-.04em;}
+main .sec h2.quote__line{font-size:clamp(26px, 2.6vw, 36px);line-height:1.1;}
+
+/* hero */
+.hero{padding-top:128px;}
+@media (max-width:1239px){.hero{padding-top:104px;}.hero__copy{margin-top:28px;}}
+.hero .summary{max-width:var(--measure);margin-top:20px;}
+.hero .meta{grid-template-columns:repeat(4,minmax(0,max-content));column-gap:48px;margin-top:40px;}
+.case-frame{margin:56px 0 0;padding:clamp(22px,2.8vw,40px) clamp(20px,3.4vw,48px) 0;overflow:hidden;border-radius:16px;
+  background:
+    radial-gradient(60% 70% at 15% 20%, #dfe6ff 0%, transparent 70%),
+    radial-gradient(55% 65% at 90% 30%, #e7ebfb 0%, transparent 70%),
+    radial-gradient(70% 70% at 50% 100%, #dbe7f7 0%, transparent 70%),
+    #edf0fa;}
+.case-frame__screen{overflow:hidden;border-radius:12px 12px 0 0;background:#fff;box-shadow:0 -2px 24px rgba(27,45,84,.14);}
+.case-frame__screen img{display:block;width:100%;height:auto;}
+@media (max-width:700px){.case-frame{padding:16px 16px 0;}.case-frame__screen{border-radius:8px 8px 0 0;}}
+@media (max-width:900px){.hero .meta{grid-template-columns:1fr 1fr;}}
+
+/* skim layer */
+.skim{margin-top:112px;}
+.skim__label,.act__label{font:400 13px/1.5 var(--sans);letter-spacing:.005em;color:var(--ink-3);}
+.skim__lead{max-width:none;margin-top:14px;font:400 clamp(19px, 1.67vw, 24px)/1.42 var(--sans);letter-spacing:-.012em;color:var(--ink);}
+.skim__lead + .skim__lead{color:var(--ink-3);}
+.skim__grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));margin-top:48px;border-top:1px solid var(--line);}
+.skim__col{display:flex;flex-direction:column;gap:14px;padding:20px 24px 24px;color:inherit;}
+.skim__col:first-child{padding-left:0;}
+.skim__col:last-child{padding-right:0;}
+.skim__col + .skim__col{border-left:1px solid var(--line);}
+.skim__head{display:flex;align-items:baseline;gap:10px;}
+.skim__head small{font:400 13px/1.5 var(--sans);color:var(--ink-3);}
+.skim__head h3{font:600 24px/1.18 var(--serif);letter-spacing:-.02em;}
+.skim__sub{font:400 13px/1.5 var(--sans);color:var(--ink-3);}
+.skim__text{font:400 15px/1.5 var(--sans);color:var(--ink-2);}
+.skim__list li{position:relative;padding-left:16px;font:400 15px/1.4 var(--sans);color:var(--ink-2);}
+.skim__list li + li{margin-top:8px;}
+.skim__list li::before{content:"";position:absolute;left:0;top:10px;width:7px;height:1px;background:var(--accent);}
+.skim__list b{font-weight:600;color:var(--ink);}
+.skim__rows li{display:grid;grid-template-columns:58px minmax(0,1fr);gap:12px;padding:12px 0;}
+.skim__rows li:first-child{padding-top:2px;}
+.skim__rows li + li{border-top:1px solid var(--line);}
+.skim__rows b{font:600 15px/1.4 var(--sans);color:var(--ink);}
+.skim__rows span{font:400 15px/1.4 var(--sans);color:var(--ink-2);}
+.skim__nums{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+.skim__nums dt{font:600 32px/1 var(--sans);letter-spacing:-.04em;color:var(--ink);}
+.skim__nums dd{margin-top:8px;font:400 13px/1.45 var(--sans);color:var(--ink-3);}
+.skim__go{margin-top:auto;padding-top:6px;font:500 13px/1.5 var(--sans);color:var(--ink);}
+.skim__go i{display:inline-block;font-style:normal;transition:transform .35s cubic-bezier(.2,.7,.1,1);}
+.skim__col:hover .skim__go i,.skim__col:focus-visible .skim__go i{transform:translateX(4px);}
+.skim__col:hover .skim__head h3{color:var(--accent);}
+.skim__head h3{transition:color .25s ease;}
+@media (max-width:900px){
+  .skim{margin-top:80px;}
+  .skim__grid{grid-template-columns:1fr;margin-top:36px;}
+  .skim__col,.skim__col:first-child,.skim__col:last-child{padding:22px 0 26px;}
+  .skim__col + .skim__col{border-left:0;border-top:1px solid var(--line);}
+  .skim__go{margin-top:4px;}
+}
+
+/* acts, and the sections inside them */
+.act{margin-top:176px;}
+.act__head{padding-top:20px;border-top:1px solid var(--line);}
+.act__lede{max-width:var(--measure);margin-top:18px;font:400 var(--t-lead)/1.65 var(--sans);color:var(--ink-2);}
+.sec{margin-top:128px;padding-top:0;}
+main .panel{margin-top:128px;}
+.act__head + .sec,.act__head + .panel{margin-top:80px;}
+#stands{margin-top:56px;}
+#stands .metrics{margin-top:0;}
+@media (max-width:900px){
+  .act{margin-top:112px;}
+  .sec,main .panel{margin-top:88px;}
+  .act__head + .sec,.act__head + .panel{margin-top:56px;}
+}
+
+/* cards that sat centred on the page now fill the column, their text on the same left edge */
+.quote--card{padding:72px clamp(28px, 6vw, 72px);}
+.quote--card .col{width:min(var(--measure),100%);margin:0;}
+.reflect{width:100%;margin:176px 0 0;padding:72px clamp(28px, 6vw, 72px) 88px;}
+.reflect .col{width:min(var(--measure),100%);margin:0;}
+@media (max-width:900px){
+  .quote--card{padding:56px 24px;}
+  .reflect{margin-top:112px;padding:56px 24px 64px;}
+}
+
+/* the rail, grouped: a label, the groups, and under the group in view its sections */
+.toc__label{display:none;}
+@media (min-width:1240px){
+  .toc{top:120px;left:56px;width:204px;gap:22px;}
+  .toc.is-covered{opacity:1;pointer-events:auto;}
+  .toc__label{display:block;margin-bottom:-8px;font:400 13px/1.5 var(--sans);color:var(--ink-3);}
+  .toc__list a{max-width:none;min-height:0;}
+  .toc__list a.toc__top{display:flex;align-items:baseline;gap:8px;padding:7px 0;font:400 15px/1.3 var(--sans);letter-spacing:-.007em;color:var(--ink-3);}
+  .toc__top small{min-width:16px;font:400 12px/1 var(--sans);color:var(--ink-3);}
+  .toc__grp.is-open > a.toc__top,.toc__list a.toc__top[aria-current]{color:var(--ink);font-weight:400;}
+  .toc__sub{display:none;padding:0 0 6px;}
+  .toc__grp.is-open .toc__sub{display:block;}
+  .toc__sub a{padding:5px 0 5px 24px;font:400 13px/1.3 var(--sans);color:var(--ink-3);}
+  .toc__sub a[aria-current]{color:var(--ink);font-weight:600;}
+}
+@media (max-width:1239px){
+  .toc__list a.toc__top{display:flex;align-items:baseline;gap:10px;}
+  .toc__top small{font:400 13px/1 var(--sans);color:var(--ink-3);}
+  .toc__sub a{padding:7px 0 7px 30px;border-top:0;font-size:15px;line-height:22px;font-weight:400;color:var(--ink-3);}
+  .toc__sub{padding-bottom:8px;}
+}
+
+/* ==========================================================================
+   V3 ALIGNMENT: one grid for every text block. Lead-size text (the hero
+   summary, the skim leads) runs the full column. Below that, a heading and its
+   label sit in the left half and the body text in the right half (a half lands
+   on the same line inside a padded card as on the page), so text ends on the same right edge as the rules, pictures and diagrams
+   instead of stopping short at a 720px measure. Act titles span both columns,
+   and a line that stands alone under a block (the opportunity line, "No space
+   starts without one") starts on the right column's edge.
+   ========================================================================== */
+:root{--gap:56px;--split:minmax(0,1fr) minmax(0,1fr);}
+.hero .summary{max-width:none;}
+main .head.col,main .cgroup.col,main .context--text{width:100%;}
+@media (min-width:861px){
+  main .head,.context__step,main .cgroup,.quote--card .col,.reflect .col,.act__head{display:grid;grid-template-columns:var(--split);column-gap:var(--gap);align-items:start;}
+  main .head > *,.context__step > *,main .cgroup > *,.reflect .col > *{grid-column:1;}
+  main .head > p,.context__step > ul,main .cgroup > p,.reflect .col > ul{grid-column:2;margin-top:0;}
+  .act__head > *{grid-column:1 / -1;}
+  .act__head > .act__lede{grid-column:2;}
+  /* the quote card reads like every other block: label and quote on the left, the reasoning on the right */
+  .quote--card .col > *{grid-column:1;}
+  .quote--card .col > .quote__sub{grid-column:2;margin-top:0;}
+  .quote--card .col > .quote__sub + .quote__sub{margin-top:16px;}
+  /* the first bullet's text level with the heading beside it, not a padding's depth below */
+  .context__step > ul{margin-top:-6px;}   /* the heading has 8px above it; the first item 14px of padding */
+  .quote--card .col,.reflect .col{width:100%;}
+  main .subhead.col,.panel .loop__back{width:auto;margin-left:calc((100% - var(--gap)) / 2 + var(--gap));}
+}
+
+/* everything else in two parts takes the same halves and gap, so the right half starts on one line
+   down the whole page: the before/after pairs, the four rules, two-up screens, the hero details */
+@media (min-width:901px){
+  .iter{column-gap:var(--gap);}
+  .rules article{padding-right:calc(var(--gap) / 2);}
+  .rules article:nth-child(even){padding-left:calc(var(--gap) / 2);padding-right:0;}
+  .console__row.console__row--2{column-gap:var(--gap);}
+  .hero .meta{grid-template-columns:repeat(4,minmax(0,1fr));column-gap:var(--gap);}
+  .metric{padding-inline:calc(var(--gap) / 2);}
+  .metric:first-child{padding-left:0;}
+}
+/* the three cards (quote, governance panel, reflections) share one inner padding, so their text starts on one line */
+main .panel{padding:72px clamp(28px, 6vw, 72px);}
+@media (max-width:900px){main .panel{padding:48px 24px;}}
+/* the reflections heading takes the section size, like every other heading in a card */
+.reflect h2{font-size:clamp(24px, 2.4vw, 32px);line-height:1.12;letter-spacing:-.04em;}
+@media (min-width:901px){
+  /* an act with a lede: the title on the left, the lede beside it on the right */
+  .act__head:has(.act__lede) > .act__title{grid-column:1;grid-row:2;}
+  .act__head:has(.act__lede) > .act__lede{grid-column:2;grid-row:2;margin-top:18px;}
+  /* the next project's card starts on the same line as every right half */
+  .next{column-gap:var(--gap);}
+}
+/* the reflections header is already the card's left half: it isn't split again */
+main .reflect .head{display:block;}
+/* the rules' text fills its half (or the column, once stacked) rather than a fixed 461px */
+.rules p{max-width:none;}
+
+/* ==========================================================================
+   V3 REDESIGN. The same content, told as pictures and groups instead of
+   paragraphs, after the way Vivek's ZBrain case study shows its data:
+   label rows (a muted label on the left, its items beside it, rows ruled
+   off), an icon, a title and one line for every idea, problem-to-answer
+   pairs, decisions asked as questions with what it cost, and steppers.
+   One grid holds it all: 12 columns with 24px gutters on the 1012px column,
+   so every block lands on quarters (259 / 518 / 777), thirds or halves.
+   ========================================================================== */
+:root{--gap:24px;--warn:#f4a261;}
+:root[data-theme="light"]{--warn:oklch(0.62 0.16 50);}
+main .head > h2{padding-right:32px;}
+
+/* icons: one line weight everywhere */
+main svg:has(> use){width:18px;height:18px;flex:none;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round;}
+.z-ic{flex:none;display:inline-grid;place-items:center;width:36px;height:36px;border-radius:10px;background:color-mix(in oklch, var(--accent) 14%, transparent);color:var(--accent);}
+.z-ic--muted{background:var(--tint);color:var(--ink-2);}
+.z-ic--warn{background:color-mix(in oklch, var(--warn) 14%, transparent);color:var(--warn);}
+
+/* label rows */
+.z-rows{margin-top:48px;}
+.z-row{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));column-gap:var(--gap);padding:32px 0;border-top:1px solid var(--line);}
+.z-rows > .z-row:last-child{border-bottom:1px solid var(--line);}
+.sec > .z-row,.z-sides + .z-row,.quote + .z-row{margin-top:56px;}
+.z-row + .z-row{margin-top:0;}
+.z-row__label{max-width:210px;font:600 14px/1.45 var(--sans);letter-spacing:-.005em;color:var(--ink-2);}
+.z-row__body{grid-column:2 / -1;min-width:0;}
+.z-items{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));column-gap:var(--gap);row-gap:28px;}
+/* four items take all four quarters, with the label above them */
+.z-row:has(> .z-items--4in3) > .z-row__label{grid-column:1 / -1;max-width:none;margin-bottom:24px;}
+.z-row > .z-items--4in3{grid-column:1 / -1;grid-template-columns:repeat(4,minmax(0,1fr));}
+.z-item h4{margin-top:14px;font:600 16px/1.3 var(--sans);letter-spacing:-.01em;color:var(--ink);}
+.z-item p{margin-top:6px;font:400 14.5px/1.55 var(--sans);color:var(--ink-3);}
+.z-item--note h4{color:var(--ink-2);}
+.z-chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:12px;}
+.z-chips i{padding:3px 9px;border:1px solid var(--line);border-radius:999px;font:500 12px/1.4 var(--sans);font-style:normal;color:var(--ink-2);}
+.z-foot{position:relative;margin-top:28px;padding-left:22px;font:400 15px/1.55 var(--sans);color:var(--ink-2);}
+.z-foot::before{content:"";position:absolute;left:0;top:11px;width:12px;height:1px;background:var(--accent);}
+
+/* at a glance */
+.z-glance{margin-top:104px;}
+.z-glance .z-row{padding:0;border-top:0;}
+.z-glance .z-row + .z-row{margin-top:40px;}
+.z-glance .z-row__label{color:var(--ink-3);}
+.z-lead{font:400 clamp(19px, 1.67vw, 24px)/1.42 var(--sans);letter-spacing:-.012em;color:var(--ink);}
+.z-lead--muted{margin-top:12px;color:var(--ink-3);}
+.z-gcard{display:flex;flex-direction:column;gap:10px;padding:24px;border:1px solid var(--line);border-radius:18px;background:var(--surface);color:inherit;transition:border-color .25s ease, transform .35s cubic-bezier(.2,.7,.1,1);}
+.z-gcard:hover,.z-gcard:focus-visible{border-color:color-mix(in oklch, var(--accent) 55%, transparent);transform:translateY(-2px);}
+.z-gcard .z-ic{margin-bottom:6px;}
+.z-gcard__num{font:600 12px/1.4 var(--sans);letter-spacing:.03em;color:var(--ink-3);}
+.z-gcard h3{font:600 20px/1.25 var(--sans);letter-spacing:-.02em;color:var(--ink);}
+.z-ticks{display:grid;gap:8px;margin-top:4px;}
+.z-ticks li{position:relative;padding-left:16px;font:400 14.5px/1.45 var(--sans);color:var(--ink-2);}
+.z-ticks li::before{content:"";position:absolute;left:0;top:9px;width:6px;height:6px;border-radius:50%;background:var(--warn);}
+.z-swaps{display:grid;margin-top:4px;}
+.z-swaps > div{padding:9px 0;border-top:1px solid var(--line);}
+.z-swaps > div:first-child{border-top:0;padding-top:0;}
+.z-swaps dt{font:600 12px/1.4 var(--sans);color:var(--ink-3);}
+.z-swaps dd{display:flex;flex-wrap:wrap;align-items:center;gap:6px;margin:3px 0 0;font:600 14.5px/1.4 var(--sans);color:var(--ink);}
+.z-swaps s{font-weight:400;color:var(--ink-3);text-decoration-color:color-mix(in oklch, var(--ink-3) 70%, transparent);}
+.z-swaps svg{width:14px !important;height:14px !important;color:var(--accent);}
+.z-nums{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:4px;}
+.z-nums dt{font:600 34px/1 var(--sans);letter-spacing:-.04em;color:var(--ink);}
+.z-nums dd{margin:8px 0 0;font:400 13px/1.45 var(--sans);color:var(--ink-3);}
+.z-go{display:inline-flex;align-items:center;gap:6px;margin-top:auto;padding-top:10px;font:600 13px/1.4 var(--sans);color:var(--ink);}
+.z-go svg{width:14px !important;height:14px !important;transition:transform .35s cubic-bezier(.2,.7,.1,1);}
+.z-gcard:hover .z-go svg{transform:translateX(4px);}
+
+/* two sides of ZBrain */
+.z-sides{position:relative;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--gap);margin-top:56px;}
+.z-side{display:flex;flex-direction:column;gap:12px;padding:28px;border:1px solid var(--line);border-radius:20px;background:var(--surface);}
+.z-side--mine{border-color:color-mix(in oklch, var(--accent) 45%, transparent);background:color-mix(in oklch, var(--accent) 7%, var(--surface));}
+.z-side .z-ic{margin-bottom:6px;}
+.z-side__kicker{font:700 12px/1.6 var(--sans);letter-spacing:.04em;text-transform:uppercase;color:var(--ink-3);}
+.z-side--mine .z-side__kicker{color:var(--accent);}
+.z-side h3{max-width:15em;font:600 clamp(20px, 1.9vw, 24px)/1.25 var(--sans);letter-spacing:-.025em;color:var(--ink);}
+.z-side__who{display:flex;align-items:center;gap:8px;margin-top:auto;padding-top:18px;font:500 13px/1.4 var(--sans);color:var(--ink-3);}
+.z-side__who svg{width:15px !important;height:15px !important;}
+.z-sides__link{position:absolute;left:50%;top:50%;z-index:1;display:inline-flex;align-items:center;gap:6px;padding:7px 12px;transform:translate(-50%,-50%);border:1px solid var(--line);border-radius:999px;background:var(--bg);font:500 12px/1 var(--sans);color:var(--ink-2);white-space:nowrap;}
+.z-sides__link svg{width:13px !important;height:13px !important;color:var(--accent);}
+
+/* my part, in order */
+.z-chain{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));margin-top:48px;}
+.z-chain li{position:relative;display:flex;flex-direction:column;gap:12px;font:600 15px/1.3 var(--sans);color:var(--ink);}
+.z-chain li:not(:last-child)::before{content:"";position:absolute;left:40px;right:8px;top:16px;border-top:1px solid var(--line);}
+.z-chain b{position:relative;z-index:1;display:grid;place-items:center;width:32px;height:32px;border:1px solid color-mix(in oklch, var(--accent) 50%, transparent);border-radius:50%;background:color-mix(in oklch, var(--accent) 10%, var(--bg));font:600 12px/1 var(--sans);color:var(--accent);}
+
+/* people */
+.z-person{display:flex;align-items:flex-start;gap:14px;}
+.z-person h4{font:600 16px/1.3 var(--sans);color:var(--ink);}
+.z-person p{margin-top:4px;font:400 14.5px/1.5 var(--sans);color:var(--ink-3);}
+.z-avatar{flex:none;display:grid;place-items:center;width:40px;height:40px;border-radius:50%;background:var(--tint);font:600 15px/1 var(--sans);color:var(--ink);}
+.z-avatar svg{width:18px !important;height:18px !important;color:var(--ink-2);}
+
+/* each team's own terms */
+.z-terms{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:var(--gap);}
+.z-terms > div{display:flex;flex-direction:column;gap:4px;padding:20px;border:1px solid var(--line);border-radius:16px;background:var(--surface);}
+.z-terms b{margin-top:12px;font:600 15.5px/1.35 var(--sans);color:var(--ink);}
+.z-terms span:last-child{font:400 13.5px/1.45 var(--sans);color:var(--ink-3);}
+
+/* four rules: the problem, then the rule that answers it */
+.z-fixes{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:var(--gap);margin-top:56px;}
+.z-fixes li{display:flex;flex-direction:column;padding:22px 22px 26px;border:1px solid var(--line);border-radius:18px;background:var(--surface);}
+.z-fixes__num{font:600 12px/1 var(--sans);letter-spacing:.04em;color:var(--ink-3);}
+.z-fixes__was{display:flex;gap:8px;min-height:4.4em;margin-top:16px;font:400 14px/1.45 var(--sans);color:var(--ink-3);}
+.z-fixes__was svg{width:16px !important;height:16px !important;margin-top:1px;color:var(--warn);}
+.z-fixes__arrow{display:block;margin:12px 0 14px;color:var(--ink-3);}
+.z-fixes__arrow svg{width:16px !important;height:16px !important;}
+.z-fixes h3{display:flex;flex-direction:column;align-items:flex-start;gap:14px;font:600 19px/1.25 var(--sans);letter-spacing:-.02em;color:var(--ink);}
+.z-fixes h3 + p{margin-top:8px;font:400 14.5px/1.5 var(--sans);color:var(--ink-2);}
+.z-idea{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));column-gap:var(--gap);align-items:baseline;margin-top:40px;padding-top:24px;border-top:1px solid var(--line);font:600 clamp(18px, 1.6vw, 22px)/1.4 var(--sans);letter-spacing:-.015em;color:var(--ink);}
+.z-idea > span{font:600 14px/1.45 var(--sans);letter-spacing:0;color:var(--accent);}
+.z-idea > b{grid-column:2 / -1;font-weight:600;}
+
+/* the menu, as a map */
+.z-ia{margin-top:64px;}
+.z-ia__root{display:flex;align-items:center;gap:10px;width:max-content;margin:0 auto;padding:12px 20px;border:1px solid color-mix(in oklch, var(--accent) 45%, transparent);border-radius:999px;background:color-mix(in oklch, var(--accent) 10%, var(--surface));font:600 15px/1.2 var(--sans);color:var(--ink);}
+.z-ia__root svg{color:var(--accent);}
+.z-ia__groups{position:relative;display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:16px;padding-top:56px;}
+.z-ia__groups::before{content:"";position:absolute;left:50%;top:0;height:28px;border-left:1px solid var(--line);}
+.z-ia__groups::after{content:"";position:absolute;left:calc((100% - 64px) / 10);right:calc((100% - 64px) / 10);top:28px;border-top:1px solid var(--line);}
+.z-ia__group{position:relative;padding:20px 18px 22px;border:1px solid var(--line);border-radius:16px;background:var(--surface);}
+.z-ia__group::before{content:"";position:absolute;left:50%;top:-29px;height:28px;border-left:1px solid var(--line);}
+.z-ia__group h3{margin-top:14px;font:600 16px/1.3 var(--sans);color:var(--ink);}
+.z-ia__q{margin-top:4px;font:400 13.5px/1.45 var(--sans);color:var(--ink-2);}
+.z-ia__group ul{display:grid;gap:8px;margin-top:16px;padding-top:14px;border-top:1px solid var(--line);}
+.z-ia__group li{position:relative;padding-left:12px;font:400 13px/1.4 var(--sans);color:var(--ink-3);}
+.z-ia__group li::before{content:"";position:absolute;left:0;top:8px;width:5px;height:1px;background:var(--accent);}
+
+/* decisions */
+.z-dec{margin-top:72px;padding-top:28px;border-top:1px solid var(--line);}
+.sec > .head + .z-dec{margin-top:56px;}
+.z-dec__head{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));column-gap:var(--gap);align-items:baseline;}
+.z-dec__num{font:600 13px/1.5 var(--sans);color:var(--accent);}
+.z-dec__head h3{grid-column:2 / -1;font:600 clamp(22px, 2.2vw, 28px)/1.2 var(--sans);letter-spacing:-.03em;color:var(--ink);}
+.iter.z-compare{margin-top:32px;}
+.z-compare__cap{display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin-top:16px;font:600 16px/1.35 var(--sans);color:var(--ink);}
+.z-tag{padding:3px 9px;border-radius:999px;background:var(--tint);font:700 11px/1.4 var(--sans);letter-spacing:.05em;text-transform:uppercase;color:var(--ink-3);}
+.z-tag--now{background:color-mix(in oklch, var(--accent) 16%, transparent);color:var(--accent);}
+.z-dec__rows{margin-top:32px;border-top:1px solid var(--line);}
+.z-dec__rows > div{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));column-gap:var(--gap);padding:18px 0;border-bottom:1px solid var(--line);}
+.z-dec__rows dt{font:600 14px/1.55 var(--sans);color:var(--ink-2);}
+.z-dec__rows dd{grid-column:2 / -1;max-width:660px;margin:0;font:400 16px/1.6 var(--sans);color:var(--ink-2);}
+
+/* a day in the console: the five moments as a stepper */
+.z-flow{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:var(--gap);margin-top:48px;padding:24px;border:1px solid var(--line);border-radius:20px;background:var(--surface);}
+.z-flow li{position:relative;}
+.z-flow li:not(:last-child)::after{content:"";position:absolute;top:18px;left:48px;right:calc(-1 * var(--gap) + 10px);border-top:1px dashed color-mix(in oklch, var(--ink-3) 45%, transparent);}
+.z-flow a{display:flex;flex-direction:column;gap:10px;font:600 15px/1.3 var(--sans);color:var(--ink);}
+.z-flow b{font:600 12px/1 var(--sans);color:var(--ink-3);}
+.z-flow .z-ic{transition:background-color .25s ease,color .25s ease;}
+.z-flow a:hover .z-ic,.z-flow a:focus-visible .z-ic{background:var(--accent);color:var(--bg);}
+.z-flow + .cgroup{margin-top:80px;}
+.cgroup[id]{scroll-margin-top:96px;}
+
+/* states */
+.z-statetag{display:inline-flex;align-items:center;gap:7px;font:700 11.5px/1.5 var(--sans);letter-spacing:.04em;text-transform:uppercase;color:var(--ink-3);}
+.z-statetag svg{width:14px !important;height:14px !important;color:var(--accent);}
+
+/* design QA: the count beside the ticket */
+.z-qa{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));column-gap:var(--gap);align-items:start;margin-top:40px;}
+.z-qa__stat{display:flex;flex-direction:column;gap:8px;}
+.z-qa__stat strong{margin-top:10px;font:600 64px/1 var(--sans);letter-spacing:-.05em;color:var(--ink);}
+.z-qa__stat > span:last-child{font:400 14.5px/1.5 var(--sans);color:var(--ink-3);}
+.z-qa .console{grid-column:2 / -1;margin-top:0;}
+
+/* impact */
+.z-stats{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--gap);}
+.z-stat{display:flex;flex-direction:column;gap:8px;padding:28px;border:1px solid var(--line);border-radius:20px;background:var(--surface);}
+.z-stat strong{margin-top:14px;font:500 clamp(52px, 5.2vw, 76px)/1 var(--sans);letter-spacing:-.055em;background:linear-gradient(100deg, var(--accent) 0%, var(--accent-2) 100%);-webkit-background-clip:text;background-clip:text;color:transparent;-webkit-text-fill-color:transparent;width:max-content;}
+.z-stat > span:last-child{font:400 15.5px/1.5 var(--sans);color:var(--ink-2);}
+.z-stats + .z-row{margin-top:56px;}
+
+/* what I learned */
+.z-lessons{counter-reset:lesson;}
+.reflect .z-lessons li{counter-increment:lesson;position:relative;padding:20px 0 20px 44px;border-top:1px solid var(--line);font:inherit;}
+.reflect .z-lessons li:first-child{padding-top:0;border-top:0;}
+.reflect .z-lessons li::before{content:counter(lesson, decimal-leading-zero);left:0;top:23px;width:auto;height:auto;background:none;font:600 13px/1 var(--sans);color:var(--accent);}
+.reflect .z-lessons li:first-child::before{top:3px;}
+.z-lessons b{display:block;font:600 17px/1.4 var(--sans);letter-spacing:-.01em;color:var(--ink);}
+.z-lessons span{display:block;margin-top:6px;font:400 15px/1.6 var(--sans);color:var(--ink-3);}
+
+/* tablet and phone */
+@media (max-width:900px){
+  .z-row{grid-template-columns:1fr;row-gap:18px;}
+  .z-row__body,.z-row > .z-items--4in3{grid-column:1;}
+  .z-row__label{max-width:none;}
+  .z-row:has(> .z-items--4in3) > .z-row__label{margin-bottom:0;}
+  .z-items,.z-row > .z-items--4in3,.z-fixes{grid-template-columns:repeat(2,minmax(0,1fr));}
+  .z-glance .z-row + .z-row{margin-top:28px;}
+  .z-chain{grid-template-columns:1fr;gap:12px;}
+  .z-chain li{flex-direction:row;align-items:center;}
+  .z-chain li:not(:last-child)::before{left:16px;right:auto;top:32px;height:12px;border-top:0;border-left:1px solid var(--line);}
+  .z-sides{grid-template-columns:1fr;gap:14px;}
+  .z-sides__link{position:static;justify-self:center;transform:none;}
+  .z-sides__link svg{transform:rotate(90deg);}
+  .z-terms{grid-template-columns:1fr;}
+  .z-idea{grid-template-columns:1fr;row-gap:6px;}
+  .z-idea > b{grid-column:1;}
+  .z-ia__groups{grid-template-columns:repeat(2,minmax(0,1fr));padding-top:24px;}
+  .z-ia__groups::before,.z-ia__groups::after,.z-ia__group::before{display:none;}
+  .z-dec__head,.z-dec__rows > div{grid-template-columns:1fr;row-gap:6px;}
+  .z-dec__head h3,.z-dec__rows dd{grid-column:1;}
+  .z-flow{grid-template-columns:1fr;gap:14px;padding:18px;}
+  .z-flow a{flex-direction:row;align-items:center;gap:12px;}
+  .z-flow li:not(:last-child)::after{display:none;}
+  .z-qa{grid-template-columns:1fr;row-gap:24px;}
+  .z-qa .console{grid-column:1;}
+}
+@media (max-width:560px){
+  .z-items,.z-row > .z-items--4in3,.z-fixes,.z-stats,.z-ia__groups{grid-template-columns:1fr;}
+  .z-fixes__was{min-height:0;}
+}
+/* labels keep their small size even when they are headings (a broader h2 rule would enlarge them) */
+main .z-row > .z-row__label{font:600 14px/1.45 var(--sans);letter-spacing:-.005em;word-spacing:0;}
+/* was / now: the old value struck through on one line, the arrow and the new value on the next */
+.z-swaps dd{display:block;}
+.z-swaps s{display:block;font-size:13px;}
+.z-swaps dd svg{display:inline-block;margin-right:6px;vertical-align:-2px;}
+/* the link between the two sides: a small arrow badge that sits in the gap, clear of both cards' text */
+.z-sides__link{justify-content:center;width:34px;height:34px;padding:0;border-radius:50%;}
+.z-sides__link svg{width:15px !important;height:15px !important;}
+/* the lessons list sits in the card's right half, beside its heading */
+@media (min-width:861px){ .reflect .col > ol{grid-column:2;margin-top:0;} }
+/* the impact card's two figures stack in two rows, ruled off like the design card's rows */
+.z-nums{grid-template-columns:1fr;gap:0;}
+.z-nums > div{padding:14px 0;border-top:1px solid var(--line);}
+.z-nums > div:first-child{padding-top:2px;border-top:0;}
+.z-nums dd{margin-top:6px;font-size:14px;}
+
+/* ---- round two: fewer identical cards ---- */
+/* text-only items (How I worked): no icon above, so no gap for one; the honest note set apart by a rule */
+.z-item > h4:first-child{margin-top:0;}
+.z-item--note{padding-left:16px;border-left:2px solid var(--line);}
+
+/* the four rules as a table: each rule, what it means, and where it shows up in the console */
+.z-table{margin-top:56px;border-top:1px solid var(--line);}
+.z-table__row{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));column-gap:var(--gap);align-items:baseline;padding:22px 0;border-bottom:1px solid var(--line);}
+.z-table__row > :nth-child(2){grid-column:2 / 4;}
+.z-table__row--head{padding:12px 0;}
+.z-table__row--head span{font:600 12px/1.5 var(--sans);letter-spacing:.04em;text-transform:uppercase;color:var(--ink-3);}
+.z-table__rule{display:flex;align-items:baseline;gap:12px;font:600 18px/1.3 var(--sans);letter-spacing:-.02em;color:var(--ink);}
+.z-table__rule b{flex:none;font:600 12px/1 var(--sans);color:var(--accent);}
+.z-table__row > span:nth-child(2){font:400 16px/1.55 var(--sans);color:var(--ink-2);}
+.z-table__row > a{display:flex;flex-direction:column;gap:2px;font:600 11.5px/1.5 var(--sans);letter-spacing:.04em;text-transform:uppercase;color:var(--accent);}
+.z-table__row > a span{font:500 14.5px/1.4 var(--sans);letter-spacing:0;text-transform:none;color:var(--ink);text-decoration:underline;text-decoration-color:var(--line);text-underline-offset:3px;transition:text-decoration-color .2s ease;}
+.z-table__row > a:hover span{text-decoration-color:var(--accent);}
+
+/* what admins were up against, and the need it adds up to: a list, an arrow, one answer */
+.z-why{position:relative;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));column-gap:var(--gap);align-items:center;}
+.z-why__list{grid-column:1 / 3;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));column-gap:var(--gap);row-gap:26px;}
+.z-why__list li{position:relative;padding-left:18px;}
+.z-why__list li::before{content:"";position:absolute;left:0;top:7px;width:7px;height:7px;border-radius:50%;background:var(--warn);}
+.z-why__list b{display:block;font:600 16px/1.3 var(--sans);color:var(--ink);}
+.z-why__list span{display:block;margin-top:6px;font:400 14.5px/1.5 var(--sans);color:var(--ink-3);}
+.z-why__arrow{position:absolute;top:50%;left:calc((100% - 2 * var(--gap)) * 2 / 3 + var(--gap) * 1.5);z-index:1;display:grid;place-items:center;width:30px;height:30px;transform:translate(-50%,-50%);border:1px solid var(--line);border-radius:50%;background:var(--bg);color:var(--accent);}
+.z-why__arrow svg{width:14px !important;height:14px !important;}
+.z-why__need{grid-column:3;display:flex;flex-direction:column;gap:14px;padding:20px 20px 22px;border:1px solid color-mix(in oklch, var(--accent) 45%, transparent);border-radius:16px;background:color-mix(in oklch, var(--accent) 7%, var(--surface));}
+.z-why__kicker{font:600 11.5px/1.5 var(--sans);letter-spacing:.04em;text-transform:uppercase;color:var(--accent);}
+.z-why__need > div{display:flex;align-items:center;gap:12px;}
+.z-why__need .z-ic{width:32px;height:32px;border-radius:9px;}
+.z-why__need p b{display:block;font:600 14.5px/1.3 var(--sans);color:var(--ink);}
+.z-why__need p span{display:block;margin-top:2px;font:400 13px/1.4 var(--sans);color:var(--ink-3);}
+
+/* what each person gets: who, then what changes for them */
+.z-who > div{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));column-gap:var(--gap);align-items:baseline;padding:16px 0;border-top:1px solid var(--line);}
+.z-who > div:first-child{padding-top:0;border-top:0;}
+.z-who dt{display:flex;align-items:center;gap:10px;font:600 16px/1.3 var(--sans);color:var(--ink);}
+.z-who dt svg{width:16px !important;height:16px !important;color:var(--accent);}
+.z-who dd{grid-column:2 / -1;margin:0;font:400 15.5px/1.55 var(--sans);color:var(--ink-2);}
+
+@media (max-width:900px){
+  .z-table__row{grid-template-columns:1fr;row-gap:8px;}
+  .z-table__row > :nth-child(2){grid-column:1;}
+  .z-table__row--head{display:none;}
+  .z-why{grid-template-columns:1fr;row-gap:20px;}
+  .z-why__list{grid-column:1;}
+  .z-why__arrow{position:static;justify-self:center;transform:rotate(90deg);}
+  .z-why__need{grid-column:1;}
+  .z-who > div{grid-template-columns:1fr;row-gap:6px;}
+  .z-who dd{grid-column:1;}
+}
+@media (max-width:560px){ .z-why__list{grid-template-columns:1fr;} }
+
+/* ---- the content centred on the page ----
+   The column sits in the middle of the window, with the same margin on both sides. The rail
+   moves in to the left edge (32px, 180px wide), and the column is narrowed only as far as it
+   must be to clear it: up to 1012px, and 236px kept free on each side (the rail, plus a gutter). */
+:root{--rail-clear:236px;}
+@media (min-width:1240px){
+  main,.next-wrap.col{width:min(var(--content), calc(100% - 2 * var(--rail-clear)));margin-left:auto;margin-right:auto;}
+  .toc{left:32px;width:180px;}
+}
+
+/* where the problems came from: customers, to the teams who heard them, to me; numbered, with an arrow in each gutter */
+.z-source > .z-item{position:relative;}
+.z-source > .z-item:not(:last-child)::after{content:"→";position:absolute;top:2px;right:calc(var(--gap) / -2);transform:translateX(50%);font:500 14px/1 var(--sans);color:var(--accent);}
+.z-step{display:grid;place-items:center;width:24px;height:24px;border:1px solid color-mix(in oklch, var(--accent) 50%, transparent);border-radius:50%;background:color-mix(in oklch, var(--accent) 10%, var(--bg));font:600 11px/1 var(--sans);color:var(--accent);}
+.z-step + h4{margin-top:12px;}
+.z-item--me h4{color:var(--accent);}
+@media (max-width:900px){ .z-source > .z-item:not(:last-child)::after{display:none;} }
+
+/* one line where two met: a decision's last row closes without a rule, because the next decision
+   opens with one; and "The idea" sits under the rules table's own bottom rule rather than a second one */
+.z-dec__rows > div:last-child{border-bottom:0;}
+.z-idea{padding-top:0;border-top:0;}
+
+/* hero: the title and summary take the left two thirds, the project details stand beside them on the
+   right third as a short spec list (label, value, a hairline between), top-aligned with the title */
+@media (min-width:901px){
+  .hero__copy{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));column-gap:var(--gap);align-items:start;}
+  .hero__copy > h1,.hero__copy > .summary{grid-column:1 / 3;}
+  .hero__copy > .meta{grid-column:3;grid-row:1 / span 2;display:block;margin-top:14px;padding:0 0 0 var(--gap);border-top:0;border-left:1px solid var(--line);}
+  .hero .meta > div{display:grid;grid-template-columns:62px minmax(0,1fr);column-gap:12px;align-items:baseline;padding:11px 0;border-top:1px solid var(--line);}
+  .hero .meta > div:first-child{padding-top:2px;border-top:0;}
+  .hero .meta > div:last-child{padding-bottom:2px;}
+  .hero .meta dd{margin-top:0;}
+}
+/* phones and tablets: the same spec list, full width under the summary */
+@media (max-width:900px){
+  .hero .meta{display:block;margin-top:32px;padding-top:4px;}
+  .hero .meta > div{display:grid;grid-template-columns:84px minmax(0,1fr);column-gap:12px;align-items:baseline;padding:11px 0;border-top:1px solid var(--line);}
+  .hero .meta > div:first-child{border-top:0;}
+  .hero .meta dd{margin-top:0;}
+}
+
+/* ---- at a glance, round three: one connected strip, problem to design to result ---- */
+.z-story{position:relative;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));margin-top:40px;border:1px solid var(--line);border-radius:20px;background:var(--surface);}
+.z-story__col{position:relative;display:flex;flex-direction:column;gap:14px;padding:28px 28px 26px;color:inherit;transition:background-color .25s ease;}
+.z-story__col:first-child{border-radius:20px 0 0 20px;}
+.z-story__col:last-child{border-radius:0 20px 20px 0;}
+.z-story__col + .z-story__col{border-left:1px solid var(--line);}
+.z-story__col--mine{background:color-mix(in oklch, var(--accent) 7%, transparent);}
+.z-story__col:hover{background:color-mix(in oklch, var(--ink) 3%, transparent);}
+.z-story__col--mine:hover{background:color-mix(in oklch, var(--accent) 11%, transparent);}
+/* an arrow on each divider: the story reads left to right */
+.z-story__col + .z-story__col::before{content:"→";position:absolute;left:0;top:50%;z-index:1;display:grid;place-items:center;width:30px;height:30px;transform:translate(-50%,-50%);border:1px solid var(--line);border-radius:50%;background:var(--bg);font:500 13px/1 var(--sans);color:var(--accent);}
+.z-story__kick{display:flex;align-items:center;gap:10px;font:600 12px/1.4 var(--sans);letter-spacing:.02em;color:var(--ink-3);}
+.z-story__kick .z-ic{width:32px;height:32px;border-radius:9px;}
+.z-story__col--mine .z-story__kick{color:var(--accent);}
+.z-story h3{font:600 clamp(19px, 1.6vw, 21px)/1.3 var(--sans);letter-spacing:-.02em;color:var(--ink);}
+.z-story h3 .live{gap:10px;}
+.z-jobs{display:grid;}
+.z-jobs li{display:grid;grid-template-columns:54px minmax(0,1fr);gap:10px;padding:10px 0;border-top:1px solid var(--line);}
+.z-jobs li:first-child{padding-top:2px;border-top:0;}
+.z-jobs b{font:600 14px/1.45 var(--sans);color:var(--accent);}
+.z-jobs span{font:400 14.5px/1.45 var(--sans);color:var(--ink-2);}
+.z-story .z-go{margin-top:auto;padding-top:12px;}
+.z-story__col:hover .z-go svg{transform:translateX(4px);}
+@media (max-width:900px){
+  .z-story{grid-template-columns:1fr;}
+  .z-story__col,.z-story__col:first-child,.z-story__col:last-child{border-radius:0;}
+  .z-story__col:first-child{border-radius:20px 20px 0 0;}
+  .z-story__col:last-child{border-radius:0 0 20px 20px;}
+  .z-story__col + .z-story__col{border-left:0;border-top:1px solid var(--line);}
+  .z-story__col + .z-story__col::before{content:"↓";left:50%;top:0;}
+}
+
+/* ==========================================================================
+   HEADER AND MENU, after Vivek's ZBrain case study (measured at 1728 wide):
+   a 1300px frame; the project name at 80px; the summary as a 32px statement on
+   the left (752px) and the project details on the right (423px), 13px labels
+   and 15px values in ruled rows; the hero picture 52px wider than the frame on
+   each side, with 14px corners. Below the header the frame splits in two: the
+   menu in a 210px column on the left, sticky 88px from the top, and the content
+   in the column beside it (1014px), 76px away.
+   ========================================================================== */
+:root{--wrap:1300px;--railcol:210px;--railgap:76px;}
+.hero h1{font:600 clamp(44px, 5.6vw, 80px)/1 var(--serif);letter-spacing:-.025em;word-spacing:normal;text-wrap:balance;}
+.z-hero-img{margin:112px 0 0;}
+.z-hero-img img{display:block;width:100%;height:auto;aspect-ratio:1404 / 790;object-fit:cover;object-position:50% 40%;border-radius:14px;}
+@media (min-width:901px){
+  .hero__copy{grid-template-columns:minmax(0,1fr) minmax(0,423px);column-gap:clamp(48px, 7vw, 125px);}
+  .hero__copy > h1{grid-column:1 / -1;}
+  .hero__copy > .summary{grid-column:1;grid-row:2;max-width:752px;margin-top:72px;font:500 clamp(22px, 2.2vw, 32px)/1.3 var(--sans);letter-spacing:-.016em;color:var(--ink);}
+  .hero__copy > .meta{grid-column:2;grid-row:2;margin-top:72px;padding:0;border-left:0;}
+  .hero .meta > div{grid-template-columns:96px minmax(0,1fr);column-gap:16px;padding:12px 0;border-top:0;border-bottom:1px solid var(--line);}
+  .hero .meta > div:first-child{padding-top:6px;}
+  .hero .meta > div:last-child{padding-bottom:12px;}
+  .hero .meta dt{font:400 13px/1.5 var(--sans);color:var(--ink-3);}
+  .hero .meta dd{font:400 15px/1.42 var(--sans);color:var(--ink);}
+}
+@media (min-width:1240px){
+  main{display:grid;grid-template-columns:var(--railcol) minmax(0,1fr);column-gap:var(--railgap);width:min(var(--wrap), calc(100% - 2 * var(--side)));margin-left:auto;margin-right:auto;}
+  main > .hero{grid-column:1 / -1;}
+  .z-hero-img{margin-inline:-52px;}
+  main > .toc{grid-column:1;grid-row:2;position:sticky;top:88px;left:auto;align-self:start;width:auto;max-height:calc(100vh - 120px);margin-top:104px;}
+  main > .z-body{grid-column:2;grid-row:2;min-width:0;}
+  .next-wrap.col{width:min(var(--wrap), calc(100% - 2 * var(--side)));margin-left:auto;margin-right:auto;padding-left:calc(var(--railcol) + var(--railgap));}
+}
+
+/* ---- how one policy works: no card. The section sits on the page like every other, and the
+   diagram's colours follow the theme instead of assuming a dark ground ---- */
+main .panel,:root[data-theme="dark"] main .panel{padding:0;border-radius:0;background:none;box-shadow:none;color:var(--ink);}
+#governance{--panel:var(--bg);--panel-ink:var(--ink);--panel-ink-2:var(--ink-2);--panel-ink-3:var(--ink-3);--panel-line:var(--line);}
+#governance h2{color:var(--ink);}
+#governance .head > p,#governance .loop__back{color:var(--ink-2);}
+#governance .loop__back b{color:var(--ink);}
+#governance .gflow{--g-line:color-mix(in oklch, var(--ink) 26%, transparent);--g-card:var(--surface);--g-card-line:var(--line);}
+:root[data-theme="light"] #governance .gflow{--g-blue:#305cff;--g-green:oklch(0.52 0.14 150);--g-orange:oklch(0.62 0.16 50);--g-red:#d64545;}
+#governance .gnode__head i{background:var(--tint);}
+
+/* ---- one text edge: a decision's question and its reasons start on the same half line as every
+   section's intro and the closing line under the diagram; "The idea" too ---- */
+.z-dec__head,.z-dec__rows > div,.z-idea{grid-template-columns:repeat(2,minmax(0,1fr));}
+.z-dec__head h3,.z-dec__rows dd,.z-idea > b{grid-column:2;}
+@media (max-width:900px){
+  .z-dec__head,.z-dec__rows > div,.z-idea{grid-template-columns:1fr;}
+  .z-dec__head h3,.z-dec__rows dd,.z-idea > b{grid-column:1;}
+}
+
+/* ---- next case studies: a one-line header like every section's, then two cards side by side,
+   each with its picture, its tag pills and its name ---- */
+.z-next{margin-top:144px;padding-bottom:120px;}
+.z-next__head{display:flex;align-items:baseline;justify-content:space-between;gap:24px;padding-top:20px;border-top:1px solid var(--line);}
+.z-next__head h2{font:600 clamp(24px, 2.4vw, 32px)/1.12 var(--serif);letter-spacing:-.04em;word-spacing:.06em;white-space:nowrap;color:var(--ink);}
+.z-next__all{display:inline-flex;align-items:center;gap:6px;font:600 14px/1.4 var(--sans);color:var(--ink-2);transition:color .2s ease;}
+.z-next__all svg{width:15px;height:15px;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round;transition:transform .35s cubic-bezier(.2,.7,.1,1);}
+.z-next__all:hover{color:var(--ink);}
+.z-next__all:hover svg{transform:translateX(4px);}
+.z-next__grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--gap);margin-top:32px;}
+.z-next__card{display:flex;flex-direction:column;color:inherit;}
+.z-next__media{overflow:hidden;aspect-ratio:1.4;border-radius:14px;background:var(--surface);}
+.z-next__media img{display:block;width:100%;height:100%;object-fit:cover;object-position:top center;transform:scale(1.02);transition:transform .8s cubic-bezier(.2,.7,.1,1);}
+.z-next__card:hover .z-next__media img{transform:scale(1.05);}
+.z-next__tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:18px;}
+.z-next__tags li{padding:4px 11px;border:1px solid var(--line);border-radius:999px;font:500 12.5px/1.4 var(--sans);color:var(--ink-2);}
+.z-next__card h3{margin-top:12px;font:600 clamp(20px, 1.9vw, 24px)/1.2 var(--sans);letter-spacing:-.02em;color:var(--ink);}
+@media (max-width:760px){
+  .z-next{margin-top:96px;padding-bottom:88px;}
+  .z-next__grid{grid-template-columns:1fr;row-gap:40px;}
+  .z-next__head h2{white-space:normal;}
+}
+/* the menu needs no "On this page" title */
+.toc .toc__label{display:none !important;}
+/* the monitor's screen sits in the middle of the hero frame: its bezel runs from row 271 to 1386 of the
+   2400 x 1570 picture, so the 1404:790 crop is placed 70% of the way down */
+.z-hero-img img{object-position:50% 70%;}
+
+/* ---- at a glance: three separate blocks, no hover, quiet colour ---- */
+.z-story{gap:var(--gap);border:0;border-radius:0;background:none;}
+.z-story__col,.z-story__col:first-child,.z-story__col:last-child,.z-story__col + .z-story__col{border:1px solid var(--line);border-radius:20px;background:var(--surface);transition:none;}
+.z-story__col--mine,.z-story__col:hover,.z-story__col--mine:hover{background:var(--surface);}
+.z-story__col:hover .z-go svg{transform:none;}
+.z-story .z-ic,.z-story .z-ic--warn{background:var(--tint);color:var(--ink-2);}
+.z-story__col--mine .z-story__kick{color:var(--ink-3);}
+.z-jobs b{color:var(--ink);}
+/* the arrow sits in the gap between two blocks, in grey */
+.z-story__col + .z-story__col::before{left:calc(var(--gap) / -2);width:26px;height:26px;font-size:12px;color:var(--ink-3);}
+@media (max-width:900px){
+  .z-story__col + .z-story__col::before{left:50%;top:calc(var(--gap) / -2);}
+}
+
+/* ---- the hero picture keeps to the frame: its left edge on the text's, its right edge on the
+   details table's, not 52px past them ---- */
+@media (min-width:1240px){ .z-hero-img{margin-inline:0;} }
+
+/* ---- top bar, as on the homepage ---- */
+.site-header{position:fixed;inset:0 0 auto;z-index:50;transition:transform .5s cubic-bezier(.2,.7,.1,1), background-color .4s ease;}
+.site-header.is-filled{background:color-mix(in oklch, var(--bg) 72%, transparent);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);}
+.site-header.is-hidden{transform:translateY(-100%);}
+.site-header__in{display:flex;align-items:center;height:84px;width:min(var(--wrap), calc(100% - 2 * var(--side)));margin-inline:auto;}
+.wordmark{font:600 18px/1 var(--sans);letter-spacing:-.02em;white-space:nowrap;color:var(--ink);}
+.site-nav{display:flex;gap:32px;margin-left:auto;}
+.site-nav a{position:relative;padding:4px 0;font:500 14px/1.4 var(--sans);letter-spacing:.01em;color:color-mix(in oklch, var(--ink) 72%, transparent);transition:color .3s ease;}
+.site-nav a:hover,.site-nav a:focus-visible{color:var(--ink);}
+.site-nav a::after{content:"";position:absolute;left:0;right:0;bottom:-2px;height:2px;background:currentColor;transform:scaleX(0);transform-origin:right;transition:transform .4s cubic-bezier(.2,.7,.1,1);}
+.site-nav a:hover::after{transform:scaleX(1);transform-origin:left;}
+.theme-toggle{display:grid;place-items:center;flex:none;width:38px;height:38px;margin-left:28px;padding:0;border:1px solid var(--line);border-radius:50%;background:none;color:var(--ink);cursor:pointer;transition:background-color .35s ease,border-color .35s ease;}
+.theme-toggle:hover{background:var(--tint);border-color:color-mix(in oklch, var(--ink) 30%, transparent);}
+.theme-toggle svg{display:block;width:19px;height:19px;fill:none;stroke:currentColor;stroke-width:1.7;}
+.theme-toggle .t-moon{display:none;}
+:root[data-theme="light"] .theme-toggle .t-sun,:root[data-theme="light"] .theme-toggle .t-rays{display:none;}
+:root[data-theme="light"] .theme-toggle .t-moon{display:block;}
+/* below 1240px the sections button sits in the top right corner, so the bar makes room for it */
+@media (max-width:1239px){
+  .site-header__in{padding-right:56px;}
+  .menu-btn{top:23px;}
+}
+@media (max-width:900px){ .site-nav{display:none;} .theme-toggle{margin-left:auto;} }
+@media (max-width:760px){ .site-header__in{height:64px;padding-right:44px;} .menu-btn{top:15px;} .wordmark{font-size:16px;} .theme-toggle{width:34px;height:34px;} }
+/* who I worked with: each person or role stacks like every other item on the page, the avatar
+   above the name and the line under it on the same left edge */
+.z-people{row-gap:32px;}
+.z-person{flex-direction:column;align-items:flex-start;gap:0;}
+.z-person h4{margin-top:14px;}
+.z-person p{margin-top:6px;}
+/* the four roles side by side, one column each, each stacked top to bottom */
+.z-people{grid-template-columns:repeat(4,minmax(0,1fr));}
+@media (max-width:900px){ .z-people{grid-template-columns:repeat(2,minmax(0,1fr));} }
+@media (max-width:560px){ .z-people{grid-template-columns:1fr;} }
+
+/* ---- how I worked: four rows on one grid, label on the left, content in the same columns,
+   one quiet colour throughout ---- */
+.z-steps5{position:relative;display:grid;grid-template-columns:repeat(5,minmax(0,1fr));column-gap:12px;}
+.z-steps5 li{position:relative;display:flex;flex-direction:column;gap:10px;font:600 15px/1.3 var(--sans);color:var(--ink);}
+.z-steps5 li:not(:last-child)::before{content:"";position:absolute;left:34px;right:-4px;top:13px;border-top:1px solid var(--line);}
+.z-steps5 b{position:relative;z-index:1;display:grid;place-items:center;width:26px;height:26px;border:1px solid var(--line);border-radius:50%;background:var(--bg);font:600 11px/1 var(--sans);color:var(--ink-2);}
+.z-source > .z-item:not(:last-child)::after{color:var(--ink-3);top:3px;}
+.z-team dd{color:var(--ink-3);}
+@media (max-width:900px){
+  .z-steps5{grid-template-columns:1fr;row-gap:12px;}
+  .z-steps5 li{flex-direction:row;align-items:center;gap:12px;}
+  .z-steps5 li:not(:last-child)::before{left:13px;right:auto;top:26px;height:12px;border-top:0;border-left:1px solid var(--line);}
+}
+
+/* ---- tighter spacing ----
+   1. Item titles are h4s, which the base reset missed: the browser's own 21px margin sat under
+      every title, so the line beneath started far from it. The title and its line now sit 6px apart.
+   2. The space between sections, acts and steps comes down by about a fifth. */
+main h4,.z-next h4{margin-top:0;margin-bottom:0;}
+.z-item h4,.z-person h4{margin-top:14px;}
+.z-item > h4:first-child{margin-top:0;}
+.sec,main .panel{margin-top:104px;}
+.act{margin-top:144px;}
+.act__head + .sec,.act__head + .panel{margin-top:64px;}
+.z-glance{margin-top:88px;}
+.reflect{margin-top:144px;}
+.z-dec{margin-top:56px;}
+.cgroup{margin-top:96px;}
+.z-flow + .cgroup{margin-top:64px;}
+.cards--shots + .cgroup{margin-top:96px;}
+.z-row{padding:28px 0;}
+.z-next{margin-top:120px;}
+@media (max-width:900px){
+  .sec,main .panel{margin-top:80px;}
+  .act{margin-top:104px;}
+  .act__head + .sec,.act__head + .panel{margin-top:48px;}
+  .cgroup{margin-top:72px;}
+}
+.z-story__col{gap:10px;}
+.z-story .z-ticks,.z-story .z-nums{margin-top:2px;}
+.z-story__kick{margin-bottom:4px;}
+/* each decision opens with its number and its question together on the left, the question under the number */
+.z-dec__head{display:block;}
+.z-dec__num{display:block;}
+.z-dec__head h3{margin-top:8px;}
+/* the table's three column headers share one style (the body-text rule for the middle column no longer reaches its header) */
+.z-table__row.z-table__row--head > span{font:600 12px/1.5 var(--sans);letter-spacing:.04em;text-transform:uppercase;color:var(--ink-3);}
+
+/* ---- one radius scale for the whole page: 24px for the two large text panels, 14px for every
+   card, frame and picture, 8px for small things (icon tiles, the screens inside a frame) ---- */
+:root{--r-l:24px;--r-m:14px;--r-s:8px;}
+.quote--card,.reflect{border-radius:var(--r-l);}
+.well,.branch,.z-gcard,.z-side,.z-ia__group,.z-terms > div,.z-stat,.z-flow,.z-fixes li,.z-why__need,
+.z-story__col,.z-story__col:first-child,.z-story__col:last-child,.z-story__col + .z-story__col,
+.z-hero-img img,.z-next__media,.next__media,.case-frame{border-radius:var(--r-m);}
+.console .well img,.console__row .well img,.cards--shots .well img{border-radius:var(--r-s) var(--r-s) 0 0;}
+.iter .well img,.iter .well .ba__img,.media video{border-radius:var(--r-s);}
+.z-ic,.z-story__kick .z-ic,.z-why__need .z-ic{border-radius:var(--r-s);}
+@media (max-width:900px){
+  .quote--card,.reflect{border-radius:20px;}
+  .well,.branch{border-radius:12px;}
+}
+#governance .gnode,#governance .gpolicy{border-radius:var(--r-m);}
+/* the reflections card: the same space above the heading as below the last lesson (the last
+   lesson's own bottom padding was adding 20px to the card's 88px) */
+.reflect{padding-top:64px;padding-bottom:64px;}
+.reflect .z-lessons li:last-child{padding-bottom:0;}
+@media (max-width:900px){ .reflect{padding-top:48px;padding-bottom:48px;} }
+
+/* ---- next case studies across the whole frame, then the site footer, as on the homepage ---- */
+@media (min-width:1240px){ .next-wrap.col{padding-left:0;} }
+.z-next{padding-bottom:96px;}
+:root{--site-green:#4fe6a3;}
+:root[data-theme="light"]{--site-green:#0b7a4f;}
+.site-foot{width:min(var(--wrap), calc(100% - 2 * var(--side)));margin:0 auto;}
+.site-foot__links{display:flex;flex-wrap:wrap;justify-content:center;gap:12px 40px;padding:28px 0 24px;border-top:1px solid var(--line);}
+.site-foot__links a{position:relative;display:inline-flex;align-items:center;gap:7px;font:400 17px/1.4 var(--sans);color:var(--ink-2);transition:color .4s ease;}
+.site-foot__links a:hover,.site-foot__links a:focus-visible{color:var(--site-green);}
+.site-foot__links .roll{position:relative;display:inline-block;overflow:hidden;vertical-align:top;}
+.site-foot__links .roll > span,.site-foot__links .roll::after{display:block;transition:transform .55s cubic-bezier(.2,.7,.1,1);}
+.site-foot__links .roll::after{content:attr(data-t);position:absolute;left:0;top:100%;}
+.site-foot__links a:hover .roll > span,.site-foot__links a:hover .roll::after,.site-foot__links a:focus-visible .roll > span,.site-foot__links a:focus-visible .roll::after{transform:translateY(-100%);}
+.site-foot__links a::after{content:"";position:absolute;left:0;right:0;bottom:-3px;height:1px;background:currentColor;transform:scaleX(0);transform-origin:right;transition:transform .55s cubic-bezier(.2,.7,.1,1);}
+.site-foot__links a:hover::after,.site-foot__links a:focus-visible::after{transform:scaleX(1);transform-origin:left;}
+.site-foot__links .arr{display:inline-block;font-size:.85em;transition:transform .55s cubic-bezier(.2,.7,.1,1);}
+.site-foot__links a:hover .arr,.site-foot__links a:focus-visible .arr{transform:translate(3px,-3px);}
+.site-foot__bar{display:flex;justify-content:space-between;align-items:center;gap:10px 24px;padding:18px 0 22px;border-top:1px solid var(--line);font:500 13px/1.4 ui-monospace, "SF Mono", Menlo, monospace;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-3);}
+.site-foot__status{display:inline-flex;align-items:center;gap:8px;}
+.site-foot__status i{width:6px;height:6px;border-radius:50%;background:var(--site-green);box-shadow:0 0 8px var(--site-green);}
+@media (max-width:760px){
+  .site-foot__links{gap:10px 26px;padding:22px 0 20px;}
+  .site-foot__links a{font-size:15px;}
+  .site-foot__bar{font-size:11px;letter-spacing:.12em;}
+}
+
+/* ---- neutral: no accent colour. The blue becomes the page's ink, so labels, icon tiles, tags,
+   numbers, the "mine" card, the menu map's root and the policy diagram all read in greys. The four
+   rule levels keep their own colours (they are the product's states), and the green status dot stays. ---- */
+:root,:root[data-theme="dark"],:root[data-theme="light"]{--accent:var(--ink);--accent-2:var(--ink-2);}
+#governance .gflow{--g-blue:var(--ink-2);}
+#governance .gpolicy{border-color:var(--line);background:var(--surface);box-shadow:none;}
+#governance .gpolicy__head i{background:var(--tint);color:var(--ink-2);}
+#governance .gport{border-color:var(--ink-3);background:var(--ink-3);}
+.z-ic{background:var(--tint);color:var(--ink-2);}
+.z-tag--now{background:var(--tint);color:var(--ink);}
+.z-side--mine{border-color:var(--line);background:var(--surface);}
+.z-side--mine .z-side__kicker{color:var(--ink-3);}
+.z-ia__root{border-color:var(--line);background:var(--surface);}
+.z-ia__root svg,.z-statetag svg,.z-who dt svg{color:var(--ink-2);}
+.z-ticks li::before,.z-ia__group li::before,.dash li::before,.z-foot::before{background:var(--ink-3);}
+.quote .kicker,.z-dec__num,.reflect .z-lessons li::before,.z-table__rule b,.z-table__row > a{color:var(--ink-3);}
+.z-table__row > a span{color:var(--ink);}
+.z-stat strong{background:none;-webkit-text-fill-color:currentColor;color:var(--ink);}
+/* light mode: a white page with neutral greys, no warm or blue tint */
+:root,:root[data-theme="light"]{--bg:#fff;--ink:#111;--ink-2:#4a4a4a;--ink-3:#6b6b6b;--surface:#f2f2f2;--surface-2:#f6f6f6;--line:rgba(0,0,0,.1);--tint:rgba(0,0,0,.05);--nav-bg:rgba(255,255,255,.88);--shot:0 2px 24px rgba(0,0,0,.1);}
+.media__toggle{border-color:rgba(0,0,0,.15);color:#1a1a1a;}
+:root[data-theme] #governance .gflow{--g-blue:var(--ink-2);}
+#governance .gnode--ok,#governance .gnode--rule,#governance .gnode--more{--c:var(--ink-2);}
+:root[data-theme] #governance .glvl--throttle{--l:oklch(0.55 0.12 255);}
+/* no arrows between the three at-a-glance blocks */
+.z-story__col + .z-story__col::before{content:none;display:none;}
+</style>
+<link rel="stylesheet" href="assets/cursor.css?v=17">
+<style>/* the "Next project" word stays under the hero title (32 to 48px) at every width, a step above the section headings */ a.next .next__word{font-size:clamp(30px, 3.2vw, 46px);}/* the "No space starts empty" note under the policy diagram starts on the content's left edge */
+#governance .loop__back,main .panel .loop__back{margin-left:0;max-width:none;}
+/* the page opens a little lower under the header */
+.hero{padding-top:184px;}
+@media (max-width:1239px){.hero{padding-top:144px;}}
+@media (max-width:760px){.hero{padding-top:120px;}}
+/* CE CoPilot: rows of phone screens, and three impact stats across */
+.cp-phones{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:40px;}
+.cp-phones figure{margin:0;}
+.cp-phones .well{padding:28px 18px;height:100%;flex-direction:column;align-items:center;justify-content:center;}
+.cp-phones .well img{width:min(100%,184px);height:auto;border-radius:0;box-shadow:none;filter:drop-shadow(0 10px 18px rgba(0,0,0,.16));}
+.cp-phones figcaption{margin-top:12px;}
+@media (max-width:760px){.cp-phones{grid-template-columns:1fr;}.cp-phones .well img{width:min(100%,260px);}}
+.z-stats--3{grid-template-columns:repeat(3,1fr);}
+@media (max-width:900px){.z-stats--3{grid-template-columns:1fr;}}
+/* impact numbers: a step smaller, so they sit with the section heading rather than shout over it */
+.z-stat strong{font-size:clamp(30px, 2.6vw, 40px);letter-spacing:-.035em;}
+/* CE CoPilot feedback loop: four steps in a row, each card carrying one real case through it,
+   and a return line from the last step back to the first */
+.cp-loop{margin-top:56px;}
+.cp-loop__track{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:28px;}
+.cp-loop__step{position:relative;display:flex;flex-direction:column;gap:10px;padding:24px 22px 0;border:1px solid var(--line);border-radius:20px;background:var(--surface-2);}
+.cp-loop__step:not(:last-child)::after{content:"";position:absolute;right:-22px;top:46px;width:16px;height:16px;border-radius:50%;background:var(--bg);border:1px solid var(--line);
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='%23888' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 4.5L9.5 8 6 11.5'/%3E%3C/svg%3E");background-size:12px;background-position:center;background-repeat:no-repeat;z-index:1;}
+.cp-loop__top{display:flex;align-items:center;justify-content:space-between;margin-bottom:6px;}
+.cp-loop__num{font:500 13px/1 var(--sans);letter-spacing:.06em;color:var(--ink-3);}
+.cp-loop__step h3{font:600 18px/1.3 var(--sans);letter-spacing:-.01em;color:var(--ink);}
+.cp-loop__step > p{font-size:14.5px;line-height:1.55;color:var(--ink-2);}
+.cp-loop__step .z-chips{margin-top:2px;}
+.cp-loop__eg{margin:auto -22px 0;padding:14px 22px 18px;border-top:1px dashed var(--line);font-size:13.5px;line-height:1.5;color:var(--ink);}
+.cp-loop__eg b{display:block;margin-bottom:4px;font:600 11px/1 var(--sans);letter-spacing:.12em;text-transform:uppercase;color:var(--ink-3);}
+.cp-loop__step{padding-bottom:0;}
+.cp-loop__step > .cp-loop__eg{margin-top:auto;}
+.cp-loop__return{position:relative;margin:0 12.5%;height:52px;border:1.5px dashed var(--ink-3);border-top:0;border-radius:0 0 28px 28px;opacity:.9;}
+.cp-loop__return::before{content:"";position:absolute;left:-7px;top:-2px;border:6px solid transparent;border-bottom:9px solid var(--ink-3);border-top:0;}
+.cp-loop__return span{position:absolute;left:50%;bottom:0;transform:translate(-50%,50%);display:inline-flex;align-items:center;gap:8px;padding:6px 14px;border-radius:999px;
+  background:var(--bg);border:1px solid var(--line);font-size:14px;line-height:1.3;color:var(--ink);white-space:nowrap;}
+.cp-loop__return svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round;flex:none;}
+@media (max-width:1000px){
+  .cp-loop__track{grid-template-columns:1fr 1fr;}
+  .cp-loop__step:nth-child(2)::after{display:none;}
+}
+@media (max-width:640px){
+  .cp-loop__track{grid-template-columns:1fr;gap:20px;}
+  .cp-loop__step:not(:last-child)::after{display:block;right:auto;left:50%;top:auto;bottom:-19px;transform:translateX(-50%) rotate(90deg);}
+  .cp-loop__return{margin:28px 0 0;height:auto;border:0;}
+  .cp-loop__return::before{display:none;}
+  .cp-loop__return span{position:static;transform:none;white-space:normal;}
+}
+@media (max-width:1000px) and (min-width:641px){ .cp-loop__return{margin:0 25%;} }
+.cp-phones figure{display:flex;flex-direction:column;}
+.cp-phones figure .well{flex:1;}
+/* the status lines under the cropped phone top, in the order they appear */
+.cp-status__seq{list-style:none;margin:-34px 0 0;padding:0;display:grid;gap:8px;width:min(100%,214px);position:relative;z-index:1;}
+.cp-status__seq li{display:grid;grid-template-columns:22px minmax(0,1fr);align-items:center;gap:10px;}
+.cp-status__seq b{display:grid;place-items:center;width:22px;height:22px;border:1px solid var(--line);border-radius:50%;background:var(--bg);font:600 10.5px/1 var(--sans);color:var(--ink-3);}
+.cp-status__seq span{display:flex;align-items:center;gap:8px;padding:8px 11px;border-radius:10px;background:#fff;color:#1a1a1a;box-shadow:0 0 0 1px rgb(0 0 0 / .06),0 2px 8px rgb(0 0 0 / .06);font:400 12.5px/16px var(--sans);}
+.cp-status__seq span::before{content:"";width:9px;height:9px;flex:none;border:1.5px solid #c4c4c4;border-top-color:transparent;border-radius:50%;}
+/* the status phone: one screen, and over it a live status line in the app's own place, size and grey:
+   the ring spins and the words change in place, Thinking through Reading documents, then again */
+.cp-live{position:relative;width:min(100%,184px);aspect-ratio:418/843;container-type:inline-size;}
+.cp-phones .cp-live img{position:absolute;inset:0;width:100%;height:100%;}
+.cp-live__line{position:absolute;left:8.85%;top:28.17%;transform:translateY(-50%);display:flex;align-items:center;gap:2.4cqw;}
+.cp-live__spin{display:block;width:3.1cqw;height:3.1cqw;border:.42cqw solid #8f8f8f;border-top-color:transparent;border-radius:50%;animation:cp-spin .8s linear infinite;}
+.cp-live__text{font:400 2.9cqw/1 Inter, "SF Pro Text", system-ui, sans-serif;color:#7a7a7a;white-space:nowrap;transition:opacity .2s ease;}
+.cp-live__text.is-out{opacity:0;}
+@keyframes cp-spin{to{transform:rotate(360deg);}}
+@media (prefers-reduced-motion:reduce){.cp-live__spin{animation:none;}}
+/* steps 01 to 04: the words beside their two phones, so each step is one row */
+.cp-step{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:clamp(28px,4vw,56px);align-items:center;margin-top:72px;}
+.z-flow + .cp-step{margin-top:56px;}
+.cp-step__copy h3{margin-top:6px;font:700 var(--t-h3)/1.1 var(--sans);letter-spacing:-.04em;}
+.cp-step__copy p{margin-top:14px;font:400 var(--t-lead)/1.65 var(--sans);color:var(--ink-2);}
+.cp-step .cp-phones{margin-top:0;}
+.cp-phones--2{grid-template-columns:repeat(2,minmax(0,1fr));}
+.cp-step + .cgroup{margin-top:96px;}
+@media (max-width:900px){.cp-step{grid-template-columns:1fr;gap:24px;margin-top:56px;}}
+@media (max-width:760px){.cp-phones--2{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;}.cp-phones--2 .well{padding:16px 10px;}}
+/* the title is a phrase, not just the product name, so it sits at the smaller case study title size */
+.hero h1{font-size:clamp(32px, 3.4vw, 48px);line-height:1.08;letter-spacing:-.03em;max-width:20ch;}
+@media (max-width:760px){.hero h1{font-size:min(9vw, 34px);}}
+/* the case study title, a step bigger and bolder */
+.hero h1{font-size:clamp(36px, 3.9vw, 56px);font-weight:700;letter-spacing:-.035em;}
+@media (max-width:760px){.hero h1{font-size:min(9.6vw, 38px);}}
+/* AR Cash App: the payment flow, one input forking into two paths that meet on the record */
+.ca-flow{margin-top:56px;display:grid;grid-template-columns:minmax(0,1fr) 36px minmax(0,1fr) 36px minmax(0,1.5fr) 36px minmax(0,1fr);align-items:center;}
+.ca-flow__node{display:flex;flex-direction:column;gap:10px;padding:22px;border:1px solid var(--line);border-radius:20px;background:var(--surface-2);}
+.ca-flow__node h3{font:600 17px/1.3 var(--sans);color:var(--ink);}
+.ca-flow__node p{font-size:14px;line-height:1.55;color:var(--ink-2);}
+.ca-flow__node--end{border-color:var(--ink-3);}
+.ca-flow__arrow,.ca-flow__fork,.ca-flow__join{position:relative;height:100%;min-height:40px;}
+.ca-flow__arrow::before{content:"";position:absolute;left:6px;right:6px;top:50%;border-top:1.5px solid var(--ink-3);}
+.ca-flow__arrow::after{content:"";position:absolute;right:4px;top:50%;margin-top:-5px;border:5px solid transparent;border-left:7px solid var(--ink-3);border-right:0;}
+.ca-flow__fork::before{content:"";position:absolute;left:6px;width:12px;top:50%;border-top:1.5px solid var(--ink-3);}
+.ca-flow__fork::after{content:"";position:absolute;left:18px;right:6px;top:25%;bottom:25%;border:1.5px solid var(--ink-3);border-right:0;border-radius:10px 0 0 10px;}
+.ca-flow__join::before{content:"";position:absolute;left:6px;right:18px;top:25%;bottom:25%;border:1.5px solid var(--ink-3);border-left:0;border-radius:0 10px 10px 0;}
+.ca-flow__join::after{content:"";position:absolute;right:4px;top:50%;margin-top:-5px;border:5px solid transparent;border-left:7px solid var(--ink-3);border-right:0;}
+.ca-flow__paths{display:grid;gap:16px;}
+.ca-flow__path{padding:16px 18px;border:1px dashed var(--line);border-radius:16px;}
+.ca-flow__path--mine{border-style:solid;border-color:var(--ink-3);background:var(--surface-2);}
+.ca-flow__tag{display:inline-block;margin-bottom:8px;font:600 11px/1 var(--sans);letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3);}
+.ca-flow__path--mine .ca-flow__tag{color:var(--ink);}
+.ca-flow__path ol{margin:0;padding-left:18px;font-size:14px;line-height:1.55;color:var(--ink-2);}
+@media (max-width:1000px){
+  .ca-flow{grid-template-columns:1fr;gap:0;}
+  .ca-flow__arrow,.ca-flow__fork,.ca-flow__join{height:32px;min-height:32px;}
+  .ca-flow__arrow::before,.ca-flow__fork::before,.ca-flow__join::before{left:50%;right:auto;top:4px;bottom:4px;width:0;border:0;border-left:1.5px solid var(--ink-3);border-radius:0;}
+  .ca-flow__arrow::after,.ca-flow__join::after{right:auto;left:50%;top:auto;bottom:2px;margin:0 0 0 -5px;border:5px solid transparent;border-top:7px solid var(--ink-3);border-bottom:0;}
+  .ca-flow__fork::after{display:none;}
+}
+/* decisions without a before and after: one screen beside the rows */
+.ca-dec-shot{margin-top:24px;}
+.ca-dec-shot .well{display:flex;justify-content:center;padding:24px;}
+.ca-dec-shot .well img{width:auto;max-width:min(100%,440px);max-height:360px;object-fit:contain;border-radius:10px;}
+/* teach the extraction: each loop card leads with its screen */
+.ca-loop .cp-loop__step{padding-top:16px;}
+.ca-loop__shot{display:block;width:calc(100% + 12px);margin:0 -6px 6px;border-radius:10px;border:1px solid var(--line);box-shadow:0 4px 14px rgba(0,0,0,.08);}
+.z-flow--4{grid-template-columns:repeat(4,minmax(0,1fr));}
+.ca-states{grid-template-columns:repeat(2,minmax(0,1fr));}
+@media (max-width:760px){.ca-states{grid-template-columns:1fr;}}
+.z-stat strong{white-space:nowrap;}
+@media (max-width:900px){.z-flow--4{grid-template-columns:1fr;}}
+.hero h1{max-width:32ch;text-wrap:balance;}
+/* what comes next, under the lessons */
+.z-whatsnext{margin-top:40px;padding:22px 24px;border:1px solid var(--line);border-radius:16px;font-size:16px;line-height:1.6;color:var(--ink-2);}
+.z-whatsnext b{display:block;margin-bottom:6px;font:600 12px/1 var(--sans);letter-spacing:.12em;text-transform:uppercase;color:var(--ink);}
+.reflect .z-whatsnext{grid-column:1 / -1;}
+/* a decision shown with one screen: centred in its own well, whole, never cropped */
+.ca-shot{margin:24px 0 0;}
+.ca-shot__well{display:flex;align-items:center;justify-content:center;padding:32px;border:1px solid var(--line);border-radius:20px;background:var(--surface);}
+.ca-shot__well img{display:block;width:auto;height:auto;max-width:min(100%,460px);max-height:400px;border-radius:10px;box-shadow:var(--shot);}
+/* the record map has four groups, not five: four columns, and the bar between them sized to match */
+@media (min-width:901px){
+  .ca-ia .z-ia__groups{grid-template-columns:repeat(4,minmax(0,1fr));}
+  .ca-ia .z-ia__groups::after{left:calc((100% - 48px) / 8);right:calc((100% - 48px) / 8);}
+}
+/* the hero is a full app screen, not a monitor photo: show all of it, uncropped */
+
+/* human in the loop: what the AI or bot proposes, handed to what the analyst decides */
+.ca-hitl{margin-top:56px;border-top:1px solid var(--line);}
+.ca-hitl__row{display:grid;grid-template-columns:minmax(0,.8fr) minmax(0,1.4fr) 34px minmax(0,1.4fr);column-gap:16px;align-items:center;padding:16px 0;border-bottom:1px solid var(--line);}
+.ca-hitl__row--head{padding:12px 0;}
+.ca-hitl__row--head span{font:600 12px/1.5 var(--sans);letter-spacing:.04em;text-transform:uppercase;color:var(--ink-3);}
+.ca-hitl__moment{font:600 18px/1.3 var(--sans);letter-spacing:-.02em;color:var(--ink);}
+.ca-hitl__cell{display:flex;flex-direction:column;gap:6px;height:100%;padding:16px 18px;border:1px solid var(--line);border-radius:var(--r-m,14px);background:var(--surface);}
+.ca-hitl__cell--me{border-color:color-mix(in oklch, var(--ink) 22%, transparent);}
+.ca-hitl__cell p{font:400 15px/1.55 var(--sans);color:var(--ink-2);}
+.ca-hitl__who{display:flex;align-items:center;gap:7px;font:600 12px/1.5 var(--sans);letter-spacing:.04em;text-transform:uppercase;color:var(--ink-3);}
+.ca-hitl__cell--me .ca-hitl__who{color:var(--ink);}
+.ca-hitl__who svg{width:14px;height:14px;flex:none;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round;}
+.ca-hitl__to{display:grid;place-items:center;width:34px;height:34px;border:1px solid var(--line);border-radius:50%;background:var(--bg);color:var(--ink-2);}
+.ca-hitl__to svg{width:15px;height:15px;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round;}
+@media (max-width:900px){
+  .ca-hitl__row{grid-template-columns:1fr;row-gap:10px;padding:22px 0;}
+  .ca-hitl__row--head{display:none;}
+  .ca-hitl__to{justify-self:center;transform:rotate(90deg);}
+}
+.ca-teach{margin-top:var(--gap,24px);grid-template-columns:repeat(2,minmax(0,1fr));}
+@media (max-width:700px){.ca-teach{grid-template-columns:1fr;}}
+
+/* impact: the older page's results row, four figures in the product's blue, split by thin rules */
+#stands .results{--accent:#1d4ed8;--accent-2:#4f7cf7;margin-top:0;}
+:root[data-theme="dark"] #stands .results{--accent:#a9bff8;--accent-2:#dbe4ff;}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) #stands .results{--accent:#a9bff8;--accent-2:#dbe4ff;}}
+#stands .results strong{font:600 clamp(28px, 2.78vw, 40px)/1 var(--sans);letter-spacing:-.05em;background:linear-gradient(100deg,var(--accent) 0%,var(--accent-2) 100%);-webkit-background-clip:text;background-clip:text;color:transparent;-webkit-text-fill-color:transparent;}
+#stands .results h3{margin-top:44px;font:600 16px/1.3 var(--sans);letter-spacing:-.01em;color:var(--ink);}
+#stands .results p{margin-top:12px;font:400 15px/1.6 var(--sans);letter-spacing:0;color:var(--ink-3);}
+.results--4{grid-template-columns:repeat(4,minmax(0,1fr));}
+@media (max-width:1100px) and (min-width:561px){
+  .results--4{grid-template-columns:1fr 1fr;}
+  .results--4 article:nth-child(3){padding-left:0;border-left:0;}
+  .results--4 article:nth-child(n+3){border-top:1px solid var(--line);}
+}
+@media (max-width:560px){
+  .results--4{grid-template-columns:1fr;}
+  .results--4 article,.results--4 article:first-child{padding:28px 0 32px;border-left:0;}
+  .results--4 article + article{border-top:1px solid var(--line);}
+  #stands .results h3{margin-top:24px;}
+}
+#stands .results + .z-row{margin-top:56px;}
+</style>
+<style>
+/* Impact in three sections: Where it stands, What is delivered, What's next (as on ZBrain v3) */
+#stands .results{margin-top:48px;}
+.act__head + #stands{margin-top:64px;}   /* same gap under the act title as the other acts */
+@media (max-width:900px){ .act__head + #stands{margin-top:48px;} }
+/* the hero summary a step smaller on desktop (was up to 32px); phones keep 17px */
+@media (min-width:901px){ #main .hero__copy > .summary{font-size:clamp(20px, 1.875vw, 27px);line-height:1.35;} }
+
+/* hero: the screen inset on a soft artboard and cut at the frame's bottom edge, as on the design system
+   and DHS Tutor pages; the artboard stays light in both themes, and turns 4:3 on a phone */
+.ds-hero{margin:112px 0 0;padding:clamp(22px, 2.8vw, 40px) clamp(20px, 3.4vw, 48px) 0;overflow:hidden;aspect-ratio:1153 / 451;border-radius:var(--r-m);
+  background:radial-gradient(60% 70% at 15% 20%, #ece9f4 0%, transparent 70%),radial-gradient(55% 65% at 90% 30%, #eef0f4 0%, transparent 70%),radial-gradient(70% 70% at 50% 100%, #e9edf2 0%, transparent 70%),#f1f0ef;}
+.ds-hero__screen{overflow:hidden;border-radius:var(--r-s) var(--r-s) 0 0;background:#fff;box-shadow:0 -2px 24px rgba(21,20,15,.12);}
+.ds-hero__screen img{display:block;width:100%;height:auto;}
+@media (max-width:700px){.ds-hero{aspect-ratio:7 / 4;padding:16px 16px 0;}} /* a wide screen fills the frame and is cut at its bottom edge */
+
+/* menu: a hovered label is underlined (the 01/02/03 numbers stay plain), and the cursor stays a plain dot */
+.toc__list a:hover{text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:4px;}
+.toc__list a.toc__top:has(small):hover{text-decoration:none;}
+.toc__list a.toc__top:has(small):hover > span{text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:4px;}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="site-header" id="site-header">
+  <div class="site-header__in">
+    <a class="wordmark" href="/" aria-label="Indrajit Sasmal, home">Indrajit Sasmal</a>
+    <nav class="site-nav" aria-label="Site">
+      <a href="/#work">Work</a>
+      <a href="/#about">About</a>
+      <a href="/#contact">Contact</a>
+    </nav>
+    <button class="theme-toggle" type="button" data-theme-toggle aria-pressed="false" aria-label="Switch to light mode">
+      <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+        <circle class="t-sun" cx="12" cy="12" r="4.6"/>
+        <g class="t-rays" stroke-linecap="round"><path d="M12 2.4v2.4M12 19.2v2.4M2.4 12h2.4M19.2 12h2.4M5.2 5.2l1.7 1.7M17.1 17.1l1.7 1.7M18.8 5.2l-1.7 1.7M6.9 17.1l-1.7 1.7"/></g>
+        <path class="t-moon" d="M20.2 14.4A8.6 8.6 0 0 1 9.6 3.8a8.6 8.6 0 1 0 10.6 10.6Z"/>
+      </svg>
+    </button>
+  </div>
+</header>
+<script>
+/* the top bar, as on the homepage: clear at the top, filled once the page moves, out of the way
+   while scrolling down and back as soon as the reader scrolls up. Its switch sets the theme for
+   the whole site (same storage key as the homepage). */
+(function () {
+  var h = document.getElementById('site-header'), root = document.documentElement;
+  if (!h) return;
+  var last = window.scrollY, queued = false;
+  function run() {
+    queued = false;
+    var y = window.scrollY;
+    h.classList.toggle('is-filled', y > 40);
+    if (!root.classList.contains('menu-open')) h.classList.toggle('is-hidden', y > last && y > 120);
+    last = y;
+  }
+  addEventListener('scroll', function () { if (!queued) { queued = true; requestAnimationFrame(run); } }, { passive: true });
+  run();
+  var btn = h.querySelector('[data-theme-toggle]');
+  function paint(t) {
+    root.setAttribute('data-theme', t); root.style.colorScheme = t;
+    btn.setAttribute('aria-pressed', String(t === 'light'));
+    btn.setAttribute('aria-label', t === 'light' ? 'Switch to dark mode' : 'Switch to light mode');
+  }
+  paint(root.getAttribute('data-theme') || 'dark');
+  btn.addEventListener('click', function () {
+    var next = root.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
+    paint(next);
+    try { localStorage.setItem('theme', next); } catch (e) {}
+  });
+})();
+</script>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <symbol id="z-eyeoff" viewBox="0 0 24 24"><path d="M3 3l18 18"/><path d="M10.6 6.1A9.6 9.6 0 0 1 12 6c5 0 8.5 4.5 9.5 6-.5.8-1.5 2.1-2.9 3.3M6.6 6.6C4.6 8 3.2 9.9 2.5 12c1 1.5 4.5 6 9.5 6 1.6 0 3-.4 4.3-1"/><path d="M9.9 9.9a3 3 0 0 0 4.2 4.2"/></symbol>
+  <symbol id="z-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="6.5"/><path d="M20 20l-4.2-4.2"/></symbol>
+  <symbol id="z-building" viewBox="0 0 24 24"><rect x="4" y="3.5" width="10" height="17" rx="1.5"/><path d="M14 9h4.5a1.5 1.5 0 0 1 1.5 1.5v10M7.5 7.5h3M7.5 11h3M7.5 14.5h3M3 20.5h18"/></symbol>
+  <symbol id="z-ripple" viewBox="0 0 24 24"><circle cx="12" cy="12" r="2"/><path d="M7.8 7.8a6 6 0 0 0 0 8.4M16.2 7.8a6 6 0 0 1 0 8.4M5 5a10 10 0 0 0 0 14M19 5a10 10 0 0 1 0 14"/></symbol>
+  <symbol id="z-shield" viewBox="0 0 24 24"><path d="M12 3l7.5 3v5.5c0 4.6-3.2 8.3-7.5 9.5-4.3-1.2-7.5-4.9-7.5-9.5V6z"/><path d="M8.8 12l2.2 2.2 4.3-4.4"/></symbol>
+  <symbol id="z-blocks" viewBox="0 0 24 24"><rect x="3.5" y="13" width="7" height="7" rx="1.5"/><rect x="13.5" y="13" width="7" height="7" rx="1.5"/><rect x="8.5" y="4" width="7" height="7" rx="1.5"/></symbol>
+  <symbol id="z-layers" viewBox="0 0 24 24"><path d="M12 3.5l8.5 4.5L12 12.5 3.5 8z"/><path d="M3.5 12l8.5 4.5 8.5-4.5M3.5 16l8.5 4.5 8.5-4.5"/></symbol>
+  <symbol id="z-key" viewBox="0 0 24 24"><circle cx="8" cy="15" r="4"/><path d="M11 12l8-8M16 7l2.5 2.5M14 9l2 2"/></symbol>
+  <symbol id="z-inbox" viewBox="0 0 24 24"><path d="M4 13.5V18a1.5 1.5 0 0 0 1.5 1.5h13A1.5 1.5 0 0 0 20 18v-4.5"/><path d="M4 13.5l2.4-7.2A1.5 1.5 0 0 1 7.8 5.3h8.4a1.5 1.5 0 0 1 1.4 1l2.4 7.2H15a3 3 0 0 1-6 0z"/></symbol>
+  <symbol id="z-users" viewBox="0 0 24 24"><circle cx="9" cy="8.5" r="3.5"/><path d="M2.5 19.5c.6-3.2 3.2-5.5 6.5-5.5s5.9 2.3 6.5 5.5M16 5.2a3.5 3.5 0 0 1 0 6.6M18.5 14.4c1.6.8 2.7 2.6 3 5.1"/></symbol>
+  <symbol id="z-coins" viewBox="0 0 24 24"><ellipse cx="12" cy="6.5" rx="7" ry="3"/><path d="M5 6.5v5c0 1.7 3.1 3 7 3s7-1.3 7-3v-5M5 11.5v5c0 1.7 3.1 3 7 3s7-1.3 7-3v-5"/></symbol>
+  <symbol id="z-sliders" viewBox="0 0 24 24"><path d="M4 7h10M18 7h2M4 17h4M12 17h8"/><circle cx="16" cy="7" r="2"/><circle cx="10" cy="17" r="2"/></symbol>
+  <symbol id="z-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/></symbol>
+  <symbol id="z-pulse" viewBox="0 0 24 24"><path d="M3 12h4l2.5-6 5 12 2.5-6h4"/></symbol>
+  <symbol id="z-box" viewBox="0 0 24 24"><path d="M12 3l8 4.5v9L12 21l-8-4.5v-9z"/><path d="M4 7.5l8 4.5 8-4.5M12 12v9"/></symbol>
+  <symbol id="z-scale" viewBox="0 0 24 24"><path d="M12 4v16M7 20h10M5 7h14"/><path d="M5 7l-2.5 6a2.5 2.5 0 0 0 5 0zM19 7l-2.5 6a2.5 2.5 0 0 0 5 0z"/></symbol>
+  <symbol id="z-card" viewBox="0 0 24 24"><rect x="3" y="5.5" width="18" height="13" rx="2"/><path d="M3 10h18M7 15h3"/></symbol>
+  <symbol id="z-briefcase" viewBox="0 0 24 24"><rect x="3.5" y="7.5" width="17" height="12" rx="2"/><path d="M9 7.5V6a1.5 1.5 0 0 1 1.5-1.5h3A1.5 1.5 0 0 1 15 6v1.5M3.5 12.5h17"/></symbol>
+  <symbol id="z-globe" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M3.5 12h17M12 3.5c2.4 2.4 3.5 5.3 3.5 8.5s-1.1 6.1-3.5 8.5c-2.4-2.4-3.5-5.3-3.5-8.5S9.6 5.9 12 3.5z"/></symbol>
+  <symbol id="z-info" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M12 11v5.5M12 7.8v.2"/></symbol>
+  <symbol id="z-doc" viewBox="0 0 24 24"><path d="M6.5 3.5h7l4 4v13h-11z"/><path d="M13.5 3.5v4h4M9 12.5h6M9 16h6"/></symbol>
+  <symbol id="z-plug" viewBox="0 0 24 24"><path d="M9 3.5V8M15 3.5V8M6.5 8h11v3a5.5 5.5 0 0 1-11 0zM12 16.5v4"/></symbol>
+  <symbol id="z-rocket" viewBox="0 0 24 24"><path d="M12 15l-3-3c1-4.5 4-8 9.5-8.5C18 9 14.5 12 12 15z"/><path d="M9 12H5.5l2-3.5H11M12 15v3.5l3.5-2V13M6.5 16.5c-1.5.5-2.5 2-2.5 3.5 1.5 0 3-1 3.5-2.5"/></symbol>
+  <symbol id="z-person" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4.5 20.5c.8-4 3.8-6.5 7.5-6.5s6.7 2.5 7.5 6.5"/></symbol>
+  <symbol id="z-check" viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></symbol>
+  <symbol id="z-arrow" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></symbol>
+  <symbol id="z-arrowdown" viewBox="0 0 24 24"><path d="M12 5v14M6 13l6 6 6-6"/></symbol>
+  <symbol id="z-pause" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M10 9v6M14 9v6"/></symbol>
+  <symbol id="z-spark" viewBox="0 0 24 24"><path d="M12 3.5l1.8 5 5 1.8-5 1.8-1.8 5-1.8-5-5-1.8 5-1.8z"/><path d="M18.5 15.5l.8 2 2 .8-2 .8-.8 2-.8-2-2-.8 2-.8z"/></symbol>
+  <symbol id="z-trash" viewBox="0 0 24 24"><path d="M4.5 7h15M9.5 7V4.5h5V7M6.5 7l1 13h9l1-13"/></symbol>
+  <symbol id="z-refresh" viewBox="0 0 24 24"><path d="M19.5 12a7.5 7.5 0 1 1-2.2-5.3"/><path d="M19.5 4v4.5H15"/></symbol>
+  <symbol id="z-type" viewBox="0 0 24 24"><path d="M4 7V5h16v2M12 5v14M9 19h6"/></symbol>
+  <symbol id="z-loader" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5" opacity=".35"/><path d="M12 3.5a8.5 8.5 0 0 1 8.5 8.5"/></symbol>
+  <symbol id="z-panel" viewBox="0 0 24 24"><rect x="3.5" y="4.5" width="17" height="15" rx="2"/><path d="M14 4.5v15"/></symbol>
+  <symbol id="z-bug" viewBox="0 0 24 24"><rect x="7.5" y="8" width="9" height="11" rx="4.5"/><path d="M12 8V5.5M7.5 12H4M20 12h-3.5M7.5 16H4.5M19.5 16h-3M5 8l2.5 2M19 8l-2.5 2"/></symbol>
+  <symbol id="z-receipt" viewBox="0 0 24 24"><path d="M6 3.5h12v17l-2-1.3-2 1.3-2-1.3-2 1.3-2-1.3-2 1.3z"/><path d="M9 8h6M9 11.5h6M9 15h4"/></symbol>
+  <symbol id="z-x" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M9 9l6 6M15 9l-6 6"/></symbol>
+  <symbol id="z-lock" viewBox="0 0 24 24"><rect x="5" y="10.5" width="14" height="10" rx="2"/><path d="M8 10.5V7.5a4 4 0 0 1 8 0v3"/></symbol>
+</svg>
+
+<button class="menu-btn" type="button" aria-controls="case-menu" aria-expanded="false" aria-label="Open sections menu"><span aria-hidden="true"></span><span aria-hidden="true"></span></button>
+
+
+
+<main id="main">
+
+  <section class="hero" id="top">
+    <a class="back" href="/#work-cash-app"><span aria-hidden="true">←</span><span>Back to work</span></a>
+    <div class="hero__copy reveal">
+      <h1>AR Cash App: a workbench for the payments the bots can’t clear</h1>
+      <p class="summary">A global healthcare company’s AI and bots clear the easy payments. I designed the workbench where its accounts receivable team checks what they matched, resolves what they couldn’t, and teaches them to read remittances better. It’s live in 5 countries.</p>
+      <dl class="meta">
+        <div><dt>Role</dt><dd>Product designer</dd></div>
+        <div><dt>Team</dt><dd>Business analyst, the client’s AR team, developers</dd></div>
+        <div><dt>Users</dt><dd>AR analysts and team leads</dd></div>
+        <div><dt>Platform</dt><dd>Enterprise web app</dd></div>
+        <div><dt>Status</dt><dd>Live in 5 countries</dd></div>
+        <div><dt>Timeline</dt><dd>8 months, 2025 – 2026</dd></div>
+      </dl>
+    </div>
+    <figure class="ds-hero reveal">
+      <div class="ds-hero__screen"><img src="assets/cashapp/hero.webp?v=1" width="1920" height="1200" fetchpriority="high" alt="An item’s record in the AR Cash App: the payment card with its amounts and details, send email and the recommended action on the left; the invoices tab with each invoice’s exception and reason code on the right, and the totals that must reconcile below."></div>
+    </figure>
+  </section>
+
+  <nav class="toc" id="case-menu" data-cursor-plain aria-label="Case study sections">
+    <a class="toc__back" href="/#work-cash-app">
+      <svg viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M6 4.5 2.5 8 6 11.5"/><path d="M2.5 8h7A3.5 3.5 0 0 0 13 4.5v-1"/></svg>
+      Go back
+    </a>
+    <p class="toc__label">On this page</p>
+    <ul class="toc__list">
+      <li class="toc__grp"><a class="toc__top" href="#overview">Overview</a></li>
+      <li class="toc__grp"><a class="toc__top" href="#identify"><small>01</small><span>Identify</span></a>
+        <ul class="toc__sub">
+          <li><a href="#sides">Scope and roles</a></li>
+          <li><a href="#process">Process</a></li>
+          <li><a href="#problem">Problem framing</a></li>
+        </ul>
+      </li>
+      <li class="toc__grp"><a class="toc__top" href="#design"><small>02</small><span>Design</span></a>
+        <ul class="toc__sub">
+          <li><a href="#rules">Design principles</a></li>
+          <li><a href="#pipeline">How a payment flows</a></li>
+          <li><a href="#anatomy">The record</a></li>
+          <li><a href="#iterating">Design decisions</a></li>
+          <li><a href="#flow">Workflow design</a></li>
+          <li><a href="#hitl">Human in the loop</a></li>
+          <li><a href="#feedback">AI feedback</a></li>
+          <li><a href="#states">States and edge cases</a></li>
+        </ul>
+      </li>
+      <li class="toc__grp"><a class="toc__top" href="#impact"><small>03</small><span>Impact</span></a>
+        <ul class="toc__sub">
+          <li><a href="#stands">Where it stands</a></li>
+          <li><a href="#delivery">What is delivered</a></li>
+          <li><a href="#next">What’s next</a></li>
+        </ul>
+      </li>
+      <li class="toc__grp"><a class="toc__top" href="#reflect">Reflection</a></li>
+    </ul>
+  </nav>
+
+  <div class="z-body">
+
+  <!-- AT A GLANCE -->
+  <section class="z-glance" id="overview" aria-labelledby="s-overview">
+    <div class="z-row z-row--open">
+      <h2 class="z-row__label" id="s-overview">At a glance</h2>
+    </div>
+    <div class="z-story reveal">
+      <a class="z-story__col" href="#identify">
+        <span class="z-story__kick"><span class="z-ic z-ic--warn"><svg><use href="#z-coins"/></svg></span>01 · The problem</span>
+        <h3>Cash that arrives isn’t cash that’s applied</h3>
+        <ul class="z-ticks">
+          <li>Details sit in a separate email or PDF</li>
+          <li>Part payments and deductions rarely add up</li>
+          <li>Matched by hand, the queue only grew</li>
+        </ul>
+        <span class="z-go">Read the problem <svg><use href="#z-arrow"/></svg></span>
+      </a>
+      <a class="z-story__col z-story__col--mine" href="#design">
+        <span class="z-story__kick"><span class="z-ic"><svg><use href="#z-scale"/></svg></span>02 · What I designed</span>
+        <h3>One workbench to check, resolve and teach</h3>
+        <ul class="z-jobs">
+          <li><b>Check</b><span>What the AI matched and the bot posted</span></li>
+          <li><b>Resolve</b><span>Each exception with every source side by side</span></li>
+          <li><b>Teach</b><span>The extraction, instead of retyping what it missed</span></li>
+        </ul>
+        <span class="z-go">See the design <svg><use href="#z-arrow"/></svg></span>
+      </a>
+      <a class="z-story__col" href="#impact">
+        <span class="z-story__kick"><span class="z-ic"><svg><use href="#z-check"/></svg></span>03 · Where it stands</span>
+        <h3><span class="live">Live in 5 countries</span></h3>
+        <dl class="z-nums">
+          <div><dt>Half</dt><dd>the ambiguous AR exceptions, 28% down to 14%</dd></div>
+          <div><dt>~15</dt><dd>more countries onboarding</dd></div>
+        </dl>
+        <span class="z-go">See the impact <svg><use href="#z-arrow"/></svg></span>
+      </a>
+    </div>
+  </section>
+
+  <!-- 01 IDENTIFY -->
+  <section class="act" id="identify" aria-labelledby="a-identify">
+    <header class="act__head reveal"><p class="act__label">01 · Identify</p><h2 class="act__title" id="a-identify">The money, the bots and the people</h2></header>
+
+    <section class="sec" id="sides" aria-labelledby="s-sides">
+      <header class="head col reveal">
+        <h2 id="s-sides">Bots match. People decide the rest.</h2>
+        <p>The AI reads every bank line and remittance and matches them to invoices, and an RPA bot posts the clean matches in SAP. Everything they can’t settle lands in the workbench I designed.</p>
+      </header>
+      <div class="z-sides reveal">
+        <div class="z-side">
+          <span class="z-ic z-ic--muted"><svg><use href="#z-spark"/></svg></span>
+          <span class="z-side__kicker">The bots · AI and RPA</span>
+          <h3>Read, match and post the payments that add up</h3>
+          <span class="z-side__who"><svg><use href="#z-blocks"/></svg>Built by the client’s automation</span>
+        </div>
+        <span class="z-sides__link" aria-hidden="true"><svg><use href="#z-arrow"/></svg></span>
+        <div class="z-side z-side--mine">
+          <span class="z-ic"><svg><use href="#z-scale"/></svg></span>
+          <span class="z-side__kicker">The workbench</span>
+          <h3>Analysts check, resolve and teach what the bots couldn’t</h3>
+          <span class="z-side__who"><svg><use href="#z-person"/></svg>Designed by me</span>
+        </div>
+      </div>
+      <div class="z-row reveal">
+        <h3 class="z-row__label">What analysts do in it</h3>
+        <div class="z-row__body z-items z-items--4in3">
+          <div class="z-item"><span class="z-ic"><svg><use href="#z-clock"/></svg></span><h4>Work the queue</h4><p>Open items, counted by how long they have waited.</p></div>
+          <div class="z-item"><span class="z-ic"><svg><use href="#z-doc"/></svg></span><h4>Read the evidence</h4><p>Invoices, bank line, remittance and deductions, side by side.</p></div>
+          <div class="z-item"><span class="z-ic"><svg><use href="#z-check"/></svg></span><h4>Decide</h4><p>Confirm or override what the AI recommends.</p></div>
+          <div class="z-item"><span class="z-ic"><svg><use href="#z-refresh"/></svg></span><h4>Teach</h4><p>Show the extraction where to look when it misses a field.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="sec" id="process" aria-labelledby="s-process">
+      <header class="head col reveal">
+        <h2 id="s-process">How I worked</h2>
+        <p>I was the only designer on the AR Cash App, from the first wireframes to developer handoff.</p>
+      </header>
+      <div class="z-rows reveal">
+        <div class="z-row">
+          <h3 class="z-row__label">My role</h3>
+          <dl class="z-row__body z-who z-team">
+            <div><dt>What I owned</dt><dd>The product design of the Cash Application portal, end to end, as its only designer.</dd></div>          </dl>
+        </div>
+        <div class="z-row">
+          <h3 class="z-row__label">My part</h3>
+          <ol class="z-row__body z-steps5" aria-label="My part, in order">
+            <li><b>01</b>Learn the flow</li>
+            <li><b>02</b>Wireframes</li>
+            <li><b>03</b>The record</li>
+            <li><b>04</b>States</li>
+            <li><b>05</b>Handoff</li>
+          </ol>
+        </div>
+        <div class="z-row">
+          <h3 class="z-row__label">Where the requirements came from</h3>
+          <div class="z-row__body z-items z-source">
+            <div class="z-item"><h4>Our business analyst</h4><p>Requirements came through our business analyst.</p></div>
+            <div class="z-item"><h4>The AR team</h4><p>Calls with the client’s AR team, who clear these payments every day.</p></div>
+            <div class="z-item"><h4>The bots</h4><p>What the AI can read and the RPA bot can post set the edges of the design.</p></div>
+          </div>
+        </div>
+        <div class="z-row">
+          <h3 class="z-row__label">What I had to learn</h3>
+          <div class="z-row__body">
+            <div class="z-items">
+              <div class="z-item"><h4>Cash application</h4><p>How a payment is cleared against open invoices.</p><span class="z-chips"><i>SAP</i><i>Clearing</i><i>On account</i></span></div>
+              <div class="z-item"><h4>Why payments don’t add up</h4><p>The usual reasons a payment falls short.</p><span class="z-chips"><i>Part payments</i><i>Deductions</i><i>Bank charges</i></span></div>
+              <div class="z-item"><h4>What the bots can do</h4><p>Where reading and posting stop and a person starts.</p><span class="z-chips"><i>Extraction</i><i>RPA</i><i>Exceptions</i></span></div>
+            </div>
+          </div>
+        </div>
+        <div class="z-row">
+          <h3 class="z-row__label">Who I worked with</h3>
+          <dl class="z-row__body z-who z-team">
+            <div><dt>Business analyst</dt><dd>Requirements, and the link to the client.</dd></div>
+            <div><dt>The client’s AR team</dt><dd>How payments are cleared today, and what goes wrong.</dd></div>
+            <div><dt>Developers</dt><dd>Built the workbench from the handoff.</dd></div>
+          </dl>
+        </div>
+      </div>
+    </section>
+
+    <section class="sec" id="problem" aria-labelledby="s-problem">
+      <div class="quote quote--card wide reveal">
+        <div class="col">
+          <span class="kicker">Why it mattered</span>
+          <h2 id="s-problem" class="quote__line">Unapplied cash is money the company has but can’t use.</h2>
+          <p class="quote__sub">In the products business this tool served, customers took about three months on average to pay. Every payment left unapplied keeps an invoice open, pushes that number up and holds up the month-end close.</p>
+        </div>
+      </div>
+      <div class="z-row reveal">
+        <h3 class="z-row__label">What the AR team was up against</h3>
+        <dl class="z-row__body z-who z-team">
+          <div><dt>Two halves of one payment</dt><dd>The money arrives as a bank line; its details often come separately, in an email, a PDF or a note to payee.</dd></div>
+          <div><dt>Numbers that don’t add up</dt><dd>Part payments, deductions and bank charges rarely match on the first try.</dd></div>
+          <div><dt>A queue that only grew</dt><dd>Matched by hand, the work kept piling up.</dd></div>
+        </dl>
+      </div>
+      <div class="z-row reveal">
+        <h3 class="z-row__label">The scale of it, every month</h3>
+        <dl class="z-row__body z-who z-team">
+          <div><dt>~600</dt><dd>payments.</dd></div>
+          <div><dt>4–5K</dt><dd>remittance emails.</dd></div>
+          <div><dt>~2,000</dt><dd>transactions.</dd></div>
+        </dl>
+      </div>
+    </section>
+  </section>
+
+  <!-- 02 DESIGN -->
+  <section class="act" id="design" aria-labelledby="a-design">
+    <header class="act__head reveal"><p class="act__label">02 · Design</p><h2 class="act__title" id="a-design">Four rules, one record, a person with the last word</h2></header>
+
+    <section class="sec" id="rules" aria-labelledby="s-rules">
+      <header class="head col reveal">
+        <h2 id="s-rules">Four rules behind every screen</h2>
+        <p>Everything in the workbench follows from these four. The last column shows where each one appears.</p>
+      </header>
+      <div class="z-table reveal" role="table" aria-label="The four rules">
+        <div class="z-table__row z-table__row--head" role="row"><span role="columnheader">Rule</span><span role="columnheader">What it means</span><span role="columnheader">Where you see it</span></div>
+        <div class="z-table__row" role="row"><span role="cell" class="z-table__rule"><b>01</b>Bots match, people decide</span><span role="cell">Only what the bots can’t settle reaches a person, sorted by what’s at risk.</span><a role="cell" href="#step-1">Step 01<span>Find it in the queue</span></a></div>
+        <div class="z-table__row" role="row"><span role="cell" class="z-table__rule"><b>02</b>Every source on one page</span><span role="cell">An exception can only be solved with its evidence in view.</span><a role="cell" href="#step-2">Step 02<span>Read every source</span></a></div>
+        <div class="z-table__row" role="row"><span role="cell" class="z-table__rule"><b>03</b>The AI recommends, a person decides</span><span role="cell">Nothing posts until an analyst confirms or overrides it, and every step is on the record.</span><a role="cell" href="#step-3">Step 03<span>Decide</span></a></div>
+        <div class="z-table__row" role="row"><span role="cell" class="z-table__rule"><b>04</b>Teach, don’t retype</span><span role="cell">When the extraction misses a field, the analyst shows it where to look.</span><a role="cell" href="#feedback">The fix<span>AI feedback</span></a></div>
+      </div>
+    </section>
+
+    <section class="sec" id="pipeline" aria-labelledby="s-pipeline">
+      <header class="head col reveal">
+        <h2 id="s-pipeline">How a payment flows</h2>
+        <p>Every payment takes one of two paths, and both end on the record.</p>
+      </header>
+      <div class="ca-flow wide reveal">
+        <div class="ca-flow__node">
+          <span class="z-ic"><svg><use href="#z-inbox"/></svg></span>
+          <h3>Payment arrives</h3>
+          <p>A bank line, and a remittance email with its attachment.</p>
+        </div>
+        <span class="ca-flow__arrow" aria-hidden="true"></span>
+        <div class="ca-flow__node">
+          <span class="z-ic"><svg><use href="#z-spark"/></svg></span>
+          <h3>The AI reads and matches</h3>
+          <p>Extracts invoice numbers and amounts, checks them against SAP, and names any exception.</p>
+        </div>
+        <span class="ca-flow__fork" aria-hidden="true"></span>
+        <div class="ca-flow__paths">
+          <div class="ca-flow__path">
+            <span class="ca-flow__tag">Clean match</span>
+            <ol><li>The RPA bot posts it in SAP</li><li>It comes back for a quick yes or no</li></ol>
+          </div>
+          <div class="ca-flow__path ca-flow__path--mine">
+            <span class="ca-flow__tag">Exception · the workbench</span>
+            <ol><li>Reaches an analyst with a recommended action</li><li>The analyst decides, and the bot posts it</li></ol>
+          </div>
+        </div>
+        <span class="ca-flow__join" aria-hidden="true"></span>
+        <div class="ca-flow__node ca-flow__node--end">
+          <span class="z-ic"><svg><use href="#z-receipt"/></svg></span>
+          <h3>On the record</h3>
+          <p>Posted in SAP, with every change, who made it and what it was before.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="sec" id="anatomy" aria-labelledby="s-anatomy">
+      <header class="head col reveal">
+        <h2 id="s-anatomy">Every source for one payment, on one page</h2>
+        <p>The left of the record sums up the payment and holds the decision. Six tabs on the right carry the evidence. Each part answers one question an analyst has.</p>
+      </header>
+      <div class="z-ia ca-ia reveal">
+        <div class="z-ia__root"><svg><use href="#z-doc"/></svg>One item’s record</div>
+        <div class="z-ia__groups">
+          <div class="z-ia__group"><span class="z-ic"><svg><use href="#z-card"/></svg></span><h3>The payment</h3><p class="z-ia__q">What came in?</p><ul><li>Payment and full amount</li><li>Check and document numbers</li><li>Bot error and exception</li><li>Linked payments</li></ul></div>
+          <div class="z-ia__group"><span class="z-ic"><svg><use href="#z-layers"/></svg></span><h3>Six sources</h3><p class="z-ia__q">What does the evidence say?</p><ul><li>Invoices from SAP</li><li>Bank transaction</li><li>Remittance advice</li><li>Deductions and bank expenses</li><li>What the bot will post</li><li>History</li></ul></div>
+          <div class="z-ia__group"><span class="z-ic"><svg><use href="#z-scale"/></svg></span><h3>The decision</h3><p class="z-ia__q">What should happen?</p><ul><li>Recommended action</li><li>Send email</li><li>Comments</li></ul></div>
+          <div class="z-ia__group"><span class="z-ic"><svg><use href="#z-coins"/></svg></span><h3>Totals</h3><p class="z-ia__q">Does it reconcile?</p><ul><li>Invoice amount in SAP</li><li>Expected payment</li><li>Remittance amount</li><li>Residual and bank difference</li></ul></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="sec" id="iterating" aria-labelledby="s-iter">
+      <header class="head col reveal">
+        <h2 id="s-iter">Four calls that shaped the workbench</h2>
+        <p>Two about trusting the bots, two about fitting more on one page.</p>
+      </header>
+
+      <article class="z-dec reveal">
+        <header class="z-dec__head"><span class="z-dec__num">Decision 01</span><h3>Should the AI post an exception on its own?</h3></header>
+        <figure class="ca-shot"><div class="ca-shot__well"><img src="assets/cashapp/rec-action.webp?v=1" width="594" height="470" loading="lazy" alt="Send email to the collection team or the customer, then select recommended action, with Post to RPA preselected over Post manually and Post on account, a comment field and Submit."></div></figure>
+        <dl class="z-dec__rows">
+          <div><dt>Options we looked at</dt><dd>The AI posts on its own; the AI recommends and an analyst confirms; analysts choose with no recommendation.</dd></div>
+          <div><dt>What I chose</dt><dd>It recommends. The AI preselects how to post, through the bot, manually or on account, and nothing moves until the analyst submits, with room to say why when they choose differently.</dd></div>
+          <div><dt>Why</dt><dd>In finance, a posting nobody can explain is a problem, however right it turns out to be.</dd></div>
+          <div><dt>What it cost</dt><dd>Speed. Every exception waits for a person, even when the AI’s pick was right.</dd></div>
+        </dl>
+      </article>
+
+      <article class="z-dec reveal">
+        <header class="z-dec__head"><span class="z-dec__num">Decision 02</span><h3>What happens to what the bot already posted?</h3></header>
+        <figure class="ca-shot"><div class="ca-shot__well"><img src="assets/cashapp/autopost-review-crop.webp?v=1" width="920" height="710" loading="lazy" alt="An auto-posted item open for review: its summary, the remittance advice it was posted against, and Reject or Approve under the question of whether it was a regular clearing."></div></figure>
+        <dl class="z-dec__rows">
+          <div><dt>Options we looked at</dt><dd>Trust what the bot posted; spot-check a sample; send every auto-posted item back for a yes or no.</dd></div>
+          <div><dt>What I chose</dt><dd>It comes back for a quick yes or no. A rejected item goes back to manual review instead of standing in SAP unchecked.</dd></div>
+          <div><dt>Why</dt><dd>A bot posting that nobody looked at is the same risk as one nobody can explain.</dd></div>
+          <div><dt>What it cost</dt><dd>A second queue. Analysts review items the bot already cleared, on top of the exceptions.</dd></div>
+        </dl>
+      </article>
+
+      <article class="z-dec reveal">
+        <header class="z-dec__head"><span class="z-dec__num">Decision 03</span><h3>How much can the payment card hold?</h3></header>
+        <div class="iter z-compare">
+          <div class="z-compare__item">
+            <div class="well"><img class="ba__img" src="assets/cashapp/card-before.webp?v=1" width="587" height="445" loading="lazy" alt="The first payment card: customer name and CAN, one amount, and nine details from check number to linked payment."></div>
+            <p class="z-compare__cap"><span class="z-tag">First</span>One amount, nine details</p>
+          </div>
+          <div class="z-compare__item">
+            <div class="well"><img class="ba__img" src="assets/cashapp/card-after.webp?v=1" width="587" height="606" loading="lazy" alt="The final payment card: the payment amount and the full amount at the top, an Updated manually flag, and thirteen details, with edit icons on the fields an analyst can change and a +3 beside the linked payment."></div>
+            <p class="z-compare__cap"><span class="z-tag z-tag--now">Now</span>Two amounts, thirteen details</p>
+          </div>
+        </div>
+        <dl class="z-dec__rows">
+          <div><dt>Options we looked at</dt><dd>Split the card into sections; move the extra details into a tab; keep one card of label and value rows.</dd></div>
+          <div><dt>Why it changed</dt><dd>As the project went on, the card took on a second amount, a manual-update flag, a follow-up date, and matching and discount sources. All of it had to stay beside the decision, so the analyst never leaves the record to check a detail.</dd></div>
+          <div><dt>How it holds</dt><dd>The amounts stay pinned at the top, every other detail is one label and value row, a pencil marks what can be changed, and further linked payments fold into +3.</dd></div>
+          <div><dt>What it cost</dt><dd>A denser card, one that has to be scanned rather than read at a glance.</dd></div>
+        </dl>
+      </article>
+
+      <article class="z-dec reveal">
+        <header class="z-dec__head"><span class="z-dec__num">Decision 04</span><h3>Where do deductions and bank charges go?</h3></header>
+        <div class="iter z-compare">
+          <div class="z-compare__item">
+            <div class="well"><img class="ba__img" src="assets/cashapp/iter-before.webp?v=1" width="1130" height="640" loading="lazy" alt="The first version of the record’s tabs: invoices, bank transaction details, remittance advice, RPA input and history, with the invoice table below."></div>
+            <p class="z-compare__cap"><span class="z-tag">First</span>Five tabs, no place for them</p>
+          </div>
+          <div class="z-compare__item">
+            <div class="well"><img class="ba__img" src="assets/cashapp/iter-after.webp?v=1" width="1130" height="640" loading="lazy" alt="The record with a sixth tab, deductions and bank expenses: the payment amount before tax, the bank expense applied, and each deduction or tax with its amount and whether it applies."></div>
+            <p class="z-compare__cap"><span class="z-tag z-tag--now">Now</span>A sixth tab, editable before posting</p>
+          </div>
+        </div>
+        <dl class="z-dec__rows">
+          <div><dt>Options we looked at</dt><dd>Fold deductions into the invoices tab; show them only on short payments; give them a tab of their own.</dd></div>
+          <div><dt>Why it changed</dt><dd>A short payment is often explained by exactly these, so the analyst needs to check and correct them before the bot posts.</dd></div>
+          <div><dt>What it cost</dt><dd>One more tab on every record, even the many with no deductions at all.</dd></div>
+        </dl>
+      </article>
+    </section>
+
+    <section class="sec" id="flow" aria-labelledby="s-flow">
+      <header class="head col reveal">
+        <h2 id="s-flow">An exception, start to finish</h2>
+        <p>Four moments from one analyst’s exception, from the queue to the trail it leaves.</p>
+      </header>
+      <ol class="z-flow z-flow--4 reveal">
+        <li><a href="#step-1"><span class="z-ic"><svg><use href="#z-clock"/></svg></span><b>01</b>Find it in the queue</a></li>
+        <li><a href="#step-2"><span class="z-ic"><svg><use href="#z-layers"/></svg></span><b>02</b>Read every source</a></li>
+        <li><a href="#step-3"><span class="z-ic"><svg><use href="#z-scale"/></svg></span><b>03</b>Decide and reach out</a></li>
+        <li><a href="#step-4"><span class="z-ic"><svg><use href="#z-receipt"/></svg></span><b>04</b>Keep the trail</a></li>
+      </ol>
+
+      <div class="cgroup col reveal" id="step-1">
+        <span class="kicker">Step 01</span>
+        <h3>Find it in the queue</h3>
+        <p>Open items are counted by how long they have waited. Fourteen filters narrow them by region, company code, matching source, exception or bot error, and team leads assign them in bulk.</p>
+      </div>
+      <figure class="console wide reveal"><div class="well"><img src="assets/cashapp/workbench.webp?v=1" width="1920" height="900" loading="lazy" alt="The workbench: open items counted as total, older than 24 hours and older than 48 hours, a row of filters, and a table of payments with check number, document number, region, country, company code, matching source, customer, follow-up date, amount and payment date."></div></figure>
+
+      <div class="cgroup col reveal" id="step-2">
+        <span class="kicker">Step 02</span>
+        <h3>Read every source</h3>
+        <p>The record puts the payment and the decision on the left and six tabs of evidence on the right, with the totals in view under every tab.</p>
+      </div>
+      <figure class="console wide reveal"><div class="well"><img src="assets/cashapp/record.webp?v=1" width="1920" height="1204" loading="lazy" alt="An item’s record: on the left the payment summary, send email, the recommended action and comments; on the right six tabs, here the invoices with their exceptions and reason codes, and the totals below."></div></figure>
+      <div class="console__row console__row--2 wide">
+        <figure class="reveal"><div class="well"><img src="assets/cashapp/src-bank.webp?v=1" width="1120" height="570" loading="lazy" alt="The bank transaction tab: customer, account, amount and posting details, then the invoices extracted from the bank’s note to payee."></div><figcaption>The bank line, with the invoices read from its note to payee.</figcaption></figure>
+        <figure class="reveal"><div class="well"><img src="assets/cashapp/src-rpa.webp?v=1" width="1120" height="570" loading="lazy" alt="The RPA input tab: the fields the bot will post for a regular clearing and for an on-account posting, side by side."></div><figcaption>The exact fields the bot will post, before it posts them.</figcaption></figure>
+      </div>
+
+      <div class="cgroup col reveal" id="step-3">
+        <span class="kicker">Step 03</span>
+        <h3>Decide and reach out</h3>
+        <p>The analyst confirms or overrides the recommended action. When the customer has to explain a deduction or a short payment, the outreach email arrives drafted, and the analyst checks it and sends it.</p>
+      </div>
+      <figure class="console wide reveal"><div class="well"><img src="assets/cashapp/outreach.webp?v=1" width="1700" height="900" loading="lazy" alt="An email preview to a customer asking for clarification on a discount applied: the reason for contact, the details needed, the recommended action, and attachments, with a send button."></div><figcaption>Customer outreach, drafted for the analyst to check and send.</figcaption></figure>
+
+      <div class="cgroup col reveal" id="step-4">
+        <span class="kicker">Step 04</span>
+        <h3>Keep the trail</h3>
+        <p>The bot posts what the analyst decided, and the item’s history keeps every change: who made it, when, and what it was before.</p>
+      </div>
+      <figure class="console wide reveal"><div class="well"><img src="assets/cashapp/history.webp?v=2" width="1120" height="593" loading="lazy" alt="The history tab: each change with who made it and when, such as a tariff amount updated from 234.58 to 264.58, a deduction amount changed, the RPA input edited, the discount source switched from SAP to the remittance, and a remittance update that failed."></div><figcaption>Every change, who made it, and what it was before.</figcaption></figure>
+    </section>
+
+    <section class="sec" id="hitl" aria-labelledby="s-hitl">
+      <header class="head col reveal">
+        <h2 id="s-hitl">A person has the last word, everywhere</h2>
+        <p>Decision 01 settled it for exceptions. The same rule runs through the rest of the workbench: wherever the AI or the bot acts, an analyst confirms it, and every step is on the record.</p>
+      </header>
+      <div class="ca-hitl wide reveal" role="table" aria-label="What the AI or the bot does, and what the analyst decides">
+        <div class="ca-hitl__row ca-hitl__row--head" role="row"><span role="columnheader">Moment</span><span role="columnheader">Proposes</span><span aria-hidden="true"></span><span role="columnheader">Decides</span></div>
+          <div class="ca-hitl__row" role="row">
+            <span class="ca-hitl__moment" role="rowheader">Posting an exception</span>
+            <div class="ca-hitl__cell" role="cell"><span class="ca-hitl__who"><svg><use href="#z-spark"/></svg>The AI</span><p>Preselects how to post: through the bot, manually or on account.</p></div>
+            <span class="ca-hitl__to" aria-hidden="true"><svg><use href="#z-arrow"/></svg></span>
+            <div class="ca-hitl__cell ca-hitl__cell--me" role="cell"><span class="ca-hitl__who"><svg><use href="#z-person"/></svg>The analyst</span><p>Confirms or overrides it, with room to say why. Nothing moves until they submit.</p></div>
+          </div>
+          <div class="ca-hitl__row" role="row">
+            <span class="ca-hitl__moment" role="rowheader">Clean matches</span>
+            <div class="ca-hitl__cell" role="cell"><span class="ca-hitl__who"><svg><use href="#z-spark"/></svg>The bot</span><p>Posts the payments that add up straight into SAP.</p></div>
+            <span class="ca-hitl__to" aria-hidden="true"><svg><use href="#z-arrow"/></svg></span>
+            <div class="ca-hitl__cell ca-hitl__cell--me" role="cell"><span class="ca-hitl__who"><svg><use href="#z-person"/></svg>The analyst</span><p>Gives each one a quick yes or no. A rejected one goes back to manual review.</p></div>
+          </div>
+          <div class="ca-hitl__row" role="row">
+            <span class="ca-hitl__moment" role="rowheader">Customer outreach</span>
+            <div class="ca-hitl__cell" role="cell"><span class="ca-hitl__who"><svg><use href="#z-spark"/></svg>The AI</span><p>Drafts the email: why we are asking, the details we need and the attachments.</p></div>
+            <span class="ca-hitl__to" aria-hidden="true"><svg><use href="#z-arrow"/></svg></span>
+            <div class="ca-hitl__cell ca-hitl__cell--me" role="cell"><span class="ca-hitl__who"><svg><use href="#z-person"/></svg>The analyst</span><p>Checks it and sends it.</p></div>
+          </div>
+          <div class="ca-hitl__row" role="row">
+            <span class="ca-hitl__moment" role="rowheader">What gets posted</span>
+            <div class="ca-hitl__cell" role="cell"><span class="ca-hitl__who"><svg><use href="#z-spark"/></svg>The bot</span><p>Posts exactly the fields on the RPA input tab.</p></div>
+            <span class="ca-hitl__to" aria-hidden="true"><svg><use href="#z-arrow"/></svg></span>
+            <div class="ca-hitl__cell ca-hitl__cell--me" role="cell"><span class="ca-hitl__who"><svg><use href="#z-person"/></svg>The analyst</span><p>Can edit them first, and the history keeps who changed what, when, and what it was before.</p></div>
+          </div>
+      </div>
+    </section>
+
+    <section class="sec" id="feedback" aria-labelledby="s-feedback">
+      <header class="head col reveal">
+        <h2 id="s-feedback">When the AI misses a field, the analyst teaches it</h2>
+        <p>Remittance advice arrives in every format a customer can think of. When the extraction missed a field, someone used to read the email and type the value in. Here, the analyst tells it where to look, and it reads the advice again.</p>
+      </header>
+      <div class="console__row console__row--2 wide">
+        <figure class="reveal"><div class="well"><img src="assets/cashapp/remit-queue.webp?v=2" width="1920" height="850" loading="lazy" alt="Open remittance emails: advice not yet matched to a payment, filtered by country, amount, date received and exception, with remittance ID, customer, subject, sender and recipient, country, total amount, date received and any exception, such as a file too large to read."></div><figcaption>Remittance emails that couldn’t be matched to a payment yet.</figcaption></figure>
+        <figure class="reveal"><div class="well"><img src="assets/cashapp/remit-mapped.webp?v=2" width="1920" height="850" loading="lazy" alt="One remittance email open: on the left its customer, amount, country, date and exception, and the payment it is mapped to by check number and document number; on the right the email itself with its attachment and the invoices it lists."></div><figcaption>An email mapped to its payment by check or document number.</figcaption></figure>
+      </div>
+      <div class="cards cards--shots ca-teach wide">
+        <article class="reveal"><div class="well"><img src="assets/cashapp/remit-1-missing.webp?v=1" width="1120" height="620" loading="lazy" alt="Remit extract: check number and total amount both marked not extracted, each with a feedback icon."></div><div class="card__copy"><span class="kicker">Step 01</span><h3>It marks what it missed</h3><p>Fields the extraction couldn’t find say Not extracted, each with a feedback icon.</p></div></article>
+        <article class="reveal"><div class="well"><img src="assets/cashapp/remit-2-keyword.webp?v=2" width="1120" height="620" loading="lazy" alt="The keyword dialog open over the remit extract: Enter keywords to extract check number, up to five, with the labels Chk no. and # Check added beside Check Number, Add New Label, and Save Keywords."></div><div class="card__copy"><span class="kicker">Step 02</span><h3>The analyst shows it where to look</h3><p>They add the labels this customer uses, up to five per field, save them and refresh.</p></div></article>
+        <article class="reveal"><div class="well"><img src="assets/cashapp/remit-3-extracted.webp?v=1" width="1120" height="620" loading="lazy" alt="Remit extract after the refresh: check number, total amount and three invoice numbers with their amounts found, the confirmed ones ticked."></div><div class="card__copy"><span class="kicker">Step 03</span><h3>It reads the advice again</h3><p>The missing values come through, and the fields the analyst confirmed are ticked.</p></div></article>
+        <article class="reveal"><div class="well"><img src="assets/cashapp/remit-4-keywords.webp?v=1" width="1120" height="620" loading="lazy" alt="The keywords list open over the remit extract: for check number, total payment amount, invoice number and invoice amount, the default keyword beside the custom keywords analysts added, such as Check no., # Check, Pay Amt and Inv no."></div><div class="card__copy"><span class="kicker">Step 04</span><h3>It keeps what it was taught</h3><p>Each field’s default keyword sits beside the ones analysts have added, and the extraction reads with all of them.</p></div></article>
+      </div>
+    </section>
+
+    <section class="sec" id="states" aria-labelledby="s-states">
+      <header class="head col reveal">
+        <h2 id="s-states">Built for money that doesn’t add up</h2>
+        <p>Cash application is mostly edge cases. These four states keep the analyst’s place when the numbers or the bots don’t cooperate.</p>
+      </header>
+      <div class="cards cards--shots z-states ca-states wide">
+        <article class="reveal"><div class="well"><img src="assets/cashapp/state-confirm.webp?v=1" width="1120" height="620" loading="lazy" alt="A confirmation over the invoice mapping: updating the mapped invoices cannot be paused or stopped once it starts, with Close or Yes, proceed."></div><div class="card__copy"><span class="z-statetag"><svg><use href="#z-info"/></svg>Can’t be stopped</span><h3>Asks first</h3><p>An update that can’t be stopped once started asks before it begins.</p></div></article>
+        <article class="reveal"><div class="well"><img src="assets/cashapp/state-progress.webp?v=1" width="1120" height="620" loading="lazy" alt="The invoices tab while an invoice is being added: a spinner and a note that the system is recalculating, with a link to view the added invoice."></div><div class="card__copy"><span class="z-statetag"><svg><use href="#z-loader"/></svg>Bot at work</span><h3>Says it’s working</h3><p>Bots work in the background, and the tab says so instead of freezing.</p></div></article>
+        <article class="reveal"><div class="well"><img src="assets/cashapp/state-notinsap.webp?v=1" width="1120" height="620" loading="lazy" alt="The invoice table with one row highlighted in red because the invoice is not in SAP, and the totals marked invoices not found in SAP."></div><div class="card__copy"><span class="z-statetag"><svg><use href="#z-x"/></svg>Not in SAP</span><h3>Flagged twice</h3><p>A missing invoice is marked on its row and in the totals.</p></div></article>
+        <article class="reveal"><div class="well"><img src="assets/cashapp/state-noaccess.webp?v=1" width="1120" height="620" loading="lazy" alt="An empty state: no data access yet, because no company codes are assigned to this account, with how to request access."></div><div class="card__copy"><span class="z-statetag"><svg><use href="#z-lock"/></svg>No access</span><h3>Says how to get it</h3><p>Access follows company codes. With none assigned, a clear empty state.</p></div></article>
+      </div>
+    </section>
+  </section>
+
+  <!-- 03 IMPACT -->
+  <section class="act" id="impact" aria-labelledby="a-impact">
+    <header class="act__head reveal"><p class="act__label">03 · Impact</p><h2 class="act__title" id="a-impact">Live, and halving the guesswork</h2></header>
+    <section class="sec" id="stands" aria-labelledby="s-stands">
+      <header class="head col reveal">
+        <h2 id="s-stands">Where it stands</h2>
+        <p>Measured in production in the US, where the tool went live first. Match and auto-posting rates count only the payments no one had to touch.</p>
+      </header>
+      <div class="results results--4 wide reveal">
+        <article><strong>14%</strong><h3>Ambiguous AR exceptions</h3><p>Down from 28%: half as many payments waiting on someone to work out where they belong.</p></article>
+        <article><strong>22.1%</strong><h3>Matched automatically</h3><p>Up from 19.9%, and as high as 25.6% in May.</p></article>
+        <article><strong>14.3%</strong><h3>Posted with no one touching it</h3><p>Up from 12.3%, and as high as 16.9% in May.</p></article>
+        <article><strong>5</strong><h3>Countries live</h3><p>The US, Denmark, Belgium, Finland and the Netherlands, with about 15 more onboarding across EMEA, APAC and LatAm.</p></article>
+      </div>
+    </section>
+
+    <section class="sec" id="delivery" aria-labelledby="s-delivery">
+      <header class="head col reveal">
+        <h2 id="s-delivery">What is delivered</h2>
+        <p>The tool as each person meets it.</p>
+      </header>
+      <div class="z-row reveal">
+        <h3 class="z-row__label">What shipped for each person</h3>
+        <dl class="z-row__body z-who">
+          <div><dt><svg><use href="#z-person"/></svg>Analysts</dt><dd>Every source for one payment on one page, and a fix for a missed field that sticks.</dd></div>
+          <div><dt><svg><use href="#z-users"/></svg>Team leads</dt><dd>One queue sorted by how long items have waited, assigned in bulk.</dd></div>
+          <div><dt><svg><use href="#z-doc"/></svg>Finance</dt><dd>No posting without a person behind it, and a history for every change.</dd></div>
+        </dl>
+      </div>
+    </section>
+
+    <section class="sec" id="next" aria-labelledby="s-next-steps">
+      <header class="head col reveal">
+        <h2 id="s-next-steps">What’s next</h2>
+        <p>More countries are coming, and one number isn’t measured yet.</p>
+      </header>
+      <div class="z-row reveal">
+        <h3 class="z-row__label">Next steps</h3>
+        <dl class="z-row__body z-who">
+          <div><dt>More countries</dt><dd>About 15 more are onboarding across EMEA, APAC and LatAm.</dd></div>
+          <div><dt>Time per exception</dt><dd>Measure how long each exception takes, not only how many payments clear on their own.</dd></div>
+        </dl>
+      </div>
+    </section>
+  </section>
+
+  <section class="reflect" id="reflect" aria-labelledby="s-reflect">
+    <div class="col">
+      <header class="head reveal"><h2 id="s-reflect">What I learned</h2></header>
+      <ol class="z-lessons reveal">
+        <li><b>In finance, automation earns trust by showing its working.</b><span>And by leaving the last word to a person.</span></li>
+        <li><b>A missed field is cheaper to teach than to retype.</b><span>So the fix belongs where the mistake is seen.</span></li>
+        <li><b>The waiting states mattered as much as the screens.</b><span>The bots work in the background, so the screen has to say what they’re doing.</span></li>
+      </ol>
+    </div>
+  </section>
+
+  </div>
+</main>
+
+<section class="next-wrap col z-next" aria-labelledby="s-next">
+  <header class="z-next__head">
+    <h2 id="s-next">Next case studies</h2>
+    <a class="z-next__all" href="/#work">All work <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+  </header>
+  <div class="z-next__grid">
+    <a class="z-next__card" href="/design-system">
+      <div class="z-next__media"><img src="assets/ds/card-specimens.webp?v=3" width="2400" height="1539" alt="ZBrain design system specimens: type scale, data table, charts, spacing, status, forms and feedback" loading="lazy"></div>
+      <ul class="z-next__tags"><li>Design system</li><li>Figma</li><li>AI prototyping</li></ul>
+      <h3>ZBrain Design System</h3>
+    </a>
+    <a class="z-next__card" href="/dhs-tutor">
+      <div class="z-next__media"><img src="assets/dhs/dashboard-hero.jpg" width="2240" height="1400" alt="The DHS Tutor dashboard, with an exam countdown, a continue-reading card and four study metrics" loading="lazy"></div>
+      <ul class="z-next__tags"><li>Edtech</li><li>Grounded AI</li><li>Prototype</li></ul>
+      <h3>DHS Tutor</h3>
+    </a>
+  </div>
+</section>
+
+<footer class="site-foot">
+  <ul class="site-foot__links">
+    <li><a href="https://www.linkedin.com/in/indrajit-sasmal/" target="_blank" rel="noopener noreferrer"><span class="roll" data-t="LinkedIn"><span>LinkedIn</span></span><span class="arr">↗</span><span class="vh">(opens in a new tab)</span></a></li>
+    <li><a href="https://dribbble.com/Indrajit1995" target="_blank" rel="noopener noreferrer"><span class="roll" data-t="Dribbble"><span>Dribbble</span></span><span class="arr">↗</span><span class="vh">(opens in a new tab)</span></a></li>
+    <li><a href="assets/Indrajit-Sasmal-Resume.pdf?v=19" target="_blank" rel="noopener noreferrer"><span class="roll" data-t="Resume"><span>Resume</span></span><span class="arr">↗</span><span class="vh">(opens in a new tab)</span></a></li>
+  </ul>
+  <div class="site-foot__bar"><span class="site-foot__status"><i aria-hidden="true"></i>Open to work</span><span>© 2026</span></div>
+</footer>
+
+<dialog class="lb" id="lightbox" aria-label="Enlarged screen">
+  <button class="lb__close" type="button" aria-label="Close"><svg viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M3.5 3.5l9 9M12.5 3.5l-9 9"/></svg></button>
+  <img alt="">
+</dialog>
+
+<script>
+/* the case studies have no theme switch of their own: the homepage's choice carries over through
+   localStorage, and until one is made a change in the system's preference is followed */
+(function () {
+  matchMedia('(prefers-color-scheme: light)').addEventListener('change', function (e) {
+    var chosen = null;
+    try { chosen = localStorage.getItem('theme'); } catch (err) {}
+    if (!chosen) { var t = e.matches ? 'light' : 'dark'; document.documentElement.setAttribute('data-theme', t); document.documentElement.style.colorScheme = t; }
+  });
+})();
+
+/* reveal on scroll. A plain position check backs up the observer, because an observer can be
+   throttled (a background tab, some iframes) and content must never stay hidden. ?static shows all. */
+(function () {
+  var els = [].slice.call(document.querySelectorAll('.reveal'));
+  function show(e) { e.classList.add('is-in'); }
+  if (/[?&]static\b/.test(location.search) || !('IntersectionObserver' in window)) { els.forEach(show); return; }
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (en) { if (en.isIntersecting) { show(en.target); io.unobserve(en.target); } });
+  }, { rootMargin: '0px 0px -8% 0px', threshold: 0.08 });
+  els.forEach(function (e) { io.observe(e); });
+  var queued = false;
+  function check() {
+    queued = false;
+    var line = innerHeight * 0.95;
+    els = els.filter(function (e) { if (e.getBoundingClientRect().top < line) { show(e); io.unobserve(e); return false; } return true; });
+    if (!els.length) { removeEventListener('scroll', onScroll); removeEventListener('resize', onScroll); }
+  }
+  function onScroll() { if (!queued) { queued = true; requestAnimationFrame(check); } }
+  addEventListener('scroll', onScroll, { passive: true });
+  addEventListener('resize', onScroll);
+  check();
+})();
+
+/* the sticky picture follows whichever step is in the middle of the screen */
+(function () {
+  var steps = document.querySelectorAll('.context__step');
+  var imgs = document.querySelectorAll('.context__visual img');
+  if (!steps.length || !('IntersectionObserver' in window)) return;
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (en) {
+      if (!en.isIntersecting) return;
+      var i = +en.target.getAttribute('data-step');
+      imgs.forEach(function (im, n) { im.classList.toggle('is-active', n === i); });
+    });
+  }, { rootMargin: '-45% 0px -45% 0px' });
+  steps.forEach(function (s) { io.observe(s); });
+})();
+
+/* the rail, grouped as Vivek's ZBrain case study groups it: the link of the section whose top has
+   passed the upper third of the screen is marked, and its group opens to show its sections, the
+   others closed. The content sits right of the rail, so nothing passes beneath it. */
+(function () {
+  var toc = document.querySelector('.toc'), list = toc && toc.querySelector('.toc__list');
+  if (!list) return;
+  var links = [].slice.call(list.querySelectorAll('a'));
+  var groups = [].slice.call(list.querySelectorAll('.toc__grp'));
+  var targets = links.map(function (a) { return document.getElementById(a.getAttribute('href').slice(1)); });
+  var queued = false;
+  function update() {
+    queued = false;
+    var hdr = document.querySelector('.site-header'), line = (hdr ? hdr.getBoundingClientRect().height : 0) + 72, active = 0;   // just under the header, where a clicked section's heading lands
+    targets.forEach(function (el, i) { if (el && el.getBoundingClientRect().top <= line) active = i; });
+    if (innerHeight + scrollY >= document.documentElement.scrollHeight - 2) active = links.length - 1;
+    if (window.__tocPin) links.forEach(function (a, i) { if (a.getAttribute('href') === window.__tocPin) active = i; });   // set by smooth-scroll.js on a click
+    var grp = links[active].closest('.toc__grp');
+    links.forEach(function (a, i) { if (i === active) a.setAttribute('aria-current', 'location'); else a.removeAttribute('aria-current'); });
+    groups.forEach(function (g) { g.classList.toggle('is-open', g === grp); });
+  }
+  function q() { if (!queued) { queued = true; requestAnimationFrame(update); } }
+  addEventListener('scroll', q, { passive: true });
+  addEventListener('resize', q);
+  update();
+})();
+
+/* below 1240px the menu button opens the rail as a panel */
+(function () {
+  var btn = document.querySelector('.menu-btn'), toc = document.querySelector('.toc'), root = document.documentElement;
+  if (!btn || !toc) return;
+  function isOpen() { return root.classList.contains('menu-open'); }
+  function set(open) {
+    root.classList.toggle('menu-open', open);
+    btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+    btn.setAttribute('aria-label', open ? 'Close sections menu' : 'Open sections menu');
+  }
+  btn.addEventListener('click', function () { set(!isOpen()); });
+  toc.addEventListener('click', function (e) { if (isOpen() && e.target.closest('a')) set(false); });
+  addEventListener('pointerdown', function (e) { if (isOpen() && !toc.contains(e.target) && !btn.contains(e.target)) set(false); });
+  addEventListener('keydown', function (e) { if (e.key === 'Escape' && isOpen()) { set(false); btn.focus(); } });
+  addEventListener('resize', function () { if (innerWidth >= 1240 && isOpen()) set(false); });
+})();
+
+/* admin screens open full size: each becomes a button, and the dialog closes on any click or Escape */
+(function () {
+  var lb = document.getElementById('lightbox');
+  if (!lb || typeof lb.showModal !== 'function') return;
+  var big = lb.querySelector('img');
+  [].forEach.call(document.querySelectorAll('.console .well img, .console__row .well img, .iter .well img:not(.ba__img), .cards--shots .well img'), function (img) {
+    var b = document.createElement('button');
+    b.type = 'button'; b.className = 'zoom';
+    b.setAttribute('aria-label', 'Enlarge: ' + img.alt);
+    img.parentNode.insertBefore(b, img); b.appendChild(img);
+    b.addEventListener('click', function () { big.src = img.currentSrc || img.src; big.alt = img.alt; lb.showModal(); });
+  });
+  lb.addEventListener('click', function () { lb.close(); });
+})();
+
+/* Recordings start when they scroll into view and restart from the first frame, so the flow is
+   never joined halfway; scrolling away pauses them. A manual pause is sticky. Reduced motion
+   never autoplays. As on the live ZBrain case study. */
+(function () {
+  var still = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var VISIBLE = 0.3;
+  var io = window.IntersectionObserver ? new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) {
+      var v = e.target;
+      var nowIn = e.isIntersecting && e.intersectionRatio >= VISIBLE;
+      if (nowIn === (v.dataset.inview === 'true')) return;
+      v.dataset.inview = nowIn ? 'true' : 'false';
+      if (nowIn) {
+        if (still || v.dataset.held === 'true') return;
+        try { v.currentTime = 0; } catch (err) {}
+        var r = v.play(); if (r && r.catch) r.catch(function () {});
+      } else if (!v.paused) {
+        v.pause();
+      }
+    });
+  }, { threshold: [0, VISIBLE] }) : null;
+  document.querySelectorAll('.media').forEach(function (wrap) {
+    var v = wrap.querySelector('video'), btn = wrap.querySelector('.media__toggle');
+    if (!v || !btn) return;
+    function sync() {
+      btn.dataset.state = v.paused ? 'paused' : 'playing';
+      btn.setAttribute('aria-label', v.paused ? 'Play' : 'Pause');
+    }
+    btn.addEventListener('click', function () {
+      if (v.paused) { v.dataset.held = 'false'; var r = v.play(); if (r && r.catch) r.catch(function () {}); }
+      else { v.dataset.held = 'true'; v.pause(); }
+    });
+    v.addEventListener('play', sync);
+    v.addEventListener('pause', sync);
+    function reveal() { btn.hidden = false; }
+    v.addEventListener('loadedmetadata', reveal);
+    if (v.readyState >= 1) reveal();
+    if (io) io.observe(v);
+    sync();
+  });
+})();
+</script>
+<script src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js" defer></script>
+<script src="smooth-scroll.js?v=2" defer></script>
+<script src="assets/cursor.js?v=8"></script>
+<script src="assets/hero-dots.js?v=2"></script>
+<script>
+/* CE CoPilot: the live status line changes its words in place while the phone is on screen */
+(() => {
+  const t = document.querySelector('.cp-live__text'); if (!t) return;
+  const words = ['Thinking…', 'Working on it…', 'Reading context…', 'Searching knowledge…', 'Reading documents…'];
+  if (matchMedia('(prefers-reduced-motion: reduce)').matches) { t.textContent = words[words.length - 1]; return; }
+  let n = 0, timer = 0;
+  const next = () => { t.classList.add('is-out'); setTimeout(() => { n = (n + 1) % words.length; t.textContent = words[n]; t.classList.remove('is-out'); }, 200); };
+  new IntersectionObserver(([e]) => { clearInterval(timer); if (e.isIntersecting) timer = setInterval(next, 1400); }).observe(t.closest('.cp-live'));
+})();
+</script>
+</body>
+</html>
