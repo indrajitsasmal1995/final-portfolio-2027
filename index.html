@@ -52,6 +52,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300..800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Averia+Serif+Libre:ital,wght@0,300;0,400;0,700;1,400&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="assets/cursor.css?v=21">
 <style>
     :root {
@@ -1412,6 +1413,16 @@
 .proj + .proj { margin-top: 56px; padding-top: 56px; border-top: 1px solid var(--line); }
 @media (max-width: 900px) { .proj + .proj { margin-top: 40px; padding-top: 40px; } .projs { margin-top: 56px; } }
 </style>
+<style id="try-averia">
+/* TRIAL: Averia Serif Libre on the homepage headings (hero headline, section headings, project titles,
+   closing line); body copy stays in Plus Jakarta Sans. Remove this block and the font link to undo. */
+:root { --serif: "Averia Serif Libre", Georgia, serif; }
+.hero-title .l1 > span, .hero-title .l2 > span, .hero-title .l3 > span,
+.h-xl, .proj__title, .cta-big { font-family: var(--serif); letter-spacing: -.02em; word-spacing: 0; }
+.hero-title .l1 > span, .hero-title .l2 > span, .hero-title .l3 > span, .h-xl { font-weight: 400; }
+.proj__title { font-weight: 400; letter-spacing: -.01em; }
+.cta-big { font-weight: 400; }
+</style>
 </head>
 <body>
   <div class="top-fade" aria-hidden="true"></div>
@@ -1456,7 +1467,7 @@
           <span class="lines" aria-hidden="true">
           <span class="mask l1"><span><span class="hw">Product</span> <span class="hm hm-head" data-cursor-hide><span class="hm-bob"><i></i><b class="hm-emo"></b></span><span class="hm-hello" data-e="&#x1F44B;" data-t="Hello!"></span></span> designer</span></span>
           <span class="mask l2"><span>with <span class="hw">builder</span></span></span>
-          <span class="mask l3"><span><span class="hm hm-folder" role="button"><svg class="fd-back" viewBox="0 0 320 210" preserveAspectRatio="none" aria-hidden="true"><path d="M10 10Q10 0 20 0H100Q106 0 110 4L126 20H290Q300 20 300 30V200H10Z"/></svg><span class="fd-papers"><img src="assets/hero/banner-dhs.webp?v=2" alt=""><img src="assets/hero/banner-cashapp.webp?v=2" alt=""><img src="assets/hero/banner-cecopilot.webp?v=2" alt=""><img src="assets/hero/banner-zbrain.webp?v=2" alt=""></span><svg class="fd-front" viewBox="0 0 320 210" preserveAspectRatio="none" aria-hidden="true"><defs><linearGradient id="fdg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#8fd3fb"/><stop offset=".5" stop-color="#5bb8f7"/><stop offset="1" stop-color="#3a9cf0"/></linearGradient></defs><path d="M0 82Q0 72 10 72H148Q153 72 157 68L171 54Q175 50 181 50H310Q320 50 319 60L309 198Q308 210 297 210H23Q12 210 11 198Z" fill="url(#fdg)"/><path d="M10 73.5H148Q153 73.5 157 69.5L171 55.5Q175 51.5 181 51.5H310" fill="none" stroke="rgba(255,255,255,.7)" stroke-width="2.5"/></svg></span><em>instinct</em></span></span>
+          <span class="mask l3"><span><span class="hm hm-folder" role="button"><svg class="fd-back" viewBox="0 0 320 210" preserveAspectRatio="none" aria-hidden="true"><path d="M10 10Q10 0 20 0H100Q106 0 110 4L126 20H290Q300 20 300 30V200H10Z"/></svg><span class="fd-papers"><img src="assets/dhs/banner-laptop.webp?v=1" alt=""><img src="assets/hero/banner-cashapp.webp?v=2" alt=""><img src="assets/cecopilot/banner-devices.webp?v=1" alt=""><img src="assets/hero/banner-zbrain.webp?v=2" alt=""></span><svg class="fd-front" viewBox="0 0 320 210" preserveAspectRatio="none" aria-hidden="true"><defs><linearGradient id="fdg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#8fd3fb"/><stop offset=".5" stop-color="#5bb8f7"/><stop offset="1" stop-color="#3a9cf0"/></linearGradient></defs><path d="M0 82Q0 72 10 72H148Q153 72 157 68L171 54Q175 50 181 50H310Q320 50 319 60L309 198Q308 210 297 210H23Q12 210 11 198Z" fill="url(#fdg)"/><path d="M10 73.5H148Q153 73.5 157 69.5L171 55.5Q175 51.5 181 51.5H310" fill="none" stroke="rgba(255,255,255,.7)" stroke-width="2.5"/></svg></span><em>instinct</em></span></span>
           </span>
         </h1>
         <p class="hero-intro">5+ years designing SaaS applications and AI products for enterprises. <span class="now">Presently working at <span class="nb">LeewayHertz, A Hackett Group Company.</span></span></p>
@@ -1525,7 +1536,7 @@
                 <span class="proj__meta">/ 2026 / Pilot</span>
               </div>
             </div>
-            <div class="proj__img" data-cursor-arrow><img src="assets/hero/banner-cecopilot.webp" width="1118" height="712" decoding="async" loading="lazy" alt="CE CoPilot: the admin console in a browser beside two phone screens of the engineer app"></div>
+            <div class="proj__img" data-cursor-arrow><img src="assets/cecopilot/banner-devices.webp?v=1" width="1760" height="1067" decoding="async" loading="lazy" alt="CE CoPilot on a tablet and a phone: the admin console overview beside the engineer app’s opening chat"></div>
           </a>
           <a class="proj" data-cursor-plain id="work-cash-app" href="/cash-app">
             <div class="proj__text">
@@ -1570,7 +1581,7 @@
                 <span class="proj__meta">/ 2026 / Prototype</span>
               </div>
             </div>
-            <div class="proj__img" data-cursor-arrow><img src="assets/hero/banner-dhs.webp" width="1118" height="712" decoding="async" loading="lazy" alt="DHS Tutor: the student dashboard with the exam countdown and study metrics"></div>
+            <div class="proj__img" data-cursor-arrow><img src="assets/dhs/banner-laptop.webp?v=1" width="1448" height="922" decoding="async" loading="lazy" alt="DHS Tutor on a laptop: the student dashboard with the exam countdown, study metrics and focus areas"></div>
           </a>
         </div>
       </div>
@@ -2238,6 +2249,27 @@
           btn.style.setProperty('--lx', (dx * 3).toFixed(1) + 'px'); btn.style.setProperty('--ly', (dy * 2).toFixed(1) + 'px');
         });
       });
+    })();
+
+    // The intro sits beside the last headline line: its last line shares the baseline of "instinct", whatever the
+    // heading font and screen width. Two zero-size probes mark the baselines; the intro moves by the difference.
+    (() => {
+      const intro = document.querySelector('.hero-intro'), l3 = document.querySelector('.hero-title .l3 > span');
+      if (!intro || !l3) return;
+      const probe = host => { const p = document.createElement('span'); p.setAttribute('aria-hidden', 'true');
+        p.style.cssText = 'display:inline-block;width:0;height:0;vertical-align:baseline;'; host.append(p); return p; };
+      const a = probe(l3), b = probe(intro);
+      const align = () => {
+        intro.style.removeProperty('top');
+        if (getComputedStyle(intro).position !== 'absolute') return;
+        const ty = new DOMMatrix(getComputedStyle(intro).transform).m42 || 0;   // the reveal's slide, not layout
+        const dy = a.getBoundingClientRect().bottom - (b.getBoundingClientRect().bottom - ty);
+        intro.style.top = (intro.offsetTop + dy).toFixed(1) + 'px';
+      };
+      document.fonts && document.fonts.ready.then(align);
+      addEventListener('load', align);
+      let t = 0; addEventListener('resize', () => { clearTimeout(t); t = setTimeout(align, 120); });
+      align();
     })();
 
     // Closing button: the orange heart of its gradient eases after the pointer; a click copies the email
