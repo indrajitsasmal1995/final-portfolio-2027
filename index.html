@@ -52,7 +52,6 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300..800&display=swap" rel="stylesheet">
-<link href="https://fonts.googleapis.com/css2?family=Averia+Serif+Libre:ital,wght@0,300;0,400;0,700;1,400&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="assets/cursor.css?v=21">
 <style>
     :root {
@@ -1243,7 +1242,8 @@
 .site-header.is-filled { background: none; -webkit-backdrop-filter: none; backdrop-filter: none; }
 .top-fade { display: none; }
 /* client grid: on a pointer screen a hovered cell shows only its year (the phone list keeps the role beside it) */
-@media (hover: hover) and (min-width: 1001px) { .stakes-grid .stakes-role { display: none; } }
+.stakes-grid .stakes-role { display: none; }   /* clients show only the year, on every screen */
+@media (max-width: 1000px) { .stakes-grid .stakes-meta { grid-row: 1 / 3; align-self: center; justify-self: end; font-size: 13px; } }
 /* on a phone the head sits near the right edge, so the longer "View my work" bubble opens leftward */
 @media (max-width: 760px) {
   .hm-head.is-work .hm-hello { left: auto; right: 40%; border-radius: 20px 20px 5px 20px; transform-origin: 100% 100%; }
@@ -1413,15 +1413,12 @@
 .proj + .proj { margin-top: 56px; padding-top: 56px; border-top: 1px solid var(--line); }
 @media (max-width: 900px) { .proj + .proj { margin-top: 40px; padding-top: 40px; } .projs { margin-top: 56px; } }
 </style>
-<style id="try-averia">
-/* TRIAL: Averia Serif Libre on the homepage headings (hero headline, section headings, project titles,
-   closing line); body copy stays in Plus Jakarta Sans. Remove this block and the font link to undo. */
-:root { --serif: "Averia Serif Libre", Georgia, serif; }
-.hero-title .l1 > span, .hero-title .l2 > span, .hero-title .l3 > span,
-.h-xl, .proj__title, .cta-big { font-family: var(--serif); letter-spacing: -.02em; word-spacing: 0; }
-.hero-title .l1 > span, .hero-title .l2 > span, .hero-title .l3 > span, .h-xl { font-weight: 400; }
-.proj__title { font-weight: 400; letter-spacing: -.01em; }
-.cta-big { font-weight: 400; }
+<style>
+/* the image wheel above the closing line, at about 72% of its former size: radius, cards, box and the air it hands back */
+.shots { --r: clamp(76px, 14vw, 194px); --cw: clamp(34px, 6.35vw, 87px); height: clamp(120px, 21vw, 302px); }
+.shots-layer { margin-block: clamp(-80px, calc(9px - 6vw), -14px) calc(-1 * var(--ring-lap)); }
+/* footer bar: copyright on the left, open to work on the right, on every screen */
+.foot-bar { flex-direction: row; justify-content: space-between; align-items: center; text-align: left; }
 </style>
 </head>
 <body>
@@ -1677,7 +1674,7 @@
           <li><a href="assets/Indrajit-Sasmal-Resume.pdf?v=19" target="_blank" rel="noopener noreferrer"><span class="roll" data-t="Resume"><span>Resume</span></span><span class="arr">↗</span><span class="vh">(opens in a new tab)</span></a></li>
         </ul>
       </div>
-      <div class="foot-bar"><span class="foot-clock"><i></i>Open to work</span><span class="foot-copy">© 2026</span></div>
+      <div class="foot-bar"><span class="foot-copy">© 2026</span><span class="foot-clock"><i></i>Open to work</span></div>
     </div>
   </footer>
 
