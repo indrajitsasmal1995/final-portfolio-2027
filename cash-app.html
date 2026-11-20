@@ -1738,6 +1738,21 @@ main h4,.z-next h4{margin-top:0;margin-bottom:0;}
 /* menu hover: every link turns white, the main sections and their numbers included (their own colour rule used to win) */
 .toc__list a.toc__top, .toc__top small { transition: color .15s ease; }
 .toc__list a:hover, .toc__list a.toc__top:hover, .toc__list a.toc__top:hover small, .toc__sub a:hover { color: var(--ink); }
+
+/* next case studies: the same title and tag chips as the homepage's project rows */
+.z-next__tags{display:flex;flex-wrap:wrap;gap:8px;}
+.z-next__tags li{padding:8px 10px;border:0;border-radius:4px;background:var(--next-chip,#1c1c1c);font:600 11px/1 var(--sans);letter-spacing:.05em;text-transform:uppercase;color:var(--ink);}
+:root[data-theme="light"]{--next-chip:#f0f0f0;}
+.z-next__card h3{text-wrap:balance;}
+.z-next__card h3{font-weight:400;letter-spacing:-.025em;}
+.z-next__card h3 + .z-next__tags{margin-top:14px;}
+
+/* one banner per project, the same picture as its homepage row: shown whole at the top of the case study,
+   and cropped like the homepage row on the next case study cards */
+.hero .z-hero-img{margin-top:112px;}
+.hero .z-hero-img img{display:block;width:100%;height:auto;aspect-ratio:auto;object-fit:contain;border-radius:var(--r-m,14px);box-shadow:none;}
+.z-next__media{aspect-ratio:1.65;}
+.z-next__media img{object-position:50% 45%;}
 </style>
 </head>
 <body>
@@ -1853,8 +1868,8 @@ main h4,.z-next h4{margin-top:0;margin-bottom:0;}
         <div><dt>Timeline</dt><dd>8 months, 2025 – 2026</dd></div>
       </dl>
     </div>
-    <figure class="ds-hero reveal">
-      <div class="ds-hero__screen"><img src="assets/cashapp/hero.webp?v=1" width="1920" height="1200" fetchpriority="high" alt="An item’s record in the AR Cash App: the payment card with its amounts and details, send email and the recommended action on the left; the invoices tab with each invoice’s exception and reason code on the right, and the totals that must reconcile below."></div>
+    <figure class="z-hero-img reveal">
+      <img src="assets/hero/banner-cashapp.webp" width="1118" height="712" fetchpriority="high" alt="The AR Cash App: an item’s record with the payment card, the recommended action and the invoices tab">
     </figure>
   </section>
 
@@ -2365,13 +2380,13 @@ main h4,.z-next h4{margin-top:0;margin-bottom:0;}
   <div class="z-next__grid">
     <a class="z-next__card" href="/design-system">
       <div class="z-next__media"><img src="assets/ds/card-specimens.webp?v=3" width="2400" height="1539" alt="ZBrain design system specimens: type scale, data table, charts, spacing, status, forms and feedback" loading="lazy"></div>
+      <h3>ZBrain Design System: one source for designers and AI chats</h3>
       <ul class="z-next__tags"><li>Design system</li><li>Figma</li><li>AI prototyping</li></ul>
-      <h3>ZBrain Design System</h3>
     </a>
     <a class="z-next__card" href="/dhs-tutor">
-      <div class="z-next__media"><img src="assets/dhs/dashboard-hero.jpg" width="2240" height="1400" alt="The DHS Tutor dashboard, with an exam countdown, a continue-reading card and four study metrics" loading="lazy"></div>
-      <ul class="z-next__tags"><li>Edtech</li><li>Grounded AI</li><li>Prototype</li></ul>
-      <h3>DHS Tutor</h3>
+      <div class="z-next__media"><img src="assets/hero/banner-dhs.webp" width="1118" height="712" alt="DHS Tutor: the student dashboard with the exam countdown and study metrics" loading="lazy"></div>
+      <h3>DHS Tutor: an AI exam tutor that can only quote the book</h3>
+      <ul class="z-next__tags"><li>Edtech</li><li>Grounded AI</li><li>Prototype</li><li>Product design</li></ul>
     </a>
   </div>
 </section>

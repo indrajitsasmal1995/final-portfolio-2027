@@ -1823,6 +1823,21 @@ main h4,.z-next h4{margin-top:0;margin-bottom:0;}
 /* menu hover: every link turns white, the main sections and their numbers included (their own colour rule used to win) */
 .toc__list a.toc__top, .toc__top small { transition: color .15s ease; }
 .toc__list a:hover, .toc__list a.toc__top:hover, .toc__list a.toc__top:hover small, .toc__sub a:hover { color: var(--ink); }
+
+/* next case studies: the same title and tag chips as the homepage's project rows */
+.z-next__tags{display:flex;flex-wrap:wrap;gap:8px;}
+.z-next__tags li{padding:8px 10px;border:0;border-radius:4px;background:var(--next-chip,#1c1c1c);font:600 11px/1 var(--sans);letter-spacing:.05em;text-transform:uppercase;color:var(--ink);}
+:root[data-theme="light"]{--next-chip:#f0f0f0;}
+.z-next__card h3{text-wrap:balance;}
+.z-next__card h3{font-weight:400;letter-spacing:-.025em;}
+.z-next__card h3 + .z-next__tags{margin-top:14px;}
+
+/* one banner per project, the same picture as its homepage row: shown whole at the top of the case study,
+   and cropped like the homepage row on the next case study cards */
+.hero .z-hero-img{margin-top:112px;}
+.hero .z-hero-img img{display:block;width:100%;height:auto;aspect-ratio:auto;object-fit:contain;border-radius:var(--r-m,14px);box-shadow:none;}
+.z-next__media{aspect-ratio:1.65;}
+.z-next__media img{object-position:50% 45%;}
 </style>
 </head>
 <body>
@@ -1937,8 +1952,8 @@ main h4,.z-next h4{margin-top:0;margin-bottom:0;}
         <div><dt>Timeline</dt><dd>1 week, 2026, for a sales proposal</dd></div>
       </dl>
     </div>
-    <figure class="ds-hero reveal">
-      <div class="ds-hero__screen"><img src="assets/dhs/dashboard-hero.jpg" width="2240" height="1400" fetchpriority="high" alt="The DHS Tutor dashboard: an exam countdown reading 51 days to your NBDHE, a continue-reading card and four study metrics."></div>
+    <figure class="z-hero-img reveal">
+      <img src="assets/hero/banner-dhs.webp" width="1118" height="712" fetchpriority="high" alt="DHS Tutor: the student dashboard with the exam countdown and study metrics">
     </figure>
   </section>
 
@@ -2259,14 +2274,14 @@ main h4,.z-next h4{margin-top:0;margin-bottom:0;}
   </header>
   <div class="z-next__grid">
     <a class="z-next__card" href="/zbrain">
-      <div class="z-next__media"><img src="assets/admin/monitor-observatory.webp?v=2" width="2400" height="1570" alt="The ZBrain admin console on a desktop monitor" loading="lazy"></div>
-      <ul class="z-next__tags"><li>Agentic AI</li><li>Admin console</li><li>Governance</li></ul>
-      <h3>ZBrain Admin Console</h3>
+      <div class="z-next__media"><img src="assets/admin/monitor-observatory.webp?v=2" width="2400" height="1570" alt="ZBrain Admin Console on a desktop monitor, open on the Observatory with cost, runs, agents at risk, governance events and agent health" loading="lazy"></div>
+      <h3>ZBrain Admin Console: designed with governance at its core</h3>
+      <ul class="z-next__tags"><li>Agentic AI</li><li>Admin console</li><li>Governance</li><li>Product design</li></ul>
     </a>
     <a class="z-next__card" href="/ce-copilot">
-      <div class="z-next__media"><img src="assets/cecopilot/cover-card.jpg?v=7" width="1600" height="1143" alt="CE CoPilot across the admin console and the mobile app" loading="lazy"></div>
-      <ul class="z-next__tags"><li>Semiconductors</li><li>Mobile + web</li><li>AI assistant</li></ul>
-      <h3>CE CoPilot</h3>
+      <div class="z-next__media"><img src="assets/hero/banner-cecopilot.webp" width="1118" height="712" alt="CE CoPilot: the admin console in a browser beside two phone screens of the engineer app" loading="lazy"></div>
+      <h3>CE CoPilot: an AI assistant and its admin console</h3>
+      <ul class="z-next__tags"><li>AI assistant</li><li>Mobile + web</li><li>Admin console</li><li>Product design</li></ul>
     </a>
   </div>
 </section>
