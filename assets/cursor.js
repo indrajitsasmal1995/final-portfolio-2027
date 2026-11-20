@@ -38,9 +38,11 @@
     cur.classList.toggle('is-zoomout', zoomOut);
     cur.classList.toggle('is-btn', btn);
     const disc = !el && !btn && hit ? hit.closest('[data-cursor-disc]') : null;   // a picture that opens something: the cursor itself says what
-    if (disc) lab.textContent = disc.dataset.cursorDisc;
+    if (disc && lab.textContent !== disc.dataset.cursorDisc) lab.textContent = disc.dataset.cursorDisc;   // only when it changes
     cur.classList.toggle('is-disc', !!disc);
-    cur.classList.toggle('is-link', !el && !btn && !zoom && !zoomOut && !disc && !!(hit && hit.closest('a[href], summary, label[for]')) && !hit.closest('[data-cursor-plain]'));   // plain areas (a case study's menu) keep the small dot
+    const arrow = !el && !btn && !disc && hit ? !!hit.closest('[data-cursor-arrow]') : false;   // a project picture: the cursor becomes a round arrow
+    cur.classList.toggle('is-arrow', arrow);
+    cur.classList.toggle('is-link', !el && !btn && !zoom && !zoomOut && !disc && !arrow && !!(hit && hit.closest('a[href], summary, label[for]')) && !hit.closest('[data-cursor-plain]'));   // plain areas (a case study's menu) keep the small dot
     if (el === card) return;
     if (el) {
       lab.textContent = el.dataset.cursor.replace(/<br\s*\/?>/gi, ' ');   // one line, as a speech bubble

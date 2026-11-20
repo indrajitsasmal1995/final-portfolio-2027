@@ -52,7 +52,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300..800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="assets/cursor.css?v=17">
+  <link rel="stylesheet" href="assets/cursor.css?v=21">
 <style>
     :root {
       --bg: #0b0b0b;
@@ -1340,6 +1340,78 @@
 .site-header.is-float.is-anim { transition: transform .45s var(--ease), background-color .4s; }
 .site-header.is-float.is-shown, .site-header.is-float.menu-open { transform: none; }
 </style>
+<style>
+/* Selected Work as project rows, after the reference: the text on the left (an index at the top, the title,
+   one line and a link, then tags and the years at the foot), and a large picture on the right with a round
+   arrow button in its corner. On hover the picture leans in, the button's arrow slides through, and the
+   link's arrow nudges forward. */
+.projs { display: grid; gap: 96px; margin-top: 8px; }
+.proj { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.55fr); gap: clamp(32px, 5vw, 80px); align-items: stretch;
+  color: var(--ink); scroll-margin-top: 104px; }
+.proj__text { display: flex; flex-direction: column; justify-content: space-between; gap: 32px; min-width: 0; }
+.proj__num { font: 600 13px/1 var(--sans); letter-spacing: .02em; color: var(--ink); }
+.proj__body { margin-top: auto; margin-bottom: auto; padding: 24px 0; }
+.proj__title { font: 500 clamp(28px, 2.55vw, 40px)/1.12 var(--sans); letter-spacing: -.032em; text-wrap: balance; }
+.proj__desc { margin-top: 18px; max-width: 46ch; font-size: 16px; line-height: 1.6; color: var(--muted); text-wrap: pretty; }
+.proj__link { display: inline-flex; align-items: center; gap: 8px; margin-top: 24px; font: 600 13.5px/1 var(--sans); letter-spacing: .06em;
+  text-transform: uppercase; color: var(--proj-accent); }
+.proj__link svg { width: 14px; height: 14px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; transition: translate .45s var(--ease); }
+:root { --proj-accent: #4fe6a3; --chip: #1c1c1c; }
+:root[data-theme="light"] { --proj-accent: #1f8a57; --chip: #f0f0f0; }
+.proj__tags { display: flex; flex-wrap: wrap; gap: 10px; padding: 0; margin: 0; list-style: none; }
+.proj__tags li { padding: 9px 11px; border-radius: 4px; background: var(--chip); font: 600 11.5px/1 var(--sans); letter-spacing: .05em; text-transform: uppercase; color: var(--ink); }
+.proj__meta { display: block; margin-top: 18px; font: 600 12px/1 var(--sans); letter-spacing: .05em; text-transform: uppercase; color: var(--ink); }
+.proj__img { position: relative; overflow: hidden; border-radius: 6px; aspect-ratio: 1.62; background: var(--chip); }
+.proj__img img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 45%; transition: transform 1s var(--ease); }
+.proj__go { position: absolute; left: 28px; top: 28px; display: grid; place-items: center; width: 62px; height: 62px; border-radius: 50%; overflow: hidden;
+  background: #111; color: #fff; box-shadow: 0 10px 24px -12px rgba(0, 0, 0, .5); transition: scale .45s cubic-bezier(.34, 1.56, .64, 1); }
+.proj__go i { position: absolute; inset: 0; display: grid; place-items: center; transition: transform .55s var(--ease); }
+.proj__go i:last-child { transform: translateX(-120%); }
+.proj__go svg { width: 26px; height: 26px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+@media (hover: hover) {
+  .proj:hover .proj__img img { transform: scale(1.035); }
+  .proj:hover .proj__go { scale: 1.08; }
+  .proj:hover .proj__go i:first-child { transform: translateX(120%); }
+  .proj:hover .proj__go i:last-child { transform: none; transition-delay: .06s; }
+  .proj:hover .proj__link svg { translate: 5px 0; }
+}
+.proj:focus-visible { outline: 2px solid var(--accent-2); outline-offset: 8px; border-radius: 8px; }
+@media (max-width: 900px) {
+  .projs { gap: 64px; }
+  .proj { grid-template-columns: 1fr; gap: 24px; }
+  .proj__img { order: -1; }
+  .proj__body { padding: 8px 0 0; }
+  .proj__text { gap: 20px; }
+  .proj__go { left: 16px; top: 16px; width: 48px; height: 48px; }
+  .proj__go svg { width: 20px; height: 20px; }
+}
+@media (prefers-reduced-motion: reduce) { .proj__img img, .proj__go, .proj__go i, .proj__link svg { transition: none; } }
+</style>
+<style>
+/* project rows, sized to the reference: a wider text column, a lighter two-line title, quieter copy and chips */
+.proj { grid-template-columns: minmax(0, 1fr) minmax(0, 1.5fr); gap: clamp(32px, 4vw, 64px); }
+.proj__title { font-weight: 400; font-size: clamp(24px, 2vw, 30px); line-height: 1.18; letter-spacing: -.028em; max-width: none; text-wrap: balance; }
+.proj__desc { margin-top: 16px; font-size: 15.5px; line-height: 1.6; max-width: 44ch; }
+.proj__link { margin-top: 22px; font-size: 13px; }
+.proj__tags { gap: 8px; }
+.proj__tags li { padding: 8px 10px; font-size: 11px; }
+.proj__meta { margin-top: 16px; font-size: 11.5px; }
+.proj__img { aspect-ratio: 1.65; border-radius: 4px; }
+.projs { gap: 88px; margin-top: 96px; }   /* clear air under the "Selected Work" heading */
+/* the picture takes its width from its column and its height from that width, so it never runs past the
+   content edge however tall the text beside it is; it sits at the top of the row, level with the index */
+.proj { align-items: start; }
+.proj__img { align-self: start; width: 100%; height: auto; }
+.proj__text { align-self: stretch; gap: 20px; }
+.proj__body { padding: 4px 0; }
+@media (max-width: 900px) { .proj { grid-template-columns: 1fr; } .proj__title { font-size: 26px; } }
+</style>
+<style>
+/* a thin line between project rows, with equal air above and below it */
+.projs { gap: 0; }
+.proj + .proj { margin-top: 56px; padding-top: 56px; border-top: 1px solid var(--line); }
+@media (max-width: 900px) { .proj + .proj { margin-top: 40px; padding-top: 40px; } .projs { margin-top: 56px; } }
+</style>
 </head>
 <body>
   <div class="top-fade" aria-hidden="true"></div>
@@ -1424,87 +1496,81 @@
           <h2 class="display h-xl" id="work-title" data-fill>Selected Work</h2>
         </div>
 
-        <div class="cases" id="featured">
-          <span class="card-mark" id="work-zbrain" aria-hidden="true"></span>
-          <a class="case" href="/zbrain">
-            <div class="case-frame"><div class="case-shot">
-            <div class="work-visual work-visual--banner">
-              <div class="work-art">
-                <img class="work-banner" src="assets/admin/monitor-observatory.webp?v=2" width="2400" height="1570" decoding="async" alt="ZBrain Admin Console on a desktop monitor, open on the Observatory with cost, runs, agents at risk, governance events and agent health">
+        <div class="projs" id="featured">
+          <a class="proj" data-cursor-plain id="work-zbrain" href="/zbrain">
+            <div class="proj__text">
+              <span class="proj__num">/ 01</span>
+              <div class="proj__body">
+                <h3 class="proj__title">ZBrain Admin Console: designed with governance at its core</h3>
+                <p class="proj__desc">The console where admins monitor and govern agents, connectors and API keys in one place; live across 12+ enterprise organisations.</p>
+                <span class="proj__link">View case study <svg viewBox="0 0 14 14" aria-hidden="true" focusable="false"><path d="M2 7h10M7.5 2.5 12 7l-4.5 4.5"/></svg></span>
+              </div>
+              <div class="proj__foot">
+                <ul class="proj__tags"><li>Agentic AI</li><li>Admin console</li><li>Governance</li><li>Product design</li></ul>
+                <span class="proj__meta">/ 2026 / Live</span>
               </div>
             </div>
-            </div></div>
-            <div class="case-copy">
-              <ul class="case-tags"><li>Agentic AI</li><li>Admin console</li><li>Governance</li></ul><h3 class="display">ZBrain Admin Console</h3><p>The console where admins monitor and govern agents, connectors and API keys in one place; live across 12+ enterprise organisations.</p>
-              <span class="pill primary case-cta" data-cursor-hide aria-hidden="true"><span class="pill__label" data-t="View case study"><span>View case study</span></span><span class="pill__arrow pill__arrow--right" aria-hidden="true"><i><svg viewBox="0 0 14 14" aria-hidden="true" focusable="false"><path d="M2 7h10M7.5 2.5 12 7l-4.5 4.5"/></svg></i><i><svg viewBox="0 0 14 14" aria-hidden="true" focusable="false"><path d="M2 7h10M7.5 2.5 12 7l-4.5 4.5"/></svg></i></span></span>
-            </div>
+            <div class="proj__img" data-cursor-arrow><img src="assets/admin/monitor-observatory.webp?v=2" width="2400" height="1570" decoding="async" fetchpriority="high" alt="ZBrain Admin Console on a desktop monitor, open on the Observatory with cost, runs, agents at risk, governance events and agent health"></div>
           </a>
-          <span class="card-mark" id="work-ce-copilot" aria-hidden="true"></span>
-          <a class="case" href="/ce-copilot">
-            <div class="case-frame"><div class="case-shot">
-            <div class="work-visual work-visual--copilot">
-              <div class="work-art">
-                <div class="mock-browser">
-                  <div class="mock-browser__chrome" aria-hidden="true"><span class="mock-browser__dots"><i></i><i></i><i></i></span><span class="mock-browser__address"></span></div>
-                  <div class="mock-browser__viewport"><img src="assets/cecopilot/admin-overview.jpg?v=9" alt="CE CoPilot admin analytics dashboard" loading="lazy"></div>
-                </div>
-                <div class="mock-mobile mock-mobile--first"><img src="assets/cecopilot/m/mob-chat-initial-response.png?v=9" alt="CE CoPilot mobile troubleshooting response" loading="lazy"></div>
-                <div class="mock-mobile mock-mobile--second"><img src="assets/cecopilot/m/mob-chat-reading-documents.png?v=9" alt="CE CoPilot mobile document search" loading="lazy"></div>
+          <a class="proj" data-cursor-plain id="work-ce-copilot" href="/ce-copilot">
+            <div class="proj__text">
+              <span class="proj__num">/ 02</span>
+              <div class="proj__body">
+                <h3 class="proj__title">CE CoPilot: an AI assistant and its admin console</h3>
+                <p class="proj__desc">An AI assistant that helps field engineers at a global semiconductor equipment maker troubleshoot from approved manuals; 60% less time to a fix and 70% fewer escalations in the pilot.</p>
+                <span class="proj__link">View case study <svg viewBox="0 0 14 14" aria-hidden="true" focusable="false"><path d="M2 7h10M7.5 2.5 12 7l-4.5 4.5"/></svg></span>
+              </div>
+              <div class="proj__foot">
+                <ul class="proj__tags"><li>AI assistant</li><li>Mobile + web</li><li>Admin console</li><li>Product design</li></ul>
+                <span class="proj__meta">/ 2026 / Pilot</span>
               </div>
             </div>
-            </div></div>
-            <div class="case-copy">
-              <ul class="case-tags"><li>Semiconductors</li><li>Mobile + web</li><li>AI assistant</li></ul><h3 class="display">CE CoPilot</h3><p>An AI assistant that helps field engineers at a global semiconductor equipment maker troubleshoot from approved manuals; 60% less time to a fix and 70% fewer escalations in the pilot.</p>
-              <span class="pill primary case-cta" data-cursor-hide aria-hidden="true"><span class="pill__label" data-t="View case study"><span>View case study</span></span><span class="pill__arrow pill__arrow--right" aria-hidden="true"><i><svg viewBox="0 0 14 14" aria-hidden="true" focusable="false"><path d="M2 7h10M7.5 2.5 12 7l-4.5 4.5"/></svg></i><i><svg viewBox="0 0 14 14" aria-hidden="true" focusable="false"><path d="M2 7h10M7.5 2.5 12 7l-4.5 4.5"/></svg></i></span></span>
-            </div>
+            <div class="proj__img" data-cursor-arrow><img src="assets/hero/banner-cecopilot.webp" width="1118" height="712" decoding="async" loading="lazy" alt="CE CoPilot: the admin console in a browser beside two phone screens of the engineer app"></div>
           </a>
-          <span class="card-mark" id="work-cash-app" aria-hidden="true"></span>
-          <a class="case" href="/cash-app">
-            <div class="case-frame"><div class="case-shot">
-            <div class="work-visual work-visual--cashapp">
-              <div class="work-art">
-                <div class="mock-browser">
-                  <div class="mock-browser__chrome" aria-hidden="true"><span class="mock-browser__dots"><i></i><i></i><i></i></span><span class="mock-browser__address"></span></div>
-                  <div class="mock-browser__viewport"><img src="assets/cashapp/hero.webp?v=1" alt="The AR Cash App: an item’s record with the payment card, the recommended action, and the invoices tab with each invoice’s exception and reason code" loading="lazy"></div>
-                </div>
+          <a class="proj" data-cursor-plain id="work-cash-app" href="/cash-app">
+            <div class="proj__text">
+              <span class="proj__num">/ 03</span>
+              <div class="proj__body">
+                <h3 class="proj__title">AR Cash App: a workbench for the payments the bots can’t clear</h3>
+                <p class="proj__desc">The workspace where a global healthcare company’s AR team clears the payments its AI and bots can’t; ambiguous exceptions halved, live in 5 countries.</p>
+                <span class="proj__link">View case study <svg viewBox="0 0 14 14" aria-hidden="true" focusable="false"><path d="M2 7h10M7.5 2.5 12 7l-4.5 4.5"/></svg></span>
+              </div>
+              <div class="proj__foot">
+                <ul class="proj__tags"><li>Finance ops</li><li>Enterprise web app</li><li>Human in the loop</li><li>Product design</li></ul>
+                <span class="proj__meta">/ 2025 – 2026 / Live</span>
               </div>
             </div>
-            </div></div>
-            <div class="case-copy">
-              <ul class="case-tags"><li>Finance ops</li><li>Enterprise web app</li><li>Human in the loop</li></ul><h3 class="display">AR Cash App</h3><p>The workspace where a global healthcare company’s AR team clears the payments its AI and bots can’t; ambiguous exceptions halved, live in 5 countries.</p>
-              <span class="pill primary case-cta" data-cursor-hide aria-hidden="true"><span class="pill__label" data-t="View case study"><span>View case study</span></span><span class="pill__arrow pill__arrow--right" aria-hidden="true"><i><svg viewBox="0 0 14 14" aria-hidden="true" focusable="false"><path d="M2 7h10M7.5 2.5 12 7l-4.5 4.5"/></svg></i><i><svg viewBox="0 0 14 14" aria-hidden="true" focusable="false"><path d="M2 7h10M7.5 2.5 12 7l-4.5 4.5"/></svg></i></span></span>
-            </div>
+            <div class="proj__img" data-cursor-arrow><img src="assets/hero/banner-cashapp.webp" width="1118" height="712" decoding="async" loading="lazy" alt="The AR Cash App: an item’s record with the payment card, the recommended action and the invoices tab"></div>
           </a>
-          <span class="card-mark" id="work-design-system" aria-hidden="true"></span>
-          <a class="case" href="/design-system">
-            <div class="case-frame"><div class="case-shot">
-            <div class="work-visual work-visual--banner work-visual--ds">
-              <div class="work-art">
-                <img class="work-banner" src="assets/ds/card-specimens.webp?v=3" width="2400" height="1539" decoding="async" loading="lazy" alt="ZBrain design system specimens: type scale, data table, charts, spacing, status, forms and feedback">
+          <a class="proj" data-cursor-plain id="work-design-system" href="/design-system">
+            <div class="proj__text">
+              <span class="proj__num">/ 04</span>
+              <div class="proj__body">
+                <h3 class="proj__title">ZBrain Design System: one source for designers and AI chats</h3>
+                <p class="proj__desc">A design system turned into an AI-ready Markdown guide, so any AI chat prototypes on-brand screens; in use across the admin and user portals.</p>
+                <span class="proj__link">View case study <svg viewBox="0 0 14 14" aria-hidden="true" focusable="false"><path d="M2 7h10M7.5 2.5 12 7l-4.5 4.5"/></svg></span>
+              </div>
+              <div class="proj__foot">
+                <ul class="proj__tags"><li>Design system</li><li>Figma</li><li>AI prototyping</li></ul>
+                <span class="proj__meta">/ 2026 / Released</span>
               </div>
             </div>
-            </div></div>
-            <div class="case-copy">
-              <ul class="case-tags"><li>Design system</li><li>Figma</li><li>AI prototyping</li></ul><h3 class="display">ZBrain design system</h3><p>A design system turned into an AI-ready Markdown guide, so any AI chat prototypes on-brand screens; in use across the admin and user portals.</p>
-              <span class="pill primary case-cta" data-cursor-hide aria-hidden="true"><span class="pill__label" data-t="View case study"><span>View case study</span></span><span class="pill__arrow pill__arrow--right" aria-hidden="true"><i><svg viewBox="0 0 14 14" aria-hidden="true" focusable="false"><path d="M2 7h10M7.5 2.5 12 7l-4.5 4.5"/></svg></i><i><svg viewBox="0 0 14 14" aria-hidden="true" focusable="false"><path d="M2 7h10M7.5 2.5 12 7l-4.5 4.5"/></svg></i></span></span>
-            </div>
+            <div class="proj__img" data-cursor-arrow><img src="assets/ds/card-specimens.webp?v=3" width="2400" height="1539" decoding="async" loading="lazy" alt="ZBrain design system specimens: type scale, data table, charts, spacing, status, forms and feedback"></div>
           </a>
-          <span class="card-mark" id="work-dhs-tutor" aria-hidden="true"></span>
-          <a class="case" href="/dhs-tutor">
-            <div class="case-frame"><div class="case-shot">
-            <div class="work-visual work-visual--dhs">
-              <div class="work-art">
-                <div class="mock-browser">
-                  <div class="mock-browser__chrome" aria-hidden="true"><span class="mock-browser__dots"><i></i><i></i><i></i></span><span class="mock-browser__address"></span></div>
-                  <div class="mock-browser__viewport"><img src="assets/dhs/dashboard-hero.jpg" alt="The DHS Tutor dashboard: an exam countdown, four study metrics, and a focus-areas table listing the weakest chapters" loading="lazy"></div>
-                </div>
+          <a class="proj" data-cursor-plain id="work-dhs-tutor" href="/dhs-tutor">
+            <div class="proj__text">
+              <span class="proj__num">/ 05</span>
+              <div class="proj__body">
+                <h3 class="proj__title">DHS Tutor: an AI exam tutor that can only quote the book</h3>
+                <p class="proj__desc">An NBDHE study app whose AI tutor answers only from the DHS Review Book and cites the page; a prototype made for a client pitch.</p>
+                <span class="proj__link">View case study <svg viewBox="0 0 14 14" aria-hidden="true" focusable="false"><path d="M2 7h10M7.5 2.5 12 7l-4.5 4.5"/></svg></span>
+              </div>
+              <div class="proj__foot">
+                <ul class="proj__tags"><li>Edtech</li><li>Grounded AI</li><li>Prototype</li><li>Product design</li></ul>
+                <span class="proj__meta">/ 2026 / Prototype</span>
               </div>
             </div>
-            </div></div>
-            <div class="case-copy">
-              <ul class="case-tags"><li>Edtech</li><li>Grounded AI</li><li>Prototype</li></ul><h3 class="display">DHS Tutor</h3><p>An NBDHE study app whose AI tutor answers only from the DHS Review Book and cites the page; a prototype made for a client pitch.</p>
-              <span class="pill primary case-cta" data-cursor-hide aria-hidden="true"><span class="pill__label" data-t="View case study"><span>View case study</span></span><span class="pill__arrow pill__arrow--right" aria-hidden="true"><i><svg viewBox="0 0 14 14" aria-hidden="true" focusable="false"><path d="M2 7h10M7.5 2.5 12 7l-4.5 4.5"/></svg></i><i><svg viewBox="0 0 14 14" aria-hidden="true" focusable="false"><path d="M2 7h10M7.5 2.5 12 7l-4.5 4.5"/></svg></i></span></span>
-            </div>
+            <div class="proj__img" data-cursor-arrow><img src="assets/hero/banner-dhs.webp" width="1118" height="712" decoding="async" loading="lazy" alt="DHS Tutor: the student dashboard with the exam countdown and study metrics"></div>
           </a>
         </div>
       </div>
@@ -1516,16 +1582,16 @@
           <h2 class="display h-xl" id="side-title" data-fill>On the side</h2>
         </div>
         <div class="side-grid">
-          <a class="side-card" href="https://uniwaveradio.vercel.app/" target="_blank" rel="noopener" data-reveal>
-            <div class="side-media" data-cursor-disc="Open app"><img src="assets/uniwave-cover.jpg?v=3" width="1600" height="1200" alt="uniwave playing MANGORADIO: the lit map tilts and zooms in on Europe, and a popup above the pin in Germany shows the station live, with its genre and stream" loading="lazy"></div>
+          <a class="side-card" data-cursor-plain href="https://uniwaveradio.vercel.app/" target="_blank" rel="noopener" data-reveal>
+            <div class="side-media" data-cursor-arrow><img src="assets/uniwave-cover.jpg?v=3" width="1600" height="1200" alt="uniwave playing MANGORADIO: the lit map tilts and zooms in on Europe, and a popup above the pin in Germany shows the station live, with its genre and stream" loading="lazy"></div>
             <div class="side-body">
               <h3>A world map of every country’s radio</h3>
               <p>uniwave puts thousands of stations on a lit map and asks one thing: where do you want to listen?</p>
               <ul class="side-tags"><li>Live app</li><li>Data viz</li><li>Audio</li></ul>
             </div>
           </a>
-          <a class="side-card" href="https://motion-bucket.vercel.app/" target="_blank" rel="noopener" data-reveal>
-            <div class="side-media side-media--mb" data-cursor-disc="Open app"><img src="assets/motion-bucket-cover.jpg" width="1600" height="1200" alt="Motion Bucket frozen mid-animation: confetti bursts over a rewards screen on an iPhone, beside a spec card that reads Festive and plots the burst's height over time" loading="lazy"></div>
+          <a class="side-card" data-cursor-plain href="https://motion-bucket.vercel.app/" target="_blank" rel="noopener" data-reveal>
+            <div class="side-media side-media--mb" data-cursor-arrow><img src="assets/motion-bucket-cover.jpg" width="1600" height="1200" alt="Motion Bucket frozen mid-animation: confetti bursts over a rewards screen on an iPhone, beside a spec card that reads Festive and plots the burst's height over time" loading="lazy"></div>
             <div class="side-body">
               <h3>A field guide to native mobile motion</h3>
               <p>Motion Bucket plays 76 iOS and Android interactions live, lets you tune every spring and curve, then hands you the code.</p>
@@ -2270,6 +2336,6 @@
     io.observe(title);
   })();
 </script>
-<script src="assets/cursor.js?v=8"></script>
+<script src="assets/cursor.js?v=10"></script>
 </body>
 </html>
