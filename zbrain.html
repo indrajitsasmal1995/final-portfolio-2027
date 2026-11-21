@@ -1548,7 +1548,7 @@ main h4,.z-next h4{margin-top:0;margin-bottom:0;}
 .hero h1{font-size:clamp(32px, 3.4vw, 48px);line-height:1.08;letter-spacing:-.03em;max-width:32ch;text-wrap:balance;}
 @media (max-width:760px){.hero h1{font-size:min(9vw, 34px);}}
 /* the case study title, a step bigger and bolder */
-.hero h1{font-size:clamp(36px, 3.9vw, 56px);font-weight:700;letter-spacing:-.035em;}
+.hero h1{font-size:clamp(36px, 3.9vw, 56px);font-weight:600;letter-spacing:-.035em;}
 @media (max-width:760px){.hero h1{font-size:min(9.6vw, 38px);}}
 /* what comes next, under the lessons */
 .z-whatsnext{margin-top:40px;padding:22px 24px;border:1px solid var(--line);border-radius:16px;font-size:16px;line-height:1.6;color:var(--ink-2);}
@@ -1624,6 +1624,13 @@ main h4,.z-next h4{margin-top:0;margin-bottom:0;}
 .site-foot__copy{margin:0;}
 .site-foot__top{display:inline-flex;align-items:center;gap:8px;min-height:34px;padding:0 15px;border:1px solid var(--line);border-radius:999px;color:inherit;text-decoration:none;transition:color .3s ease,border-color .3s ease;}
 .site-foot__top:hover,.site-foot__top:focus-visible{color:var(--ink);border-color:var(--ink-3);}
+</style>
+<style>
+/* Hero drift: with the class from the script below, the frame clips and the picture is drawn 10% larger,
+   so its drift (up to 4.5% of the frame height) never shows an edge. Without it (no JS, reduced motion)
+   the picture shows whole, as before. */
+.hero .z-hero-img.is-drift{overflow:hidden;}
+.hero .z-hero-img.is-drift img{scale:1.1;will-change:translate;}
 </style>
 </head>
 <body>
@@ -2412,5 +2419,28 @@ main h4,.z-next h4{margin-top:0;margin-bottom:0;}
 <script src="assets/cursor.js?v=11"></script>
 <script src="assets/hero-dots.js?v=2"></script>
 <script>/* lazy images start loading about a screen and a half before they scroll into view */(function(){if(!("IntersectionObserver" in window))return;var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.loading="eager";io.unobserve(e.target);}});},{rootMargin:"150% 0px"});document.querySelectorAll('img[loading="lazy"]').forEach(function(i){io.observe(i);});})();</script>
+<script>
+/* Hero drift: the top picture moves a little against the scroll inside its frame, centred when the
+   frame is in the middle of the window. Only the picture moves; the frame stays put. */
+(() => {
+  if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  const box = document.querySelector('.hero .z-hero-img');
+  const img = box && box.querySelector('img');
+  if (!img) return;
+  box.classList.add('is-drift');
+  let queued = false;
+  const place = () => {
+    queued = false;
+    const r = box.getBoundingClientRect(), vh = innerHeight;
+    if (r.bottom < -vh * .2 || r.top > vh * 1.2) return;
+    const k = Math.max(-1, Math.min(1, (r.top + r.height / 2 - vh / 2) / (vh / 2 + r.height / 2)));
+    img.style.translate = '0 ' + (-k * r.height * .045).toFixed(1) + 'px';
+  };
+  const q = () => { if (!queued) { queued = true; requestAnimationFrame(place); } };
+  addEventListener('scroll', q, { passive: true });
+  addEventListener('resize', q);
+  q();
+})();
+</script>
 </body>
 </html>
