@@ -52,7 +52,7 @@
 <meta name="twitter:image:alt" content="Portfolio27. Indrajit Sasmal, Product Designer">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300..800&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300..800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="assets/cursor.css?v=21">
 <style>
     :root {
@@ -1615,9 +1615,9 @@ footer .foot-c { border-top: 1px solid var(--line); padding: 18px 0 26px; }
 .contact-acts { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
 .ca-btn { position: relative; display: inline-flex; align-items: center; justify-content: center; gap: 10px; height: 48px; padding: 0 24px;
   border-radius: 999px; overflow: hidden; isolation: isolate; text-decoration: none; cursor: pointer;
-  font: 500 13px/1 "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace; letter-spacing: .08em; text-transform: uppercase;
+  font: 500 14px/1 var(--sans); letter-spacing: .005em;   /* the page font, in sentence case like the other pills */
   transition: transform .35s var(--ease), color .35s var(--ease), border-color .35s var(--ease), box-shadow .35s var(--ease); }
-/* JetBrains Mono's capitals are centred in a 1-line box, so label, icon and button share one centre line */
+/* label and icon share the button's centre line */
 .ca-label { display: block; }
 .ca-btn svg, .ca-ico svg { display: block; flex: none; }
 .ca-btn--fill { min-width: 161px; border: 1px solid var(--ink); background: var(--ink); color: var(--bg); }
