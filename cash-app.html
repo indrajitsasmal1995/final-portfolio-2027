@@ -1754,6 +1754,39 @@ main h4,.z-next h4{margin-top:0;margin-bottom:0;}
 .z-next__media{aspect-ratio:1.65;}
 .z-next__media img{object-position:50% 45%;}
 </style>
+<style>
+/* Square corners on every container, images and text cards alike: the hero image, the wells and the
+   screens and videos in them, the next-case images, the lightbox, and the story, sides, quote and
+   reflection cards. The drawn infographics keep theirs: the pipeline (.ca-flow__node, .ca-flow__path), the IA map (.z-ia__group), the steps strip (.z-flow) and the human-in-the-loop grid (.ca-hitl__cell). Pills, dots and avatars are not
+   containers and keep their round shape. Marked important because each container sets its radius in
+   several places, some inside media queries; this one rule settles them all. */
+.z-hero-img, .z-hero-img img, .hero__media img,
+.well, .well img, .well video, .media video,
+.z-next__media, .next__media, .lb img, .case-frame, .case-frame__screen,
+.z-story__col, .z-side, .z-stat, .quote--card, .reflect,
+.ca-shot__well, .ca-shot__well img { border-radius: 0 !important; }
+/* Square, the filled cards read as bands, so the space above and below each one matches: the quote
+   card gets the section gap under it as well as over it, and the reflection panel sits as far from
+   the next-project cards as from the section above it. */
+.quote--card + * { margin-top: 104px !important; }
+.reflect { margin-top: 120px !important; }
+@media (max-width:900px){ .quote--card + * { margin-top: 80px !important; } .reflect { margin-top: 96px !important; } .z-next { margin-top: 96px !important; } }
+/* At a glance cards: more air and one rhythm. Each card's four parts (label, title, content, link)
+   sit on rows the three cards share, so titles, content and links line up across them whatever their
+   length: 20px from label to title, 24px from title to content, 32px above the link. One column on a
+   tablet or phone, where each card simply stacks its parts. */
+@media (min-width:901px){
+  .z-story { grid-template-rows: auto auto 1fr auto; row-gap: 0; }
+  .z-story__col { display: grid; grid-row: span 4; grid-template-rows: subgrid; row-gap: 0; }
+  .z-story .z-story__col .z-go { align-self: end; }   /* the foot of its shared row (stronger than the column rule below) */
+}
+.z-story__col { padding: 32px 32px 30px; gap: 0; }
+.z-story__kick { margin: 0 0 20px; }
+.z-story h3 { margin: 0 0 24px; }
+.z-story .z-ticks, .z-story .z-jobs, .z-story .z-nums { margin-top: 0; align-self: start; }
+.z-story .z-go { margin-top: auto; padding-top: 32px; align-self: start; }   /* left-aligned when the card is a column */
+@media (max-width:900px){ .z-story__col { padding: 28px 24px 26px; } .z-story h3 { margin-bottom: 20px; } .z-story .z-go { padding-top: 24px; } }
+</style>
 </head>
 <body>
 <a class="skip" href="#main">Skip to content</a>
@@ -1869,7 +1902,7 @@ main h4,.z-next h4{margin-top:0;margin-bottom:0;}
       </dl>
     </div>
     <figure class="z-hero-img reveal">
-      <img src="assets/hero/banner-cashapp.webp" width="1118" height="712" fetchpriority="high" alt="The AR Cash App: an item’s record with the payment card, the recommended action and the invoices tab">
+      <img src="assets/hero/banner-cashapp.webp?v=3" width="1672" height="941" fetchpriority="high" alt="The AR Cash App on a desktop monitor: an item’s record with the payment card, the recommended action and the invoices tab">
     </figure>
   </section>
 
@@ -2395,7 +2428,7 @@ main h4,.z-next h4{margin-top:0;margin-bottom:0;}
   <ul class="site-foot__links">
     <li><a href="https://www.linkedin.com/in/indrajit-sasmal/" target="_blank" rel="noopener noreferrer"><span class="roll" data-t="LinkedIn"><span>LinkedIn</span></span><span class="arr">↗</span><span class="vh">(opens in a new tab)</span></a></li>
     <li><a href="https://dribbble.com/Indrajit1995" target="_blank" rel="noopener noreferrer"><span class="roll" data-t="Dribbble"><span>Dribbble</span></span><span class="arr">↗</span><span class="vh">(opens in a new tab)</span></a></li>
-    <li><a href="assets/Indrajit-Sasmal-Resume.pdf?v=21" target="_blank" rel="noopener noreferrer"><span class="roll" data-t="Resume"><span>Resume</span></span><span class="arr">↗</span><span class="vh">(opens in a new tab)</span></a></li>
+    <li><a href="assets/Indrajit-Sasmal-Resume.pdf?v=22" target="_blank" rel="noopener noreferrer"><span class="roll" data-t="Resume"><span>Resume</span></span><span class="arr">↗</span><span class="vh">(opens in a new tab)</span></a></li>
   </ul>
   <div class="site-foot__bar"><span class="site-foot__status"><i aria-hidden="true"></i>Open to work</span><span>© 2026</span></div>
 </footer>
