@@ -13,8 +13,22 @@
   }
   const lab = cur.querySelector('span');
   document.documentElement.classList.add('has-cursor');
-  let x = innerWidth / 2, y = innerHeight / 2, cx = x, cy = y;
-  addEventListener('pointermove', e => { x = e.clientX; y = e.clientY; cur.classList.add('is-on'); });
+  // Start where the pointer really is. The page before saves the last position (the window and so
+  // the screen coordinates are the same), so coming back from a case study the cursor appears under
+  // the mouse instead of in the middle of the screen. With no saved position it stays hidden, and
+  // shows no state, until the mouse first moves.
+  let x = innerWidth / 2, y = innerHeight / 2, seen = false;
+  try {
+    const p = JSON.parse(sessionStorage.getItem('cursorAt') || 'null');
+    if (p && Date.now() - p.t < 60000 && p.x >= 0 && p.y >= 0 && p.x <= innerWidth && p.y <= innerHeight) {
+      x = p.x; y = p.y; seen = true; cur.classList.add('is-on');
+    }
+  } catch (e) {}
+  let cx = x, cy = y;
+  const save = () => { if (seen) try { sessionStorage.setItem('cursorAt', JSON.stringify({ x, y, t: Date.now() })); } catch (e) {} };
+  addEventListener('pagehide', save);
+  addEventListener('pointerdown', save, true);   // a click that navigates may not reach pagehide in time
+  addEventListener('pointermove', e => { x = e.clientX; y = e.clientY; seen = true; cur.classList.add('is-on'); });
   document.addEventListener('pointerleave', () => cur.classList.remove('is-on'));
   // Project label: follow whatever card is under the pointer, including while the page
   // scrolls a new card underneath a still mouse. Landing on a different project blinks the disc.
@@ -26,6 +40,7 @@
   };
   const sync = () => {
     queued = false;
+    if (!seen) return;
     const hit = document.elementFromPoint(x, y);
     const el = hit ? hit.closest('[data-cursor]') : null;
     const dlg = hit ? hit.closest('dialog[open]') : null;
@@ -54,6 +69,13 @@
     card = el;
   };
   const queue = () => { if (!queued) { queued = true; requestAnimationFrame(sync); } };
+  addEventListener('pageshow', e => {
+    if (!e.persisted) return;
+    try {
+      const p = JSON.parse(sessionStorage.getItem('cursorAt') || 'null');
+      if (p && Date.now() - p.t < 60000) { x = cx = p.x; y = cy = p.y; seen = true; queue(); }
+    } catch (err) {}
+  });
   addEventListener('pointermove', queue, { passive: true });
   addEventListener('scroll', queue, { passive: true });
   // An open image is a modal dialog, which the browser draws in its top layer, above any z-index.
