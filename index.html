@@ -2478,6 +2478,37 @@ footer .foot-c::before { content: ""; position: absolute; top: 0; left: var(--pa
       align();
     })();
 
+    // The about line sits midway between the hero buttons and "Shipped for": the space under it (its last
+    // baseline to the heading's cap height) matches the space above it (the buttons' foot to its cap height).
+    // The space above changes with the window height, since the hero fills the screen, so it is measured.
+    // Layout offsets ignore the reveal transforms; the probes are added and removed within one measure.
+    (() => {
+      const sec = document.querySelector('.intro'), para = sec && sec.querySelector('.intro-copy'),
+            cta = document.querySelector('.hero-cta'), head = document.querySelector('#stakes-title');
+      if (!para || !cta || !head) return;
+      const Y = el => { let y = 0; while (el) { y += el.offsetTop; el = el.offsetParent; } return y; };
+      const base = (host, first) => {
+        const p = document.createElement('span');
+        p.style.cssText = 'display:inline-block;width:0;height:0;vertical-align:baseline;';
+        first ? host.prepend(p) : host.append(p);
+        const y = Y(p); p.remove(); return y;
+      };
+      const ctx = document.createElement('canvas').getContext('2d');
+      const cap = el => { const s = getComputedStyle(el); ctx.font = `${s.fontWeight} ${s.fontSize} ${s.fontFamily}`; return ctx.measureText('H').actualBoundingBoxAscent; };
+      const fit = () => {
+        const had = sec.style.paddingBottom;
+        sec.style.removeProperty('padding-bottom');
+        const above = base(para, true) - cap(para) - (Y(cta) + cta.offsetHeight);
+        const below = base(head, false) - cap(head) - base(para, false);
+        const pad = Math.max(0, parseFloat(getComputedStyle(sec).paddingBottom) + above - below).toFixed(1) + 'px';
+        sec.style.paddingBottom = Math.abs(parseFloat(had) - parseFloat(pad)) < 1 ? had : pad;   // no 1px jitter
+      };
+      document.fonts && document.fonts.ready.then(fit);
+      addEventListener('load', fit);
+      let t = 0; addEventListener('resize', () => { clearTimeout(t); t = setTimeout(fit, 120); });
+      fit();
+    })();
+
     // Closing button: the orange heart of its gradient eases after the pointer; a click copies the email
     (() => {
       const act = document.querySelector('.cta-act'), btn = act && act.querySelector('[data-copy]');
