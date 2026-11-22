@@ -2462,12 +2462,15 @@ footer .foot-c::before { content: ""; position: absolute; top: 0; left: var(--pa
       const probe = host => { const p = document.createElement('span'); p.setAttribute('aria-hidden', 'true');
         p.style.cssText = 'display:inline-block;width:0;height:0;vertical-align:baseline;'; host.append(p); return p; };
       const a = probe(l3), b = probe(intro);
+      // Measured with layout offsets, which ignore transforms. The kinetic headline lifts "instinct" up to 56px as
+      // the page scrolls (and the note slides in on its reveal), so an on-screen measurement taken while scrolled,
+      // on a resize or a restored scroll, left the note too high, over "builder", once back at the top.
+      const yIn = (el, root) => { let y = 0; while (el && el !== root) { y += el.offsetTop; el = el.offsetParent; } return el ? y : NaN; };
       const align = () => {
         intro.style.removeProperty('top');
         if (getComputedStyle(intro).position !== 'absolute') return;
-        const ty = new DOMMatrix(getComputedStyle(intro).transform).m42 || 0;   // the reveal's slide, not layout
-        const dy = a.getBoundingClientRect().bottom - (b.getBoundingClientRect().bottom - ty);
-        intro.style.top = (intro.offsetTop + dy).toFixed(1) + 'px';
+        const y = yIn(a, intro.offsetParent) - yIn(b, intro);
+        if (isFinite(y)) intro.style.top = y + 'px';
       };
       document.fonts && document.fonts.ready.then(align);
       addEventListener('load', align);
