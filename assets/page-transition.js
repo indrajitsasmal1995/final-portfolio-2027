@@ -98,22 +98,10 @@
     return u;
   };
 
-  // Fetch the destination while the pointer is still travelling toward it, so
-  // the sweep and the page load overlap instead of queueing.
-  const warmed = new Set();
-  const warm = a => {
-    const u = page(a);
-    if (!u || warmed.has(u.href)) return;
-    warmed.add(u.href);
-    const l = document.createElement('link');
-    l.rel = 'prefetch';
-    l.as = 'document';
-    l.href = u.href;
-    document.head.append(l);
-  };
-  const near = e => { const a = e.target.closest && e.target.closest('a[href]'); if (a) warm(a); };
-  addEventListener('pointerover', near, { passive: true });
-  addEventListener('focusin', near, { passive: true });
+  // No prefetch. It used to add a <link rel=prefetch> on hover and on click so the load could
+  // overlap the sweep, but a click that landed while that prefetch was still in flight made the
+  // real navigation queue behind it: 4s and 30s of covered screen measured on the live site
+  // (2026-11-24), against about 0.1s without it. The page is asked for at the end of the sweep.
 
   addEventListener('click', e => {
     if (busy || e.defaultPrevented || e.button !== 0) return;
@@ -131,11 +119,6 @@
     const dir = a.dataset.ptDir || (home ? 'up' : 'down');
 
     document.body.append(panel(dir, 'in', IN));
-
-    // Start the fetch now rather than at the end of the sweep. On a mouse the pointer has
-    // usually warmed it already, but a tap or a keyboard activation never fires
-    // pointerover, and those were sitting out the whole cover before asking for the page.
-    warm(a);
 
     // Stamped with the time, because the key is the only thing that crosses between the two
     // documents and nothing guarantees the second one ever loads. A reader who hits back
